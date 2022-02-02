@@ -1,0 +1,753 @@
+
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' >
+
+  <div class="container-fluid">
+    <h3 class="text-center">{{field_name_addusersdetail}}</h3>
+    <div class="card">
+      <div class="card-body">
+       
+          <form class="form-horizontal form-material" name="form" #f="ngForm" (ngSubmit)="f.form.valid &&  onSubmit()">
+            <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+              <strong>Users Details!</strong>The form has the following errors that need to be corrected
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="card-header">
+              <h2> 
+                  <span *ngIf="!isUpdate">{{field_name_adduser}}</span> 
+                  <span *ngIf="isUpdate"> {{field_name_updateuser}}</span>
+                 
+              </h2>
+              </div>
+              <div class="card-body">
+        
+                <div class="form-row">
+            <div class="form-group col-md-4">
+              <label  for="usertype" class="col-sm-5 col-form-label">{{field_name_usertype}}<span
+                class="text-danger font-weight-bold">
+                *</span></label>
+            
+                <div class="col-sm-10">
+                  <select class="custom-select" id="gender2" name="usertype" [(ngModel)]="userDetail.usertype"
+                      #usertype="ngModel" [ngClass]="{'is-invalid': f.submitted && usertype.invalid, 
+                      'is-valid': f.submitted && usertype.valid }" required>
+                      <option selected>Choose your Permissions</option>
+                
+                     
+                    
+                                           
+                      <option value="Super Admin">Super Admin</option>
+                      <option value="Super Manager">Super Manager</option>
+                      <option value="Super Sales">Super Sales</option> 
+                      <option value="Marketing Admin">Marketing Admin</option>
+                      <option value="Marketing Manager"> Marketing Manager</option>
+                       <option value="Marketing User">Marketing User</option>
+                      <option value="Inventory Admin">Inventory Admin</option>
+                      <option value="Inventory Manager"> Inventory Manager</option>
+                       <option value="Inventory User">Inventory User</option>
+                       <option value="Sales Admin">Sales Admin</option>
+                       <option value="Sales Manager"> Sales Manager</option>
+                        <option value="Sales User">Sales User</option>
+                        <option value="Service Admin">Service Admin</option>
+                        <option value="Service Manager"> Service Manager</option>
+                         <option value="Service User">Service User</option>
+                         <option value="Hr Admin">Hr Admin</option>
+                         <option value="Hr Manager">Hr Manager</option>
+                          <option value="Hr User">Hr User</option>
+  
+
+  
+                  </select> 
+                  <div *ngIf="f.submitted && usertype.invalid" class="invalid-feedback">
+                      <div *ngIf="usertype.errors.required">Requred Usertype</div>
+                  </div> 
+              </div>
+          </div>
+         <!--  <div class="form-group col-md-4">
+            <label class="col-sm-5 col-form-label">{{field_name_email}} <span
+              class="text-danger font-weight-bold">
+              *</span></label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" [(ngModel)]="userDetail.email" name="email"
+              pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" #email="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && email.invalid, 
+              'is-valid': f.submitted && email.valid }"
+          required />
+          <div *ngIf="showError != ''" class="alert alert-danger">
+            {{showError}}</div>
+      
+          
+          <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+            <div *ngIf="email.errors.required"> Please provide Email</div>
+        <div *ngIf="email.errors.pattern">Email format should be <small  class="text-success"><b>jhon@abc.com</b></small>
+        </div>
+        </div>
+            </div>
+          </div> -->
+       
+          
+            <div class="form-group col-md-4 " *ngIf="!isUpdate">
+              <label class="col-sm-5 col-form-label"  >{{field_name_email}}<span class="text-danger font-weight-bold">
+                  *</span></label>
+                  <div class="col-sm-10">
+                    <div class="ng-autocomplete">
+                      <ng-autocomplete [data]="employeeArray" [searchKeyword]="keyword"  [initialValue]='keyword' (selected)='selectEvent($event)'
+                        (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
+                        [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"   required
+                        >
+                      </ng-autocomplete>
+    
+                      <ng-template #itemTemplate let-item>
+                        <a [innerHTML]="item.email"></a>
+                      </ng-template>
+                   
+                      <ng-template #notFoundTemplate let-notFound>
+                        <div [innerHTML]="notFound">
+                        
+                        </div>
+                     
+                      
+                      </ng-template>
+                      <!-- <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+                        <div *ngIf="email.errors.required">Please Provide  Email</div>
+              
+                       
+                      </div> -->
+                      
+                    </div>
+              </div>
+           
+            </div>
+            <div class="col-md-4 form-group" *ngIf="isUpdate">
+              <label class="col-sm-5 col-form-label">{{field_name_email}}<span class="text-danger font-weight-bold"> *</span>
+            </label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" [(ngModel)]="userDetail.email" name="email"
+              readonly />
+        </div>
+        </div>
+        <div class="form-group col-md-4">
+          <label class="col-sm-5 col-form-label">{{field_name_password}}<span
+            class="text-danger font-weight-bold">
+            *</span></label>
+          <div class="input-group col-sm-10">
+            <!-- Change input type to be dynamic -->
+            <input
+              [type]="fieldTextType ? 'text' : 'password'"
+              class="form-control" [(ngModel)]="userDetail.password"
+              name="password" #password="ngModel" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+            [ngClass]="{ 'is-invalid': f.submitted && password.invalid,  
+            'is-valid': f.submitted && password.valid}" required/>
+          
+            <div class="input-group-append">
+              <span class="input-group-text">
+                <i
+                  class="fa"
+                  [ngClass]="{
+                    'fa-eye-slash': !fieldTextType,
+                    'fa-eye': fieldTextType
+                  }"
+                  (click)="toggleFieldTextType()"
+                ></i>
+              </span>
+            </div>
+            <div *ngIf="f.submitted && password.invalid" class="invalid-feedback">
+              <div  *ngIf="password.errors.required">Please provide password</div>
+               <div *ngIf="password.errors.pattern">Password must contain minimum eight characters, at least one uppercase letter, one lowercase letter, 
+                 one number and one special character</div>
+              
+      
+            </div>
+          </div>
+        </div>
+      
+      </div>
+        <div class="form-row"> 
+          <div class="col-md-4 form-group">
+            <div class="col-sm-10">
+            <label class="col-sm-5 col-form-label">{{field_name_first_name}}<span class="text-danger font-weight-bold"> *</span></label>
+            <input type="text" class="form-control" [(ngModel)]="userDetail.first_name" #first_name="ngModel" name="first_name" readonly
+            [ngClass]="{ 'is-invalid': f.submitted && first_name.invalid,
+        'is-valid': f.submitted && first_name.valid}" required >
+        <div *ngIf="f.submitted && first_name.invalid " class="invalid-feedback">
+          <div *ngIf="first_name.errors.required ">Please select customer to get first name  </div>
+         
+        </div>
+          </div>
+          </div>
+        <div class="col-md-4 form-group">
+          <div class="col-sm-10">
+          <label class="col-sm-5 col-form-label">{{field_name_last_name}}<span class="text-danger font-weight-bold">
+              *</span></label>
+          <input type="text" class="form-control" [(ngModel)]="userDetail.last_name"
+         #last_name="ngModel" name="last_name" readonly
+          [ngClass]="{ 'is-invalid': f.submitted && last_name.invalid,
+          'is-valid': f.submitted && last_name.valid}" required >
+          <div *ngIf="f.submitted && last_name.invalid " class="invalid-feedback">
+            <div *ngIf="last_name.errors.required ">Please select customer to get last name details </div>
+           
+          </div>
+        </div>
+        </div>
+        <div class="col-md-4 form-group">
+          <div class="col-sm-10">
+          <label class="col-sm-5 col-form-label">{{field_name_phone}}<span class="text-danger font-weight-bold"> *</span></label>
+          <input type="text" class="form-control"  #phone="ngModel" [(ngModel)]="userDetail.phone" name="phone" readonly
+          [ngClass]="{ 'is-invalid': f.submitted && phone.invalid,
+          'is-valid': f.submitted && phone.valid}" required >
+          <div *ngIf="f.submitted && phone.invalid " class="invalid-feedback">
+            <div *ngIf="phone.errors.required ">Please select customer to get phone details </div>
+           
+          </div>
+        </div>
+        </div>
+            
+      
+      
+           </div>
+          
+
+
+  
+           
+
+ <!--  <div class="form-row">
+            <div class="form-group col-md-4">
+              <label class="col-sm-5 col-form-label">{{field_name_first_name}}<span
+                class="text-danger font-weight-bold">
+                *</span></label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" [(ngModel)]="userDetail.first_name" name="first_name"
+                pattern="[a-zA-Z_]+" #first_name="ngModel" maxlength="20" minlength="1"
+                [ngClass]="{ 'is-invalid': f.submitted && first_name.invalid, 
+                'is-valid': f.submitted && first_name.valid }"
+                required /> 
+                <div *ngIf="f.submitted && first_name.invalid "
+                class="invalid-feedback">
+                <div
+                    *ngIf="first_name.errors.required ">
+                    Please provide First name</div>
+                    <div *ngIf=" first_name.errors.pattern">
+                      Provide alphabets only
+                    </div>
+                    <div *ngIf="first_name.errors.maxlength"> Please provide maxlength 20 Characters
+                    </div>
+                    <div *ngIf="first_name.errors.minlength"> Please provide maxlength 20 Characters
+                    </div>
+                  
+            </div>
+              </div>
+            </div>
+         
+  
+            <div class="form-group col-md-4">
+              <label class="col-sm-5 col-form-label">{{field_name_last_name}}
+                <span
+                class="text-danger font-weight-bold">
+                *</span>
+              </label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" [(ngModel)]="userDetail.last_name" name="last_name"
+                pattern="[a-zA-Z_]+" #last_name="ngModel" maxlength="20" minlength="1"
+                [ngClass]="{ 'is-invalid': f.submitted && last_name.invalid, 
+                'is-valid': f.submitted && last_name.valid }"
+                required /> 
+                <div *ngIf="f.submitted && last_name.invalid "
+                class="invalid-feedback">
+                <div
+                    *ngIf="last_name.errors.required ">
+                    Please provide Last name</div>
+                    <div *ngIf=" last_name.errors.pattern">
+                      Provide alphabets only
+                    </div>
+                    <div *ngIf="last_name.errors.maxlength"> Please provide maxlength 20 Characters
+                    </div>
+                    <div *ngIf="last_name.errors.minlength"> Please provide maxlength 20 Characters
+                    </div>
+                  
+            </div>
+              </div>
+            </div>
+  
+       
+  
+            <div class="form-group col-md-4">
+              <label class="col-sm-5 col-form-label">{{field_name_phone}} <span
+                class="text-danger font-weight-bold">
+                *</span></label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" [(ngModel)]="userDetail.phone" name="phone"
+                 required pattern="^(?:[0-9()\-+]+)(?:[0-9()\-+]+)$" #phone="ngModel" 
+                 [ngClass]="{ 'is-invalid': f.submitted && phone.invalid, 
+                 'is-valid': f.submitted && phone.valid }"
+                required/>
+             
+                <div *ngIf="f.submitted && phone.invalid" class="invalid-feedback">
+                    <div *ngIf="phone.errors.required">Please provide phone number</div>
+                 
+                <div *ngIf="phone.errors.pattern">Phone number should be only numbers
+                   </div>
+                </div>
+              </div>
+            </div>
+            </div> -->
+  
+            <div class="form-row">
+            <div class="form-group col-md-4">
+                
+                <label class="col-sm-5 col-form-label">{{field_name_dob}}<span
+                  class="text-danger font-weight-bold">
+                  </span></label>
+                  <div class="col-sm-10">
+                  <div class="input-group">
+                    <input type="date" class="form-control" [(ngModel)]="userDetail.dob" name="dob">
+                     <!--  ngbDatepicker #d="ngbDatepicker" -->
+                    
+                    </div>
+              </div>
+            </div>
+  </div>
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_created_by}}
+                 
+                </label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" name="created_by"
+                  [(ngModel)]="userDetail.created_by"
+                  #created_by="ngModel" readonly>
+              </div>
+            </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_created_time}}
+                  
+                </label>
+                <div class="col-sm-10">
+                 
+              
+                  <input type="text" class="form-control" name="created_time"  
+                   readonly value="{{userDetail.created_time |  date : dateFormat:'GMT':locale}}">
+                   
+                
+                
+              </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_updated_by}}
+                 
+                </label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" name="updated_by"
+                    [(ngModel)]="userDetail.updated_by"
+                    #updated_by="ngModel" readonly>
+              </div>
+            </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_updated_time}}
+                 
+                </label>
+                <div class="col-sm-10">
+                
+                  <input type="text" class="form-control" name="modified_time"  
+                   readonly value=" {{userDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+                
+              </div>
+            </div>
+              </div>
+           
+  
+        <button class="btn btn-danger btn-round text-center pull-right" style=" margin-top: 73px;" type="button"
+        appCancelbutton>{{'Cancel'|translate}}</button>
+        <button class="btn btn-success btn-round text-center pull-right" style=" margin-top: 73px;">
+          <span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+          <span *ngIf="isUpdate">{{'Update'|translate}}</span></button>
+  
+  
+  
+  
+            </div>
+          </form>
+      
+      </div>
+  
+      </div>
+      </div>
+        </section>
+    
+    
+    
+        
+    
+        <section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir='ltr' >
+    
+          <div class="container-fluid">
+            <h3 class="text-center">{{field_name_addusersdetail}}</h3>
+            <div class="card">
+              <div class="card-body">
+               
+                  <form class="form-horizontal form-material" name="form" #f="ngForm" (ngSubmit)="f.form.valid &&  onSubmit()">
+                    <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+                      <strong>Users Details!</strong>The form has the following errors that need to be corrected
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="card-header">
+                      <h2> 
+                          <span *ngIf="!isUpdate">{{field_name_adduser}}</span> 
+                          <span *ngIf="isUpdate"> {{field_name_updateuser}}</span>
+                         
+                      </h2>
+                      </div>
+                      <div class="card-body">
+                
+                        <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label  for="usertype" class="col-sm-5 col-form-label">{{field_name_usertype}}<span
+                        class="text-danger font-weight-bold">
+                        *</span></label>
+                    
+                        <div class="col-sm-10">
+                          <select class="custom-select" id="gender2" name="usertype" [(ngModel)]="userDetail.usertype"
+                              #usertype="ngModel" [ngClass]="{'is-invalid': f.submitted && usertype.invalid, 
+                              'is-valid': f.submitted && usertype.valid }" required>
+                              <option selected>Choose your Permissions</option>
+                      
+                              <option value="Super Admin">Super Admin</option>
+                              <option value="Super Manager">Super Manager</option>
+                              <option value="Super Sales">Super Sales</option> 
+                              <option value="Marketing Admin">Marketing Admin</option>
+                              <option value="Marketing Manager"> Marketing Manager</option>
+                               <option value="Marketing User">Marketing User</option>
+                              <option value="Inventory Admin">Inventory Admin</option>
+                              <option value="Inventory Manager"> Inventory Manager</option>
+                               <option value="Inventory User">Inventory User</option>
+                               <option value="Sales Admin">Sales Admin</option>
+                               <option value="Sales Manager"> Sales Manager</option>
+                                <option value="Sales User">Sales User</option>
+                                <option value="Service Admin">Service Admin</option>
+                                <option value="Service Manager"> Service Manager</option>
+                                 <option value="Service User">Service User</option>
+                                 <option value="Hr Admin">Hr Admin</option>
+                                 <option value="Hr Manager">Hr Manager</option>
+                                  <option value="Hr User">Hr User</option>
+          
+          
+                          </select> 
+                          <div *ngIf="f.submitted && usertype.invalid" class="invalid-feedback">
+                              <div *ngIf="usertype.errors.required">Requred Usertype</div>
+                          </div> 
+                      </div>
+                  </div>
+                 <!--  <div class="form-group col-md-4">
+                    <label class="col-sm-5 col-form-label">{{field_name_email}} <span
+                      class="text-danger font-weight-bold">
+                      *</span></label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" [(ngModel)]="userDetail.email" name="email"
+                      pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" #email="ngModel"
+                      [ngClass]="{ 'is-invalid': f.submitted && email.invalid, 
+                      'is-valid': f.submitted && email.valid }"
+                  required />
+                  <div *ngIf="showError != ''" class="alert alert-danger">
+                    {{showError}}</div>
+              
+                  
+                  <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+                    <div *ngIf="email.errors.required"> Please provide Email</div>
+                <div *ngIf="email.errors.pattern">Email format should be <small  class="text-success"><b>jhon@abc.com</b></small>
+                </div>
+                </div>
+                    </div>
+                  </div> -->
+               
+                  
+                    <div class="form-group col-md-4 " *ngIf="!isUpdate">
+                      <label class="col-sm-5 col-form-label"  >{{field_name_email}}<span class="text-danger font-weight-bold">
+                          *</span></label>
+                          <div class="col-sm-10">
+                            <div class="ng-autocomplete">
+                              <ng-autocomplete [data]="employeeArray" [searchKeyword]="keyword"  [initialValue]='keyword' (selected)='selectEvent($event)'
+                                (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
+                                [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"   required
+                                >
+                              </ng-autocomplete>
+            
+                              <ng-template #itemTemplate let-item>
+                                <a [innerHTML]="item.email"></a>
+                              </ng-template>
+                           
+                              <ng-template #notFoundTemplate let-notFound>
+                                <div [innerHTML]="notFound">
+                                
+                                </div>
+                             
+                              
+                              </ng-template>
+                              <!-- <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+                                <div *ngIf="email.errors.required">Please Provide  Email</div>
+                      
+                               
+                              </div> -->
+                              
+                            </div>
+                      </div>
+                   
+                    </div>
+                    <div class="col-md-4 form-group" *ngIf="isUpdate">
+                      <label class="col-sm-5 col-form-label">{{field_name_email}}<span class="text-danger font-weight-bold"> *</span>
+                    </label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" [(ngModel)]="userDetail.email" name="email"
+                      readonly />
+                </div>
+                </div>
+                <div class="form-group col-md-4">
+                  <label class="col-sm-5 col-form-label">{{field_name_password}}<span
+                    class="text-danger font-weight-bold">
+                    *</span></label>
+                  <div class="input-group col-sm-10">
+                    <!-- Change input type to be dynamic -->
+                    <input
+                      [type]="fieldTextType ? 'text' : 'password'"
+                      class="form-control" [(ngModel)]="userDetail.password"
+                      name="password" #password="ngModel" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                    [ngClass]="{ 'is-invalid': f.submitted && password.invalid,  
+                    'is-valid': f.submitted && password.valid}" required/>
+                  
+                    <div class="input-group-append">
+                      <span class="input-group-text">
+                        <i
+                          class="fa"
+                          [ngClass]="{
+                            'fa-eye-slash': !fieldTextType,
+                            'fa-eye': fieldTextType
+                          }"
+                          (click)="toggleFieldTextType()"
+                        ></i>
+                      </span>
+                    </div>
+                    <div *ngIf="f.submitted && password.invalid" class="invalid-feedback">
+                      <div  *ngIf="password.errors.required">Please provide password</div>
+                       <div *ngIf="password.errors.pattern">Password must contain minimum eight characters, at least one uppercase letter, one lowercase letter, 
+                         one number and one special character</div>
+                      
+              
+                    </div>
+                  </div>
+                </div>
+              
+              </div>
+                <div class="form-row"> 
+                  <div class="col-md-4 form-group">
+                    <div class="col-sm-10">
+                    <label class="col-sm-5 col-form-label">{{field_name_first_name}}<span class="text-danger font-weight-bold"> *</span></label>
+                    <input type="text" class="form-control" [(ngModel)]="userDetail.first_name" #first_name="ngModel" name="first_name" readonly
+                    [ngClass]="{ 'is-invalid': f.submitted && first_name.invalid,
+                'is-valid': f.submitted && first_name.valid}" required >
+                <div *ngIf="f.submitted && first_name.invalid " class="invalid-feedback">
+                  <div *ngIf="first_name.errors.required ">Please select customer to get first name  </div>
+                 
+                </div>
+                  </div>
+                  </div>
+                <div class="col-md-4 form-group">
+                  <div class="col-sm-10">
+                  <label class="col-sm-5 col-form-label">{{field_name_last_name}}<span class="text-danger font-weight-bold">
+                      *</span></label>
+                  <input type="text" class="form-control" [(ngModel)]="userDetail.last_name"
+                 #last_name="ngModel" name="last_name" readonly
+                  [ngClass]="{ 'is-invalid': f.submitted && last_name.invalid,
+                  'is-valid': f.submitted && last_name.valid}" required >
+                  <div *ngIf="f.submitted && last_name.invalid " class="invalid-feedback">
+                    <div *ngIf="last_name.errors.required ">Please select customer to get last name details </div>
+                   
+                  </div>
+                </div>
+                </div>
+                <div class="col-md-4 form-group">
+                  <div class="col-sm-10">
+                  <label class="col-sm-5 col-form-label">{{field_name_phone}}<span class="text-danger font-weight-bold"> *</span></label>
+                  <input type="text" class="form-control"  #phone="ngModel" [(ngModel)]="userDetail.phone" name="phone" readonly
+                  [ngClass]="{ 'is-invalid': f.submitted && phone.invalid,
+                  'is-valid': f.submitted && phone.valid}" required >
+                  <div *ngIf="f.submitted && phone.invalid " class="invalid-feedback">
+                    <div *ngIf="phone.errors.required ">Please select customer to get phone details </div>
+                   
+                  </div>
+                </div>
+                </div>
+                    
+              
+              
+                   </div>
+                  
+      
+      
+          
+                   
+      
+         <!--  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label class="col-sm-5 col-form-label">{{field_name_first_name}}<span
+                        class="text-danger font-weight-bold">
+                        *</span></label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" [(ngModel)]="userDetail.first_name" name="first_name"
+                        pattern="[a-zA-Z_]+" #first_name="ngModel" maxlength="20" minlength="1"
+                        [ngClass]="{ 'is-invalid': f.submitted && first_name.invalid, 
+                        'is-valid': f.submitted && first_name.valid }"
+                        required /> 
+                        <div *ngIf="f.submitted && first_name.invalid "
+                        class="invalid-feedback">
+                        <div
+                            *ngIf="first_name.errors.required ">
+                            Please provide First name</div>
+                            <div *ngIf=" first_name.errors.pattern">
+                              Provide alphabets only
+                            </div>
+                            <div *ngIf="first_name.errors.maxlength"> Please provide maxlength 20 Characters
+                            </div>
+                            <div *ngIf="first_name.errors.minlength"> Please provide maxlength 20 Characters
+                            </div>
+                          
+                    </div>
+                      </div>
+                    </div>
+                 
+          
+                    <div class="form-group col-md-4">
+                      <label class="col-sm-5 col-form-label">{{field_name_last_name}}
+                        <span
+                        class="text-danger font-weight-bold">
+                        *</span>
+                      </label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" [(ngModel)]="userDetail.last_name" name="last_name"
+                        pattern="[a-zA-Z_]+" #last_name="ngModel" maxlength="20" minlength="1"
+                        [ngClass]="{ 'is-invalid': f.submitted && last_name.invalid, 
+                        'is-valid': f.submitted && last_name.valid }"
+                        required /> 
+                        <div *ngIf="f.submitted && last_name.invalid "
+                        class="invalid-feedback">
+                        <div
+                            *ngIf="last_name.errors.required ">
+                            Please provide Last name</div>
+                            <div *ngIf=" last_name.errors.pattern">
+                              Provide alphabets only
+                            </div>
+                            <div *ngIf="last_name.errors.maxlength"> Please provide maxlength 20 Characters
+                            </div>
+                            <div *ngIf="last_name.errors.minlength"> Please provide maxlength 20 Characters
+                            </div>
+                          
+                    </div>
+                      </div>
+                    </div>
+          
+               
+          
+                    <div class="form-group col-md-4">
+                      <label class="col-sm-5 col-form-label">{{field_name_phone}} <span
+                        class="text-danger font-weight-bold">
+                        *</span></label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" [(ngModel)]="userDetail.phone" name="phone"
+                         required pattern="^(?:[0-9()\-+]+)(?:[0-9()\-+]+)$" #phone="ngModel" 
+                         [ngClass]="{ 'is-invalid': f.submitted && phone.invalid, 
+                         'is-valid': f.submitted && phone.valid }"
+                        required/>
+                     
+                        <div *ngIf="f.submitted && phone.invalid" class="invalid-feedback">
+                            <div *ngIf="phone.errors.required">Please provide phone number</div>
+                         
+                        <div *ngIf="phone.errors.pattern">Phone number should be only numbers
+                           </div>
+                        </div>
+                      </div>
+                    </div>
+                    </div> -->
+          
+                    <div class="form-row">
+                    <div class="form-group col-md-4">
+                        
+                        <label class="col-sm-5 col-form-label">{{field_name_dob}}<span
+                          class="text-danger font-weight-bold">
+                          </span></label>
+                          <div class="col-sm-10">
+                          <div class="input-group">
+                            <input type="date" class="form-control" [(ngModel)]="userDetail.dob" name="dob">
+                             <!--  ngbDatepicker #d="ngbDatepicker" -->
+                            
+                            </div>
+                      </div>
+                    </div>
+          </div>
+                    <div class="form-row">
+                      <div class="form-group col-md-3">
+                        <label class="col-sm-5 col-form-label">{{field_name_created_by}}
+                         
+                        </label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" name="created_by"
+                          [(ngModel)]="userDetail.created_by"
+                          #created_by="ngModel" readonly>
+                      </div>
+                    </div>
+                      <div class="form-group col-md-3">
+                        <label class="col-sm-5 col-form-label">{{field_name_created_time}}
+                          
+                        </label>
+                        <div class="col-sm-10">
+                         
+                      
+                          <input type="text" class="form-control" name="created_time"  
+                           readonly value="{{userDetail.created_time |  date : dateFormat:'GMT':locale}}">
+                           
+                        
+                        
+                      </div>
+                      </div>
+                      <div class="form-group col-md-3">
+                        <label class="col-sm-5 col-form-label">{{field_name_updated_by}}
+                         
+                        </label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" name="updated_by"
+                            [(ngModel)]="userDetail.updated_by"
+                            #updated_by="ngModel" readonly>
+                      </div>
+                    </div>
+                      <div class="form-group col-md-3">
+                        <label class="col-sm-5 col-form-label">{{field_name_updated_time}}
+                         
+                        </label>
+                        <div class="col-sm-10">
+                        
+                          <input type="text" class="form-control" name="modified_time"  
+                           readonly value=" {{userDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+                        
+                      </div>
+                    </div>
+                      </div>
+                   
+          
+                <button class="btn btn-danger btn-round text-center pull-right" style=" margin-top: 73px;" type="button"
+                appCancelbutton>{{'Cancel'|translate}}</button>
+                <button class="btn btn-success btn-round text-center pull-right" style=" margin-top: 73px;">
+                  <span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+                  <span *ngIf="isUpdate">{{'Update'|translate}}</span></button>
+          
+          
+          
+          
+                    </div>
+                  </form>
+              
+              </div>
+          
+              </div>
+              </div>
+          </section>

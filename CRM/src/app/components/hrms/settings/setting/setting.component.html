@@ -1,0 +1,457 @@
+
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' >
+  <div class="row" style="width:100%">
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img src="../../../../../assets/settings/user.png" class="bigtext"/>
+            <a routerLink="/hrms/settings/userlist" class="txtclass">{{
+              field_name_hrms_settings_user_management
+            }}</a>
+          </h5>
+  
+          <p class="card-text">{{field_name_hrms_settings_user_management_headings}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img src="../../../../../assets/settings/user.png" class="bigtext"/>
+            <a class="txtclass" routerLink="/hrms/settings/history">{{
+              field_name_hrms_settings_history
+            }}</a>
+          </h5>
+          <p class="card-text">{{field_name_hrms_settings_history_heading}}</p>
+        </div>
+      </div>
+    </div>
+  
+  
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img src="../../../../../assets/settings/user.png" class="bigtext"/>
+            <a routerLink="/hrms/settings/dynamicsettings" class="txtclass">{{
+              field_name_hrms_settings_configuration_management
+            }}</a>
+          </h5>
+          <p class="card-text">{{field_name_hrms_settings_configuration_management_heading}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img src="../../../../../assets/settings/user.png" class="bigtext"/>
+            <a
+              routerLink="/hrms/settings/dynamicsettings/expenselist"
+              class="txtclass"
+              >{{ field_name_hrms_settings_addexpenses }}</a
+            >
+          </h5>
+          <p class="card-text">{{ field_name_hrms_settings_addexpenses_heading }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img src="../../../../../assets/settings/user.png" class="bigtext"/>
+            <a routerLink="/hrms/settings/leaveapprovelist" class="txtclass">{{
+              field_name_hrms_settings_leave_approve
+            }}</a>
+          </h5>
+          <p class="card-text">{{ field_name_hrms_settings_leave_approve_heading }}</p>
+        </div>
+      </div>
+    </div>
+    <!--  <div class="col-sm-4">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <i class="fa fa-history" aria-hidden="true"></i>
+                    <a routerLink="/sales/settings/dynamicsettings/expenselist" class="txtclass">{{'Add Expenses'|translate}}</a></h5>
+                  <p class="card-text">{{'Add Expenses'|translate}}</p>
+              
+                </div>
+              </div>
+            </div> -->
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img src="../../../../../assets/settings/user.png" class="bigtext"/>
+            <a routerLink="/hrms/settings/editprofile" class="txtclass">{{
+              field_name_hrms_settings_edit_profile
+            }}</a>
+          </h5>
+          <p class="card-text">{{ field_name_hrms_settings_edit_profile_heading }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img src="../../../../../assets/settings/user.png" class="bigtext"/>
+            <a routerLink="/hrms/settings/changepassword" class="txtclass">{{
+              field_name_hrms_settings_change_password
+            }}</a>
+          </h5>
+          <p class="card-text">{{ field_name_hrms_settings_change_password_heading }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img src="../../../../../assets/settings/user.png" class="bigtext"/>
+            <a routerLink="/hrms/settings/attendancelist" class="txtclass">{{
+              field_name_hrms_settings_attendance
+            }}</a>
+          </h5>
+          <p class="card-text">{{ field_name_hrms_settings_attendance_heading }}</p>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="col-sm-4">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <i class="fa fa-history" aria-hidden="true"></i>
+                    <a routerLink="/sales/settings/configureorganisation" class="txtclass">{{'Configure Organisation'|translate}}</a></h5>
+                  <p class="card-text">{{'Configure Organisation'|translate}}</p>
+              
+                </div>
+              </div>
+            </div> -->
+  
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img src="../../../../../assets/settings/user.png" class="bigtext"/>
+            <a routerLink="/hrms/settings/policylist" class="txtclass">{{field_name_hrms_settings_policy}}</a>
+          </h5>
+          <p class="card-text">{{field_name_hrms_settings_policy_heading}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img src="../../../../../assets/settings/user.png" class="bigtext"/>
+            <a routerLink="/hrms/settings/organisationlist" class="txtclass"
+              >{{field_name_hrms_settings_organisation_chart}}</a
+            >
+          </h5>
+          <p class="card-text">{{field_name_hrms_settings_organisation_chart_heading}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img src="../../../../../assets/settings/user.png" class="bigtext"/>
+            <a routerLink="/hrms/settings/payrolllist" class="txtclass"
+              >{{field_name_hrms_settings_payroll}}</a
+            >
+          </h5>
+          <p class="card-text">{{field_name_hrms_settings_payroll_heading}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img src="../../../../../assets/settings/user.png" class="bigtext"/>
+            <a routerLink="/hrms/settings/tasklist" class="txtclass"
+              >{{field_name_hrms_settings_task_management}}</a
+            >
+          </h5>
+          <p class="card-text">{{field_name_hrms_settings_task_management_heading}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img src="../../../../../assets/settings/user.png" class="bigtext"/>
+            <a routerLink="/hrms/settings/paysliplist" class="txtclass"
+              > {{field_name_hrms_settings_pay_slip}}</a
+            >
+          </h5>
+          <p class="card-text">{{field_name_hrms_settings_pay_slip_heading}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img src="../../../../../assets/settings/user.png" class="bigtext"/>
+            <a routerLink="/hrms/interviewlist" class="txtclass"
+              > {{field_name_hrms_settings_interview}}</a
+            >
+          </h5>
+          <p class="card-text">{{field_name_hrms_settings_interview_heading}} </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">
+        <img src="../../../../../assets/settings/user.png">
+         <a routerLink="/hrms/settings/editformfields"  class="txtclass" >{{field_name_hrms_settings_edit_form_fields}}</a></h5>
+        <p class="card-text"> {{field_name_hrms_settings_edit_form_fields_heading}}</p>
+  
+      </div>
+    </div>
+  </div>
+    
+  </div>
+  
+</section>
+
+
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir='ltr' >
+  <div class="row" style="width:100%">
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img src="../../../../../assets/settings/user.png" class="bigtext"/>
+            <a routerLink="/hrms/settings/userlist" class="txtclass">{{
+              field_name_hrms_settings_user_management
+            }}</a>
+          </h5>
+  
+          <p class="card-text">{{field_name_hrms_settings_user_management_headings}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img src="../../../../../assets/settings/user.png" class="bigtext"/>
+            <a class="txtclass" routerLink="/hrms/settings/history">{{
+              field_name_hrms_settings_history
+            }}</a>
+          </h5>
+          <p class="card-text">{{field_name_hrms_settings_history_heading}}</p>
+        </div>
+      </div>
+    </div>
+  
+  
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img src="../../../../../assets/settings/user.png" class="bigtext"/>
+            <a routerLink="/hrms/settings/dynamicsettings" class="txtclass">{{
+              field_name_hrms_settings_configuration_management
+            }}</a>
+          </h5>
+          <p class="card-text">{{field_name_hrms_settings_configuration_management_heading}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img src="../../../../../assets/settings/user.png" class="bigtext"/>
+            <a
+              routerLink="/hrms/settings/dynamicsettings/expenselist"
+              class="txtclass"
+              >{{ field_name_hrms_settings_addexpenses }}</a
+            >
+          </h5>
+          <p class="card-text">{{ field_name_hrms_settings_addexpenses_heading }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img src="../../../../../assets/settings/user.png" class="bigtext"/>
+            <a routerLink="/hrms/settings/leaveapprovelist" class="txtclass">{{
+              field_name_hrms_settings_leave_approve
+            }}</a>
+          </h5>
+          <p class="card-text">{{ field_name_hrms_settings_leave_approve_heading }}</p>
+        </div>
+      </div>
+    </div>
+    <!--  <div class="col-sm-4">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <i class="fa fa-history" aria-hidden="true"></i>
+                    <a routerLink="/sales/settings/dynamicsettings/expenselist" class="txtclass">{{'Add Expenses'|translate}}</a></h5>
+                  <p class="card-text">{{'Add Expenses'|translate}}</p>
+              
+                </div>
+              </div>
+            </div> -->
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img src="../../../../../assets/settings/user.png" class="bigtext"/>
+            <a routerLink="/hrms/settings/editprofile" class="txtclass">{{
+              field_name_hrms_settings_edit_profile
+            }}</a>
+          </h5>
+          <p class="card-text">{{ field_name_hrms_settings_edit_profile_heading }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img src="../../../../../assets/settings/user.png" class="bigtext"/>
+            <a routerLink="/hrms/settings/changepassword" class="txtclass">{{
+              field_name_hrms_settings_change_password
+            }}</a>
+          </h5>
+          <p class="card-text">{{ field_name_hrms_settings_change_password_heading }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img src="../../../../../assets/settings/user.png" class="bigtext"/>
+            <a routerLink="/hrms/settings/attendancelist" class="txtclass">{{
+              field_name_hrms_settings_attendance
+            }}</a>
+          </h5>
+          <p class="card-text">{{ field_name_hrms_settings_attendance_heading }}</p>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="col-sm-4">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <i class="fa fa-history" aria-hidden="true"></i>
+                    <a routerLink="/sales/settings/configureorganisation" class="txtclass">{{'Configure Organisation'|translate}}</a></h5>
+                  <p class="card-text">{{'Configure Organisation'|translate}}</p>
+              
+                </div>
+              </div>
+            </div> -->
+  
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img src="../../../../../assets/settings/user.png" class="bigtext"/>
+            <a routerLink="/hrms/settings/policylist" class="txtclass">{{field_name_hrms_settings_policy}}</a>
+          </h5>
+          <p class="card-text">{{field_name_hrms_settings_policy_heading}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img src="../../../../../assets/settings/user.png" class="bigtext"/>
+            <a routerLink="/hrms/settings/organisationlist" class="txtclass"
+              >{{field_name_hrms_settings_organisation_chart}}</a
+            >
+          </h5>
+          <p class="card-text">{{field_name_hrms_settings_organisation_chart_heading}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img src="../../../../../assets/settings/user.png" class="bigtext"/>
+            <a routerLink="/hrms/settings/payrolllist" class="txtclass"
+              >{{field_name_hrms_settings_payroll}}</a
+            >
+          </h5>
+          <p class="card-text">{{field_name_hrms_settings_payroll_heading}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img src="../../../../../assets/settings/user.png" class="bigtext"/>
+            <a routerLink="/hrms/settings/tasklist" class="txtclass"
+              >{{field_name_hrms_settings_task_management}}</a
+            >
+          </h5>
+          <p class="card-text">{{field_name_hrms_settings_task_management_heading}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img src="../../../../../assets/settings/user.png" class="bigtext"/>
+            <a routerLink="/hrms/settings/paysliplist" class="txtclass"
+              > {{field_name_hrms_settings_pay_slip}}</a
+            >
+          </h5>
+          <p class="card-text">{{field_name_hrms_settings_pay_slip_heading}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <img src="../../../../../assets/settings/user.png" class="bigtext"/>
+            <a routerLink="/hrms/interviewlist" class="txtclass"
+              > {{field_name_hrms_settings_interview}}</a
+            >
+          </h5>
+          <p class="card-text">{{field_name_hrms_settings_interview_heading}} </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">
+        <img src="../../../../../assets/settings/user.png">
+         <a routerLink="/hrms/settings/editformfields"  class="txtclass" >{{field_name_hrms_settings_edit_form_fields}}</a></h5>
+        <p class="card-text"> {{field_name_hrms_settings_edit_form_fields_heading}}</p>
+  
+      </div>
+    </div>
+  </div>
+    
+  </div>
+  
+  </section>

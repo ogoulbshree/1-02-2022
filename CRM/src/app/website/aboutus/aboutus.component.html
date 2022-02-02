@@ -1,0 +1,231 @@
+  
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' >
+    
+<app-navbar></app-navbar>
+ 
+<section class="header-bg align-items-center position-relative d-flex" id="top" >
+  <div class="container" style="max-width: 100%">
+      <div class="row align-items-center">
+          <div class="col-lg-7">
+              <div class="header-title" style="margin:12%">
+                <!--   <p class="highlight font-weight-bold size-16 text-uppercase header-small-title title mb-3 ml-1">Bootstrap Theme</p> -->
+                  <h1 class="headding mt-2">{{aboutus_hedding}}</h1>
+                  <h2 class="sub-headding mb-6 mt-2"> 
+                  {{aboutus_subhedding}}</h2>
+         
+                    <div >
+                      <app-organisation-pop></app-organisation-pop>
+                      
+                    </div>
+                    
+              </div>
+          </div>
+          <div class="col-lg-5 order-1 order-lg-2" id="laptop-img">
+             
+                  <img style="margin-top:104px" src="../../../assets/website/pngwing 1.png" alt="" class="img-fluid mx-auto d-block">
+             
+          </div>
+      </div>
+  </div>
+</section>
+
+
+
+  <section id="" class="benifits">
+  <div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 class="section-title">{{aboutus_crm_benefits}}</h2>
+        </div>
+  
+    </div>
+    <div class="row">
+  
+      <div class="col-sm-4">
+        <div class="row">
+          <div class="col-sm-12">
+           
+            <div class="content">
+              
+              <h1 class="mb-2 mt-2 services-title features"> <span><i class="fa fa-square" style="color: #ECB44E;"></i></span>
+               {{aboutus_single_repository}}
+              </h1>
+              <h4 class="mb-2 mt-2 services-title sub-features">
+               {{aboutus_single_repository_subheadding}} </h4>
+
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="content">
+            
+              <h1 class="mb-2 mt-2 services-title features"> <span><i class="fa fa-square" style="color: #ECB44E;"></i></span>
+                {{aboutus_obtain_useful}}
+                </h1>
+              <h4 class="mb-2 mt-2 services-title sub-features">{{aboutus_obtain_useful_subheadding}}
+                 </h4>
+              
+            </div>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+              <div class="content">
+             
+                 
+                  
+                <h1 class=" mt-2 services-title features">  <span><i class="fa fa-square" style="color: #ECB44E;"></i></span>
+                {{aboutus_activity_management}}</h1>
+                <h4 class=" mt-2 mb-3 services-title sub-features">{{aboutus_activity_management_subheadding}} </h4>
+                
+                </div>
+            </div>
+          </div>
+
+      </div>
+      
+    
+      <div class="col-md-8" >
+      
+        
+                <div class="col-lg-8 crm-benifits" >
+                  <img  style="margin-top:50px;margin-bottom: 30px;" src="../../../assets/website/Group 4.png" class="img-fluid" alt="">
+                  </div>
+  
+       
+      </div>
+      
+    </div>
+    
+  </div>
+  </section>
+
+  <app-footer></app-footer>
+  
+
+</section>
+
+
+
+
+
+
+
+    
+ 
+
+
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir='ltr' >
+
+
+    
+    <app-navbar></app-navbar>
+     
+    <section class="header-bg align-items-center position-relative d-flex" id="top" >
+      <div class="container" style="max-width: 100%;">
+          <div class="row align-items-center">
+              <div class="col-lg-7">
+                  <div class="header-title" style="margin:12%">
+                    <!--   <p class="highlight font-weight-bold size-16 text-uppercase header-small-title title mb-3 ml-1">Bootstrap Theme</p> -->
+                      <h1 class="headding mt-2">{{aboutus_hedding}}</h1>
+                      <h2 class="sub-headding mb-6 mt-2"> 
+                      {{aboutus_subhedding}}</h2>
+             
+                        <div >
+                          <app-organisation-pop></app-organisation-pop>
+                          
+                        </div>
+                        
+                  </div>
+              </div>
+              <div class="col-lg-5 order-1 order-lg-2" id="laptop-img">
+                 
+                      <img style="margin-top:104px" src="../../../assets/website/pngwing 1.png" alt="" class="img-fluid mx-auto d-block">
+                 
+              </div>
+          </div>
+      </div>
+    </section>
+    
+    
+    
+      <section id="" class="benifits">
+      <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="section-title">{{aboutus_crm_benefits}}</h2>
+            </div>
+      
+        </div>
+        <div class="row">
+      
+          <div class="col-sm-4">
+            <div class="row">
+              <div class="col-sm-12">
+               
+                <div class="content">
+                  
+                  <h1 class="mb-2 mt-2 services-title features"> <span><i class="fa fa-square" style="color: #ECB44E;"></i></span>
+                   {{aboutus_single_repository}}
+                  </h1>
+                  <h4 class="mb-2 mt-2 services-title sub-features">
+                   {{aboutus_single_repository_subheadding}} </h4>
+    
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="content">
+                
+                  <h1 class="mb-2 mt-2 services-title features"> <span><i class="fa fa-square" style="color: #ECB44E;"></i></span>
+                    {{aboutus_obtain_useful}}
+                    </h1>
+                  <h4 class="mb-2 mt-2 services-title sub-features">{{aboutus_obtain_useful_subheadding}}
+                     </h4>
+                  
+                </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                  <div class="content">
+                 
+                     
+                      
+                    <h1 class=" mt-2 services-title features">  <span><i class="fa fa-square" style="color: #ECB44E;"></i></span>
+                    {{aboutus_activity_management}}</h1>
+                    <h4 class=" mt-2 mb-3 services-title sub-features">{{aboutus_activity_management_subheadding}} </h4>
+                    
+                    </div>
+                </div>
+              </div>
+    
+          </div>
+          
+        
+          <div class="col-md-8" >
+          
+            
+                    <div class="col-lg-8 crm-benifits" >
+                        <img  style="margin-top:50px;margin-bottom: 30px;" src="../../../assets/website/Group 4.png" class="img-fluid" alt="">
+                      </div>
+      
+           
+          </div>
+          
+        </div>
+        
+      </div>
+      </section>
+    
+      <app-footer></app-footer>
+    </section>
+    
+    
+ 
+      

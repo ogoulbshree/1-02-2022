@@ -1,0 +1,23 @@
+.btn{
+    line-height: 2.25;
+}
+@media  screen and (min-width: 600px) {
+ 
+    .dateSectionMat{
+      display: none !important;;
+    }
+    .dateSection{
+      display: flex;
+    }
+    
+}
+ 
+@media  screen and (max-width: 599px) {
+
+  .dateSectionMat{
+    display: flex;
+  }
+  .dateSection{
+    display: none !important;
+  }
+}

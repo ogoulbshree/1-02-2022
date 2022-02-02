@@ -1,0 +1,92 @@
+<div class="container-fluid">
+    <h3 class="text-center">{{'Contacted Details'|translate}}</h3>
+    <div class="card">
+        <div class="card-body">
+            <form class="form-horizontal form-material" name="form" #f="ngForm" (ngSubmit)="f.form.valid &&  onSubmit()">
+            <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>requested demo Details!</strong>The form has the following errors that need to be corrected
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="card-header">
+                <h2> 
+                    <span *ngIf="!isUpdate"></span> 
+                    <span *ngIf="isUpdate">{{'Add New' |translate}}</span>
+                </h2>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Full Name" 
+                              [(ngModel)]="contactusDetail.name" name="name"
+                              pattern="[a-zA-Z_]+" #name="ngModel"
+                              [ngClass]="{ 'is-invalid': f.submitted && name.invalid, 
+                                'is-valid': f.submitted && name.valid }"
+                              required /> 
+                              <div *ngIf="f.submitted && name.invalid "
+                              class="invalid-feedback">
+                              <div
+                                  *ngIf="name.errors.required">
+                                  Please provide First name </div>
+                                  <div *ngIf="name.errors.pattern">
+                                    Provide alphabets only
+                                  </div>
+                          </div>
+                          </div>
+                         <div class="form-group">
+                           <input type="text" class="form-control" placeholder="Email" [(ngModel)]="contactusDetail.email" name="email"
+                               pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" #email="ngModel"
+                               [ngClass]="{ 'is-invalid': f.submitted && email.invalid, 
+                               'is-valid': f.submitted && email.valid }"
+                           required />
+                           
+                           <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+                             <div *ngIf="email.errors.required"> Please provide Email</div>
+                         <div *ngIf="email.errors.pattern">Email format should be <small  class="text-success"><b>jhon@abc.com</b></small>
+                         </div>
+                         </div>
+                           </div>
+                           <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Subject" 
+                                  [(ngModel)]="contactusDetail.subject" name="subject"
+                                  pattern="[a-zA-Z_]+" #subject="ngModel"
+                                  [ngClass]="{ 'is-invalid': f.submitted && subject.invalid, 
+                                    'is-valid': f.submitted && subject.valid }"
+                                  required /> 
+                                  <div *ngIf="f.submitted && subject.invalid "
+                                  class="invalid-feedback">
+                                  <div
+                                      *ngIf="subject.errors.required">
+                                      Please provide subject </div>
+                                      <div *ngIf="subject.errors.pattern">
+                                        Provide alphabets only
+                                      </div>
+                              </div>
+                              </div>
+                           <div class="form-group">
+                            <textarea type="text" class="form-control" placeholder="Message"
+                             [(ngModel)]="contactusDetail.message" rows="5" data-rule="required" 
+                             data-msg="Please write something for us" name="message"
+                                #message="ngModel"
+                                [ngClass]="{ 'is-invalid': f.submitted && message.invalid, 
+                                'is-valid': f.submitted && message.valid }"
+                            required >	</textarea>
+
+
+                       
+                            <div *ngIf="f.submitted && message.invalid" class="invalid-feedback">
+                              <div *ngIf="message.errors.required"> Please provide Message</div>
+                      
+                          </div>
+                          </div>
+                          <button  class="btn btn-success btn-round">
+                            <span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+                            <span *ngIf="isUpdate">{{'Update'|translate}}</span>
+                        </button>
+                       
+                                 <button class="btn btn-danger btn-round" type="button" appCancelbutton >{{'Cancel'|translate}}</button>
+                            </div>
+                </form>
+            </div>
+        </div>
+    </div>

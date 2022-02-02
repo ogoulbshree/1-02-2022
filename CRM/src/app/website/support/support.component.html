@@ -1,0 +1,107 @@
+ 
+ <app-navbar></app-navbar>
+
+ <section class="header-bg align-items-center position-relative d-flex" id="top">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-12">
+          <div class="text-center ">
+              <div class="text-center">
+              <h1 class="highlight header-colorize">Hello, How we can help</h1>
+               <h1 class="highlight header-colorize"> you?</h1>
+            
+          </div>
+          </div>
+      </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-lg-6 mx-auto">
+        <div class="text-center ">
+            <div class="text-center">
+        
+        <form action="">
+        
+          <div class="input-group">
+            <input type="search" placeholder="What're you searching for?" aria-describedby="button-addon6" class="form-control"  [(ngModel)]="questionsSearch" name="questionsSearch" (ngModelChange)="searchQuestions('clear')">
+            <div class="input-group-append">
+              <button id="button-addon6" type="submit" class="btn btn-info" (click)="searchQuestions('search')"><i class="fa fa-search"></i></button>
+            </div>
+          </div>
+    
+        </form>
+      
+        </div>
+        </div>
+    </div>
+</div>
+  </div>
+
+   
+
+
+
+ 
+  
+ 
+</section>
+
+
+
+<br><br>
+
+        <div class="container" style="min-height: 256px;">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="section-title text-center wow zoomIn">
+					
+						<span></span>
+						<p>Our Frequently Asked Questions here.</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">				
+				<div class="col-md-12">
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" *ngIf="faqs.length == 0" >
+               Sorry No results found
+          </div>
+					<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" *ngFor="let faq of faqs;let i = index" >
+						<div class="panel panel-default">
+							<div class="panel-heading" role="tab" id="headingOne"   >
+								<h4 class="panel-title"   >
+									<a role="button"   data-toggle="collapse" [attr.data-target]="'#collapse' + i" aria-expanded="false">
+                    Q {{i+1}}. {{faq.questions}}?
+									</a>
+								</h4>
+							</div>
+							<div id="collapseOne"  [attr.id]="'collapse' + i"   class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+								<div class="panel-body" >
+									<p>  {{faq.answers}} </p>
+								</div>
+							</div>
+						</div>
+           
+					
+					
+					
+					</div>
+				</div>	
+			</div>		
+
+		</div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<app-footer></app-footer>

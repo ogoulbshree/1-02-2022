@@ -1,0 +1,183 @@
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' >
+<h2 mat-dialog-title>{{field_name_hrms_project_add_project}}</h2>
+<form
+  class="form-horizontal"
+  name="form"
+  #f="ngForm"
+  (ngSubmit)="f.form.valid && onSubmit()"
+>
+  <mat-dialog-content class="mat-typography">
+    <div class="row">
+      <div class="col-md-12">
+        <br />
+        {{field_name_hrms_project_name}}:<br />
+        <input
+          type="text"
+          class="form-control"
+          name="project_name"
+          #project_name="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && project_name.invalid,
+            'is-valid': f.submitted && project_name.valid
+          }"
+          [(ngModel)]="projectDetail.project_name"
+          required
+        />
+        <div
+          *ngIf="f.submitted && project_name.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="project_name.errors.required">
+            Please provide Project Name
+          </div>
+        </div>
+
+        <br />
+        {{field_name_hrms_project_team}}:<br />
+       
+        <ng-select [multiple]="true"    name="project_team"
+        #project_team="ngModel" [(ngModel)]="projectDetail.project_team" (remove)="removeFromTeam($event)"  (add)="addToTeam($event)">
+          <ng-option *ngFor="let employee of employeeArray" [value]="employee.employee_id" >{{employee.first_name}}</ng-option>
+       </ng-select>
+        <div
+          *ngIf="f.submitted && project_team.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="project_team.errors.required">
+            Please provide Project Team
+          </div>
+        </div>
+        <br />
+      {{field_name_hrms_project_description}}:<br />
+        <input
+          type="text"
+          class="form-control"
+          name="project_description"
+          #project_description="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && project_description.invalid,
+            'is-valid': f.submitted && project_description.valid
+          }"
+          [(ngModel)]="projectDetail.project_description"
+          required
+        />
+        <div
+          *ngIf="f.submitted && project_description.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="project_description.errors.required">
+            Please provide Description
+          </div>
+        </div>
+
+        <br />
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+   <button mat-button mat-dialog-close class="btn btn-danger">{{'Cancel'|translate}}</button> 
+   
+    <button
+      type="submit"
+      mat-button
+      class="btn btn-success"
+    >
+    {{'Save'|translate}}
+    </button>
+  </mat-dialog-actions>
+</form>
+</section>
+
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir='ltr' >
+  <h2 mat-dialog-title>{{field_name_hrms_project_add_project}}</h2>
+  <form
+    class="form-horizontal"
+    name="form"
+    #f="ngForm"
+    (ngSubmit)="f.form.valid && onSubmit()"
+  >
+    <mat-dialog-content class="mat-typography">
+      <div class="row">
+        <div class="col-md-12">
+          <br />
+          {{field_name_hrms_project_name}}:<br />
+          <input
+            type="text"
+            class="form-control"
+            name="project_name"
+            #project_name="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && project_name.invalid,
+              'is-valid': f.submitted && project_name.valid
+            }"
+            [(ngModel)]="projectDetail.project_name"
+            required
+          />
+          <div
+            *ngIf="f.submitted && project_name.invalid"
+            class="invalid-feedback"
+          >
+            <div *ngIf="project_name.errors.required">
+              Please provide Project Name
+            </div>
+          </div>
+  
+          <br />
+          {{field_name_hrms_project_team}}:<br />
+         
+          <ng-select [multiple]="true"    name="project_team"
+          #project_team="ngModel" [(ngModel)]="projectDetail.project_team" (remove)="removeFromTeam($event)"  (add)="addToTeam($event)">
+            <ng-option *ngFor="let employee of employeeArray" [value]="employee.employee_id" >{{employee.first_name}}</ng-option>
+         </ng-select>
+          <div
+            *ngIf="f.submitted && project_team.invalid"
+            class="invalid-feedback"
+          >
+            <div *ngIf="project_team.errors.required">
+              Please provide Project Team
+            </div>
+          </div>
+          <br />
+        {{field_name_hrms_project_description}}:<br />
+          <input
+            type="text"
+            class="form-control"
+            name="project_description"
+            #project_description="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && project_description.invalid,
+              'is-valid': f.submitted && project_description.valid
+            }"
+            [(ngModel)]="projectDetail.project_description"
+            required
+          />
+          <div
+            *ngIf="f.submitted && project_description.invalid"
+            class="invalid-feedback"
+          >
+            <div *ngIf="project_description.errors.required">
+              Please provide Description
+            </div>
+          </div>
+  
+          <br />
+        </div>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+     <button mat-button mat-dialog-close class="btn btn-danger">{{'Cancel'|translate}}</button> 
+     
+      <button
+        type="submit"
+        mat-button
+        class="btn btn-success"
+      >
+      {{'Save'|translate}}
+      </button>
+    </mat-dialog-actions>
+  </form>
+  </section>

@@ -1,0 +1,222 @@
+
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' >
+  <div class="button-page">
+    <div class="row w-100">
+      <div class="col-sm-12">
+        <form
+          class="form-horizontal form-material"
+          name="form"
+          #f="ngForm"
+          (ngSubmit)="f.form.valid && generatePDF()"
+        >
+          <div
+            *ngIf="f.form.invalid && f.submitted"
+            class="alert alert-danger alert-dismissible fade show"
+            role="alert"
+          >
+            <strong>Payslip Details!</strong>The form has the following errors
+            that need to be corrected
+            <button
+              type="button"
+              class="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="card-header">
+            <h2>
+              <span *ngIf="!isUpdate">{{field_name_hrms_payslip_info}}</span>
+              <span *ngIf="isUpdate">{{field_name_hrms_payslip_update}}</span>
+            </h2>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-5" style="display:flex;margin-bottom: 15px;">
+             {{field_name_hrms_payslip_employee_name}} :&nbsp;&nbsp;
+                <div class="ng-autocomplete">
+                  <ng-autocomplete
+                    [data]="employeeArray"
+                    [searchKeyword]="keyword"
+                    [initialValue]="keyword"
+                    (selected)="selectEvent($event)"
+                    [itemTemplate]="itemTemplate"
+                    [notFoundTemplate]="notFoundTemplate"
+                    [(ngModel)]="employeeDetail.first_name"
+                    name="first_name"
+                    #first_name="ngModel"
+                    required
+                    [ngClass]="{
+                      'is-invalid': f.submitted && first_name.invalid,
+                      'is-valid': f.submitted && first_name.valid
+                    }"
+                  >
+                  </ng-autocomplete>
+  
+                  <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.first_name"></a>
+                  </ng-template>
+  
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                  </ng-template>
+                  <div
+                    *ngIf="f.submitted && first_name.invalid"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="first_name.errors.required">
+                      Please Provide First Name
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-5" style="display:flex;margin-bottom: 15px;">
+                {{field_name_hrms_payslip_select_year_month}}:&nbsp;&nbsp;
+                <select
+                  style="width:30%"
+                  class="form-control"
+                  (change)="selectedDate('year', $event)"
+                >
+                  <option [ngValue]="" disabled [selected]="true">
+                    Choose Year
+                  </option>
+                  <option value="2021">2021</option>
+                  <option value="2022">2022</option></select
+                >&nbsp;&nbsp;
+                <select
+                  style="width:30%"
+                  class="form-control"
+                  formControlName="monthSelected"
+                  (change)="selectedDate('month', $event)"
+                >
+                  <option [ngValue]="" disabled [selected]="true">
+                    Choose Month
+                  </option>
+                  <option *ngFor="let item of monthsArray" [value]="item.name">
+                    {{ item.name }}
+                  </option></select
+                >&nbsp;&nbsp;
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-success btn-round">
+                  <span *ngIf="!isUpdate">{{ field_name_hrms_payslip_generate }}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+</section>
+
+
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir='ltr' >
+  <div class="button-page">
+    <div class="row w-100">
+      <div class="col-sm-12">
+        <form
+          [formGroup]="form" *ngIf="this.form"
+          (ngSubmit)=" generatePDF()"
+        >
+          <!-- <div
+            *ngIf="f.form.invalid && f.submitted"
+            class="alert alert-danger alert-dismissible fade show"
+            role="alert"
+          >
+            <strong>Payslip Details!</strong>The form has the following errors
+            that need to be corrected
+            <button
+              type="button"
+              class="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div> -->
+          <div class="card-header">
+            <h2>
+              <span *ngIf="!isUpdate">{{field_name_hrms_payslip_info}}</span>
+              <span *ngIf="isUpdate">{{field_name_hrms_payslip_update}}</span>
+            </h2>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-5" style="display:flex;margin-bottom: 15px;">
+             {{field_name_hrms_payslip_employee_name}} :&nbsp;&nbsp;
+                <div class="ng-autocomplete">
+                  <ng-autocomplete
+                    [data]="employeeArray"
+                    [searchKeyword]="keyword"
+                    [initialValue]="keyword"
+                    (selected)="selectEvent($event)"
+                    [itemTemplate]="itemTemplate"
+                    [notFoundTemplate]="notFoundTemplate"
+                    formControlName="employeeName"
+                    required
+                    
+                  >
+                  </ng-autocomplete>
+  
+                  <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.first_name"></a>
+                  </ng-template>
+  
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                  </ng-template>
+                  <!-- <div
+                    *ngIf="f.submitted && first_name.invalid"
+                    class="invalid-feedback"
+                  >
+                  </div> -->
+                </div>
+              </div>
+              <div class="col-md-5" style="display:flex;margin-bottom: 15px;">
+                {{field_name_hrms_payslip_select_year_month}}:&nbsp;&nbsp;
+                <select
+                  style="width:30%"
+                  class="form-control"
+                  (change)="selectedDate('year', $event)"
+                >
+                  <option [ngValue]="" disabled [selected]="true">
+                    Choose Year
+                  </option>
+                  <option value="2021">2021</option>
+                  <option value="2022">2022</option></select
+                >&nbsp;&nbsp;
+                <select
+                  style="width:30%"
+                  class="form-control"
+                  formControlName="monthSelected"
+                  (change)="selectedDate('month', $event)"
+                >
+                  <option [ngValue]="" disabled [selected]="true">
+                    Choose Month
+                  </option>
+                  <option *ngFor="let item of monthsArray" [value]="item.name">
+                    {{ item.name }}
+                  </option></select
+                >&nbsp;&nbsp;
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-success btn-round">
+                  <span *ngIf="!isUpdate">{{ field_name_hrms_payslip_generate}}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  </section>
+

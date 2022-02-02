@@ -1,0 +1,77 @@
+.btn-danger{
+    margin-left: 0px;
+    margin-right:0px;
+}
+.btn-primary{
+    background-color: #57aeb6;
+    border: none;
+}
+
+
+.btn i {
+    margin-right: 1px;
+}
+
+.well1
+{
+    display: block;
+    float: right;
+}
+.btn-light{
+    color: #f2f5f8;
+      background-color: #757b80;
+      border-color: #d3d9df;
+  }
+
+.btn-secondary{
+    background-color: #57aeb6;
+    
+        height: 34px;
+    /* margin-bottom: -12px; */
+    margin-top: 1px;
+}
+
+.btn-success{
+    background-color: #57aeb6;
+  
+    border: none;
+    height: 35px;
+}
+
+
+
+.margin-left{
+    margin-left: 3px !important;
+}
+#mySelect{
+float: left;
+}
+.well{
+  display: block;
+}
+
+
+.routerlink{
+    font-size: medium !important;}
+
+    @media  screen and (min-width: 600px) {
+ 
+        .dateSectionMat{
+          display: none !important;;
+        }
+        .dateSection{
+          display: flex;
+        }
+        
+    }
+     
+    @media  screen and (max-width: 599px) {
+    
+      .dateSectionMat{
+        display: flex;
+      }
+      .dateSection{
+        display: none !important;
+      }
+    }
+    

@@ -1,0 +1,1737 @@
+<section *ngIf="this._uiService.langDataSource.value == 'ar'" dir="rtl">
+  <br />
+  <br />
+  <div class="grey-bg container-fluid">
+    <section id="minimal-statistics">
+      <form
+        class="form-row dateSection"
+        name="form"
+        #f="ngForm"
+        (ngSubmit)="f.form.valid && filterData()"
+      >
+        <div class="form-group row col-md-4">
+          <label class="col-sm-3 col-form-label">
+            {{field_name_marketing_fromdate}}<span class="text-danger font-weight-bold"> *</span></label
+          >
+          <div class="col-sm-8">
+            <input
+              type="date"
+              class="form-control"
+              [(ngModel)]="model.fromDate"
+              name="fromDate"
+              #fromDate="ngModel"
+              [ngClass]="{
+                'is-invalid': f.submitted && fromDate.invalid,
+                'is-valid': f.submitted && fromDate.valid
+              }"
+              required
+            />
+
+            <div
+              *ngIf="f.submitted && fromDate.invalid"
+              class="invalid-feedback"
+            >
+              <div *ngIf="fromDate.errors.required">
+                Please provide fromDate
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row col-md-4">
+          <label class="col-sm-3 col-form-label">
+            {{field_name_marketing_todate}}<span class="text-danger font-weight-bold"> *</span></label
+          >
+          <div class="col-sm-8">
+            <input
+              type="date"
+              class="form-control"
+              [(ngModel)]="model.toDate"
+              name="toDate"
+              #toDate="ngModel"
+              [ngClass]="{
+                'is-invalid': f.submitted && toDate.invalid,
+                'is-valid': f.submitted && toDate.valid
+              }"
+              required
+            />
+
+            <div *ngIf="f.submitted && toDate.invalid" class="invalid-feedback">
+              <div *ngIf="toDate.errors.required">Please provide toDate</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-success search-btn">{{field_name_search}}</button>
+        </div>
+      </form>
+      <form
+      class="form-row dateSectionMat"
+      name="form"
+      #f="ngForm"
+      (ngSubmit)="f.form.valid && filterData()"
+    >
+      &nbsp;&nbsp;<mat-form-field
+        style="width: 110px; margin-left: 10px; font-weight: bold"
+      >
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [(ngModel)]="model.fromDate"
+          name="fromDate"
+          #fromDate="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && fromDate.invalid,
+            'is-valid': f.submitted && fromDate.valid
+          }"
+          required
+          placeholder={{field_name_marketing_fromdate}}
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <div *ngIf="f.submitted && fromDate.invalid" class="invalid-feedback">
+        <div *ngIf="fromDate.errors.required">Please provide fromDate</div>
+      </div>
+
+      <mat-form-field style="width: 93px; margin-left: 10px; font-weight: bold">
+        <input
+          matInput
+          [matDatepicker]="picker1"
+          [(ngModel)]="model.toDate"
+          name="toDate"
+          #toDate="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && toDate.invalid,
+            'is-valid': f.submitted && toDate.valid
+          }"
+          required
+          placeholder={{field_name_marketing_todate}}
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="picker1"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+      <div *ngIf="f.submitted && toDate.invalid" class="invalid-feedback">
+        <div *ngIf="toDate.errors.required">Please provide toDate</div>
+      </div>
+      &nbsp;&nbsp;
+      <div style="width: 110px">
+        <button class="btn btn-success search-btn font-weight-bold">
+          {{ field_name_search }}
+        </button>
+      </div>
+    </form>
+      <div class="row">
+        <!--   <div class="col-12 mt-3 mb-1">
+              <h4 class="text-uppercase">Minimal Statistics Cards</h4>
+              <p>Statistics on minimal cards.</p>
+            </div> -->
+      </div>
+      <div class="row">
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i
+                      class="fa fa-address-book-o primary font-large-2 float-left"
+                    ></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="filterFlagEnabled">{{ totalContactsCount }}</h3>
+                    <h3 *ngIf="!filterFlagEnabled">{{ totalcontacts }}</h3>
+                    <span>{{ field_name_marketing_contacts }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i class="icon-user warning font-large-2 float-left"></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="filterFlagEnabled">{{ totalCustomersCount }}</h3>
+                    <h3 *ngIf="!filterFlagEnabled">{{ totalcustomers }}</h3>
+                    <span> {{ field_name_marketing_customers }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i class="fa fa-filter success font-large-2 float-left"></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="filterFlagEnabled">{{ totalLeadsCount }}</h3>
+                    <h3 *ngIf="!filterFlagEnabled">{{ totalleads }}</h3>
+                    <span>{{ field_name_marketing_leads }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i
+                      class="fa fa-bullhorn danger font-large-2 float-left"
+                    ></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="filterFlagEnabled">{{ totalCampaignsCount }}</h3>
+                    <h3 *ngIf="!filterFlagEnabled">{{ totalcampaigns }}</h3>
+                    <span>{{ field_name_marketing_campaigns }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i class="fa fa-tasks danger font-large-2 float-left"></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="filterFlagEnabled">
+                      {{ totalActivitiesCount }}
+                    </h3>
+                    <h3 *ngIf="!filterFlagEnabled">{{ totalactivity }}</h3>
+                    <span> {{ field_name_marketing_activities }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i class="icon-users danger font-large-2 float-left"></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="filterFlagEnabled">{{ totalUsersCount }}</h3>
+                    <h3 *ngIf="!filterFlagEnabled">{{ totalusers }}</h3>
+
+                    <span> {{ field_name_marketing_users }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div *ngIf="filterFlagEnabled">
+      <!--Contact US-->
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_contact_table}}</div>
+        <div class="table-responsive">
+          <table
+            id="contentToConvert"
+            class="table table-striped"
+            [mfData]="filteredContacts"
+            #mf4="mfDataTable"
+          >
+            <thead class="thead-light">
+              <tr>
+                <!--  <th width="20%">
+                  <mfDefaultSorter by="user_id">ID</mfDefaultSorter>
+                </th> -->
+
+                <th width="20%">
+                  <mfDefaultSorter by="first_name">{{
+                    field_name_customers_first_name
+                  }}</mfDefaultSorter>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter by="last_name">{{
+                    field_name_customers_last_name
+                  }}</mfDefaultSorter>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter by="email">{{
+                    field_name_customers_email
+                  }}</mfDefaultSorter>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter by="phone">{{
+                    field_name_customers_phone
+                  }}</mfDefaultSorter>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter>{{
+                    field_name_customers_actions
+                  }}</mfDefaultSorter>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let obj of mf4.data
+                    | orderBy: key:reverse
+                    | paginate
+                      : {
+                          id: 'contacts',
+                          itemsPerPage: 5,
+                          currentPage: contactsPagination,
+                          totalItems: totalContactsCount
+                        };
+                  let i = index
+                "
+              >
+                <!--  <td>{{obj.user_id}}</td> -->
+                <td>{{ obj.first_name }}</td>
+                <td>{{ obj.last_name }}</td>
+
+                <td>{{ obj.email }}</td>
+                <td>{{ obj.phone }}</td>
+                <!--  <td>
+                <button type="button" class="btn btn-primary" (click)="onClickEdit(obj)"> <i class="fa fa-edit"></i></button> 
+                <button type="button" class="btn btn-danger" (click)="onClickDelete(obj)"> <i class="fa fa-trash"></i></button>  
+                </td> -->
+                <td>
+                  <i class="fa fa-edit" (click)="onClickEdit('contacts',obj)"></i>
+
+                  <!-- <span
+                    ><i (click)="onClickDelete('contacts',obj)" class="fa fa-trash"></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4">
+                  <pagination-controls
+                    id="contacts"
+                    (pageChange)="
+                      pageChanged('contacts', (contactsPagination = $event))
+                    "
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <!--Customers-->
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_customer_table}}</div>
+
+        <div class="table-responsive">
+          <table
+            id="contentToConvert"
+            class="table table-striped"
+            [mfData]="filteredCustomers"
+            #mf1="mfDataTable"
+          >
+            <thead class="thead-light">
+              <tr>
+                <th width="20%" (click)="sortCustomers('first_name')">
+                  <mfDefaultSorter by="first_name">{{
+                    field_name_customers_first_name
+                  }}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('last_name')">
+                  <mfDefaultSorter by="last_name">{{
+                    field_name_customers_last_name
+                  }}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('email')">
+                  <mfDefaultSorter by="email">{{
+                    field_name_customers_email
+                  }}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('phone')">
+                  <mfDefaultSorter by="phone">{{
+                    field_name_customers_phone
+                  }}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter>{{
+                    field_name_customers_actions
+                  }}</mfDefaultSorter>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody *ngIf="filteredCustomers.length > 0">
+              <tr
+                *ngFor="
+                  let obj of mf1.data
+                    | orderBy: key:reverse
+                    | paginate
+                      : {
+                          id: 'customers',
+                          itemsPerPage: 5,
+                          currentPage: customerPagination,
+                          totalItems: totalCustomersCount
+                        };
+                  let i = index
+                "
+              >
+                <td>{{ obj.first_name }}</td>
+
+                <td>{{ obj.last_name }}</td>
+                <td>{{ obj.email }}</td>
+                <td>{{ obj.phone }}</td>
+
+                <td>
+                  <i
+                    class="fa fa-edit"
+                    (click)="onClickEdit('customers', obj)"
+                  ></i>
+
+                  <!-- <span
+                    ><i
+                      (click)="onClickDelete('customers', obj)"
+                      class="fa fa-trash"
+                    ></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="filteredCustomers.length == 0">
+              No Records Found
+            </tbody>
+            <tfoot *ngIf="filteredCustomers.length > 0">
+              <tr>
+                <td colspan="4">
+                  <pagination-controls
+                    id="customers"
+                    (pageChange)="
+                      pageChanged('customers', (customerPagination = $event))
+                    "
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <!---Leads-->
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_leads_table}}</div>
+        <div class="table-responsive">
+          <table
+            id="contentToConvert"
+            class="table table-striped"
+            [mfData]="filteredLeads"
+            #mf3="mfDataTable"
+          >
+            <thead class="thead-light">
+              <tr>
+                <!--  <th width="20%">
+                    <mfDefaultSorter by="user_id">ID</mfDefaultSorter>
+                  </th> -->
+
+                <th width="20%" (click)="sort('first_name')">
+                  <mfDefaultSorter by="first_name">{{
+                    field_name_customers_first_name
+                  }}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sort('last_name')">
+                  <mfDefaultSorter by="last_name">{{
+                    field_name_customers_last_name
+                  }}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sort('email')">
+                  <mfDefaultSorter by="email">{{
+                    field_name_customers_email
+                  }}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sort('phone')">
+                  <mfDefaultSorter by="phone">{{
+                    field_name_customers_phone
+                  }}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+
+                <!--  <th width="20%">
+                      <mfDefaultSorter by="files">ImageUrl</mfDefaultSorter>
+      
+                    </th> -->
+
+                <th width="20%">
+                  <mfDefaultSorter>{{
+                    field_name_customers_actions
+                  }}</mfDefaultSorter>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody *ngIf="filteredLeads.length > 0">
+              <tr
+                *ngFor="
+                  let obj of mf3.data
+                    | orderBy: key:reverse
+                    | paginate
+                      : {
+                          id: 'leads',
+                          itemsPerPage: 5,
+                          currentPage: leadsPagination,
+                          totalItems: totalLeadsCount
+                        };
+                  let i = index
+                "
+              >
+                <!--  <td>{{obj.user_id}}</td> -->
+                <td>{{ obj.first_name }}</td>
+
+                <td>{{ obj.last_name }}</td>
+                <td>{{ obj.email }}</td>
+                <td>{{ obj.phone }}</td>
+
+                <!--      
+              <td>
+                  <button type="button" class="btn btn-primary" (click)="onClickEdit(obj)"> <i class="fa fa-edit"></i></button> 
+                  <button type="button" class="btn btn-danger" (click)="onClickDelete(obj)"> <i class="fa fa-trash"></i></button>  
+                  </td> -->
+
+                <td>
+                  <i class="fa fa-edit" (click)="onClickEdit('leads', obj)"></i>
+
+                  <!-- <span
+                    ><i
+                      (click)="onClickDelete('leads', obj)"
+                      class="fa fa-trash"
+                    ></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="filteredLeads.length == 0">
+              No Records Found
+            </tbody>
+            <tfoot *ngIf="filteredLeads.length > 0">
+              <tr>
+                <td colspan="4">
+                  <pagination-controls
+                    id="leads"
+                    (pageChange)="
+                      pageChanged('leads', (leadsPagination = $event))
+                    "
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <!--Campaign-->
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_campaign_table}}</div>
+        <div class="table-responsive">
+          <table
+            id="contentToConvert"
+            class="table table-striped"
+            [mfData]="filteredCampaigns"
+            #mf6="mfDataTable"
+          >
+            <thead class="thead-light">
+              <tr>
+                <!--  <th width="20%">
+                  <mfDefaultSorter by="user_id">ID</mfDefaultSorter>
+                </th> -->
+
+                <th width="20%">
+                  <mfDefaultSorter by="campaign_owner">{{
+                    field_name_campaign_campaign_owner
+                  }}</mfDefaultSorter>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter by="campaign_name">{{
+                    field_name_campaign_campaign_name
+                  }}</mfDefaultSorter>
+                </th>
+                <!--   <th width="20%">
+                  <mfDefaultSorter by="files">{{field_name_campaign_files}}</mfDefaultSorter>
+                </th> -->
+                <th width="20%">
+                  <mfDefaultSorter by="active">{{
+                    field_name_campaign_active
+                  }}</mfDefaultSorter>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter by="status">{{
+                    field_name_campaign_status
+                  }}</mfDefaultSorter>
+                </th>
+
+                <th width="20%">
+                  <mfDefaultSorter by="type">{{
+                    field_name_campaign_type
+                  }}</mfDefaultSorter>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter>{{
+                    field_name_customers_actions
+                  }}</mfDefaultSorter>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let obj of mf6.data
+                    | orderBy
+                      : key
+                      : reverse
+                      | paginate
+                      : {
+                          id: 'campaigns',
+                          itemsPerPage: 5,
+                          currentPage: campaignsPagination,
+                          totalItems: totalCampaignsCount
+                        };
+                  let i = index
+                "
+              >
+                <!--  <td>{{obj.user_id}}</td> -->
+                <td>{{ obj.campaign_owner }}</td>
+                <td>{{ obj.campaign_name }}</td>
+                <!--   <td><img [src]="obj.files" style="height: 50px;width: 50px; border-radius: 50%;"> </td> -->
+                <td>{{ obj.active }}</td>
+                <td>{{ obj.status }}</td>
+                <td>{{ obj.type }}</td>
+
+                <!--  <td>
+                <button type="button" class="btn btn-primary" (click)="onClickEdit(obj)"> <i class="fa fa-edit"></i></button> 
+                <button type="button" class="btn btn-danger" (click)="onClickDelete(obj)"> <i class="fa fa-trash"></i></button>  
+                </td> -->
+
+                <td>
+                  <i
+                    class="fa fa-edit"
+                    (click)="onClickEdit('campaigns', obj)"
+                  ></i>
+
+                  <!-- <span
+                    ><i
+                      (click)="onClickDelete('campaigns', obj)"
+                      class="fa fa-trash"
+                    ></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4">
+                  <pagination-controls
+                    id="campaigns"
+                    (pageChange)="
+                      pageChanged('campaigns', (campaignsPagination = $event))
+                    "
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <!--Activity-->
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_activity_table}}</div>
+        <div class="table-responsive">
+          <table
+            id="contentToConvert"
+            class="table table-striped"
+            [mfData]="filteredActivity"
+            #mf7="mfDataTable"
+          >
+            <thead class="thead-light">
+              <tr>
+                <!--  <th width="20%">
+            <mfDefaultSorter by="user_id">ID</mfDefaultSorter>
+          </th> -->
+
+                <th width="20%">
+                  <mfDefaultSorter by="record_type">{{
+                    field_name_activities_record_type
+                  }}</mfDefaultSorter>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter by="subject">{{
+                    field_name_activities_subject
+                  }}</mfDefaultSorter>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter by="due_date">{{
+                    field_name_activities_due_date
+                  }}</mfDefaultSorter>
+                </th>
+
+                <th width="20%">
+                  <mfDefaultSorter>{{
+                    field_name_customers_actions
+                  }}</mfDefaultSorter>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let obj of mf7.data
+                    | orderBy: key:reverse
+                    | paginate
+                      : {
+                          id: 'activity',
+                          itemsPerPage: 5,
+                          currentPage: activityPagination,
+                          totalItems: totalActivitiesCount
+                        };
+                  let i = index
+                "
+              >
+                <!--  <td>{{obj.user_id}}</td> -->
+                <td>{{ obj.record_type }}</td>
+                <td>{{ obj.subject }}</td>
+
+                <td>{{ obj.due_date }}</td>
+                <!--     
+      <td>
+          <button type="button" class="btn btn-primary" (click)="onClickEdit(obj)"> <i class="fa fa-edit"></i></button> 
+          <button type="button" class="btn btn-danger" (click)="onClickDelete(obj)"> <i class="fa fa-trash"></i></button>  
+          </td> -->
+
+                <td>
+                  <i
+                    class="fa fa-edit"
+                    (click)="onClickEdit('activity', obj)"
+                  ></i>
+
+                  <!-- <span
+                    ><i
+                      (click)="onClickDelete('activity', obj)"
+                      class="fa fa-trash"
+                    ></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4">
+                  <pagination-controls
+                    id="activity"
+                    (pageChange)="
+                      pageChanged('activity', (activityPagination = $event))
+                    "
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <!--Users-->
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_users_table}}</div>
+        <div class="table-responsive">
+          <table
+            id="contentToConvert"
+            class="table table-striped"
+            [mfData]="filteredTotalUsers"
+            #mf2="mfDataTable"
+          >
+            <thead class="thead-light">
+              <tr>
+                <th width="20%" (click)="sort('first_name')">
+                  <mfDefaultSorter by="first_name">{{
+                    field_name_customers_first_name
+                  }}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sort('last_name')">
+                  <mfDefaultSorter by="last_name">{{
+                    field_name_customers_last_name
+                  }}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sort('email')">
+                  <mfDefaultSorter by="email">{{
+                    field_name_customers_email
+                  }}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sort('phone')">
+                  <mfDefaultSorter by="phone">{{
+                    field_name_customers_phone
+                  }}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter>{{
+                    field_name_customers_actions
+                  }}</mfDefaultSorter>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody *ngIf="filteredTotalUsers.length > 0">
+              <tr
+                *ngFor="
+                  let obj of mf2.data
+                    | orderBy: key:reverse
+                    | paginate
+                      : {
+                          id: 'users',
+                          itemsPerPage: 5,
+                          currentPage: usersPagination,
+                          totalItems: totalUsersCount
+                        };
+                  let i = index
+                "
+              >
+                <td>{{ obj.first_name }}</td>
+
+                <td>{{ obj.last_name }}</td>
+                <td>{{ obj.email }}</td>
+                <td>{{ obj.phone }}</td>
+
+                <td>
+                  <i class="fa fa-edit" (click)="onClickEdit('users', obj)"></i>
+
+                  <!-- <span
+                    ><i
+                      (click)="onClickDelete('users', obj)"
+                      class="fa fa-trash"
+                    ></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="filteredTotalUsers.length == 0">
+              No records found
+            </tbody>
+            <tfoot *ngIf="filteredTotalUsers.length > 0">
+              <tr>
+                <td colspan="4">
+                  <pagination-controls
+                    id="users"
+                    (pageChange)="
+                      pageChanged('users', (usersPagination = $event))
+                    "
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section *ngIf="this._uiService.langDataSource.value != 'ar'" dir="ltr">
+  <br />
+  <br />
+  <div class="grey-bg container-fluid">
+    <section id="minimal-statistics">
+      <form
+        class="form-row dateSection"
+        name="form"
+        #f="ngForm"
+        (ngSubmit)="f.form.valid && filterData()"
+      >
+        <div class="form-group row col-md-4">
+          <label class="col-sm-3 col-form-label">
+            {{field_name_marketing_fromdate}}<span class="text-danger font-weight-bold"> *</span></label
+          >
+          <div class="col-sm-8">
+            <input
+              type="date"
+              class="form-control"
+              [(ngModel)]="model.fromDate"
+              name="fromDate"
+              #fromDate="ngModel"
+              [ngClass]="{
+                'is-invalid': f.submitted && fromDate.invalid,
+                'is-valid': f.submitted && fromDate.valid
+              }"
+              required
+            />
+
+            <div
+              *ngIf="f.submitted && fromDate.invalid"
+              class="invalid-feedback"
+            >
+              <div *ngIf="fromDate.errors.required">
+                Please provide fromDate
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row col-md-4">
+          <label class="col-sm-3 col-form-label">
+            {{field_name_marketing_todate}}<span class="text-danger font-weight-bold"> *</span></label
+          >
+          <div class="col-sm-8">
+            <input
+              type="date"
+              class="form-control"
+              [(ngModel)]="model.toDate"
+              name="toDate"
+              #toDate="ngModel"
+              [ngClass]="{
+                'is-invalid': f.submitted && toDate.invalid,
+                'is-valid': f.submitted && toDate.valid
+              }"
+              required
+            />
+
+            <div *ngIf="f.submitted && toDate.invalid" class="invalid-feedback">
+              <div *ngIf="toDate.errors.required">Please provide toDate</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-success search-btn">{{field_name_search}}</button>
+        </div>
+      </form>
+      <form
+      class="form-row dateSectionMat"
+      name="form"
+      #f="ngForm"
+      (ngSubmit)="f.form.valid && filterData()"
+    >
+      &nbsp;&nbsp;<mat-form-field
+        style="width: 110px; margin-left: 10px; font-weight: bold"
+      >
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [(ngModel)]="model.fromDate"
+          name="fromDate"
+          #fromDate="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && fromDate.invalid,
+            'is-valid': f.submitted && fromDate.valid
+          }"
+          required
+          placeholder={{field_name_marketing_fromdate}}
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <div *ngIf="f.submitted && fromDate.invalid" class="invalid-feedback">
+        <div *ngIf="fromDate.errors.required">Please provide fromDate</div>
+      </div>
+
+      <mat-form-field style="width: 93px; margin-left: 10px; font-weight: bold">
+        <input
+          matInput
+          [matDatepicker]="picker1"
+          [(ngModel)]="model.toDate"
+          name="toDate"
+          #toDate="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && toDate.invalid,
+            'is-valid': f.submitted && toDate.valid
+          }"
+          required
+          placeholder={{field_name_marketing_todate}}
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="picker1"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+      <div *ngIf="f.submitted && toDate.invalid" class="invalid-feedback">
+        <div *ngIf="toDate.errors.required">Please provide toDate</div>
+      </div>
+      &nbsp;&nbsp;
+      <div style="width: 110px">
+        <button class="btn btn-success search-btn font-weight-bold">
+          {{ field_name_search }}
+        </button>
+      </div>
+    </form>
+      <div class="row">
+        <!--   <div class="col-12 mt-3 mb-1">
+              <h4 class="text-uppercase">Minimal Statistics Cards</h4>
+              <p>Statistics on minimal cards.</p>
+            </div> -->
+      </div>
+      <div class="row">
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i
+                      class="fa fa-address-book-o primary font-large-2 float-left"
+                    ></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="filterFlagEnabled">{{ totalContactsCount }}</h3>
+                    <h3 *ngIf="!filterFlagEnabled">{{ totalcontacts }}</h3>
+                    <span>{{ field_name_marketing_contacts }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i class="icon-user warning font-large-2 float-left"></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="filterFlagEnabled">{{ totalCustomersCount }}</h3>
+                    <h3 *ngIf="!filterFlagEnabled">{{ totalcustomers }}</h3>
+                    <span> {{ field_name_marketing_customers }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i class="fa fa-filter success font-large-2 float-left"></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="filterFlagEnabled">{{ totalLeadsCount }}</h3>
+                    <h3 *ngIf="!filterFlagEnabled">{{ totalleads }}</h3>
+                    <span>{{ field_name_marketing_leads }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i
+                      class="fa fa-bullhorn danger font-large-2 float-left"
+                    ></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="filterFlagEnabled">{{ totalCampaignsCount }}</h3>
+                    <h3 *ngIf="!filterFlagEnabled">{{ totalcampaigns }}</h3>
+                    <span>{{ field_name_marketing_campaigns }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i class="fa fa-tasks danger font-large-2 float-left"></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="filterFlagEnabled">
+                      {{ totalActivitiesCount }}
+                    </h3>
+                    <h3 *ngIf="!filterFlagEnabled">{{ totalactivity }}</h3>
+                    <span> {{ field_name_marketing_activities }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i class="icon-users danger font-large-2 float-left"></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="filterFlagEnabled">{{ totalUsersCount }}</h3>
+                    <h3 *ngIf="!filterFlagEnabled">{{ totalusers }}</h3>
+
+                    <span> {{ field_name_marketing_users }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div *ngIf="filterFlagEnabled">
+      <!--Contact US-->
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_contact_table}}</div>
+        <div class="table-responsive">
+          <table
+            id="contentToConvert"
+            class="table table-striped"
+            [mfData]="filteredContacts"
+            #mf4="mfDataTable"
+          >
+            <thead class="thead-light">
+              <tr>
+                <!--  <th width="20%">
+                  <mfDefaultSorter by="user_id">ID</mfDefaultSorter>
+                </th> -->
+
+                <th width="20%">
+                  <mfDefaultSorter by="first_name">{{
+                    field_name_customers_first_name
+                  }}</mfDefaultSorter>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter by="last_name">{{
+                    field_name_customers_last_name
+                  }}</mfDefaultSorter>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter by="email">{{
+                    field_name_customers_email
+                  }}</mfDefaultSorter>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter by="phone">{{
+                    field_name_customers_phone
+                  }}</mfDefaultSorter>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter>{{
+                    field_name_customers_actions
+                  }}</mfDefaultSorter>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let obj of mf4.data
+                    | orderBy: key:reverse
+                    | paginate
+                      : {
+                          id: 'contacts',
+                          itemsPerPage: 5,
+                          currentPage: contactsPagination,
+                          totalItems: totalContactsCount
+                        };
+                  let i = index
+                "
+              >
+                <!--  <td>{{obj.user_id}}</td> -->
+                <td>{{ obj.first_name }}</td>
+                <td>{{ obj.last_name }}</td>
+
+                <td>{{ obj.email }}</td>
+                <td>{{ obj.phone }}</td>
+                <!--  <td>
+                <button type="button" class="btn btn-primary" (click)="onClickEdit(obj)"> <i class="fa fa-edit"></i></button> 
+                <button type="button" class="btn btn-danger" (click)="onClickDelete(obj)"> <i class="fa fa-trash"></i></button>  
+                </td> -->
+                <td>
+                  <i class="fa fa-edit" (click)="onClickEdit('contacts',obj)"></i>
+
+                  <!-- <span
+                    ><i (click)="onClickDelete('contacts',obj)" class="fa fa-trash"></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4">
+                  <pagination-controls
+                    id="contacts"
+                    (pageChange)="
+                      pageChanged('contacts', (contactsPagination = $event))
+                    "
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <!--Customers-->
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_customer_table}}</div>
+
+        <div class="table-responsive">
+          <table
+            id="contentToConvert"
+            class="table table-striped"
+            [mfData]="filteredCustomers"
+            #mf1="mfDataTable"
+          >
+            <thead class="thead-light">
+              <tr>
+                <th width="20%" (click)="sortCustomers('first_name')">
+                  <mfDefaultSorter by="first_name">{{
+                    field_name_customers_first_name
+                  }}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('last_name')">
+                  <mfDefaultSorter by="last_name">{{
+                    field_name_customers_last_name
+                  }}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('email')">
+                  <mfDefaultSorter by="email">{{
+                    field_name_customers_email
+                  }}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('phone')">
+                  <mfDefaultSorter by="phone">{{
+                    field_name_customers_phone
+                  }}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter>{{
+                    field_name_customers_actions
+                  }}</mfDefaultSorter>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody *ngIf="filteredCustomers.length > 0">
+              <tr
+                *ngFor="
+                  let obj of mf1.data
+                    | orderBy: key:reverse
+                    | paginate
+                      : {
+                          id: 'customers',
+                          itemsPerPage: 5,
+                          currentPage: customerPagination,
+                          totalItems: totalCustomersCount
+                        };
+                  let i = index
+                "
+              >
+                <td>{{ obj.first_name }}</td>
+
+                <td>{{ obj.last_name }}</td>
+                <td>{{ obj.email }}</td>
+                <td>{{ obj.phone }}</td>
+
+                <td>
+                  <i
+                    class="fa fa-edit"
+                    (click)="onClickEdit('customers', obj)"
+                  ></i>
+
+                  <!-- <span
+                    ><i
+                      (click)="onClickDelete('customers', obj)"
+                      class="fa fa-trash"
+                    ></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="filteredCustomers.length == 0">
+              No Records Found
+            </tbody>
+            <tfoot *ngIf="filteredCustomers.length > 0">
+              <tr>
+                <td colspan="4">
+                  <pagination-controls
+                    id="customers"
+                    (pageChange)="
+                      pageChanged('customers', (customerPagination = $event))
+                    "
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <!---Leads-->
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_leads_table}}</div>
+        <div class="table-responsive">
+          <table
+            id="contentToConvert"
+            class="table table-striped"
+            [mfData]="filteredLeads"
+            #mf3="mfDataTable"
+          >
+            <thead class="thead-light">
+              <tr>
+                <!--  <th width="20%">
+                    <mfDefaultSorter by="user_id">ID</mfDefaultSorter>
+                  </th> -->
+
+                <th width="20%" (click)="sort('first_name')">
+                  <mfDefaultSorter by="first_name">{{
+                    field_name_customers_first_name
+                  }}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sort('last_name')">
+                  <mfDefaultSorter by="last_name">{{
+                    field_name_customers_last_name
+                  }}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sort('email')">
+                  <mfDefaultSorter by="email">{{
+                    field_name_customers_email
+                  }}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sort('phone')">
+                  <mfDefaultSorter by="phone">{{
+                    field_name_customers_phone
+                  }}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+
+                <!--  <th width="20%">
+                      <mfDefaultSorter by="files">ImageUrl</mfDefaultSorter>
+      
+                    </th> -->
+
+                <th width="20%">
+                  <mfDefaultSorter>{{
+                    field_name_customers_actions
+                  }}</mfDefaultSorter>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody *ngIf="filteredLeads.length > 0">
+              <tr
+                *ngFor="
+                  let obj of mf3.data
+                    | orderBy: key:reverse
+                    | paginate
+                      : {
+                          id: 'leads',
+                          itemsPerPage: 5,
+                          currentPage: leadsPagination,
+                          totalItems: totalLeadsCount
+                        };
+                  let i = index
+                "
+              >
+                <!--  <td>{{obj.user_id}}</td> -->
+                <td>{{ obj.first_name }}</td>
+
+                <td>{{ obj.last_name }}</td>
+                <td>{{ obj.email }}</td>
+                <td>{{ obj.phone }}</td>
+
+                <!--      
+              <td>
+                  <button type="button" class="btn btn-primary" (click)="onClickEdit(obj)"> <i class="fa fa-edit"></i></button> 
+                  <button type="button" class="btn btn-danger" (click)="onClickDelete(obj)"> <i class="fa fa-trash"></i></button>  
+                  </td> -->
+
+                <td>
+                  <i class="fa fa-edit" (click)="onClickEdit('leads', obj)"></i>
+
+                  <!-- <span
+                    ><i
+                      (click)="onClickDelete('leads', obj)"
+                      class="fa fa-trash"
+                    ></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="filteredLeads.length == 0">
+              No Records Found
+            </tbody>
+            <tfoot *ngIf="filteredLeads.length > 0">
+              <tr>
+                <td colspan="4">
+                  <pagination-controls
+                    id="leads"
+                    (pageChange)="
+                      pageChanged('leads', (leadsPagination = $event))
+                    "
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <!--Campaign-->
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_campaign_table}}</div>
+        <div class="table-responsive">
+          <table
+            id="contentToConvert"
+            class="table table-striped"
+            [mfData]="filteredCampaigns"
+            #mf6="mfDataTable"
+          >
+            <thead class="thead-light">
+              <tr>
+                <!--  <th width="20%">
+                  <mfDefaultSorter by="user_id">ID</mfDefaultSorter>
+                </th> -->
+
+                <th width="20%">
+                  <mfDefaultSorter by="campaign_owner">{{
+                    field_name_campaign_campaign_owner
+                  }}</mfDefaultSorter>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter by="campaign_name">{{
+                    field_name_campaign_campaign_name
+                  }}</mfDefaultSorter>
+                </th>
+                <!--   <th width="20%">
+                  <mfDefaultSorter by="files">{{field_name_campaign_files}}</mfDefaultSorter>
+                </th> -->
+                <th width="20%">
+                  <mfDefaultSorter by="active">{{
+                    field_name_campaign_active
+                  }}</mfDefaultSorter>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter by="status">{{
+                    field_name_campaign_status
+                  }}</mfDefaultSorter>
+                </th>
+
+                <th width="20%">
+                  <mfDefaultSorter by="type">{{
+                    field_name_campaign_type
+                  }}</mfDefaultSorter>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter>{{
+                    field_name_customers_actions
+                  }}</mfDefaultSorter>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let obj of mf6.data
+                    | orderBy
+                      : key
+                      : reverse
+                      | paginate
+                      : {
+                          id: 'campaigns',
+                          itemsPerPage: 5,
+                          currentPage: campaignsPagination,
+                          totalItems: totalCampaignsCount
+                        };
+                  let i = index
+                "
+              >
+                <!--  <td>{{obj.user_id}}</td> -->
+                <td>{{ obj.campaign_owner }}</td>
+                <td>{{ obj.campaign_name }}</td>
+                <!--   <td><img [src]="obj.files" style="height: 50px;width: 50px; border-radius: 50%;"> </td> -->
+                <td>{{ obj.active }}</td>
+                <td>{{ obj.status }}</td>
+                <td>{{ obj.type }}</td>
+
+                <!--  <td>
+                <button type="button" class="btn btn-primary" (click)="onClickEdit(obj)"> <i class="fa fa-edit"></i></button> 
+                <button type="button" class="btn btn-danger" (click)="onClickDelete(obj)"> <i class="fa fa-trash"></i></button>  
+                </td> -->
+
+                <td>
+                  <i
+                    class="fa fa-edit"
+                    (click)="onClickEdit('campaigns', obj)"
+                  ></i>
+
+                  <!-- <span
+                    ><i
+                      (click)="onClickDelete('campaigns', obj)"
+                      class="fa fa-trash"
+                    ></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4">
+                  <pagination-controls
+                    id="campaigns"
+                    (pageChange)="
+                      pageChanged('campaigns', (campaignsPagination = $event))
+                    "
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <!--Activity-->
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_activity_table}}</div>
+        <div class="table-responsive">
+          <table
+            id="contentToConvert"
+            class="table table-striped"
+            [mfData]="filteredActivity"
+            #mf7="mfDataTable"
+          >
+            <thead class="thead-light">
+              <tr>
+                <!--  <th width="20%">
+            <mfDefaultSorter by="user_id">ID</mfDefaultSorter>
+          </th> -->
+
+                <th width="20%">
+                  <mfDefaultSorter by="record_type">{{
+                    field_name_activities_record_type
+                  }}</mfDefaultSorter>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter by="subject">{{
+                    field_name_activities_subject
+                  }}</mfDefaultSorter>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter by="due_date">{{
+                    field_name_activities_due_date
+                  }}</mfDefaultSorter>
+                </th>
+
+                <th width="20%">
+                  <mfDefaultSorter>{{
+                    field_name_customers_actions
+                  }}</mfDefaultSorter>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let obj of mf7.data
+                    | orderBy: key:reverse
+                    | paginate
+                      : {
+                          id: 'activity',
+                          itemsPerPage: 5,
+                          currentPage: activityPagination,
+                          totalItems: totalActivitiesCount
+                        };
+                  let i = index
+                "
+              >
+                <!--  <td>{{obj.user_id}}</td> -->
+                <td>{{ obj.record_type }}</td>
+                <td>{{ obj.subject }}</td>
+
+                <td>{{ obj.due_date }}</td>
+                <!--     
+      <td>
+          <button type="button" class="btn btn-primary" (click)="onClickEdit(obj)"> <i class="fa fa-edit"></i></button> 
+          <button type="button" class="btn btn-danger" (click)="onClickDelete(obj)"> <i class="fa fa-trash"></i></button>  
+          </td> -->
+
+                <td>
+                  <i
+                    class="fa fa-edit"
+                    (click)="onClickEdit('activity', obj)"
+                  ></i>
+
+                  <!-- <span
+                    ><i
+                      (click)="onClickDelete('activity', obj)"
+                      class="fa fa-trash"
+                    ></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4">
+                  <pagination-controls
+                    id="activity"
+                    (pageChange)="
+                      pageChanged('activity', (activityPagination = $event))
+                    "
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <!--Users-->
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_users_table}}</div>
+        <div class="table-responsive">
+          <table
+            id="contentToConvert"
+            class="table table-striped"
+            [mfData]="filteredTotalUsers"
+            #mf2="mfDataTable"
+          >
+            <thead class="thead-light">
+              <tr>
+                <th width="20%" (click)="sort('first_name')">
+                  <mfDefaultSorter by="first_name">{{
+                    field_name_customers_first_name
+                  }}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sort('last_name')">
+                  <mfDefaultSorter by="last_name">{{
+                    field_name_customers_last_name
+                  }}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sort('email')">
+                  <mfDefaultSorter by="email">{{
+                    field_name_customers_email
+                  }}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sort('phone')">
+                  <mfDefaultSorter by="phone">{{
+                    field_name_customers_phone
+                  }}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter>{{
+                    field_name_customers_actions
+                  }}</mfDefaultSorter>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody *ngIf="filteredTotalUsers.length > 0">
+              <tr
+                *ngFor="
+                  let obj of mf2.data
+                    | orderBy: key:reverse
+                    | paginate
+                      : {
+                          id: 'users',
+                          itemsPerPage: 5,
+                          currentPage: usersPagination,
+                          totalItems: totalUsersCount
+                        };
+                  let i = index
+                "
+              >
+                <td>{{ obj.first_name }}</td>
+
+                <td>{{ obj.last_name }}</td>
+                <td>{{ obj.email }}</td>
+                <td>{{ obj.phone }}</td>
+
+                <td>
+                  <i class="fa fa-edit" (click)="onClickEdit('users', obj)"></i>
+
+                  <!-- <span
+                    ><i
+                      (click)="onClickDelete('users', obj)"
+                      class="fa fa-trash"
+                    ></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="filteredTotalUsers.length == 0">
+              No records found
+            </tbody>
+            <tfoot *ngIf="filteredTotalUsers.length > 0">
+              <tr>
+                <td colspan="4">
+                  <pagination-controls
+                    id="users"
+                    (pageChange)="
+                      pageChanged('users', (usersPagination = $event))
+                    "
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

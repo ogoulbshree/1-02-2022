@@ -1,0 +1,164 @@
+<br />
+<br />
+<section id="minimal-statistics">
+    <form
+      class="form-row dateSection"
+      name="form"
+      #f="ngForm"
+    
+    >
+      <div class="form-group row col-md-4">
+        <label class="col-sm-3 col-form-label">
+          fromdate<span class="text-danger font-weight-bold"> *</span></label
+        >
+        <div class="col-sm-8">
+          <input
+            type="date"
+            class="form-control"
+            [(ngModel)]="model.fromDate"
+            name="fromDate"
+            #fromDate="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && fromDate.invalid,
+              'is-valid': f.submitted && fromDate.valid
+            }"
+            required
+          />
+
+          <div
+            *ngIf="f.submitted && fromDate.invalid"
+            class="invalid-feedback"
+          >
+            <div *ngIf="fromDate.errors.required">
+              Please provide fromDate
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row col-md-4">
+        <label class="col-sm-3 col-form-label">
+          todate<span class="text-danger font-weight-bold"> *</span></label
+        >
+        <div class="col-sm-8">
+          <input
+            type="date"
+            class="form-control"
+            [(ngModel)]="model.toDate"
+            name="toDate"
+            #toDate="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && toDate.invalid,
+              'is-valid': f.submitted && toDate.valid
+            }"
+            required
+          />
+
+          <div *ngIf="f.submitted && toDate.invalid" class="invalid-feedback">
+            <div *ngIf="toDate.errors.required">Please provide toDate</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-success search-btn">search</button>
+      </div>
+    </form>
+  
+   
+    <div class="row">
+      <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="align-self-center">
+                  <i class="icon-users primary font-large-2 float-left"></i>
+                </div>
+                <div class="media-body text-right">
+                  <h3 >3</h3>
+                  <span >Un Resolved</span>
+                 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="align-self-center">
+                  <i
+                    class="fa fa-question-circle-o success font-large-2 float-left"
+                  ></i>
+                </div>
+                <div class="media-body text-right">
+                  <h3 >10</h3>
+                  <span >OverDue</span>
+                
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="align-self-center">
+                  <i class="icon-user danger font-large-2 float-left"></i>
+                </div>
+                <div class="media-body text-right">
+                  <h3 >12</h3>
+                  <span >Due Today</span>
+               
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="align-self-center">
+                  <i class="icon-user danger font-large-2 float-left"></i>
+                </div>
+                <div class="media-body text-right">
+                  <h3 >12</h3>
+                  <span >Open</span>
+               
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="media d-flex">
+                <div class="align-self-center">
+                  <i class="icon-user danger font-large-2 float-left"></i>
+                </div>
+                <div class="media-body text-right">
+                  <h3 >12</h3>
+                  <span >Un Assigned</span>
+               
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

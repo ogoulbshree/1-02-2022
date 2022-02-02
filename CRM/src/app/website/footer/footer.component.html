@@ -1,0 +1,134 @@
+<!-- 
+
+<footer class="footer-section">
+  
+    <div class="copyright-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-7 col-lg-7 text-center text-lg-left">
+                    <div class="footer-menu">
+                        <ul>
+  
+                            <li><a href=""  routerLink=""  routerLinkActive="active" >
+                                 <p>All rights reserved for <span class="company" >Ogoul Technologies</span> 2021</p></a></li>
+                            <li><a href=""  routerLink="/website/home"  routerLinkActive="active" >Home</a></li>
+                            <li><a href=""  routerLink="/website/aboutus"  routerLinkActive="active" >About</a></li>
+                            <li><a href=""  routerLink="/website/support"  routerLinkActive="active" >Support</a></li>
+                             <li><a href=""  routerLink="/website/services"  routerLinkActive="active" >Services</a></li>
+                             <li><a href=""  routerLink=""  routerLinkActive="active" data-toggle="modal" data-target=".survey" (click)="survey()" >Survey</a></li>
+                           
+                        </ul>
+                    </div>
+                    
+                </div>
+              
+                <div class="col-xl-5 col-lg-5 d-none d-lg-block text-right">
+                    <div class="footer-menu">
+                    <ul>
+                         <li><a href=""><i class="fa fa-twitter" ></i></a></li>
+                            <li><a href=""><i class="fa fa-facebook"></i></a></li>
+                            <li><a href=""><i class="fa fa-linkedin"></i></a></li>
+                            </ul>
+                            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer> -->
+
+
+
+
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' >
+
+<footer>
+    <div class="container">
+
+      <div class="row text-center">
+        <div class="col-md-4 box">
+          <span class="copyright quick-links">{{all_right_reserved}}  <span class="company" ><a class="company" href="http://localhost:4200/website/home">Ogoul Technologies</a></span> 2022
+          
+          </span>
+        </div>
+        <div class="col-md-4 box">
+          <ul class="list-inline  quick-links">
+            <li class="list-inline-item"><a href=""  routerLink="/website/home"  routerLinkActive="active" >{{website_home}} </a></li>
+            <li class="list-inline-item"><a href=""  routerLink="/website/aboutus"  routerLinkActive="active" >{{website_about_us}}</a></li>
+        <!--     <li class="list-inline-item"><a href=""  routerLink="/website/support"  routerLinkActive="active" >Support</a></li> -->
+             <li class="list-inline-item"><a href=""  routerLink="/website/services"  routerLinkActive="active" >{{website_service}}</a></li>
+            <li class="list-inline-item"><a href=""  routerLink=""  routerLinkActive="active" data-toggle="modal" data-target=".survey" (click)="survey()" >{{website_survey}}</a></li>
+          </ul>
+        </div>
+       <!--  <div class="col-md-4 box">
+          <ul class="list-inline social-buttons">
+             <li class="list-inline-item">
+              <a href="#">
+              <i class="fab fa-twitter"></i>
+            </a>
+            </li> 
+             <li class="list-inline-item">
+              <a href="#">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            </li> 
+            <li class="list-inline-item">
+                <a href="#">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              </li>
+          </ul>
+        </div> -->
+      </div>
+    </div>
+  </footer>
+
+</section>
+
+
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir='ltr' >
+  
+  <footer>
+    <div class="container">
+
+      <div class="row text-center">
+        <div class="col-md-4 box">
+          <span class="copyright quick-links">{{all_right_reserved}}  <span class="company" ><a  class="company" href="http://localhost:4200/website/home">Ogoul Technologies</a></span> 2022
+          
+        </span>
+        </div>
+        <div class="col-md-4 box">
+          <ul class="list-inline  quick-links">
+            <li class="list-inline-item"><a href=""  routerLink="/website/home"  routerLinkActive="active" >{{website_home}} </a></li>
+            <li class="list-inline-item"><a href=""  routerLink="/website/aboutus"  routerLinkActive="active" >{{website_about_us}}</a></li>
+        <!--     <li class="list-inline-item"><a href=""  routerLink="/website/support"  routerLinkActive="active" >Support</a></li> -->
+             <li class="list-inline-item"><a href=""  routerLink="/website/services"  routerLinkActive="active" >{{website_service}}</a></li>
+            <li class="list-inline-item"><a href=""  routerLink=""  routerLinkActive="active" data-toggle="modal" data-target=".survey" (click)="survey()" >{{website_survey}}</a></li>
+          </ul>
+        </div>
+       <!--  <div class="col-md-4 box">
+          <ul class="list-inline social-buttons">
+             <li class="list-inline-item">
+              <a href="#">
+              <i class="fab fa-twitter"></i>
+            </a>
+            </li> 
+             <li class="list-inline-item">
+              <a href="#">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            </li> 
+            <li class="list-inline-item">
+                <a href="#">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              </li>
+          </ul>
+        </div> -->
+      </div>
+    </div>
+  </footer>
+
+</section>

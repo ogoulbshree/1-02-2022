@@ -1,0 +1,554 @@
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' >
+  <h2 mat-dialog-title>{{field_name_candidates_addcomments}}</h2>
+<form
+  class="form-horizontal"
+  name="form"
+  #f="ngForm"
+  (ngSubmit)="f.form.valid && submit()"
+>
+  <mat-dialog-content class="mat-typography">
+    <div class="row">
+      <div class="col-md-6">
+       {{field_name_candidates_candidate_name}} :<br />
+        <input
+          type="text"
+          class="form-control"
+          name="holiday_name"
+          [(ngModel)]="candidateDetail.candidate_name"
+          #holiday_name="ngModel"
+          readonly
+        /><br />
+    {{field_name_candidates_candidate_phone}} :<br />
+        <input
+          type="text"
+          class="form-control"
+          name="candidate_phone"
+          [(ngModel)]="candidateDetail.candidate_phone"
+          #candidate_phone="ngModel"
+          readonly
+        /><br />
+      </div>
+      <div class="col-md-6">
+       {{field_name_candidates_email}} :<br />
+        <input
+          type="text"
+          class="form-control"
+          name="candidate_email"
+          [(ngModel)]="candidateDetail.candidate_email"
+          #candidate_email="ngModel"
+          readonly
+        /><br />
+      {{field_name_candidates_candidate_resume}} :<br />
+        <input
+          type="file"
+          class="form-control"
+          name="candidate_resume"
+          [(ngModel)]="candidateDetail.candidate_resume"
+          #candidate_resume="ngModel"
+          readonly
+        /><br />
+      </div>
+
+      <div
+        class="col-md-12"
+        *ngIf="candidateDetail.candidate_status == 'Review'"
+      >
+       {{field_name_candidates_review_comments}} :<br />
+        <textarea
+          type="text"
+          class="form-control"
+          name="review_comments"
+          [(ngModel)]="candidateDetail.review_comments"
+          #review_comments="ngModel"
+        >
+        </textarea
+        ><br />
+      </div>
+      <div
+        class="col-md-12"
+        *ngIf="
+          candidateDetail.review_comments &&
+          candidateDetail.candidate_status != 'Review'
+        "
+      >
+      {{field_name_candidates_review_comments}} :<br />
+        <textarea
+          readonly
+          type="text"
+          class="form-control"
+          name="review_comments"
+          [(ngModel)]="candidateDetail.review_comments"
+          #review_comments="ngModel"
+        >
+        </textarea
+        ><br />
+      </div>
+      <div
+        class="col-md-12"
+        *ngIf="candidateDetail.candidate_status == 'Hiring manager'"
+      >
+      {{field_name_candidates_hiring_manager_comments}} :<br />
+        <textarea
+          type="text"
+          class="form-control"
+          name="hiring_manager_comments"
+          [(ngModel)]="candidateDetail.hiring_manager_comments"
+          #hiring_manager_comments="ngModel"
+        >
+        </textarea
+        ><br />
+      </div>
+      <div
+        class="col-md-12"
+        *ngIf="
+          candidateDetail.hiring_manager_comments &&
+          candidateDetail.candidate_status != 'Hiring manager'
+        "
+      >
+       {{field_name_candidates_review_comments}} :<br />
+        <textarea
+          readonly
+          type="text"
+          class="form-control"
+          name="hiring_manager_comments"
+          [(ngModel)]="candidateDetail.hiring_manager_comments"
+          #hiring_manager_comments="ngModel"
+        >
+        </textarea
+        ><br />
+      </div>
+      <div
+        class="col-md-12"
+        *ngIf="candidateDetail.candidate_status == 'Request feedback'"
+      >
+        {{field_name_candidates_feedback_comments}}:<br />
+        <textarea
+          type="text"
+          class="form-control"
+          name="request_feedback_comments"
+          [(ngModel)]="candidateDetail.request_feedback_comments"
+          #request_feedback_comments="ngModel"
+        >
+        </textarea
+        ><br />
+      </div>
+      <div
+        class="col-md-12"
+        *ngIf="
+          candidateDetail.candidate_status != 'Request feedback' &&
+          candidateDetail.request_feedback_comments
+        "
+      >
+       {{field_name_candidates_feedback_comments}}:<br />
+        <textarea
+          readonly
+          type="text"
+          class="form-control"
+          name="request_feedback_comments"
+          [(ngModel)]="candidateDetail.request_feedback_comments"
+          #request_feedback_comments="ngModel"
+        >
+        </textarea
+        ><br />
+      </div>
+      <div
+        class="col-md-12"
+        *ngIf="candidateDetail.candidate_status == 'Interview'"
+      >
+       {{field_name_candidates_interview_comments}} :<br />
+        <textarea
+          type="text"
+          class="form-control"
+          name="interview_comments"
+          [(ngModel)]="candidateDetail.interview_comments"
+          #interview_comments="ngModel"
+        >
+        </textarea
+        ><br />
+      </div>
+      <div
+        class="col-md-12"
+        *ngIf="
+          candidateDetail.candidate_status != 'Interview' &&
+          candidateDetail.interview_comments
+        "
+      >
+        {{field_name_candidates_interview_comments}}:<br />
+        <textarea
+          readonly
+          type="text"
+          class="form-control"
+          name="interview_comments"
+          [(ngModel)]="candidateDetail.interview_comments"
+          #interview_comments="ngModel"
+        >
+        </textarea
+        ><br />
+      </div>
+      <div
+        class="col-md-12"
+        *ngIf="candidateDetail.candidate_status == 'Offer accepted'"
+      >
+      {{field_name_candidates_offer_comments}} :<br />
+        <textarea
+          type="text"
+          class="form-control"
+          name="offer_accepted_comments"
+          [(ngModel)]="candidateDetail.offer_accepted_comments"
+          #offer_accepted_comments="ngModel"
+        >
+        </textarea
+        ><br />
+      </div>
+      <div
+        class="col-md-12"
+        *ngIf="
+          candidateDetail.candidate_status != 'Offer accepted' &&
+          candidateDetail.offer_accepted_comments
+        "
+      >
+       {{field_name_candidates_offer_comments}} :<br />
+        <textarea
+          readonly
+          type="text"
+          class="form-control"
+          name="offer_accepted_comments"
+          [(ngModel)]="candidateDetail.offer_accepted_comments"
+          #offer_accepted_comments="ngModel"
+        >
+        </textarea
+        ><br />
+      </div>
+      <div
+        class="col-md-12"
+        *ngIf="candidateDetail.candidate_status == 'Rejected'"
+      >
+      {{field_name_candidates_rejected_comments}} :<br />
+        <textarea
+          type="text"
+          class="form-control"
+          name="rejected_comments"
+          [(ngModel)]="candidateDetail.rejected_comments"
+          #rejected_comments="ngModel"
+        >
+        </textarea
+        ><br />
+      </div>
+      <div
+        class="col-md-12"
+        *ngIf="
+          candidateDetail.candidate_status != 'Rejected' &&
+          candidateDetail.rejected_comments
+        "
+      >
+        {{field_name_candidates_rejected_comments}} :<br />
+        <textarea
+          readonly
+          type="text"
+          class="form-control"
+          name="rejected_comments"
+          [(ngModel)]="candidateDetail.rejected_comments"
+          #rejected_comments="ngModel"
+        >
+        </textarea
+        ><br />
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close class="btn btn-danger">{{'Cancel'|translate}}</button>
+
+    <button type="submit" mat-button class="btn btn-success">{{'Save'|translate}}</button>
+    <!-- <button mat-button mat-dialog-close>Close</button>
+    <button
+      type="submit"
+      mat-button
+      style="background: #ff9b44 !important; color: white"
+    >
+      Save
+    </button> -->
+  </mat-dialog-actions>
+</form>
+
+</section>
+
+
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir='ltr' >
+  <h2 mat-dialog-title>{{field_name_candidates_addcomments}}</h2>
+<form
+  class="form-horizontal"
+  name="form"
+  #f="ngForm"
+  (ngSubmit)="f.form.valid && submit()"
+>
+  <mat-dialog-content class="mat-typography">
+    <div class="row">
+      <div class="col-md-6">
+       {{field_name_candidates_candidate_name}} :<br />
+        <input
+          type="text"
+          class="form-control"
+          name="holiday_name"
+          [(ngModel)]="candidateDetail.candidate_name"
+          #holiday_name="ngModel"
+          readonly
+        /><br />
+    {{field_name_candidates_candidate_phone}} :<br />
+        <input
+          type="text"
+          class="form-control"
+          name="candidate_phone"
+          [(ngModel)]="candidateDetail.candidate_phone"
+          #candidate_phone="ngModel"
+          readonly
+        /><br />
+      </div>
+      <div class="col-md-6">
+       {{field_name_candidates_email}} :<br />
+        <input
+          type="text"
+          class="form-control"
+          name="candidate_email"
+          [(ngModel)]="candidateDetail.candidate_email"
+          #candidate_email="ngModel"
+          readonly
+        /><br />
+      {{field_name_candidates_candidate_resume}} :<br />
+        <input
+          type="file"
+          class="form-control"
+          name="candidate_resume"
+          [(ngModel)]="candidateDetail.candidate_resume"
+          #candidate_resume="ngModel"
+          readonly
+        /><br />
+      </div>
+
+      <div
+        class="col-md-12"
+        *ngIf="candidateDetail.candidate_status == 'Review'"
+      >
+       {{field_name_candidates_review_comments}} :<br />
+        <textarea
+          type="text"
+          class="form-control"
+          name="review_comments"
+          [(ngModel)]="candidateDetail.review_comments"
+          #review_comments="ngModel"
+        >
+        </textarea
+        ><br />
+      </div>
+      <div
+        class="col-md-12"
+        *ngIf="
+          candidateDetail.review_comments &&
+          candidateDetail.candidate_status != 'Review'
+        "
+      >
+      {{field_name_candidates_review_comments}} :<br />
+        <textarea
+          readonly
+          type="text"
+          class="form-control"
+          name="review_comments"
+          [(ngModel)]="candidateDetail.review_comments"
+          #review_comments="ngModel"
+        >
+        </textarea
+        ><br />
+      </div>
+      <div
+        class="col-md-12"
+        *ngIf="candidateDetail.candidate_status == 'Hiring manager'"
+      >
+      {{field_name_candidates_hiring_manager_comments}} :<br />
+        <textarea
+          type="text"
+          class="form-control"
+          name="hiring_manager_comments"
+          [(ngModel)]="candidateDetail.hiring_manager_comments"
+          #hiring_manager_comments="ngModel"
+        >
+        </textarea
+        ><br />
+      </div>
+      <div
+        class="col-md-12"
+        *ngIf="
+          candidateDetail.hiring_manager_comments &&
+          candidateDetail.candidate_status != 'Hiring manager'
+        "
+      >
+       {{field_name_candidates_review_comments}} :<br />
+        <textarea
+          readonly
+          type="text"
+          class="form-control"
+          name="hiring_manager_comments"
+          [(ngModel)]="candidateDetail.hiring_manager_comments"
+          #hiring_manager_comments="ngModel"
+        >
+        </textarea
+        ><br />
+      </div>
+      <div
+        class="col-md-12"
+        *ngIf="candidateDetail.candidate_status == 'Request feedback'"
+      >
+        {{field_name_candidates_feedback_comments}}:<br />
+        <textarea
+          type="text"
+          class="form-control"
+          name="request_feedback_comments"
+          [(ngModel)]="candidateDetail.request_feedback_comments"
+          #request_feedback_comments="ngModel"
+        >
+        </textarea
+        ><br />
+      </div>
+      <div
+        class="col-md-12"
+        *ngIf="
+          candidateDetail.candidate_status != 'Request feedback' &&
+          candidateDetail.request_feedback_comments
+        "
+      >
+       {{field_name_candidates_feedback_comments}}:<br />
+        <textarea
+          readonly
+          type="text"
+          class="form-control"
+          name="request_feedback_comments"
+          [(ngModel)]="candidateDetail.request_feedback_comments"
+          #request_feedback_comments="ngModel"
+        >
+        </textarea
+        ><br />
+      </div>
+      <div
+        class="col-md-12"
+        *ngIf="candidateDetail.candidate_status == 'Interview'"
+      >
+       {{field_name_candidates_interview_comments}} :<br />
+        <textarea
+          type="text"
+          class="form-control"
+          name="interview_comments"
+          [(ngModel)]="candidateDetail.interview_comments"
+          #interview_comments="ngModel"
+        >
+        </textarea
+        ><br />
+      </div>
+      <div
+        class="col-md-12"
+        *ngIf="
+          candidateDetail.candidate_status != 'Interview' &&
+          candidateDetail.interview_comments
+        "
+      >
+        {{field_name_candidates_interview_comments}}:<br />
+        <textarea
+          readonly
+          type="text"
+          class="form-control"
+          name="interview_comments"
+          [(ngModel)]="candidateDetail.interview_comments"
+          #interview_comments="ngModel"
+        >
+        </textarea
+        ><br />
+      </div>
+      <div
+        class="col-md-12"
+        *ngIf="candidateDetail.candidate_status == 'Offer accepted'"
+      >
+      {{field_name_candidates_offer_comments}} :<br />
+        <textarea
+          type="text"
+          class="form-control"
+          name="offer_accepted_comments"
+          [(ngModel)]="candidateDetail.offer_accepted_comments"
+          #offer_accepted_comments="ngModel"
+        >
+        </textarea
+        ><br />
+      </div>
+      <div
+        class="col-md-12"
+        *ngIf="
+          candidateDetail.candidate_status != 'Offer accepted' &&
+          candidateDetail.offer_accepted_comments
+        "
+      >
+       {{field_name_candidates_offer_comments}} :<br />
+        <textarea
+          readonly
+          type="text"
+          class="form-control"
+          name="offer_accepted_comments"
+          [(ngModel)]="candidateDetail.offer_accepted_comments"
+          #offer_accepted_comments="ngModel"
+        >
+        </textarea
+        ><br />
+      </div>
+      <div
+        class="col-md-12"
+        *ngIf="candidateDetail.candidate_status == 'Rejected'"
+      >
+      {{field_name_candidates_rejected_comments}} :<br />
+        <textarea
+          type="text"
+          class="form-control"
+          name="rejected_comments"
+          [(ngModel)]="candidateDetail.rejected_comments"
+          #rejected_comments="ngModel"
+        >
+        </textarea
+        ><br />
+      </div>
+      <div
+        class="col-md-12"
+        *ngIf="
+          candidateDetail.candidate_status != 'Rejected' &&
+          candidateDetail.rejected_comments
+        "
+      >
+        {{field_name_candidates_rejected_comments}} :<br />
+        <textarea
+          readonly
+          type="text"
+          class="form-control"
+          name="rejected_comments"
+          [(ngModel)]="candidateDetail.rejected_comments"
+          #rejected_comments="ngModel"
+        >
+        </textarea
+        ><br />
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close class="btn btn-danger">{{'Cancel'|translate}}</button>
+
+    <button type="submit" mat-button class="btn btn-success">{{'Save'|translate}}</button>
+    <!-- <button mat-button mat-dialog-close>Close</button>
+    <button
+      type="submit"
+      mat-button
+      style="background: #ff9b44 !important; color: white"
+    >
+      Save
+    </button> -->
+  </mat-dialog-actions>
+</form>
+
+  </section>

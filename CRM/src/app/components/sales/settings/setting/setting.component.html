@@ -1,0 +1,192 @@
+
+ <section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' style='width:99%'>
+   
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="fa fa-user-plus" aria-hidden="true"></i>
+                  <a routerLink="/sales/settings/userlist" class="txtclass">{{field_name_sales_settings_user_management}}</a></h5>
+
+                <p class="card-text">{{field_name_sales_settings_user_management_headings}}</p>
+            
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="fa fa-history" aria-hidden="true"></i>
+                  <a class="txtclass" routerLink="/sales/settings/history">{{field_name_sales_settings_history}}</a></h5>
+                <p class="card-text">{{field_name_sales_settings_history_heading}}</p>
+            
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">
+              <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+               <a routerLink="/sales/settings/editformfields"  class="txtclass" >{{field_name_sales_settings_edit_form_fields}}</a></h5>
+              <p class="card-text"> {{field_name_sales_settings_edit_form_fields_heading}}</p>
+
+            </div>
+          </div>
+        </div>
+
+          <div class="col-sm-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="fa fa-cog" aria-hidden="true"></i>
+                  <a routerLink="/sales/settings/dynamicsettings" class="txtclass">{{field_name_sales_settings_configuration_management }}</a></h5>
+                  <p class="card-text">{{field_name_sales_settings_configuration_management_heading}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="fa fa-money" aria-hidden="true"></i>
+                  <a routerLink="/sales/settings/dynamicsettings/expenselist" class="txtclass">{{field_name_sales_settings_addexpenses}}</a></h5>
+                <p class="card-text">{{field_name_sales_settings_addexpenses_heading}}</p>
+            
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                  <a routerLink="/sales/settings/editprofile" class="txtclass">{{field_name_sales_settings_edit_profile}}</a></h5>
+                <p class="card-text">{{field_name_sales_settings_edit_profile_heading}}</p>
+            
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="fa fa-key" aria-hidden="true"></i>
+                  <a routerLink="/sales/settings/changepassword" class="txtclass">{{field_name_sales_settings_change_password}}</a></h5>
+                <p class="card-text">{{field_name_sales_settings_change_password_heading}}</p>
+            
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <i class="fa fa-building-o" aria-hidden="true"></i>
+                  <a routerLink="/sales/settings/configureorganisation" class="txtclass">{{field_name_sales_settings_organisation}}</a></h5>
+                <p class="card-text">{{field_name_sales_settings_organisation_heading}}</p>
+            
+              </div>
+            </div>
+          </div>
+      
+  </div>
+ </section>
+
+
+
+ <section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir='ltr' >
+  <div class="row w-100">
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <i class="fa fa-user-plus" aria-hidden="true"></i>
+            <a routerLink="/sales/settings/userlist" class="txtclass">{{field_name_sales_settings_user_management}}</a></h5>
+
+          <p class="card-text">{{field_name_sales_settings_user_management_headings}}</p>
+      
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <i class="fa fa-history" aria-hidden="true"></i>
+            <a class="txtclass" routerLink="/sales/settings/history">{{field_name_sales_settings_history}}</a></h5>
+          <p class="card-text">{{field_name_sales_settings_history_heading}}</p>
+      
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-4">
+      <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">
+        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+         <a routerLink="/sales/settings/editformfields"  class="txtclass" >{{field_name_sales_settings_edit_form_fields}}</a></h5>
+        <p class="card-text"> {{field_name_sales_settings_edit_form_fields_heading}}</p>
+
+      </div>
+    </div>
+  </div>
+
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <i class="fa fa-cog" aria-hidden="true"></i>
+            <a routerLink="/sales/settings/dynamicsettings" class="txtclass">{{field_name_sales_settings_configuration_management }}</a></h5>
+            <p class="card-text">{{field_name_sales_settings_configuration_management_heading}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <i class="fa fa-money" aria-hidden="true"></i>
+            <a routerLink="/sales/settings/dynamicsettings/expenselist" class="txtclass">{{field_name_sales_settings_addexpenses}}</a></h5>
+          <p class="card-text">{{field_name_sales_settings_addexpenses_heading}}</p>
+      
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <i class="fa fa-user" aria-hidden="true"></i>
+            <a routerLink="/sales/settings/editprofile" class="txtclass">{{field_name_sales_settings_edit_profile}}</a></h5>
+          <p class="card-text">{{field_name_sales_settings_edit_profile_heading}}</p>
+      
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <i class="fa fa-key" aria-hidden="true"></i>
+            <a routerLink="/sales/settings/changepassword" class="txtclass">{{field_name_sales_settings_change_password}}</a></h5>
+          <p class="card-text">{{field_name_sales_settings_change_password_heading}}</p>
+      
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <i class="fa fa-building-o" aria-hidden="true"></i>
+            <a routerLink="/sales/settings/configureorganisation" class="txtclass">{{field_name_sales_settings_organisation}}</a></h5>
+          <p class="card-text">{{field_name_sales_settings_organisation_heading}}</p>
+      
+        </div>
+      </div>
+    </div></div></section>

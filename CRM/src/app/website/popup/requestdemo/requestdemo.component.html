@@ -1,0 +1,347 @@
+
+<section id="top" *ngIf="this._uiservice.langDataSource.value == 'ar' && this.requestdemoDetail" dir='rtl'>
+
+<div class="modal-header">
+  <h4 class="modal-title">{{create_account}}</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form
+    class="form-horizontal form-material"
+    name="form"
+    #f="ngForm"
+    (ngSubmit)="f.form.valid && onSubmitDemo()"
+  >
+    <div class="modal-body">
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Full Name"
+          [(ngModel)]="requestdemoDetail.full_name"
+          name="full_name" maxlength="20" minlength="1"
+          pattern="[a-zA-Z\s]+"
+          #full_name="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && full_name.invalid,
+            'is-valid': f.submitted && full_name.valid
+          }"
+          required
+        />
+        <div *ngIf="f.submitted && full_name.invalid" class="invalid-feedback">
+          <div *ngIf="full_name.errors.required">Please provide Full name</div>
+          <div *ngIf="full_name.errors.pattern">Provide alphabets only</div>
+          <div *ngIf="full_name.errors.maxlength"> Please provide maxlength 20 Characters
+          </div>
+          <div *ngIf="full_name.errors.minlength"> Please provide maxlength 20 Characters
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Email"
+          [(ngModel)]="requestdemoDetail.email"
+          name="email"
+          pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+          #email="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && email.invalid,
+            'is-valid': f.submitted && email.valid
+          }"
+          required
+        />
+
+        <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+          <div *ngIf="email.errors.required">Please provide Email</div>
+          <div *ngIf="email.errors.pattern">
+            Email format should be
+            <small class="text-success"><b>jhon@abc.com</b></small>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Phone"
+          [(ngModel)]="requestdemoDetail.phone"
+          name="phone" maxlength="15" minlength="6"
+          pattern=".{6,15}"
+          #phone="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && phone.invalid,
+            'is-valid': f.submitted && phone.valid
+          }"
+          required
+        />
+        <div *ngIf="f.submitted && phone.invalid" class="invalid-feedback">
+          <div *ngIf="phone.errors.required">Please provide phone number</div>
+          <div *ngIf="phone.errors.pattern">Please maxlength 15 only</div>
+          <div *ngIf="phone.errors.maxlength">Please enter maxlength 15 only</div>
+         
+        </div>
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Organization"
+          [(ngModel)]="requestdemoDetail.organization"
+          maxlength="20"
+          minlength="1"
+          name="organization"
+          #organization="ngModel"
+          pattern="^(?=.*[a-zA-Z]).{3,}$"
+          name="organization"
+          [ngClass]="{
+            'is-invalid': f.submitted && organization.invalid,
+            'is-valid': f.submitted && organization.valid
+          }"
+          required
+        />
+        <div
+          *ngIf="f.submitted && organization.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="organization.errors.required">
+            Please provide Organization
+          </div>
+          <div *ngIf="organization.errors.maxlength"> Please provide maxlength 20 Characters
+          </div>
+          <div *ngIf="organization.errors.minlength"> Please provide maxlength 20 Characters
+          </div>
+        
+        </div>
+      </div>
+
+      <div class="form-group">
+        <select 
+           class="custom-select" id="plan"
+          placeholder="Select your plans"
+          [(ngModel)]="requestdemoDetail.plan"
+          name="plan"
+          #plan="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && plan.invalid,
+            'is-valid': f.submitted && plan.valid
+          }"
+          required
+        >
+        <option [ngValue]="null" [disabled]="true">Choose option</option>
+        
+          <option *ngFor="let obj of plansDetail" [value]="obj.plan">{{obj.plan}}
+          </option>
+        </select>
+        <div *ngIf="f.submitted && plan.invalid" class="invalid-feedback">
+          <div *ngIf="plan.errors.required">Please Select plan</div>
+        </div>
+      </div>
+     
+    </div>
+    <!-- <div class="modal-footer border-top-0 d-flex justify-content-center">
+      <button type="submit" class="btn btn-success">Submit</button>
+    </div> -->
+    <div style="text-align: end">
+      <button
+        class="btn btn-success text-center pull-right"
+        style="margin-top: 10px"
+        type="submit"
+      >
+        <span>{{ 'Save'| translate }}</span>
+      </button>
+      <button
+        class="btn btn-danger text-center pull-right"
+        style="margin-top: 10px"
+        type="cancel"
+        (click)="activeModal.dismiss('Cross click')"
+      >
+        {{ 'Cancel'| translate }}
+      </button>
+    </div>
+  </form>
+</div>
+
+
+</section>
+
+
+<section *ngIf="this._uiservice.langDataSource.value != 'ar' && this.requestdemoDetail" dir='ltr'> 
+
+  <div class="modal-header">
+    <h4 class="modal-title">{{create_account}}</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="activeModal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form
+      class="form-horizontal form-material"
+      name="form"
+      #f="ngForm"
+      (ngSubmit)="f.form.valid && onSubmitDemo()"
+    >
+      <div class="modal-body">
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Full Name"
+            [(ngModel)]="requestdemoDetail.full_name"
+            name="full_name" maxlength="20" minlength="1"
+            pattern="[a-zA-Z\s]+"
+            #full_name="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && full_name.invalid,
+              'is-valid': f.submitted && full_name.valid
+            }"
+            required
+          />
+          <div *ngIf="f.submitted && full_name.invalid" class="invalid-feedback">
+            <div *ngIf="full_name.errors.required">Please provide Full name</div>
+            <div *ngIf="full_name.errors.pattern">Provide alphabets only</div>
+            <div *ngIf="full_name.errors.maxlength"> Please provide maxlength 20 Characters
+            </div>
+            <div *ngIf="full_name.errors.minlength"> Please provide maxlength 20 Characters
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Email"
+            [(ngModel)]="requestdemoDetail.email"
+            name="email"
+            pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+            #email="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && email.invalid,
+              'is-valid': f.submitted && email.valid
+            }"
+            required
+          />
+  
+          <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+            <div *ngIf="email.errors.required">Please provide Email</div>
+            <div *ngIf="email.errors.pattern">
+              Email format should be
+              <small class="text-success"><b>jhon@abc.com</b></small>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <input
+            type="number"
+            class="form-control"
+            placeholder="Phone"
+            [(ngModel)]="requestdemoDetail.phone"
+            name="phone" maxlength="15" minlength="6"
+            pattern=".{6,15}"
+            #phone="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && phone.invalid,
+              'is-valid': f.submitted && phone.valid
+            }"
+            required
+          />
+          <div *ngIf="f.submitted && phone.invalid" class="invalid-feedback">
+            <div *ngIf="phone.errors.required">Please provide phone number</div>
+            <div *ngIf="phone.errors.pattern">Please maxlength 15 only</div>
+            <div *ngIf="phone.errors.maxlength">Please enter maxlength 15 only</div>
+           
+          </div>
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Organization"
+            [(ngModel)]="requestdemoDetail.organization"
+            maxlength="20"
+            minlength="1"
+            name="organization"
+            #organization="ngModel"
+            pattern="^(?=.*[a-zA-Z]).{3,}$"
+            name="organization"
+            [ngClass]="{
+              'is-invalid': f.submitted && organization.invalid,
+              'is-valid': f.submitted && organization.valid
+            }"
+            required
+          />
+          <div
+            *ngIf="f.submitted && organization.invalid"
+            class="invalid-feedback"
+          >
+            <div *ngIf="organization.errors.required">
+              Please provide Organization
+            </div>
+            <div *ngIf="organization.errors.maxlength"> Please provide maxlength 20 Characters
+            </div>
+            <div *ngIf="organization.errors.minlength"> Please provide maxlength 20 Characters
+            </div>
+          
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <select 
+             class="custom-select" id="plan"
+            placeholder="Select your plans"
+            [(ngModel)]="requestdemoDetail.plan"
+            name="plan"
+            #plan="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && plan.invalid,
+              'is-valid': f.submitted && plan.valid
+            }"
+            required
+          >
+          <option [ngValue]="null" [disabled]="true">Choose option</option>
+          
+            <option *ngFor="let obj of plansDetail" [value]="obj.plan">{{obj.plan}}
+            </option>
+          </select>
+          <div *ngIf="f.submitted && plan.invalid" class="invalid-feedback">
+            <div *ngIf="plan.errors.required">Please Select plan</div>
+          </div>
+        </div>
+       
+      </div>
+      <!-- <div class="modal-footer border-top-0 d-flex justify-content-center">
+        <button type="submit" class="btn btn-success">Submit</button>
+      </div> -->
+      <div style="text-align: end">
+        <button
+          class="btn btn-success text-center pull-right"
+          style="margin-top: 10px"
+          type="submit"
+        >
+          <span>{{ 'Save'| translate }}</span>
+        </button>
+        <button
+          class="btn btn-danger text-center pull-right"
+          style="margin-top: 10px"
+          type="cancel"
+          (click)="activeModal.dismiss('Cross click')"
+        >
+          {{ 'Cancel' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</section>

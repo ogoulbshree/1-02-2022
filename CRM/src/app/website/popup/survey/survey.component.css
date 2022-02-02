@@ -1,0 +1,133 @@
+
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .brand {
+    text-align: center;
+      font-weight: 300;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+  }
+  
+  .brand span {
+    color: #ffffff;
+  }
+  
+  .wrapper {
+    box-shadow: 0 0 20px 0 rgba(57, 82, 163, 0.7);
+  }
+  
+  .wrapper > * {
+    padding: 1em;
+  }
+  
+  /* ------------------- */
+  /* COMPANY INFORMATION */
+  /* ------------------- */
+  
+  .company-info {
+    background: #F1F7FF;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+  
+  .company-info h3,
+  .company-info ul {
+    text-align: center;
+    margin: 0 0 1rem 0;
+  }
+  
+  /* ------- */
+  /* CONTACT */
+  /* ------- */
+  
+  .contact {
+	background: #F1F7FF;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+  
+  /* ---- */
+  /* FORM */
+  /* ---- */
+  
+  .contact form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+  }
+  
+  .contact form label {
+    display: block;
+  }
+  
+ 
+  
+  
+  
+  .contact form button,
+  .contact form input,
+  .contact form textarea {
+    width: 100%;
+    padding: 1em;
+    border: solid 1px #627EDC;
+    border-radius: 4px;
+  }
+  
+  .contact form textarea {
+    resize: none;
+  }
+  
+  
+  
+  
+  
+  /* ------------- */
+  /* MEDIA QUERIES */
+  /* ------------- */
+  
+  @media only screen and (min-width: 700px) {
+    .wrapper {
+      display: grid;
+      /* grid-template-columns: 1fr 2fr; */
+	  margin-bottom: 40px;
+    }
+}
+  
+    .company-info {
+      border-radius: 4px 0 0 4px;
+    }
+  
+    .contact {
+      border-radius: 0 4px 4px 0;
+    }
+  
+  
+  
+  
+  .txtcolor{
+      color: #0058D2;
+  }
+  
+  .headerc{
+      
+      font-weight: 800;
+  }
+
+  #content{
+    width:78%;
+    height:400px;
+    float:left;
+    border:1px solid black;
+    text-align:center;
+}
+textarea
+{
+  
+    width:98% !important;
+
+	
+}

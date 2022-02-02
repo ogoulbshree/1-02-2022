@@ -1,0 +1,689 @@
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar' && this.stockDetail" dir='rtl' >
+  <div class="container-fluid">
+    <h3 class="text-center">{{field_name_stock_details}}</h3>
+    <div class="card">
+      <div class="card-body">
+
+<form class="form-horizontal form-material" name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()">
+<div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+<strong>Stocks Details!</strong>The form has the following errors that need to be corrected
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="card-header">
+<h2>
+<span *ngIf="!isUpdate">{{field_name_stock_addstock}}</span>
+<span *ngIf="isUpdate">{{field_name_stock_update}}</span>
+</h2>
+</div>
+<div class="card-body">
+
+
+  <div class="form-row">
+   
+
+   <div class="form-group col-md-4">
+    <label class="col-sm-5 col-form-label">{{field_name_stock_code}}<span
+    class="text-danger font-weight-bold" >
+    *</span></label>
+    <div class="col-sm-10">
+    <input type="text" class="form-control" [(ngModel)]="stockDetail.code" name="code"
+    pattern="^(?:[A-Za-z0-9]+)(?:[A-Za-z0-9 _]*)$" #code="ngModel"
+    [ngClass]="{ 'is-invalid': f.submitted && code.invalid,
+    'is-valid': f.submitted && code.valid }"
+    required>
+    <div *ngIf="f.submitted && code.invalid" class="invalid-feedback">
+    <div *ngIf="code.errors.required">Please provide Code</div>
+    <div *ngIf="code.errors.pattern"> Please provide Only Alphanumeric
+    </div>
+   
+    </div>
+    </div>
+    </div>
+
+
+
+    <div class="form-group col-md-4">
+      <label class="col-sm-5 col-form-label">{{field_name_stock_product_name}}<span
+      class="text-danger font-weight-bold" >
+      *</span></label>
+      <div class="col-sm-10">
+      <input type="text" class="form-control" [(ngModel)]="stockDetail.product_name" name="product_name"
+      pattern="^(?:[A-Za-z0-9]+)(?:[A-Za-z0-9 _]*)$" #product_name="ngModel"
+      [ngClass]="{ 'is-invalid': f.submitted && product_name.invalid,
+      'is-valid': f.submitted && product_name.valid }"
+      required>
+      <div *ngIf="f.submitted && product_name.invalid" class="invalid-feedback">
+      <div *ngIf="product_name.errors.required">Please provide Product name</div>
+      <div *ngIf="product_name.errors.pattern"> Please provide Only Alphanumeric
+      </div>
+     
+      </div>
+      </div>
+      </div>
+   
+
+
+    <div class="form-group col-md-4">
+      <label for="currency_name" class="col-sm-5 col-form-label">{{field_name_stock_currency}}<span
+      class="text-danger font-weight-bold">
+      *</span></label>
+      
+      <div class="col-sm-10">
+      <select class="custom-select" name="currency_name" [(ngModel)]="stockDetail.currency_name"
+      #currency_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && currency_name.invalid,
+      'is-valid': f.submitted && currency_name.valid }"
+      required >
+
+     
+        <option *ngFor="let obj of currencyDetail" [value]="obj.currency_name">{{obj.currency_name}}
+        </option>
+      
+      </select>
+      <div *ngIf="f.submitted && currency_name.invalid" class="invalid-feedback">
+      <div *ngIf="currency_name.errors.required">Required currency</div>
+      </div>
+      </div>
+      </div>
+
+
+
+      <div class="form-group col-md-4">
+        <label class="col-sm-5 col-form-label">{{field_name_stock_cost}}<span
+        class="text-danger font-weight-bold" >
+        *</span></label>
+        <div class="col-sm-10">
+        <input type="text" class="form-control" [(ngModel)]="stockDetail.cost" name="cost"
+        pattern="[0-9]*[.]?[0-9]+" #cost="ngModel"
+        [ngClass]="{ 'is-invalid': f.submitted && cost.invalid,
+        'is-valid': f.submitted && cost.valid }"
+        required>
+       <div *ngIf="f.submitted && cost.invalid" class="invalid-feedback">
+        <div *ngIf="cost.errors.required">Please provide cost price</div>
+        
+        <div *ngIf="cost.errors.pattern">only number allowed
+        </div> 
+        </div> 
+        </div>
+        </div>
+
+        <div class="form-group col-md-4">
+          <label class="col-sm-5 col-form-label">{{field_name_stock_supplier_name}}<span
+            class="text-danger font-weight-bold">
+            </span></label>
+          <div class="col-sm-10">
+            <select type="text" class="custom-select" [(ngModel)]="stockDetail.supplier_name" name="supplier_name"
+              #supplier_name="ngModel" 
+           [ngClass]="{ 'is-invalid': f.submitted && supplier_name.invalid, 
+             'is-valid': f.submitted && supplier_name.valid }"
+            required> 
+         
+            <option *ngFor="let obj of suppliernameDetail" [value]="obj.supplier_name">{{obj.supplier_name}}
+            </option>
+          </select>
+          <div *ngIf="f.submitted && supplier_name.invalid" class="invalid-feedback">
+                <div *ngIf="supplier_name.errors.required">Please provide supplier name</div>
+            
+            </div> 
+          </div>
+        </div>
+
+
+        <div class="form-group col-md-4">
+          <label for="category_name" class="col-sm-5 col-form-label">{{field_name_stock_category_name}}<span
+          class="text-danger font-weight-bold" >
+          *</span></label>
+          
+          <div class="col-sm-10">
+          <select class="custom-select" name="category_name" [(ngModel)]="stockDetail.category_name"
+          #category_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && category_name.invalid,
+          'is-valid': f.submitted && category_name.valid }"
+          required >
+          <option *ngFor="let obj of categoryDetail" [value]="obj.category_name">{{obj.category_name}}
+          </option>
+          </select>
+          <div *ngIf="f.submitted && category_name.invalid" class="invalid-feedback">
+          <div *ngIf="category_name.errors.required">Required Categoryname</div>
+          </div>
+          </div>
+          </div>
+
+
+
+<div class="form-group col-md-4">
+<label class="col-sm-5 col-form-label">{{field_name_stock_weight}}<span
+class="text-danger font-weight-bold">
+</span></label>
+<div class="col-sm-10">
+<input type="text" class="form-control" [(ngModel)]="stockDetail.weight" name="weight"
+ #weight="ngModel">
+<!--  [ngClass]="{ 'is-invalid': f.submitted && weight.invalid,
+'is-valid': f.submitted && weight.valid }"
+[required]="field_weight_required"/> -->
+<!-- <div *ngIf="f.submitted && weight.invalid" class="invalid-feedback">
+<div *ngIf="weight.errors.required">Please provide weight </div>
+
+<div *ngIf="weight.errors.pattern">only number allowed
+</div>
+</div> -->
+</div>
+</div>
+
+
+<!-- <div class="form-group col-md-4">
+  <label class="col-sm-5 col-form-label">{{field_name_stock_manage_stock}}<span
+  class="text-danger font-weight-bold" >
+  *</span></label>
+  <div class="col-sm-10">
+  <input type="text" class="form-control" [(ngModel)]="stockDetail.manage_stock" name="manage_stock"
+   #manage_stock="ngModel" [ngClass]="{ 'is-invalid': f.submitted && manage_stock.invalid,
+  'is-valid': f.submitted && manage_stock.valid }"
+  required> 
+  <div *ngIf="f.submitted && manage_stock.invalid" class="invalid-feedback">
+  <div *ngIf="manage_stock.errors.required">Please provide Manage Stock </div>
+  
+
+  </div> 
+  </div>
+  </div> -->
+  
+<!--   <div class="form-group col-md-4">
+    <label class="col-sm-5 col-form-label">{{field_name_stock_stock_status}}<span
+    class="text-danger font-weight-bold">
+    *</span></label>
+    <div class="col-sm-10">
+    <input type="text" class="form-control" [(ngModel)]="stockDetail.stock_status" name="stock_status"
+ #stock_status="ngModel" [ngClass]="{ 'is-invalid': f.submitted && stock_status.invalid,
+    'is-valid': f.submitted && stock_status.valid }"
+    required>
+    <div *ngIf="f.submitted && stock_status.invalid" class="invalid-feedback">
+    <div *ngIf="stock_status.errors.required">Please provide Stock Status </div>
+    
+   
+    </div> 
+    </div>
+    </div> -->
+
+
+</div>
+
+<div class="form-row">
+
+               
+ 
+  
+       
+          <div class="form-group col-md-4">
+              <label class="col-sm-5 col-form-label">{{field_name_stock_stock}}<span
+              class="text-danger font-weight-bold" >
+              *</span></label>
+              <div class="col-sm-10">
+              <input type="text" class="form-control" [(ngModel)]="stockDetail.stock" name="stock"
+               #stock="ngModel" [ngClass]="{ 'is-invalid': f.submitted && stock.invalid,
+              'is-valid': f.submitted && stock.valid }"
+              required> 
+             <div *ngIf="f.submitted && stock.invalid" class="invalid-feedback">
+              <div *ngIf="stock.errors.required">Please provide Stock </div>
+              
+             
+              </div> 
+              </div>
+              </div>
+
+              <div class="form-group col-md-4">
+                <label  for="availability" class="col-sm-5 col-form-label">{{field_name_stock_availability}}<span
+                  class="text-danger font-weight-bold">
+                  *</span></label>
+              
+                  <div class="col-sm-10">
+                    <select class="custom-select" id="gender2" name="availability" [(ngModel)]="stockDetail.availability"
+                        #availability="ngModel" [ngClass]="{'is-invalid': f.submitted && availability.invalid, 
+                        'is-valid': f.submitted && availability.valid }" required>
+                        
+                  
+                       
+                      
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                       
+    
+                    </select> 
+                   <div *ngIf="f.submitted && availability.invalid" class="invalid-feedback">
+                        <div *ngIf="availability.errors.required">Requred Availability</div>
+                    </div>  
+                </div>
+            </div>
+
+<div class="form-group col-md-4">
+<label for="files" class="col-sm-5 col-form-label">{{field_name_files}}<span
+class="text-danger font-weight-bold" >
+</span></label>
+<div class="col-sm-10">
+<input type="file" class="form-control" name="files" #files="ngModel" 
+[(ngModel)]="stockDetail.files" (change)="selectImage($event)"/>
+
+</div>
+</div>
+<div class="form-group">
+<div class="hoverable" *ngIf="preview && preview !== null">
+<img [src]="preview" >
+
+</div>
+</div>
+</div>
+<div class="form-row">
+<div class="form-group col-md-3">
+<label class="col-sm-5 col-form-label"> {{field_name_stock_created_by}}
+
+</label>
+<div class="col-sm-10">
+<input type="text" class="form-control" name="created_by"
+[(ngModel)]="stockDetail.created_by"
+#created_by="ngModel" readonly>
+</div>
+</div>
+<div class="form-group col-md-3">
+<label class="col-sm-5 col-form-label"> {{field_name_stock_created_time}}
+
+</label>
+<div class="col-sm-10">
+
+
+<input type="text" class="form-control" name="created_time"
+readonly value="{{stockDetail.created_time |  date : dateFormat:'GMT':locale}}">
+
+
+
+</div>
+</div>
+<div class="form-group col-md-3">
+<label class="col-sm-5 col-form-label"> {{field_name_stock_updated_by}}
+
+</label>
+<div class="col-sm-10">
+<input type="text" class="form-control" name="updated_by"
+[(ngModel)]="stockDetail.updated_by"
+#updated_by="ngModel" readonly>
+</div>
+</div>
+<div class="form-group col-md-3">
+<label class="col-sm-5 col-form-label">{{field_name_stock_updated_time}}
+
+</label>
+<div class="col-sm-10">
+
+<input type="text" class="form-control" name="modified_time"
+readonly value=" {{stockDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+
+
+</div>
+</div>
+</div>
+
+<button class="btn btn-danger btn-round text-center pull-right" type="button"
+                                                      appCancelbutton>{{'Cancel'|translate}}</button>
+                                                      <button class="btn btn-success btn-round text-center pull-right" >
+                                                        <span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+                                                        <span *ngIf="isUpdate">{{'Update'|translate}}</span></button>
+
+</div>
+
+</form>
+</div>
+
+
+
+</div>
+</div>
+
+  </section>
+  
+  
+  
+  
+  
+  
+  
+  <section *ngIf="this._uiservice.langDataSource.value != 'ar' && this.stockDetail" dir='ltr' >
+    <div class="container-fluid">
+      <h3 class="text-center">{{field_name_stock_details}}</h3>
+      <div class="card">
+        <div class="card-body">
+  
+  <form class="form-horizontal form-material" name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()">
+  <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+  <strong>Stocks Details!</strong>The form has the following errors that need to be corrected
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+  </button>
+  </div>
+  <div class="card-header">
+  <h2>
+  <span *ngIf="!isUpdate">{{field_name_stock_addstock}}</span>
+  <span *ngIf="isUpdate">{{field_name_stock_update}}</span>
+  </h2>
+  </div>
+  <div class="card-body">
+  
+  
+    <div class="form-row">
+     
+  
+     <div class="form-group col-md-4">
+      <label class="col-sm-5 col-form-label">{{field_name_stock_code}}<span
+      class="text-danger font-weight-bold" >
+      *</span></label>
+      <div class="col-sm-10">
+      <input type="text" class="form-control" [(ngModel)]="stockDetail.code" name="code"
+      pattern="^(?:[A-Za-z0-9]+)(?:[A-Za-z0-9 _]*)$" #code="ngModel"
+      [ngClass]="{ 'is-invalid': f.submitted && code.invalid,
+      'is-valid': f.submitted && code.valid }"
+      required>
+      <div *ngIf="f.submitted && code.invalid" class="invalid-feedback">
+      <div *ngIf="code.errors.required">Please provide Code</div>
+      <div *ngIf="code.errors.pattern"> Please provide Only Alphanumeric
+      </div>
+     
+      </div>
+      </div>
+      </div>
+  
+  
+  
+      <div class="form-group col-md-4">
+        <label class="col-sm-5 col-form-label">{{field_name_stock_product_name}}<span
+        class="text-danger font-weight-bold" >
+        *</span></label>
+        <div class="col-sm-10">
+        <input type="text" class="form-control" [(ngModel)]="stockDetail.product_name" name="product_name"
+        pattern="^(?:[A-Za-z0-9]+)(?:[A-Za-z0-9 _]*)$" #product_name="ngModel"
+        [ngClass]="{ 'is-invalid': f.submitted && product_name.invalid,
+        'is-valid': f.submitted && product_name.valid }"
+        required>
+        <div *ngIf="f.submitted && product_name.invalid" class="invalid-feedback">
+        <div *ngIf="product_name.errors.required">Please provide Product name</div>
+        <div *ngIf="product_name.errors.pattern"> Please provide Only Alphanumeric
+        </div>
+       
+        </div>
+        </div>
+        </div>
+     
+  
+  
+      <div class="form-group col-md-4">
+        <label for="currency_name" class="col-sm-5 col-form-label">{{field_name_stock_currency}}<span
+        class="text-danger font-weight-bold">
+        *</span></label>
+        
+        <div class="col-sm-10">
+        <select class="custom-select" name="currency_name" [(ngModel)]="stockDetail.currency_name"
+        #currency_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && currency_name.invalid,
+        'is-valid': f.submitted && currency_name.valid }"
+        required >
+  
+       
+          <option *ngFor="let obj of currencyDetail" [value]="obj.currency_name">{{obj.currency_name}}
+          </option>
+        
+        </select>
+        <div *ngIf="f.submitted && currency_name.invalid" class="invalid-feedback">
+        <div *ngIf="currency_name.errors.required">Required currency</div>
+        </div>
+        </div>
+        </div>
+  
+  
+  
+        <div class="form-group col-md-4">
+          <label class="col-sm-5 col-form-label">{{field_name_stock_cost}}<span
+          class="text-danger font-weight-bold" >
+          *</span></label>
+          <div class="col-sm-10">
+          <input type="text" class="form-control" [(ngModel)]="stockDetail.cost" name="cost"
+          pattern="[0-9]*[.]?[0-9]+" #cost="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && cost.invalid,
+          'is-valid': f.submitted && cost.valid }"
+          required>
+         <div *ngIf="f.submitted && cost.invalid" class="invalid-feedback">
+          <div *ngIf="cost.errors.required">Please provide cost price</div>
+          
+          <div *ngIf="cost.errors.pattern">only number allowed
+          </div> 
+          </div> 
+          </div>
+          </div>
+  
+          <div class="form-group col-md-4">
+            <label class="col-sm-5 col-form-label">{{field_name_stock_supplier_name}}<span
+              class="text-danger font-weight-bold">
+              </span></label>
+            <div class="col-sm-10">
+              <select type="text" class="custom-select" [(ngModel)]="stockDetail.supplier_name" name="supplier_name"
+                #supplier_name="ngModel" 
+             [ngClass]="{ 'is-invalid': f.submitted && supplier_name.invalid, 
+               'is-valid': f.submitted && supplier_name.valid }"
+              required> 
+           
+              <option *ngFor="let obj of suppliernameDetail" [value]="obj.supplier_name">{{obj.supplier_name}}
+              </option>
+            </select>
+            <div *ngIf="f.submitted && supplier_name.invalid" class="invalid-feedback">
+                  <div *ngIf="supplier_name.errors.required">Please provide supplier name</div>
+              
+              </div> 
+            </div>
+          </div>
+  
+  
+          <div class="form-group col-md-4">
+            <label for="category_name" class="col-sm-5 col-form-label">{{field_name_stock_category_name}}<span
+            class="text-danger font-weight-bold" >
+            *</span></label>
+            
+            <div class="col-sm-10">
+            <select class="custom-select" name="category_name" [(ngModel)]="stockDetail.category_name"
+            #category_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && category_name.invalid,
+            'is-valid': f.submitted && category_name.valid }"
+            required >
+            <option *ngFor="let obj of categoryDetail" [value]="obj.category_name">{{obj.category_name}}
+            </option>
+            </select>
+            <div *ngIf="f.submitted && category_name.invalid" class="invalid-feedback">
+            <div *ngIf="category_name.errors.required">Required Categoryname</div>
+            </div>
+            </div>
+            </div>
+  
+  
+  
+  <div class="form-group col-md-4">
+  <label class="col-sm-5 col-form-label">{{field_name_stock_weight}}<span
+  class="text-danger font-weight-bold">
+  </span></label>
+  <div class="col-sm-10">
+  <input type="text" class="form-control" [(ngModel)]="stockDetail.weight" name="weight"
+   #weight="ngModel">
+  <!--  [ngClass]="{ 'is-invalid': f.submitted && weight.invalid,
+  'is-valid': f.submitted && weight.valid }"
+  [required]="field_weight_required"/> -->
+  <!-- <div *ngIf="f.submitted && weight.invalid" class="invalid-feedback">
+  <div *ngIf="weight.errors.required">Please provide weight </div>
+  
+  <div *ngIf="weight.errors.pattern">only number allowed
+  </div>
+  </div> -->
+  </div>
+  </div>
+  
+  <!-- 
+  <div class="form-group col-md-4">
+    <label class="col-sm-5 col-form-label">{{field_name_stock_manage_stock}}<span
+    class="text-danger font-weight-bold" >
+    *</span></label>
+    <div class="col-sm-10">
+    <input type="text" class="form-control" [(ngModel)]="stockDetail.manage_stock" name="manage_stock"
+     #manage_stock="ngModel" [ngClass]="{ 'is-invalid': f.submitted && manage_stock.invalid,
+    'is-valid': f.submitted && manage_stock.valid }"
+    required> 
+    <div *ngIf="f.submitted && manage_stock.invalid" class="invalid-feedback">
+    <div *ngIf="manage_stock.errors.required">Please provide Manage Stock </div>
+    
+  
+    </div> 
+    </div>
+    </div> -->
+    
+   <!--  <div class="form-group col-md-4">
+      <label class="col-sm-5 col-form-label">{{field_name_stock_stock_status}}<span
+      class="text-danger font-weight-bold">
+      *</span></label>
+      <div class="col-sm-10">
+      <input type="text" class="form-control" [(ngModel)]="stockDetail.stock_status" name="stock_status"
+   #stock_status="ngModel" [ngClass]="{ 'is-invalid': f.submitted && stock_status.invalid,
+      'is-valid': f.submitted && stock_status.valid }"
+      required>
+      <div *ngIf="f.submitted && stock_status.invalid" class="invalid-feedback">
+      <div *ngIf="stock_status.errors.required">Please provide Stock Status </div>
+      
+     
+      </div> 
+      </div>
+      </div> -->
+  
+  
+  </div>
+  
+  <div class="form-row">
+  
+                 
+   
+    
+         
+            <div class="form-group col-md-4">
+                <label class="col-sm-5 col-form-label">{{field_name_stock_stock}}<span
+                class="text-danger font-weight-bold" >
+                *</span></label>
+                <div class="col-sm-10">
+                <input type="text" class="form-control" [(ngModel)]="stockDetail.stock" name="stock"
+                 #stock="ngModel" [ngClass]="{ 'is-invalid': f.submitted && stock.invalid,
+                'is-valid': f.submitted && stock.valid }"
+                required> 
+               <div *ngIf="f.submitted && stock.invalid" class="invalid-feedback">
+                <div *ngIf="stock.errors.required">Please provide Stock </div>
+                
+               
+                </div> 
+                </div>
+                </div>
+  
+                <div class="form-group col-md-4">
+                  <label  for="availability" class="col-sm-5 col-form-label">{{field_name_stock_availability}}<span
+                    class="text-danger font-weight-bold">
+                    *</span></label>
+                
+                    <div class="col-sm-10">
+                      <select class="custom-select" id="gender2" name="availability" [(ngModel)]="stockDetail.availability"
+                          #availability="ngModel" [ngClass]="{'is-invalid': f.submitted && availability.invalid, 
+                          'is-valid': f.submitted && availability.valid }" required>
+                          
+                    
+                         
+                        
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                         
+      
+                      </select> 
+                     <div *ngIf="f.submitted && availability.invalid" class="invalid-feedback">
+                          <div *ngIf="availability.errors.required">Requred Availability</div>
+                      </div>  
+                  </div>
+              </div>
+  
+  <div class="form-group col-md-4">
+  <label for="files" class="col-sm-5 col-form-label">{{field_name_files}}<span
+  class="text-danger font-weight-bold" >
+  </span></label>
+  <div class="col-sm-10">
+  <input type="file" class="form-control" name="files" #files="ngModel" 
+  [(ngModel)]="stockDetail.files" (change)="selectImage($event)"/>
+  
+  </div>
+  </div>
+  <div class="form-group">
+  <div class="hoverable" *ngIf="preview && preview !== null">
+  <img [src]="preview" >
+  
+  </div>
+  </div>
+  </div>
+  <div class="form-row">
+  <div class="form-group col-md-3">
+  <label class="col-sm-5 col-form-label"> {{field_name_stock_created_by}}
+  
+  </label>
+  <div class="col-sm-10">
+  <input type="text" class="form-control" name="created_by"
+  [(ngModel)]="stockDetail.created_by"
+  #created_by="ngModel" readonly>
+  </div>
+  </div>
+  <div class="form-group col-md-3">
+  <label class="col-sm-5 col-form-label"> {{field_name_stock_created_time}}
+  
+  </label>
+  <div class="col-sm-10">
+  
+  
+  <input type="text" class="form-control" name="created_time"
+  readonly value="{{stockDetail.created_time |  date : dateFormat:'GMT':locale}}">
+  
+  
+  
+  </div>
+  </div>
+  <div class="form-group col-md-3">
+  <label class="col-sm-5 col-form-label"> {{field_name_stock_updated_by}}
+  
+  </label>
+  <div class="col-sm-10">
+  <input type="text" class="form-control" name="updated_by"
+  [(ngModel)]="stockDetail.updated_by"
+  #updated_by="ngModel" readonly>
+  </div>
+  </div>
+  <div class="form-group col-md-3">
+  <label class="col-sm-5 col-form-label">{{field_name_stock_updated_time}}
+  
+  </label>
+  <div class="col-sm-10">
+  
+  <input type="text" class="form-control" name="modified_time"
+  readonly value=" {{stockDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+  
+  
+  </div>
+  </div>
+  </div>
+  
+  <button class="btn btn-danger btn-round text-center pull-right" type="button"
+                                                        appCancelbutton>{{'Cancel'|translate}}</button>
+                                                        <button class="btn btn-success btn-round text-center pull-right" >
+                                                          <span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+                                                          <span *ngIf="isUpdate">{{'Update'|translate}}</span></button>
+  
+  </div>
+  
+  </form>
+  </div>
+  
+  
+  
+  </div>
+  </div>
+  
+  </section>
+  

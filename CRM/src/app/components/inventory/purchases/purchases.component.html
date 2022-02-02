@@ -1,0 +1,565 @@
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'  && this.purchaseDetail" dir='rtl' >
+
+  <div class="container-fluid">
+    <h3 class="text-center">{{field_name_purchase_details}}</h3>
+    <div class="card">
+      <div class="card-body">
+
+  <div *ngIf="print" class="btn-toolbar text-center well1">
+    <button  (click)=" exportToPrint()" type="button" class="btn btn-success col-xs-5 margin-left">
+      <i class="fa fa-print" aria-hidden="true"></i>{{field_name_purchase_print}}
+    </button>
+  </div>
+  
+  <form id="contentToConvert" class="form-horizontal form-material" name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()">
+     <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+      <strong>Purchases Details!</strong>The form has the following errors that need to be corrected
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="card-header">
+      <h2>
+        <span *ngIf="!isUpdate">{{field_name_purchase_addpurchase}}</span>
+        <span *ngIf="isUpdate">{{field_name_purchase_update}}</span>
+        
+      </h2>
+    </div>
+    <div class="card-body">
+  
+      <div class="form-row">
+      <div class="form-group col-md-4" *ngIf="!isUpdate">
+        <label class="col-sm-5 col-form-label"  >{{field_name_purchase_supplier_name}}
+          <span class="text-danger font-weight-bold">
+            *</span>
+        </label>
+        <div class="col-sm-10">
+         
+          <div class="ng-autocomplete">
+            <ng-autocomplete [data]="suppliers" [searchKeyword]="supplier_keyword" [itemTemplate]="itemTemplate"
+              (inputChanged)='onChangeSearch($event)' (selected)='onSupplierSelect($event)'  historyIdentifier="suppliers"
+              (inputFocused)='onFocused($event)' [notFoundTemplate]="notFoundTemplate" [(ngModel)]="suppliers.supplier_name"
+              name="supplier_name" required  #supplier_name="ngModel" 
+                        [ngClass]="{ 'is-invalid': f.submitted && supplier_name.invalid, 
+                       'is-valid': f.submitted && supplier_name.valid }">
+             
+            </ng-autocomplete>
+            
+            <ng-template #itemTemplate let-item>
+              <a [innerHTML]="item.supplier_name"></a>
+            </ng-template>
+
+            <ng-template #notFoundTemplate let-notFound>
+              <div [innerHTML]="notFound"></div>
+              
+          
+            </ng-template> 
+            <div *ngIf="f.submitted && supplier_name.invalid" class="invalid-feedback">
+              <div *ngIf="supplier_name.errors.required">Please Provide Supplier Name</div>
+    
+             
+            </div>
+           
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-4" *ngIf="isUpdate">
+        <label class="col-sm-5 col-form-label" >{{field_name_purchase_supplier_name}}<span class="text-danger font-weight-bold">
+            *</span></label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" [(ngModel)]="purchaseDetail.supplier_name" name="supplier_name" readonly required
+             #supplier_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && supplier_name.invalid, 
+            'is-valid': f.submitted && supplier_name.valid }" readonly />
+        </div>
+        <div *ngIf="f.submitted && supplier_name.invalid" class="invalid-feedback">
+          <div *ngIf="supplier_name.errors.required">Please provide Supplier Name</div>
+
+         
+        </div> 
+      </div> 
+      <div class="form-group col-md-4">
+        <label class="col-sm-5 col-form-label">{{field_name_purchase_mobile}}<span class="text-danger font-weight-bold">
+            *</span></label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" [(ngModel)]="purchaseDetail.supplier_phone" name="supplier_phone" required
+          pattern="^[0-9()\-+\s]+$" #supplier_phone="ngModel" [ngClass]="{ 'is-invalid': f.submitted && supplier_phone.invalid, 
+          'is-valid': f.submitted && supplier_phone.valid }" readonly >
+          <div *ngIf="f.submitted && supplier_phone.invalid "class="invalid-feedback">
+            <div
+                *ngIf="supplier_phone.errors.required ">Please select Suppiers name to get phone details </div>
+               
+              </div>
+
+        </div>
+      </div> 
+
+      <div class="form-group col-md-4">
+        <label class="col-sm-5 col-form-label">{{field_name_purchase_date}}
+          <span class="text-danger font-weight-bold">
+            *</span>
+        </label>
+        <div class="col-sm-10">
+          <input type="date" class="form-control" [(ngModel)]="purchaseDetail.purchases_date" name="purchases_date"
+            #purchases_date="ngModel" [ngClass]="{ 'is-invalid': f.submitted && purchases_date.invalid, 
+            'is-valid': f.submitted && purchases_date.valid }" required />
+            <div *ngIf="f.submitted && purchases_date.invalid "class="invalid-feedback">
+              <div
+                  *ngIf="purchases_date.errors.required ">Please Provide Purchases Date </div>
+                 
+                </div>
+        </div>
+      </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="warehouse_name" class="col-sm-5 col-form-label">{{field_name_purchase_warehouse}}<span
+          class="text-danger font-weight-bold">
+          *</span></label>
+          
+          <div class="col-sm-10">
+          <select class="custom-select" name="warehouse_name" [(ngModel)]="purchaseDetail.warehouse_name"
+          #warehouse_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && warehouse_name.invalid,
+          'is-valid': f.submitted && warehouse_name.valid }"
+          required >
+    
+         
+            <option *ngFor="let obj of warehouseDetail" [value]="obj.warehouse_name">{{obj.warehouse_name}}
+            </option>
+          
+          </select>
+         
+          </div>
+          </div>
+      <div class="form-group col-md-4">
+        <label class="col-sm-5 col-form-label">{{field_name_purchase_productname}}
+          <span class="text-danger font-weight-bold">
+            *</span>
+        </label>
+        <div class="col-sm-10" >
+          <mat-form-field class="example-full-width" appearance="none" floatLabel="never" >
+            <input type="text" matInput [matAutocomplete]="auto" [formControl]="userControl"
+              [(ngModel)]="purchaseDetail.product_name" name="product_name" required>
+              <mat-error *ngIf="userControl.hasError('required')">Please choose any products</mat-error>
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let product of filteredProducts | async" [value]="selectedProducts">
+              <div (click)="optionClicked($event, product)"required >
+                <mat-checkbox [checked]="product.selected" (change)="toggleSelection(product)"
+                  (click)="$event.stopPropagation()">
+                  {{ product.product_name }}
+                </mat-checkbox>
+              </div>
+            </mat-option>
+          </mat-autocomplete>
+         
+         
+        </mat-form-field>
+        </div>
+      </div>
+</div>
+  
+     <div class="table-responsive" *ngIf="selectedProducts.length">
+        <table class="table" [mfData]="selectedProducts" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage">
+          <thead class="thead-light">
+            <tr>
+              <th width="20%">
+                <mfDefaultSorter by="product_name">{{field_name_purchase_productname}}</mfDefaultSorter>
+              </th>
+              <th width="20%">
+                <mfDefaultSorter by="customer_name">{{field_name_purchase_product_category}}</mfDefaultSorter>
+              </th>
+              <th width="20%">
+                <mfDefaultSorter by="mobile">{{field_name_purchase_product_rate}}</mfDefaultSorter>
+              </th>
+              <th width="20%">
+                <mfDefaultSorter by="mobile">{{field_name_purchase_product_quantity}}</mfDefaultSorter>
+              </th>
+              <th width="20%">
+                <mfDefaultSorter by="quotation_date">{{field_name_purchase_product_discount}}</mfDefaultSorter>
+              </th>
+              <th width="20%">
+                <mfDefaultSorter by="quotation_date">{{field_name_purchase_product_actual_rate}}</mfDefaultSorter>
+              </th>
+              <th width="20%">
+                <mfDefaultSorter by="availability">{{field_name_purchase_availability}} </mfDefaultSorter>
+              </th>
+              <th width="20%">
+                <mfDefaultSorter by="product_name">{{field_name_purchase_product_total}} </mfDefaultSorter>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let obj of mf.data;let i=index">
+              <td>{{obj.product_name}}</td>
+              <td>{{obj.category_name}}</td>
+              <td>{{obj.cost}}</td>
+              <td>
+                <input type="text" name="quantity-{{i}}" [(ngModel)]="obj.quantity" (keyup)="onChangeProductQnt(i, $event)">
+              </td>
+              <td>
+                <input type="text" name="discount-{{i}}" [(ngModel)]="obj.discount"
+                  (keyup)="onChangeProductDiscount(i, $event)">
+              </td>
+              <td>{{obj.cost*obj.quantity}}</td>
+              <td>{{obj.availability}}</td>
+              <td>{{obj.product_Total}}</td>
+            </tr>
+            <tr>
+              <td colspan="6"></td>
+              <td colspan="4">{{field_name_purchase_product_total}}: {{total_cost}}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="">
+                <mfBootstrapPaginator [rowsOnPageSet]="[]"></mfBootstrapPaginator>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div> 
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label class="col-sm-5 col-form-label"> {{field_name_purchase_created_by}}
+           
+          </label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="created_by"
+            [(ngModel)]="purchaseDetail.created_by"
+            #created_by="ngModel" readonly>
+        </div>
+      </div>
+        <div class="form-group col-md-3">
+          <label class="col-sm-5 col-form-label">{{field_name_purchase_created_time}}
+            
+          </label>
+          <div class="col-sm-10">
+           
+        
+            <input type="text" class="form-control" name="created_time"  
+             readonly value="{{purchaseDetail.created_time |  date : dateFormat:'GMT':locale}}">
+             
+          
+          
+        </div>
+        </div>
+        <div class="form-group col-md-3">
+          <label class="col-sm-5 col-form-label">{{field_name_purchase_updated_by}}
+           
+          </label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="updated_by"
+              [(ngModel)]="purchaseDetail.updated_by"
+              #updated_by="ngModel" readonly>
+        </div>
+      </div>
+        <div class="form-group col-md-3">
+          <label class="col-sm-5 col-form-label"> {{field_name_purchase_updated_time}}
+           
+          </label>
+          <div class="col-sm-10">
+          
+            <input type="text" class="form-control" name="modified_time"  
+             readonly value=" {{purchaseDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+          
+        </div>
+      </div>
+        </div>
+       
+<button class="btn btn-danger btn-round text-center pull-right" type="button" appCancelbutton>{{'Cancel'|translate}}</button>
+<button  class="btn btn-success btn-round text-center pull-right">
+<span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+  <span *ngIf="isUpdate">{{'Update'|translate}}</span></button>
+    </div>
+  </form>
+ 
+</div>
+</div>
+</div>
+  
+  </section>
+  
+  
+  
+  
+  
+  
+  <section *ngIf="this._uiservice.langDataSource.value != 'ar' && this.purchaseDetail" dir='ltr' >
+  
+    <div class="container-fluid">
+        <h3 class="text-center">{{field_name_purchase_details}}</h3>
+        <div class="card">
+          <div class="card-body">
+    
+      <div *ngIf="print" class="btn-toolbar text-center well1">
+        <button  (click)=" exportToPrint()" type="button" class="btn btn-success col-xs-5 margin-left">
+          <i class="fa fa-print" aria-hidden="true"></i>{{field_name_purchase_print}}
+        </button>
+      </div>
+      
+      <form id="contentToConvert" class="form-horizontal form-material" name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()">
+         <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>Purchases Details!</strong>The form has the following errors that need to be corrected
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="card-header">
+          <h2>
+            <span *ngIf="!isUpdate">{{field_name_purchase_addpurchase}}</span>
+            <span *ngIf="isUpdate">{{field_name_purchase_update}}</span>
+            
+          </h2>
+        </div>
+        <div class="card-body">
+      
+          <div class="form-row">
+          <div class="form-group col-md-4" *ngIf="!isUpdate">
+            <label class="col-sm-5 col-form-label"  >{{field_name_purchase_supplier_name}}
+              <span class="text-danger font-weight-bold">
+                *</span>
+            </label>
+            <div class="col-sm-10">
+             
+              <div class="ng-autocomplete">
+                <ng-autocomplete [data]="suppliers" [searchKeyword]="supplier_keyword" [itemTemplate]="itemTemplate"
+                  (inputChanged)='onChangeSearch($event)' (selected)='onSupplierSelect($event)'  historyIdentifier="suppliers"
+                  (inputFocused)='onFocused($event)' [notFoundTemplate]="notFoundTemplate" [(ngModel)]="suppliers.supplier_name"
+                  name="supplier_name" required  #supplier_name="ngModel" 
+                            [ngClass]="{ 'is-invalid': f.submitted && supplier_name.invalid, 
+                           'is-valid': f.submitted && supplier_name.valid }">
+                 
+                </ng-autocomplete>
+                
+                <ng-template #itemTemplate let-item>
+                  <a [innerHTML]="item.supplier_name"></a>
+                </ng-template>
+    
+                <ng-template #notFoundTemplate let-notFound>
+                  <div [innerHTML]="notFound"></div>
+                  
+              
+                </ng-template> 
+                <div *ngIf="f.submitted && supplier_name.invalid" class="invalid-feedback">
+                  <div *ngIf="supplier_name.errors.required">Please Provide Supplier Name</div>
+        
+                 
+                </div>
+               
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-4" *ngIf="isUpdate">
+            <label class="col-sm-5 col-form-label" >{{field_name_purchase_supplier_name}}<span class="text-danger font-weight-bold">
+                *</span></label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" [(ngModel)]="purchaseDetail.supplier_name" name="supplier_name" readonly required
+                 #supplier_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && supplier_name.invalid, 
+                'is-valid': f.submitted && supplier_name.valid }" readonly />
+            </div>
+            <div *ngIf="f.submitted && supplier_name.invalid" class="invalid-feedback">
+              <div *ngIf="supplier_name.errors.required">Please provide Supplier Name</div>
+    
+             
+            </div> 
+          </div> 
+          <div class="form-group col-md-4">
+            <label class="col-sm-5 col-form-label">{{field_name_purchase_mobile}}<span class="text-danger font-weight-bold">
+                *</span></label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" [(ngModel)]="purchaseDetail.supplier_phone" name="supplier_phone" required
+              pattern="^[0-9()\-+\s]+$" #supplier_phone="ngModel" [ngClass]="{ 'is-invalid': f.submitted && supplier_phone.invalid, 
+              'is-valid': f.submitted && supplier_phone.valid }" readonly >
+              <div *ngIf="f.submitted && supplier_phone.invalid "class="invalid-feedback">
+                <div
+                    *ngIf="supplier_phone.errors.required ">Please select Suppiers name to get phone details </div>
+                   
+                  </div>
+    
+            </div>
+          </div> 
+    
+          <div class="form-group col-md-4">
+            <label class="col-sm-5 col-form-label">{{field_name_purchase_date}}
+              <span class="text-danger font-weight-bold">
+                *</span>
+            </label>
+            <div class="col-sm-10">
+              <input type="date" class="form-control" [(ngModel)]="purchaseDetail.purchases_date" name="purchases_date"
+                #purchases_date="ngModel" [ngClass]="{ 'is-invalid': f.submitted && purchases_date.invalid, 
+                'is-valid': f.submitted && purchases_date.valid }" required />
+                <div *ngIf="f.submitted && purchases_date.invalid "class="invalid-feedback">
+                  <div
+                      *ngIf="purchases_date.errors.required ">Please Provide Purchases Date </div>
+                     
+                    </div>
+            </div>
+          </div>
+          </div>
+          <div class="form-row">
+            
+     <div class="form-group col-md-4">
+      <label for="warehouse_name" class="col-sm-5 col-form-label">{{field_name_purchase_warehouse}}<span
+      class="text-danger font-weight-bold">
+      *</span></label>
+      
+      <div class="col-sm-10">
+      <select class="custom-select" name="warehouse_name" [(ngModel)]="purchaseDetail.warehouse_name"
+      #warehouse_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && warehouse_name.invalid,
+      'is-valid': f.submitted && warehouse_name.valid }"
+      required >
+
+     
+        <option *ngFor="let obj of warehouseDetail" [value]="obj.warehouse_name">{{obj.warehouse_name}}
+        </option>
+      
+      </select>
+     
+      </div>
+      </div>
+          <div class="form-group col-md-4">
+            <label class="col-sm-5 col-form-label">{{field_name_purchase_productname}}
+              <span class="text-danger font-weight-bold">
+                *</span>
+            </label>
+            <div class="col-sm-10" >
+              <mat-form-field class="example-full-width" appearance="none" floatLabel="never" >
+                <input type="text" matInput [matAutocomplete]="auto" [formControl]="userControl"
+                  [(ngModel)]="purchaseDetail.product_name" name="product_name" required>
+                  <mat-error *ngIf="userControl.hasError('required')">Please choose any products</mat-error>
+              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let product of filteredProducts | async" [value]="selectedProducts">
+                  <div (click)="optionClicked($event, product)"required >
+                    <mat-checkbox [checked]="product.selected" (change)="toggleSelection(product)"
+                      (click)="$event.stopPropagation()">
+                      {{ product.product_name }}
+                    </mat-checkbox>
+                  </div>
+                </mat-option>
+              </mat-autocomplete>
+             
+             
+            </mat-form-field>
+            </div>
+          </div>
+    </div>
+      
+         <div class="table-responsive" *ngIf="selectedProducts.length">
+            <table class="table" [mfData]="selectedProducts" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage">
+              <thead class="thead-light">
+                <tr>
+                  <th width="20%">
+                    <mfDefaultSorter by="product_name">{{field_name_purchase_productname}}</mfDefaultSorter>
+                  </th>
+                  <th width="20%">
+                    <mfDefaultSorter by="customer_name">{{field_name_purchase_product_category}}</mfDefaultSorter>
+                  </th>
+                  <th width="20%">
+                    <mfDefaultSorter by="mobile">{{field_name_purchase_product_rate}}</mfDefaultSorter>
+                  </th>
+                  <th width="20%">
+                    <mfDefaultSorter by="mobile">{{field_name_purchase_product_quantity}}</mfDefaultSorter>
+                  </th>
+                  <th width="20%">
+                    <mfDefaultSorter by="quotation_date">{{field_name_purchase_product_discount}}</mfDefaultSorter>
+                  </th>
+                  <th width="20%">
+                    <mfDefaultSorter by="quotation_date">{{field_name_purchase_product_actual_rate}}</mfDefaultSorter>
+                  </th>
+                  <th width="20%">
+                    <mfDefaultSorter by="availability">{{field_name_purchase_availability}}</mfDefaultSorter>
+                  </th>
+                  <th width="20%">
+                    <mfDefaultSorter by="product_name">{{field_name_purchase_product_total}} </mfDefaultSorter>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let obj of mf.data;let i=index">
+                  <td>{{obj.product_name}}</td>
+                  <td>{{obj.category_name}}</td>
+                  <td>{{obj.cost}}</td>
+                  <td>
+                    <input type="text" name="quantity-{{i}}" [(ngModel)]="obj.quantity" (keyup)="onChangeProductQnt(i, $event)">
+                  </td>
+                  <td>
+                    <input type="text" name="discount-{{i}}" [(ngModel)]="obj.discount"
+                      (keyup)="onChangeProductDiscount(i, $event)">
+                  </td>
+                  <td>{{obj.cost*obj.quantity}}</td>
+                  <td>{{obj.availability}}</td>
+                  <td>{{obj.product_Total}}</td>
+                </tr>
+                <tr>
+                  <td colspan="6"></td>
+                  <td colspan="4">{{field_name_purchase_product_total}}: {{total_cost}}</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="">
+                    <mfBootstrapPaginator [rowsOnPageSet]="[]"></mfBootstrapPaginator>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div> 
+          <div class="form-row">
+            <div class="form-group col-md-3">
+              <label class="col-sm-5 col-form-label"> {{field_name_purchase_created_by}}
+               
+              </label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" name="created_by"
+                [(ngModel)]="purchaseDetail.created_by"
+                #created_by="ngModel" readonly>
+            </div>
+          </div>
+            <div class="form-group col-md-3">
+              <label class="col-sm-5 col-form-label">{{field_name_purchase_created_time}}
+                
+              </label>
+              <div class="col-sm-10">
+               
+            
+                <input type="text" class="form-control" name="created_time"  
+                 readonly value="{{purchaseDetail.created_time |  date : dateFormat:'GMT':locale}}">
+                 
+              
+              
+            </div>
+            </div>
+            <div class="form-group col-md-3">
+              <label class="col-sm-5 col-form-label">{{field_name_purchase_updated_by}}
+               
+              </label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" name="updated_by"
+                  [(ngModel)]="purchaseDetail.updated_by"
+                  #updated_by="ngModel" readonly>
+            </div>
+          </div>
+            <div class="form-group col-md-3">
+              <label class="col-sm-5 col-form-label"> {{field_name_purchase_updated_time}}
+               
+              </label>
+              <div class="col-sm-10">
+              
+                <input type="text" class="form-control" name="modified_time"  
+                 readonly value=" {{purchaseDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+              
+            </div>
+          </div>
+            </div>
+           
+    <button class="btn btn-danger btn-round text-center pull-right" type="button" appCancelbutton>{{'Cancel'|translate}}</button>
+    <button  class="btn btn-success btn-round text-center pull-right">
+    <span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+      <span *ngIf="isUpdate">{{'Update'|translate}}</span></button>
+        </div>
+      </form>
+     
+    </div>
+    </div>
+    </div>
+    
+    </section>

@@ -1,0 +1,36 @@
+#divChart{
+    display: block;
+    width:400px; 
+    height:400px;
+}
+@media only screen and (min-width: 600px) {
+    #divChart {
+        margin-left: 30%;
+    }
+    .displayInSmallScreen{
+        display:none
+    }
+  }
+  @media only screen and (max-width: 600px) {
+    #divChart {
+        width:335px; 
+    }
+    .displayInLargeScreen{
+        display:none
+    }
+    
+  }
+
+  .alignToCenter{
+    align-items:center;
+  }
+
+  .borderBlack{
+    border: 1px solid black;
+  }
+  .percentageTable {
+    border: 1px solid black;
+    width: 100%;
+    margin-left: 30px;
+    border-collapse: collapse;
+  }

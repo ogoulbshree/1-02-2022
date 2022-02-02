@@ -1,0 +1,96 @@
+
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar' && this.userDetail" dir='rtl' >
+
+  <div class="container-fluid">
+    <h3 class="text-center">{{field_name_Organisation_details}}</h3>
+    <div class="card" *ngIf="this.userDetail.organziation_id != 'dashboard'">
+      <div class="card-body">
+        {{field_name_subscription_status}}: 30 days free trial
+          <br/> <br/>
+          {{field_name_expires_on}} : {{this.expiryCalculator()}}
+          <br/> <br/>
+          <form class="form-horizontal form-material" name="form" #f="ngForm" (ngSubmit)="f.form.valid &&  onSubmit()">
+            {{field_name_currency_selected }}: {{this.userDetail.currency}}
+           </form>
+      
+      </div>
+  
+      </div>
+      <div class="card" *ngIf="this.userDetail.organziation_id == 'dashboard'">
+        <div class="card-body">
+          
+            <form class="form-horizontal form-material" name="form" #f="ngForm" (ngSubmit)="f.form.valid &&  onSubmit()">
+              {{ field_name_free_trial}} :
+              <!-- <input type="text" class="form-control"  [(ngModel)]="freeTrial"/> -->
+              <input type="text" class="form-control" [(ngModel)]="freeTrial" name="freeTrial" (ngModelChange)="saveTrial()"
+                                   
+                                 >
+              <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+                 
+                 
+              </div>  
+        <button class="btn btn-danger btn-round text-center pull-right" style=" margin-top: 73px;" type="button"
+        appCancelbutton>{{'Cancel'|translate}}</button>
+        <button class="btn btn-success btn-round text-center pull-right" style=" margin-top: 73px;">
+          <span>{{'Save'|translate}}</span>
+         </button>
+  
+              
+            </form>
+        
+        </div>
+    
+        </div>
+      </div>
+   
+        </section>
+    
+    
+    
+        
+    
+        <section *ngIf="this._uiservice.langDataSource.value != 'ar' && this.userDetail" dir='ltr' >
+    
+          <div class="container-fluid">
+            <h3 class="text-center">{{field_name_Organisation_details}}</h3>
+            <div class="card" *ngIf="this.userDetail.organziation_id != 'dashboard'">
+              <div class="card-body">
+                {{field_name_subscription_status}}: 30 days free trial
+                  <br/> <br/>
+                  {{field_name_expires_on}} : {{this.expiryCalculator()}}
+                  <br/> <br/>
+                  <form class="form-horizontal form-material" name="form" #f="ngForm" (ngSubmit)="f.form.valid &&  onSubmit()">
+                    {{field_name_currency_selected }}: {{this.userDetail.currency}}
+                   </form>
+              
+              </div>
+          
+              </div>
+              <div class="card" *ngIf="this.userDetail.organziation_id == 'dashboard'">
+                <div class="card-body">
+                  
+                    <form class="form-horizontal form-material" name="form" #f="ngForm" (ngSubmit)="f.form.valid &&  onSubmit()">
+                      {{ field_name_free_trial}} :
+                      <!-- <input type="text" class="form-control"  [(ngModel)]="freeTrial"/> -->
+                      <input type="text" class="form-control" [(ngModel)]="freeTrial" name="freeTrial" (ngModelChange)="saveTrial()"
+                                           
+                                         >
+                      <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+                         
+                         
+                      </div>  
+                <button class="btn btn-danger btn-round text-center pull-right" style=" margin-top: 73px;" type="button"
+                appCancelbutton>{{'Cancel'|translate}}</button>
+                <button class="btn btn-success btn-round text-center pull-right" style=" margin-top: 73px;">
+                  <span>{{'Save'|translate}}</span>
+                 </button>
+          
+                      
+                    </form>
+                
+                </div>
+            
+                </div>
+              </div>
+          </section>

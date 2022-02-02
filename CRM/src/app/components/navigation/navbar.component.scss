@@ -1,0 +1,10 @@
+#top-select-container{
+    flex:.6;
+    display: flex;
+}
+#top-select-container div{
+    margin:8px;
+}
+.dropdown-toggle::after {
+    border-top: 0.3em solid #a0a0a0;
+}

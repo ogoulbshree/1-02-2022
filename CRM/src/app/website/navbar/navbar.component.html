@@ -1,0 +1,186 @@
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' >
+   <nav>
+	<input id="nav-toggle" type="checkbox">
+	<div class="logo"><a href="" ><img src="../../../assets/website/70x80.png"  ></a></div>
+	<ul class="links">
+	
+			<li class="">
+			  <a class="" routerLink="/website/home"  routerLinkActive="active" href="#">{{website_home}} <span class="sr-only">(current)</span></a>
+			</li>
+		
+			<li class="">
+			  <a class="" routerLink="/website/productslist/" routerLinkActive=""  href="#">{{website_products}} &raquo;</a>
+			  <ul>
+				   <li  >
+					<a class="" routerLink="/website/productslist/marketing"  routerLinkActive="active"  href="#">{{products_marketing}}</a>
+				  </li> 
+				  <li >
+					<a class="" routerLink="/website/productslist/service"  routerLinkActive="active"  href="#">{{products_service}}</a>
+				  </li>
+				  <li  >
+					<a class="" routerLink="/website/productslist/sales"  routerLinkActive="active"  href="#">{{products_sales}}</a>
+				  </li>
+			  </ul></li>
+			<li class="">
+				<a class=""   routerLink="/website/aboutus"  routerLinkActive="active" href="#">{{website_about_us}}</a>
+			  </li>
+	
+			 <!--  <li class="">
+				<a class=""   routerLink="/website/resources"  routerLinkActive="active" href="#">{{website_resources}}</a>
+			  </li> -->
+			  <li class="">
+				<a class=""   routerLink="/website/support"  routerLinkActive="active" href="#">{{website_support}}</a>
+			  </li>
+	
+			  <li class="">
+				<a class=""  routerLink="/website/features"  routerLinkActive="active" href="#">{{website_fetures}}</a>
+			  </li>
+			<li class="">
+			  <a class=""  routerLink="/website/pricing"  routerLinkActive="active" href="">{{website_pricing}}</a>
+			</li>
+			<li class="">
+				<a class=""  routerLink="/website/services"  routerLinkActive="active" href="">{{website_service}}</a>
+			  </li>
+
+
+			<!--   <li class="">
+				<a class=""  routerLink="/website/landing-page"  routerLinkActive="active" href="">landing-page</a>
+			  </li> -->
+		
+			<span class="">
+				<a class="btn-outline-sm"  routerLink="/website/loginauth/login"  routerLinkActive="active" href="">{{login}}</a>
+			
+			</span>
+			
+
+<div class="row">
+	
+	<div class="col-auto">
+		<select class="custom-select"  (change)="onLanguageSelect($event)" name="myLanguage" [(ngModel)]="myLanguage" style="height: 30px;">
+		
+			<option value="en">EN</option>
+			  <option value="ar">AR</option>
+			  <option value="es">ES</option>
+			  <option value="zh">ZH</option>
+			  <option value="fr">FR</option>
+			  <option value="ru">RU</option>
+			  <option value="ko">KO</option>
+			  <option value="ja">JA</option>
+			  <option value="tr">TR</option>
+			
+			 
+		  </select> 
+	</div>
+  </div>
+  </ul>
+		
+	<label for="nav-toggle" class="icon-burger">
+		<div class="line"></div>
+		<div class="line"></div>
+		<div class="line"></div>
+	</label>
+	
+</nav>
+
+
+
+ </section>
+
+
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir='ltr' >
+
+	<nav>
+		<input id="nav-toggle" type="checkbox">
+		<div class="logo"><a href="" ><img src="../../../assets/website/70x80.png"  ></a></div>
+		<ul class="links">
+		
+				<li class="">
+				  <a class="" routerLink="/website/home"  routerLinkActive="active" href="#">{{website_home}} <span class="sr-only">(current)</span></a>
+				</li>
+			
+				<li class="">
+				  <a class="" routerLink="/website/productslist/" routerLinkActive=""  href="#">{{website_products}} &raquo;</a>
+				  <ul>
+					   <li  >
+						<a class="" routerLink="/website/productslist/marketing"  routerLinkActive="active"  href="#">{{products_marketing}}</a>
+					  </li> 
+					  <li >
+						<a class="" routerLink="/website/productslist/service"  routerLinkActive="active"  href="#">{{products_service}}</a>
+					  </li>
+					  <li  >
+						<a class="" routerLink="/website/productslist/sales"  routerLinkActive="active"  href="#">{{products_sales}}</a>
+					  </li>
+				  </ul></li>
+				<li class="">
+					<a class=""   routerLink="/website/aboutus"  routerLinkActive="active" href="#">{{website_about_us}}</a>
+				  </li>
+		
+				<!--   <li class="">
+					<a class=""   routerLink="/website/resources"  routerLinkActive="active" href="#">{{website_resources}}</a>
+				  </li> -->
+				  <li class="">
+					<a class=""   routerLink="/website/support"  routerLinkActive="active" href="#">{{website_support}}</a>
+				  </li>
+		
+				  <li class="">
+					<a class=""  routerLink="/website/features"  routerLinkActive="active" href="#">{{website_fetures}}</a>
+				  </li>
+				<li class="">
+				  <a class=""  routerLink="/website/pricing"  routerLinkActive="active" href="">{{website_pricing}}</a>
+				</li>
+				<li class="">
+					<a class=""  routerLink="/website/services"  routerLinkActive="active" href="">{{website_service}}</a>
+				  </li>
+	
+	
+				<!--   <li class="">
+					<a class=""  routerLink="/website/landing-page"  routerLinkActive="active" href="">landing-page</a>
+				  </li> -->
+			
+				<span class="">
+					<a class="btn-outline-sm"  routerLink="/website/loginauth/login"  routerLinkActive="active" href="">{{login}}</a>
+				
+				</span>
+				
+	
+	<div class="row">
+		
+		<div class="col-auto">
+			<select class="custom-select"  (change)="onLanguageSelect($event)" name="myLanguage" [(ngModel)]="myLanguage" style="height: 30px;">
+			
+				<option value="en">EN</option>
+				  <option value="ar">AR</option>
+				  <option value="es">ES</option>
+				  <option value="zh">ZH</option>
+				  <option value="fr">FR</option>
+				  <option value="ru">RU</option>
+				  <option value="ko">KO</option>
+				  <option value="ja">JA</option>
+				  <option value="tr">TR</option>
+				
+				 
+			  </select> 
+		</div>
+	  </div>
+	  </ul>
+			
+		<label for="nav-toggle" class="icon-burger">
+			<div class="line"></div>
+			<div class="line"></div>
+			<div class="line"></div>
+		</label>
+		
+	</nav>
+	
+</section>
+
+
+      
+
+
+
+
+
+      
+

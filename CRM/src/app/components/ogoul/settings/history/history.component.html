@@ -1,0 +1,62 @@
+<div class="container-fluid">
+
+    <div class="form-row">
+    <div class="form-group col-md-5">
+        <label class="col-sm-3 col-form-label"> {{field_name_marketing_history_fromdate}}<span
+          class="text-danger font-weight-bold">
+          *</span></label>
+        <div class="col-sm-10">
+            <input type="date" class="form-control" [(ngModel)]="fromDate" />
+        </div>
+      </div>
+      <div class="form-group col-md-5">
+        <label class="col-sm-3 col-form-label"> {{field_name_marketing_history_todate}}<span
+          class="text-danger font-weight-bold">
+          *</span></label>
+        <div class="col-sm-10">
+            <input type="date" class="form-control" [(ngModel)]="toDate" />
+       
+        </div>
+      </div>
+      <div class="col-md-2">
+            <button class="btn btn-success search-btn" (click)="filterloginActions()" style="margin-top: 37px;">{{field_name_marketing_history_search}}</button>
+           
+        </div>
+      </div>
+ 
+    
+    <div class="table-responsive">
+      <table class="table" [mfData]="userlogin" #mf="mfDataTable" [mfRowsOnPage]="10">
+          <thead  class="thead-light">
+              <tr>
+                  <th width="20%">
+                      <mfDefaultSorter by="email">{{field_name_marketing_history_email}}</mfDefaultSorter>
+                  </th>
+                  <th width="20%">
+                      <mfDefaultSorter by="date">{{field_name_marketing_history_date}}</mfDefaultSorter>
+                  </th>
+                 
+                  <th width="20%">
+                      <mfDefaultSorter by="phone">{{field_name_marketing_history_action}}</mfDefaultSorter>
+                  </th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let obj of mf.data">
+                  <td>{{obj.email}}</td>
+                  <td>{{obj.login_id | date: 'short'}}</td>
+                  <td>{{obj.action}}</td>
+              </tr>
+          </tbody>
+          <tfoot>
+              <tr>
+                  <td colspan="6">
+                      <mfBootstrapPaginator [rowsOnPageSet]="[10,25,50]"></mfBootstrapPaginator>
+                  </td>
+              </tr>
+          </tfoot>
+      </table>
+  </div>
+
+
+

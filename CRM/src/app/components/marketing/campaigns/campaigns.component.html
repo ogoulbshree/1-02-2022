@@ -1,0 +1,944 @@
+<section *ngIf="this._uiservice.langDataSource.value == 'ar' && this.campaignDetail" dir='rtl' >
+
+
+
+<div class="container-fluid">
+    <h3 class="text-center">{{field_name_campaign_campaigndetails}}
+      
+    </h3>
+    <div class="card">
+      <div class="card-body">
+        <form class="form-horizontal" name="form" #f="ngForm" (ngSubmit)="f.form.valid &&  onSubmit()">
+          <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Campaign Details!</strong>The form has the following errors that need to be corrected
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="card-header">
+            <h2> 
+                <span *ngIf="!isUpdate">{{field_name_campaign_add}}</span> 
+                <span *ngIf="isUpdate">{{field_name_campaign_update}}</span>
+            </h2>
+            </div>
+            <div class="card-body">
+
+
+              <nav>
+                <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-campaign-info-tab" data-toggle="tab" href="#nav-campaign-info" role="tab" aria-controls="nav-campaign-info" aria-selected="true">  
+                      {{field_name_campaign_info}}   </a>
+                    <a class="nav-item nav-link" id="nav-notes-info-tab" data-toggle="tab" href="#nav-notes-info" role="tab" aria-controls="nav-notes-info" aria-selected="false">   
+                      {{field_name_campaign_notes_attachments}}</a>
+    
+                   
+                </div>
+              </nav> 
+              <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-campaign-info" role="tabpanel" aria-labelledby="nav-campaign-info-tab">
+
+                  <div class="panel-body">
+                    <div class="form-row">
+                      <div class="form-group col-md-4">
+                          <label class="col-sm-5 col-form-label">{{field_name_campaign_campaign_owner}}
+                            <span
+                            class="text-danger font-weight-bold">
+                            *</span>
+                          </label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" name="campaign_owner" pattern="[a-zA-Z0-9 ]+" 
+                            [(ngModel)]="campaignDetail.campaign_owner"
+                            #campaign_owner="ngModel" [ngClass]="{ 'is-invalid': f.submitted && campaign_owner.invalid,
+                           'is-valid': f.submitted && campaign_owner.valid}" required />
+                            <div *ngIf="f.submitted && campaign_owner.invalid "class="invalid-feedback">
+                            <div
+                                *ngIf="campaign_owner.errors.required ">Please provide campaign owner</div>
+                                <div *ngIf="campaign_owner.errors.pattern">Provide proper campaign_owner 
+                                </div></div>
+                          </div>
+                        </div>
+                    <div class="form-group col-md-4">
+                      <label class="col-sm-5 col-form-label">{{field_name_campaign_campaign_name}}
+                        <span
+                        class="text-danger font-weight-bold">
+                        *</span>
+                      </label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" name="campaign_name" pattern="[a-zA-Z0-9 ]+" 
+                        [(ngModel)]="campaignDetail.campaign_name"
+                        #campaign_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && campaign_name.invalid,
+                       'is-valid': f.submitted && campaign_name.valid}" required />
+                        <div *ngIf="f.submitted && campaign_name.invalid "class="invalid-feedback">
+                        <div
+                            *ngIf="campaign_name.errors.required ">Please provide campaign name</div>
+                            <div *ngIf="campaign_name.errors.pattern"> Provide proper campaign name
+                            </div></div>
+                      </div>
+                    </div>
+                    
+                    <div class="form-group col-md-4">
+                      <label class="col-sm-5 col-form-label"> {{field_name_campaign_active}}
+                        <span
+                        class="text-danger font-weight-bold">
+                        </span>
+                      </label>
+                      <div class="col-sm-10">
+                          <select type="text" class="custom-select" name="active" pattern="[a-zA-Z0-9 ]+"
+                           [(ngModel)]="campaignDetail.active"
+                           #active="ngModel" [ngClass]="{ 'is-invalid': f.submitted && active.invalid,
+                       'is-valid': f.submitted && active.valid}" required > 
+                       <option *ngFor="let obj of activeDetails" [value]="obj.active">{{obj.active}}
+                      </option>
+                    </select>
+                        <div *ngIf="f.submitted && active.invalid "class="invalid-feedback">
+                        <div
+                            *ngIf="active.errors.required ">Please provide active</div>
+                            <div *ngIf=" active.errors.pattern"> Provide proper active 
+                            </div>
+                    </div> 
+                      </div>
+                    </div>
+                  
+                    </div>
+
+
+                    <div class="form-row">
+                      <div class="form-group col-md-4">
+                        <label class="col-sm-5 col-form-label">{{field_name_campaign_type}}<span
+                          class="text-danger font-weight-bold">
+                          </span></label>
+                        <div class="col-sm-10">
+                          <select type="text" class="custom-select" [(ngModel)]="campaignDetail.type" name="type"
+                         #type="ngModel"
+                         [ngClass]="{ 'is-invalid': f.submitted && type.invalid, 
+                          'is-valid': f.submitted && type.valid }"
+                      required >
+                      <option *ngFor="let obj of campaigntypeDetail" [value]="obj.campaign_type_name">{{obj.campaign_type_name}}
+                      </option>
+                    </select>
+                      <div *ngIf="f.submitted && type.invalid" class="invalid-feedback">
+                        <div *ngIf="type.errors.required"> Please provide type</div>
+                   
+                    </div> 
+                        </div>
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label class="col-sm-5 col-form-label">{{field_name_campaign_status}}<span
+                          class="text-danger font-weight-bold">
+                          </span></label>
+                        <div class="col-sm-10">
+                          <select type="text" class="custom-select" [(ngModel)]="campaignDetail.status" name="status"
+                            #status="ngModel" 
+                         [ngClass]="{ 'is-invalid': f.submitted && status.invalid, 
+                           'is-valid': f.submitted && status.valid }"
+                          required>
+                         <!--  <option *ngFor="let obj of campaignstatusDetail" [value]="obj.campaign_status">{{obj.campaign_status}}
+                          </option> -->
+                          <option value="Created">{{field_name_campaign_created}}</option>
+                          <option value="On Hold">{{field_name_campaign_on_hold}}</option>
+                          <option value="In Progress">{{field_name_campaign_in_progress}}</option>
+                          <option value="Closed">{{field_name_campaign_closed}}</option>
+                        </select>
+                      <div *ngIf="f.submitted && status.invalid" class="invalid-feedback">
+                              <div *ngIf="status.errors.required">Please provide status</div>
+                           
+                       
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label class="col-sm-5 col-form-label">{{field_name_campaign_start_date}}<span
+                          class="text-danger font-weight-bold">
+                          </span></label>
+                        <div class="col-sm-10">
+                          <input type="date" class="form-control" [(ngModel)]="campaignDetail.start_date" name="start_date"
+                            #start_date="ngModel" >
+                          <!--  [ngClass]="{ 'is-invalid': f.submitted && home_phone.invalid, 
+                           'is-valid': f.submitted && home_phone.valid }"
+                          required />--->
+                       
+                         <!--  <div *ngIf="f.submitted && start_date.invalid" class="invalid-feedback">
+                              <div *ngIf="start_date.errors.required">Please provide phone number</div>
+                           
+                          <div *ngIf="start_date.errors.pattern">Phone number should be only numbers
+                             </div>
+                          </div> -->
+                        </div>
+                      </div>
+                    
+                    </div>
+
+
+                    <div class="form-row">
+                      <div class="form-group col-md-4">
+                        <label class="col-sm-5 col-form-label">{{field_name_campaign_end_date }}<span
+                          class="text-danger font-weight-bold">
+                          </span></label>
+                        <div class="col-sm-10">
+                          <input type="date" class="form-control" [(ngModel)]="campaignDetail.end_date" name="end_date"
+                          #end_date="ngModel">
+                        <!--   [ngClass]="{ 'is-invalid': f.submitted && account_number.invalid, 
+                          'is-valid': f.submitted && account_number.valid }"
+                      required /> -->
+                      <!-- <div *ngIf="f.submitted && end_date.invalid" class="invalid-feedback">
+                        <div *ngIf="end_date.errors.required"> Please provide End_date</div>
+                   
+                    </div> -->
+                        </div>
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label class="col-sm-5 col-form-label"> {{field_name_campaign_expected_revenue_in_campaign}}<span
+                          class="text-danger font-weight-bold">
+                          </span></label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" [(ngModel)]="campaignDetail.expected_revenue_in_campaign" name="expected_revenue_in_campaign"
+                            #expected_revenue_in_campaign="ngModel" >
+                          <!--  [ngClass]="{ 'is-invalid': f.submitted && title.invalid, 
+                           'is-valid': f.submitted && title.valid }"
+                          required/> -->
+                       
+                        <!--   <div *ngIf="f.submitted && expected_revenue_in_campaign.invalid" class="invalid-feedback">
+                              <div *ngIf=" expected_revenue_in_campaign.errors.required">Please provide  expected_revenue_in_campaign</div>
+                           
+                          <div *ngIf=" expected_revenue_in_campaign.errors.pattern">Phone number should be only text
+                             </div>
+                          </div> -->
+                        </div>
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label class="col-sm-5 col-form-label">{{field_name_campaign_budgeted_cost_in_campaign}}<span
+                          class="text-danger font-weight-bold">
+                          </span></label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" [(ngModel)]="campaignDetail.budgeted_cost_in_campaign" name="budgeted_cost_in_campaign"
+                          #budgeted_cost_in_campaign="ngModel" >
+                          <!--  [ngClass]="{ 'is-invalid': f.submitted && department.invalid, 
+                           'is-valid': f.submitted && department.valid }"
+                          required/> -->
+                       
+                         <!--  <div *ngIf="f.submitted && budgeted_cost_in_campaign.invalid" class="invalid-feedback">
+                              <div *ngIf="budgeted_cost_in_campaign.errors.required">Please provide budgeted_cost_in_campaign</div>
+                           
+                          <div *ngIf="budgeted_cost_in_campaign.errors.pattern">Phone number should be only text
+                             </div>
+                          </div> -->
+                        </div>
+                      </div>
+                    
+                    </div>
+
+
+                    <div class="form-row">
+                      <div class="form-group col-md-4">
+                        <label class="col-sm-5 col-form-label">{{field_name_campaign_actual_cost_in_campaign}}<span
+                          class="text-danger font-weight-bold">
+                          </span></label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" [(ngModel)]="campaignDetail.actual_cost_in_campaign" 
+                          name="actual_cost_in_campaign"
+                          #actual_cost_in_campaign="ngModel">
+                         <!--  [ngClass]="{ 'is-invalid': f.submitted && fax.invalid, 
+                          'is-valid': f.submitted && fax.valid }"
+                      required /> -->
+                     <!--  <div *ngIf="f.submitted && actual_cost_in_campaign.invalid" class="invalid-feedback">
+                        <div *ngIf="actual_cost_in_campaign.errors.required"> Please provide fax</div>
+                    <div *ngIf="actual_cost_in_campaign.errors.pattern">Email format should be <small  class="text-success"><b>jhon@abc.com</b></small>
+                    </div>
+                    </div> -->
+                        </div>
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label class="col-sm-5 col-form-label">{{field_name_campaign_expected_response_percent}}<span
+                          class="text-danger font-weight-bold">
+                          </span></label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" [(ngModel)]="campaignDetail.expected_response_percent" name="expected_response_percent"
+                             #expected_response_percent="ngModel" >
+                          <!--  [ngClass]="{ 'is-invalid': f.submitted && dob.invalid, 
+                           'is-valid': f.submitted && dob.valid }"
+                          required/> -->
+                       
+                          <!-- <div *ngIf="f.submitted && expected_response_percent.invalid" class="invalid-feedback">
+                              <div *ngIf="expected_response_percent.errors.required">Please provide expected_response_percent</div>
+                           
+                          <div *ngIf="expected_response_percent.errors.pattern">Phone number should be only text
+                             </div>
+                          </div> -->
+                        </div>
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label class="col-sm-5 col-form-label">{{field_name_campaign_description_info}}<span
+                          class="text-danger font-weight-bold">
+                          </span></label>
+                          <div class="form-group col-md-10">
+                            <label for="exampleFormControlTextarea1"></label>
+                           
+                            <textarea class="form-control" id="" rows="3" [(ngModel)]="campaignDetail.description_info" 
+                            name="description_info"  #description_info="ngModel"  ></textarea>
+                          </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  </div>
+
+                  <div class="tab-pane fade" id="nav-notes-info" role="tabpanel" aria-labelledby="nav-notes-info-tab">
+                    <div class="panel-body">
+    
+            <div class="col-md-2">
+              <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#AddAttchment" 
+              style="float: right;">{{field_name_campaign_upload_files}} </button>
+            </div>
+  
+  
+  <!-- Modal for Display uploaded files -->
+  <div class="modal fade" id="FileOpen" tabindex="-1" role="dialog" aria-labelledby="FileOpenLabel" >
+  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+  <div class="modal-body p-0">
+  <img src="" alt="" style="width: 100%;">
+  </div>
+  </div>
+  </div>
+  </div>
+  
+  <!-- Modal for add new attachmenst files -->
+  <div class="modal fade" id="AddAttchment" tabindex="-1" role="dialog" aria-labelledby="AddAttchmentLabel" >
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+    <h4 class="modal-title">{{field_name_campaign_upload_attachments}}</h4>
+    </div>
+    <form class="needs-validation" novalidate>
+      <div class="modal-body mt-2 mb-3">
+    <div class="row">
+    <div class="form-group col-12 col-md-12">
+    <label for="title">{{field_name_campaign_file_title}}</label>
+    <input type="text" name="title" id="title"  class="form-control" [(ngModel)]="attchment.title" 
+     [ngClass]="invalid_file ? 'is-invalid': 'is-valid'"   required/>
+    <div class="invalid-feedback">
+      please provide title
+    </div>
+    </div>
+    <div class=" col-12 col-md-12">
+    <label for="notes">{{field_name_campaign_file}}</label>
+    <input type="file" name="notes" id="notes" class="form-control" 
+    [ngClass]="invalid_file ? 'is-invalid': 'is-valid'" (change)="upload($event)">
+    <div class="invalid-feedback">
+      {{field_name_campaign_please_upload_csv}}
+    </div>
+    </div>
+
+    
+</div>
+    </div> 
+    
+    
+   <!--  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{'Cancel'|translate}}</button>
+    <input type="button" class="btn btn-primary saveBtn" data-dismiss="modal" (click)="save()" value="Upload Now">
+    <input type="button" hidden data-dismiss="modal" id="closeAttachment_Modal">
+    
+    </div> -->
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">{{'Cancel'|translate}}</button>
+      <button type="submit" class="btn btn-primary saveBtn" data-dismiss="modal"
+       (click)="save()" [disabled]="invalid_file">{{'Upload Now'|translate}}</button>
+    </div>
+    </form>
+    </div>
+    </div>
+    </div>
+       <!--When Leads available-->
+       <table  class="table table-striped" [mfData]="attachmenstsData" #mf="mfDataTable" 
+       [mfRowsOnPage]="rowsOnPage">
+ <thead class="thead">
+   <tr class="th_r">
+     <!--  <th>ID <i class="fa fa-sort" aria-hidden="true" (click)="sort('_id')"></i> </th> -->
+     <th width="20%">
+       <mfDefaultSorter by="campaign_id">{{field_name_campaign_Id}}<i class="fa fa-sort"
+                                   aria-hidden="true"></i></mfDefaultSorter>
+     </th>
+
+     <th width="20%">
+       <mfDefaultSorter by="size">{{field_name_campaign_size}}</mfDefaultSorter>
+     </th>
+     <th width="20%">
+       <mfDefaultSorter by="file">{{field_name_campaign_file_title}}</mfDefaultSorter>
+     </th>
+     <th width="20%">
+       <mfDefaultSorter by="">{{field_name_campaign_file_name}}</mfDefaultSorter>
+     </th>
+     <th width="20%">
+       <mfDefaultSorter by="">{{field_name_campaign_download}}</mfDefaultSorter>
+     </th>
+
+   </tr>
+ </thead>
+ <tbody>
+   <tr *ngFor="let note of notes">
+     <td>{{note.campaign_id}}</td>
+
+     <td>{{note.size}} Bytes</td>
+     <td>{{note.title}}</td>
+     <td>
+         {{note.file_name}}
+     </td>
+     <td>
+       <a class="download" (click)="onClickDownload(note)">{{field_name_campaign_download}}</a>
+
+     </td>
+     <td>
+       <i (click)="onClickDeletenote(note)" class="fa fa-trash"></i>
+     </td>
+
+   </tr>
+
+   <tr >
+
+   </tr>
+ </tbody>
+</table>
+             
+        <div class="form-row">
+          <div class="form-group col-md-3">
+            <label class="col-sm-5 col-form-label">{{field_name_campaign_created_by}}
+             
+            </label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="created_by"
+              [(ngModel)]="campaignDetail.created_by"
+              #created_by="ngModel" readonly>
+          </div>
+        </div>
+          <div class="form-group col-md-3">
+            <label class="col-sm-5 col-form-label">{{field_name_campaign_created_time}}
+              
+            </label>
+            <div class="col-sm-10">
+             
+          
+              <input type="text" class="form-control" name="created_time"  
+               readonly value="{{campaignDetail.created_time |  date : dateFormat:'GMT':locale}}">
+               
+            
+            
+          </div>
+          </div>
+          <div class="form-group col-md-3">
+            <label class="col-sm-5 col-form-label">{{field_name_campaign_updated_by}}
+             
+            </label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="updated_by"
+                [(ngModel)]="campaignDetail.updated_by"
+                #updated_by="ngModel" readonly>
+          </div>
+        </div>
+          <div class="form-group col-md-3">
+            <label class="col-sm-5 col-form-label">{{field_name_campaign_updated_time}}
+             
+            </label>
+            <div class="col-sm-10">
+            
+              <input type="text" class="form-control" name="modified_time"  
+               readonly value=" {{campaignDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+            
+          </div>
+        </div>
+          </div>
+          </div>
+</div>
+ 
+
+       
+<button class="btn btn-danger btn-round text-center pull-right" type="button" appCancelbutton>{{'Cancel'|translate}}</button>
+                                <button  class="btn btn-success btn-round text-center pull-right">
+                                <span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+                                  <span *ngIf="isUpdate">{{'Update'|translate}}</span></button>
+                                </div>
+                              
+    
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  </section>
+
+
+
+  <section *ngIf="this._uiservice.langDataSource.value != 'ar' && this.campaignDetail" dir='ltr' >
+
+    <div class="container-fluid">
+        <h3 class="text-center">{{field_name_campaign_campaigndetails}}
+          
+        </h3>
+        <div class="card">
+          <div class="card-body">
+            <form class="form-horizontal" name="form" #f="ngForm" (ngSubmit)="f.form.valid &&  onSubmit()">
+              <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Campaign Details!</strong>The form has the following errors that need to be corrected
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="card-header">
+                <h2> 
+                    <span *ngIf="!isUpdate">{{field_name_campaign_add}}</span> 
+                    <span *ngIf="isUpdate">{{field_name_campaign_update}}</span>
+                </h2>
+                </div>
+                <div class="card-body">
+    
+    
+                  <nav>
+                    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-campaign-info-tab" data-toggle="tab" href="#nav-campaign-info" role="tab" aria-controls="nav-campaign-info" aria-selected="true">  
+                          {{field_name_campaign_info}}   </a>
+                        <a class="nav-item nav-link" id="nav-notes-info-tab" data-toggle="tab" href="#nav-notes-info" role="tab" aria-controls="nav-notes-info" aria-selected="false">   
+                          {{field_name_campaign_notes_attachments}}</a>
+        
+                       
+                    </div>
+                  </nav> 
+                  <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-campaign-info" role="tabpanel" aria-labelledby="nav-campaign-info-tab">
+    
+                      <div class="panel-body">
+                        <div class="form-row">
+                          <div class="form-group col-md-4">
+                              <label class="col-sm-5 col-form-label">{{field_name_campaign_campaign_owner}}
+                                <span
+                                class="text-danger font-weight-bold">
+                                *</span>
+                              </label>
+                              <div class="col-sm-10">
+                                <input type="text" class="form-control" name="campaign_owner" pattern="[a-zA-Z0-9 ]+" 
+                                [(ngModel)]="campaignDetail.campaign_owner"
+                                #campaign_owner="ngModel" [ngClass]="{ 'is-invalid': f.submitted && campaign_owner.invalid,
+                               'is-valid': f.submitted && campaign_owner.valid}" required />
+                                <div *ngIf="f.submitted && campaign_owner.invalid "class="invalid-feedback">
+                                <div
+                                    *ngIf="campaign_owner.errors.required ">Please provide campaign owner</div>
+                                    <div *ngIf="campaign_owner.errors.pattern"> Provide proper campaign owner 
+                                    </div>
+                                  </div>
+                              </div>
+                            </div>
+                        <div class="form-group col-md-4">
+                          <label class="col-sm-5 col-form-label">{{field_name_campaign_campaign_name}}
+                            <span
+                            class="text-danger font-weight-bold">
+                            *</span>
+                          </label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" name="campaign_name" pattern="[a-zA-Z0-9 ]+" 
+                            [(ngModel)]="campaignDetail.campaign_name"
+                            #campaign_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && campaign_name.invalid,
+                           'is-valid': f.submitted && campaign_name.valid}" required />
+                            <div *ngIf="f.submitted && campaign_name.invalid "class="invalid-feedback">
+                            <div
+                                *ngIf="campaign_name.errors.required ">Please provide campaign name</div>
+                                <div *ngIf="campaign_name.errors.pattern"> Provide proper campaign name 
+                                </div></div>
+                          </div>
+                        </div>
+                        
+                        <div class="form-group col-md-4">
+                          <label class="col-sm-5 col-form-label"> {{field_name_campaign_active}}
+                            <span
+                            class="text-danger font-weight-bold">
+                            </span>
+                          </label>
+                          <div class="col-sm-10">
+                              <select type="text" class="custom-select" name="active" pattern="[a-zA-Z0-9 ]+"
+                               [(ngModel)]="campaignDetail.active"
+                               #active="ngModel" [ngClass]="{ 'is-invalid': f.submitted && active.invalid,
+                           'is-valid': f.submitted && active.valid}" required > 
+                           <option *ngFor="let obj of activeDetails" [value]="obj.active">{{obj.active}}
+                          </option>
+                        </select>
+                            <div *ngIf="f.submitted && active.invalid "class="invalid-feedback">
+                            <div
+                                *ngIf="active.errors.required ">Please provide active</div>
+                                <div *ngIf=" active.errors.pattern"> Provide proper active 
+                                </div>
+                        </div> 
+                          </div>
+                        </div>
+                      
+                        </div>
+    
+    
+                        <div class="form-row">
+                          <div class="form-group col-md-4">
+                            <label class="col-sm-5 col-form-label">{{field_name_campaign_type}}<span
+                              class="text-danger font-weight-bold">
+                              </span></label>
+                            <div class="col-sm-10">
+                              <select type="text" class="custom-select" [(ngModel)]="campaignDetail.type" name="type"
+                             #type="ngModel"
+                             [ngClass]="{ 'is-invalid': f.submitted && type.invalid, 
+                              'is-valid': f.submitted && type.valid }"
+                          required >
+                          <option *ngFor="let obj of campaigntypeDetail" [value]="obj.campaign_type_name">{{obj.campaign_type_name}}
+                          </option>
+                        </select>
+                          <div *ngIf="f.submitted && type.invalid" class="invalid-feedback">
+                            <div *ngIf="type.errors.required"> Please provide type</div>
+                       
+                        </div> 
+                            </div>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label class="col-sm-5 col-form-label">{{field_name_campaign_status}}<span
+                              class="text-danger font-weight-bold">
+                              </span></label>
+                            <div class="col-sm-10">
+                              <select type="text" class="custom-select" [(ngModel)]="campaignDetail.status" name="status"
+                                #status="ngModel" 
+                             [ngClass]="{ 'is-invalid': f.submitted && status.invalid, 
+                               'is-valid': f.submitted && status.valid }"
+                              required>
+                           <!--    <option *ngFor="let obj of campaignstatusDetail" [value]="obj.campaign_status">{{obj.campaign_status}}
+                              </option> -->
+                              <option value="Created">{{field_name_campaign_created}}</option>
+                              <option value="On Hold">{{field_name_campaign_on_hold}}</option>
+                              <option value="In Progress">{{field_name_campaign_in_progress}}</option>
+                              <option value="Closed">{{field_name_campaign_closed}}</option>
+                            
+                            </select>
+                          <div *ngIf="f.submitted && status.invalid" class="invalid-feedback">
+                                  <div *ngIf="status.errors.required">Please provide status</div>
+                               
+                           
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label class="col-sm-5 col-form-label">{{field_name_campaign_start_date}}<span
+                              class="text-danger font-weight-bold">
+                              </span></label>
+                            <div class="col-sm-10">
+                              <input type="date" class="form-control" [(ngModel)]="campaignDetail.start_date" name="start_date"
+                                #start_date="ngModel" >
+                              <!--  [ngClass]="{ 'is-invalid': f.submitted && home_phone.invalid, 
+                               'is-valid': f.submitted && home_phone.valid }"
+                              required />--->
+                           
+                             <!--  <div *ngIf="f.submitted && start_date.invalid" class="invalid-feedback">
+                                  <div *ngIf="start_date.errors.required">Please provide phone number</div>
+                               
+                              <div *ngIf="start_date.errors.pattern">Phone number should be only numbers
+                                 </div>
+                              </div> -->
+                            </div>
+                          </div>
+                        
+                        </div>
+    
+    
+                        <div class="form-row">
+                          <div class="form-group col-md-4">
+                            <label class="col-sm-5 col-form-label">{{field_name_campaign_end_date}}<span
+                              class="text-danger font-weight-bold">
+                              </span></label>
+                            <div class="col-sm-10">
+                              <input type="date" class="form-control" [(ngModel)]="campaignDetail.end_date" name="end_date"
+                              #end_date="ngModel">
+                            <!--   [ngClass]="{ 'is-invalid': f.submitted && account_number.invalid, 
+                              'is-valid': f.submitted && account_number.valid }"
+                          required /> -->
+                          <!-- <div *ngIf="f.submitted && end_date.invalid" class="invalid-feedback">
+                            <div *ngIf="end_date.errors.required"> Please provide End_date</div>
+                       
+                        </div> -->
+                            </div>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label class="col-sm-5 col-form-label"> {{field_name_campaign_expected_revenue_in_campaign}}<span
+                              class="text-danger font-weight-bold">
+                              </span></label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" [(ngModel)]="campaignDetail.expected_revenue_in_campaign" name="expected_revenue_in_campaign"
+                                #expected_revenue_in_campaign="ngModel" >
+                              <!--  [ngClass]="{ 'is-invalid': f.submitted && title.invalid, 
+                               'is-valid': f.submitted && title.valid }"
+                              required/> -->
+                           
+                            <!--   <div *ngIf="f.submitted && expected_revenue_in_campaign.invalid" class="invalid-feedback">
+                                  <div *ngIf=" expected_revenue_in_campaign.errors.required">Please provide  expected_revenue_in_campaign</div>
+                               
+                              <div *ngIf=" expected_revenue_in_campaign.errors.pattern">Phone number should be only text
+                                 </div>
+                              </div> -->
+                            </div>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label class="col-sm-5 col-form-label">{{field_name_campaign_budgeted_cost_in_campaign}}<span
+                              class="text-danger font-weight-bold">
+                              </span></label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" [(ngModel)]="campaignDetail.budgeted_cost_in_campaign" name="budgeted_cost_in_campaign"
+                              #budgeted_cost_in_campaign="ngModel" >
+                              <!--  [ngClass]="{ 'is-invalid': f.submitted && department.invalid, 
+                               'is-valid': f.submitted && department.valid }"
+                              required/> -->
+                           
+                             <!--  <div *ngIf="f.submitted && budgeted_cost_in_campaign.invalid" class="invalid-feedback">
+                                  <div *ngIf="budgeted_cost_in_campaign.errors.required">Please provide budgeted_cost_in_campaign</div>
+                               
+                              <div *ngIf="budgeted_cost_in_campaign.errors.pattern">Phone number should be only text
+                                 </div>
+                              </div> -->
+                            </div>
+                          </div>
+                        
+                        </div>
+    
+    
+                        <div class="form-row">
+                          <div class="form-group col-md-4">
+                            <label class="col-sm-5 col-form-label">{{field_name_campaign_actual_cost_in_campaign}}<span
+                              class="text-danger font-weight-bold">
+                              </span></label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" [(ngModel)]="campaignDetail.actual_cost_in_campaign" 
+                              name="actual_cost_in_campaign"
+                              #actual_cost_in_campaign="ngModel">
+                             <!--  [ngClass]="{ 'is-invalid': f.submitted && fax.invalid, 
+                              'is-valid': f.submitted && fax.valid }"
+                          required /> -->
+                         <!--  <div *ngIf="f.submitted && actual_cost_in_campaign.invalid" class="invalid-feedback">
+                            <div *ngIf="actual_cost_in_campaign.errors.required"> Please provide fax</div>
+                        <div *ngIf="actual_cost_in_campaign.errors.pattern">Email format should be <small  class="text-success"><b>jhon@abc.com</b></small>
+                        </div>
+                        </div> -->
+                            </div>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label class="col-sm-5 col-form-label">{{field_name_campaign_expected_response_percent}}<span
+                              class="text-danger font-weight-bold">
+                              </span></label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" [(ngModel)]="campaignDetail.expected_response_percent" name="expected_response_percent"
+                                 #expected_response_percent="ngModel" >
+                              <!--  [ngClass]="{ 'is-invalid': f.submitted && dob.invalid, 
+                               'is-valid': f.submitted && dob.valid }"
+                              required/> -->
+                           
+                              <!-- <div *ngIf="f.submitted && expected_response_percent.invalid" class="invalid-feedback">
+                                  <div *ngIf="expected_response_percent.errors.required">Please provide expected_response_percent</div>
+                               
+                              <div *ngIf="expected_response_percent.errors.pattern">Phone number should be only text
+                                 </div>
+                              </div> -->
+                            </div>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label class="col-sm-5 col-form-label">{{field_name_campaign_description_info}}<span
+                              class="text-danger font-weight-bold">
+                              </span></label>
+                              <div class="form-group col-md-10">
+                                <label for="exampleFormControlTextarea1"></label>
+                                <textarea class="form-control" id="" rows="3" [(ngModel)]="campaignDetail.description_info" 
+                            name="description_info"  #description_info="ngModel"  ></textarea>
+                              </div>
+                          </div>
+                        </div>
+    
+                        </div>
+    
+    
+    
+                      </div>
+    
+                      <div class="tab-pane fade" id="nav-notes-info" role="tabpanel" aria-labelledby="nav-notes-info-tab">
+                        <div class="panel-body">
+        
+                 
+    
+            <div class="col-md-2">
+              <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#AddAttchment" 
+              style="float: right;">{{field_name_campaign_upload_files}} </button>
+            </div>
+  
+  
+  <!-- Modal for Display uploaded files -->
+  <div class="modal fade" id="FileOpen" tabindex="-1" role="dialog" aria-labelledby="FileOpenLabel" >
+  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+  <div class="modal-body p-0">
+  <img src="" alt="" style="width: 100%;">
+  </div>
+  </div>
+  </div>
+  </div>
+  
+ 
+  <!-- Modal for add new attachmenst files -->
+  <div class="modal fade" id="AddAttchment" tabindex="-1" role="dialog" aria-labelledby="AddAttchmentLabel" >
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+    <h4 class="modal-title">{{field_name_campaign_upload_attachments}}</h4>
+    </div>
+    <form class="needs-validation" novalidate>
+      <div class="modal-body mt-2 mb-3">
+    <div class="row">
+    <div class="form-group col-12 col-md-12">
+    <label for="title">{{field_name_campaign_file_title}}</label>
+    <input type="text" name="title" id="title"  class="form-control" [(ngModel)]="attchment.title"  
+    [ngClass]="invalid_file ? 'is-invalid': 'is-valid'"  required/>
+    <div class="invalid-feedback">
+      please provide title file too
+    </div>
+    </div>
+    <div class=" col-12 col-md-12">
+    <label for="notes">{{field_name_campaign_file}}</label>
+    <input type="file" name="notes" id="notes" class="form-control" 
+    [ngClass]="invalid_file ? 'is-invalid': 'is-valid'" (change)="upload($event)">
+    <div class="invalid-feedback">
+      {{field_name_campaign_please_upload_csv}}
+    </div>
+    </div>
+
+    
+</div>
+    </div> 
+    
+    
+   <!--  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{'Cancel'|translate}}</button>
+    <input type="button" class="btn btn-primary saveBtn" data-dismiss="modal" (click)="save()" value="Upload Now">
+    <input type="button" hidden data-dismiss="modal" id="closeAttachment_Modal">
+    
+    </div> -->
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">{{'Cancel'|translate}}</button>
+      <button type="submit" class="btn btn-primary saveBtn" data-dismiss="modal"
+       (click)="save()" [disabled]="invalid_file">{{'Upload Now'|translate}}</button>
+    </div>
+    </form>
+    </div>
+    </div>
+    </div>
+<!--When Leads available-->
+                                        <table  class="table table-striped" [mfData]="attachmenstsData" #mf="mfDataTable" 
+                                        [mfRowsOnPage]="rowsOnPage">
+                                  <thead class="thead">
+                                    <tr class="th_r">
+                                      <!--  <th>ID <i class="fa fa-sort" aria-hidden="true" (click)="sort('_id')"></i> </th> -->
+                                      <th width="20%">
+                                        <mfDefaultSorter by="campaign_id">{{field_name_campaign_Id}}<i class="fa fa-sort"
+                                                                    aria-hidden="true"></i></mfDefaultSorter>
+                                      </th>
+                
+                                      <th width="20%">
+                                        <mfDefaultSorter by="size">{{field_name_campaign_size}}</mfDefaultSorter>
+                                      </th>
+                                      <th width="20%">
+                                        <mfDefaultSorter by="file">{{field_name_campaign_file_title}}</mfDefaultSorter>
+                                      </th>
+                                      <th width="20%">
+                                        <mfDefaultSorter by="">{{field_name_campaign_file_name}}</mfDefaultSorter>
+                                      </th>
+                                      <th width="20%">
+                                        <mfDefaultSorter by="">{{field_name_campaign_download}}</mfDefaultSorter>
+                                      </th>
+                
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr *ngFor="let note of notes">
+                                      <td>{{note.campaign_id}}</td>
+                
+                                      <td>{{note.size}} Bytes</td>
+                                      <td>{{note.title}}</td>
+                                      <td>
+                                          {{note.file_name}}
+                                      </td>
+                                      <td>
+                                        <a class="download" (click)="onClickDownload(note)">{{field_name_campaign_download}}</a>
+                
+                                      </td>
+                                      <td>
+                                        <i (click)="onClickDeletenote(note)" class="fa fa-trash"></i>
+                                      </td>
+                
+                                    </tr>
+                
+                                    <tr >
+                
+                                    </tr>
+                                  </tbody>
+                                </table>
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_campaign_created_by}}
+                 
+                </label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" name="created_by"
+                  [(ngModel)]="campaignDetail.created_by"
+                  #created_by="ngModel" readonly>
+              </div>
+            </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_campaign_created_time}}
+                  
+                </label>
+                <div class="col-sm-10">
+                 
+              
+                  <input type="text" class="form-control" name="created_time"  
+                   readonly value="{{campaignDetail.created_time |  date : dateFormat:'GMT':locale}}">
+                   
+                
+                
+              </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_campaign_updated_by}}
+                 
+                </label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" name="updated_by"
+                    [(ngModel)]="campaignDetail.updated_by"
+                    #updated_by="ngModel" readonly>
+              </div>
+            </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_campaign_updated_time}}
+                 
+                </label>
+                <div class="col-sm-10">
+                
+                  <input type="text" class="form-control" name="modified_time"  
+                   readonly value=" {{campaignDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+                
+              </div>
+            </div>
+              </div>
+              </div>          
+    
+    </div>
+     </div>
+    
+
+                 
+    <button class="btn btn-danger btn-round text-center pull-right" type="button" appCancelbutton>{{'Cancel'|translate}}</button>
+                                    <button  class="btn btn-success btn-round text-center pull-right">
+                                    <span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+                                      <span *ngIf="isUpdate">{{'Update'|translate}}</span></button>
+    
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      </section>

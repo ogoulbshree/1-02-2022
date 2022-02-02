@@ -1,0 +1,839 @@
+
+ <br>
+ <section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' >
+ 
+  <div class="container-fluid">
+ 
+    <form class="form-row dateSection" name="form" #f="ngForm" >
+
+      <div class="form-group row col-md-4">
+          <label class="col-sm-3 col-form-label"> {{field_name_return_fromdate}}<span
+            class="text-danger font-weight-bold">
+            *</span></label>
+            <div class="col-sm-8">
+              <input type="date" class="form-control"   max="{{date | date:'yyyy-MM-dd'}}" [(ngModel)]="model.fromDate"  name="fromDate" #fromDate="ngModel"
+    
+              [ngClass]="{ 'is-invalid': f.submitted && fromDate.invalid, 
+                'is-valid': f.submitted && fromDate.valid }"
+               required>
+            
+               <div *ngIf="f.submitted && fromDate.invalid" class="invalid-feedback">
+                   <div *ngIf="fromDate.errors.required">Please provide fromDate</div>
+                
+              
+               </div> 
+          </div>
+        </div>
+        <div class="form-group  row col-md-4">
+          <label class="col-sm-3 col-form-label"> {{field_name_return_todate}}<span
+            class="text-danger font-weight-bold">
+            *</span></label>
+            <div class="col-sm-8">
+              <input type="date" class="form-control" [(ngModel)]="model.toDate"  name="toDate" #toDate="ngModel"
+    
+              [ngClass]="{ 'is-invalid': f.submitted && toDate.invalid, 
+                'is-valid': f.submitted && toDate.valid }"
+               required>
+            
+               <div *ngIf="f.submitted && toDate.invalid" class="invalid-feedback">
+                   <div *ngIf="toDate.errors.required">Please provide toDate</div>
+                
+              
+               </div> 
+           
+          </div>
+    
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-success search-btn"  (click)="filterData()" >{{field_name_return_search}}
+          
+          </button>
+         
+      </div>
+     
+        </form>
+        <form
+        class="form-row dateSectionMat"
+        name="form"
+        #f="ngForm"
+        (ngSubmit)="f.form.valid && filterData()"
+      >
+        &nbsp;&nbsp;<mat-form-field
+          style="width: 110px; margin-left: 10px; font-weight: bold"
+        >
+          <input
+            matInput
+            [matDatepicker]="picker"
+            [(ngModel)]="model.fromDate"
+            name="fromDate"
+            #fromDate="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && fromDate.invalid,
+              'is-valid': f.submitted && fromDate.valid
+            }"
+            required
+            placeholder={{field_name_return_fromdate}}
+          />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <div *ngIf="f.submitted && fromDate.invalid" class="invalid-feedback">
+          <div *ngIf="fromDate.errors.required">Please provide fromDate</div>
+        </div>
+  
+        <mat-form-field style="width: 93px; margin-left: 10px; font-weight: bold">
+          <input
+            matInput
+            [matDatepicker]="picker1"
+            [(ngModel)]="model.toDate"
+            name="toDate"
+            #toDate="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && toDate.invalid,
+              'is-valid': f.submitted && toDate.valid
+            }"
+            required
+            placeholder={{field_name_return_todate}}
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker1"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+        <div *ngIf="f.submitted && toDate.invalid" class="invalid-feedback">
+          <div *ngIf="toDate.errors.required">Please provide toDate</div>
+        </div>
+        &nbsp;&nbsp;
+        <div style="width: 110px">
+          <button class="btn btn-success search-btn font-weight-bold">
+            {{ field_name_return_search }}
+          </button>
+        </div>
+      </form>
+    
+      
+  
+  <div class="col-md-12 col-lg-12">
+    <div class="row">
+       
+          <div class="col-md-3">
+            <div class="form-group  has-search dateSection" style="display:flex;align-items:center">
+              <!-- <span class="fa fa-search form-control-feedback"></span> -->
+         <input type="text" class="form-control" name="supplier_name" placeholder="Enter Supplier Name to search"
+           [(ngModel)]="supplier_name" (ngModelChange)="searchData('clear')">
+           <button class="btn btn-success" (click)="searchData('search')"><i class="fa fa-search" ></i> {{field_name_return_search}}</button>
+        </div>
+        <div
+            class="form-group has-search dateSectionMat"
+            style="display: flex; align-items: center"
+          >
+           <mat-form-field
+              class="example-full-width"
+              style="width: 200px; font-weight: bold"
+            >
+              <input
+                matInput
+                [(ngModel)]="supplier_name"
+                name="supplier_name"
+                (ngModelChange)="searchData('clear')"
+                placeholder="Enter First Name to search"
+              />
+            </mat-form-field>
+            <button
+              class="btn btn-success search-btn font-weight-bold"
+              style="margin-right: 80px"
+              (click)="searchData('search')"
+            >
+              {{ field_name_return_search }}
+            </button>
+           </div>
+        </div> 
+        <!-- <div class="col-sm-1">
+            <button type="button" (click)="downloadPdf()" class="btn btn-success">
+              <i class="fa fa-file-pdf-o" aria-hidden="true"></i> {{field_name_return_pdf}}
+              </button>
+           </div> 
+         <div class="col-sm-1">
+         <button type="button" (click)="generateCsv()" class="btn btn-success">
+          <i class="fa fa-building-o" aria-hidden="true"></i>{{field_name_return_csv}}
+          </button>
+         </div> -->
+     <!--   <div class="col-sm-1">
+       <button type="button" (click)="print()" class="btn btn-success">
+          <i class="fa fa-file-pdf-o" aria-hidden="true"></i> {{field_name_quotes_print}}
+          </button> 
+
+       </div>  -->
+      <!--  <div class="col-sm-1">
+        <button type="button" (click)="downloadPdf()" class="btn btn-success">
+          <i class="fa fa-file-pdf-o" aria-hidden="true"></i>{{field_name_quotes_pdf}}
+          </button>
+       </div>  -->
+      <!--  <div class="col-sm-1">
+       <button type="button" (click)="generateCsv()" class="btn btn-success">
+        <i class="fa fa-building-o" aria-hidden="true"></i> {{field_name_quotes_csv}}
+        </button>
+       
+       </div> -->
+      <!--  <div class="col-md-1">
+        <button type="button" class="btn btn-info" 
+        routerLink=""><i class="fa fa-upload" aria-hidden="true"></i>{{field_name_quotes_import}}</button>
+      </div> -->
+      <!--  <div class="col-sm-1">
+        <button type="button" class="btn btn-info" 
+        routerLink=""> 
+         <i class="fa fa-arrows-h" aria-hidden="true"></i>Convert to Lead</button>
+      </div> -->
+      <!-- <div class="col-sm-2">
+        <button class="btn btn-primary" data-toggle="modal" data-target="#csv" >{{field_name_return_upload_csv}} </button>
+      </div>
+       <div class="col-sm-2">
+        <button type="button" class="btn btn-info pull-right"
+        routerLink="/inventory/return">  <i class="fa fa-plus" aria-hidden="true"></i> {{field_name_return_addreturn}}</button>
+      </div> -->
+      <div class="dateSection">
+        <div class="col-sm-6">
+          <button
+            type="button"
+            (click)="downloadPdf()"
+            class="btn btn-success font-weight-bold"
+          >
+            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+            {{ field_name_return_pdf }}
+          </button>
+        </div>
+        <div class="col-sm-6">
+          <button
+            type="button"
+            (click)="generateCsv()"
+            class="btn btn-success font-weight-bold"
+          >
+            <i class="fa fa-building-o" aria-hidden="true"></i
+            >{{ field_name_return_csv }}
+          </button>
+        </div>
+      </div>
+
+      <div class="d-flex dateSectionMat">
+        <div class="col-md-6">
+          <button
+            type="button"
+            (click)="downloadPdf()"
+            class="btn btn-success font-weight-bold"
+          >
+            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+            {{ field_name_return_pdf }}
+          </button>
+        </div>
+        <div class="col-md-6">
+          <button
+            type="button"
+            class="btn btn-info font-weight-bold"
+            routerLink="/inventory/return"
+          >
+            <i class="fa fa-plus" aria-hidden="true"></i
+            >{{ field_name_return_addreturn }}
+          </button>
+        </div>
+      </div>
+      <div class="dateSection">
+        <div class="col-md-6">
+          <button
+            class="btn btn-primary font-weight-bold"
+            data-toggle="modal"
+            data-target="#csv"
+          >
+            {{ field_name_return_upload_csv }}
+          </button>
+        </div>
+        <div class="col-md-6">
+          <button
+            type="button"
+            class="btn btn-info font-weight-bold"
+            routerLink="/inventory/return"
+          >
+            <i class="fa fa-plus" aria-hidden="true"></i
+            >{{ field_name_return_addreturn }}
+          </button>
+        </div>
+      </div>
+
+      <div class="d-flex dateSectionMat">
+        <div class="col-md-6">
+          <button
+            type="button"
+            (click)="generateCsv()"
+            class="btn btn-success font-weight-bold"
+          >
+            <i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;&nbsp;{{
+              field_name_return_csv
+            }}
+          </button>
+        </div>
+        <div class="col-md-6">
+          <button
+            class="btn btn-primary font-weight-bold"
+            data-toggle="modal"
+            data-target="#csv"
+          >
+            {{ field_name_return_upload_csv }}
+          </button>
+        </div>
+      </div>
+      </div> 
+  </div>
+<!-- Modal for add new attachmenst files -->
+<div class="modal fade" id="csv" tabindex="-1" role="dialog" >
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">{{field_name_return_upload_csv}}</h4>
+    </div>
+    <form class="needs-validation" novalidate>
+      <div class="modal-body mt-2 mb-3">
+        <div class="row">
+
+          <div class=" col-12 col-md-12">
+            <label for="file"> {{field_name_return_upload_files}}</label>
+            <input type="file" name="file" accept=".csv" id="file" class="form-control"
+                [ngClass]="invalid_file ? 'is-invalid': 'is-valid'" (change)="upload($event)">
+            <div class="invalid-feedback">
+              {{field_name_return_please_upload_csv}}
+            </div>
+            <div *ngIf="this.customerErrorName.length>0 || this.supplierErrorName.length>0 || this.productErrorName.length>0 || this.wareHouseError.length>0">
+              <span style="font-size: 15px;">Following issues are encountered .please correct the issues before upload</span><br/>
+              <span style="font-size: 15px;font-weight: 600" *ngIf="this.productErrorName.length>0">Products Section</span>  <br/>
+              <span  style="font-size:small;color:red" *ngFor="let k of this.productErrorName">
+               {{k}}<br/>
+              </span>
+              <span style="font-size: 15px;font-weight: 600" *ngIf="this.supplierErrorName.length>0">Suppliers Section</span>  <br/>
+              <span  style="font-size:small;color:red" *ngFor="let k of this.supplierErrorName">
+                {{k}}<br/>
+               </span>
+               <span style="font-size: 15px;font-weight: 600" *ngIf="this.customerErrorName.length>0">Customer Section</span>  <br/>
+              <span  style="font-size:small;color:red" *ngFor="let k of this.customerErrorName">
+                {{k}}<br/>
+               </span>
+               <span style="font-size: 15px;font-weight: 600" *ngIf="this.wareHouseError.length>0"> WareHouse Section</span>  <br/>
+               <span  style="font-size:small;color:red" *ngFor="let k of this.wareHouseError">
+                 {{k}}<br/>
+                </span>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeUpload()">{{'Cancel'|translate}}</button>
+        <button type="submit" class="btn btn-primary saveBtn" data-dismiss="modal"
+                (click)="save($event)" [disabled]="invalid_file">{{'Upload Now'|translate}}</button>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+
+  <hr>
+  <div class="col-md-9">
+    <div class="d-flex justify-content-around dateSection">
+      <span class="font-weight-bold">{{field_name_return_purchases_returned}}:{{purchaseReturnedCount}} </span>
+      <span class="font-weight-bold">{{field_name_return_purchases_amount}}:{{purchaseAmount}}&nbsp;&nbsp;{{this._dbService.getCurrentUserDetail().currency}} </span>  
+      <span class="font-weight-bold">{{field_name_return_invoices_returned}}: {{invoiceReturnedCount}} </span>
+      <span class="font-weight-bold">{{field_name_return_invoices_amount}}: {{invoiceAmount}}&nbsp;&nbsp;{{this._dbService.getCurrentUserDetail().currency}}</span>
+    
+    </div>
+    <div class="d-flex row justify-content-around dateSectionMat">
+      <span class="font-weight-bold col-md-12">{{field_name_return_purchases_returned}}:{{purchaseReturnedCount}} </span>
+      <span class="font-weight-bold col-md-12">{{field_name_return_purchases_amount}}:{{purchaseAmount}}&nbsp;&nbsp;{{this._dbService.getCurrentUserDetail().currency}} </span>  
+      <span class="font-weight-bold col-md-12">{{field_name_return_invoices_returned}}: {{invoiceReturnedCount}} </span>
+      <span class="font-weight-bold col-md-12">{{field_name_return_invoices_amount}}: {{invoiceAmount}}&nbsp;&nbsp;{{this._dbService.getCurrentUserDetail().currency}}</span>
+    
+    </div>
+  </div>
+  <div class="card-body product-table p-t-35">
+    <div class="table-responsive" >
+      <table id="contentToConvert" class="table" [mfData]="filteredTableDataArr" #mf="mfDataTable" >
+        <thead class="thead-light">
+          <tr style="white-space: nowrap">
+            <th width="20%" (click) ="sort('Id')"> 
+              <mfDefaultSorter by="id">Id</mfDefaultSorter>
+              <i class="fa fa-sort"></i>
+            </th>
+           
+            <th width="20%" (click) ="sort('supplier_name')"> 
+              <mfDefaultSorter by="supplier_name">{{field_name_return_supplier_name}}</mfDefaultSorter>
+              <i class="fa fa-sort"></i>
+            </th>
+          
+            <th width="20%" (click) ="sort('returns_date')"> 
+              <mfDefaultSorter by="returns_date">{{field_name_return_date}}</mfDefaultSorter>
+              <i class="fa fa-sort"></i>
+            </th>
+            <th width="20%" (click) ="sort('product_name')"> 
+              <mfDefaultSorter by="product_name">{{field_name_return_productname}}</mfDefaultSorter>
+              <i class="fa fa-sort"></i>
+            </th>
+            <th width="20%" *ngIf="SHOW_EDIT_DELETE">
+              {{field_name_return_actions}}
+             </th>
+          </tr>
+        </thead>
+        <tbody *ngIf="mf.data?.length >= 1">
+          <tr *ngFor="let obj of mf.data | orderBy: key: reverse | paginate: {itemsPerPage:5,currentPage:p,totalItems:returnDetailcount}; let i = index" >
+          
+            <td>{{obj.return_id}}</td>
+            <td>{{obj.supplier_name}}</td>
+          
+            <td>{{obj.returns_date}}</td>
+            <td>{{getProductDetails(obj.product_name)}}</td>
+            <td *ngIf="SHOW_EDIT_DELETE">
+         
+              <i class="fa fa-edit" (click)="onClickEdit(obj)"></i> 
+
+                <span *ngIf="ALL_DELETE_ALLOWED"><i (click)="onClickDelete(obj)" class="fa fa-trash"></i></span>
+          </td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="mf.data?.length <= 0">
+          <tr class="odd" style="opacity: 1;">
+            <td valign="top" colspan="8" style="text-align: center;" class="dataTables_empty">No data
+              available
+              in table</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr *ngIf="mf.data?.length > 0">
+             <td colspan="4">
+              <pagination-controls (pageChange)="pageChanged('schedule', (p = $event))">
+                      
+              </pagination-controls>
+                                      </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+    
+       </section>
+ 
+ 
+ 
+ 
+       <br>
+ 
+ <section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir='ltr' >
+ 
+  
+    <div class="container-fluid">
+ 
+        <form class="form-row dateSection" name="form" #f="ngForm" >
+    
+          <div class="form-group row col-md-4">
+              <label class="col-sm-3 col-form-label"> {{field_name_return_fromdate}}<span
+                class="text-danger font-weight-bold">
+                *</span></label>
+                <div class="col-sm-8">
+                  <input type="date" class="form-control"   max="{{date | date:'yyyy-MM-dd'}}" [(ngModel)]="model.fromDate"  name="fromDate" #fromDate="ngModel"
+        
+                  [ngClass]="{ 'is-invalid': f.submitted && fromDate.invalid, 
+                    'is-valid': f.submitted && fromDate.valid }"
+                   required>
+                
+                   <div *ngIf="f.submitted && fromDate.invalid" class="invalid-feedback">
+                       <div *ngIf="fromDate.errors.required">Please provide fromDate</div>
+                    
+                  
+                   </div> 
+              </div>
+            </div>
+            <div class="form-group  row col-md-4">
+              <label class="col-sm-3 col-form-label"> {{field_name_return_todate}}<span
+                class="text-danger font-weight-bold">
+                *</span></label>
+                <div class="col-sm-8">
+                  <input type="date" class="form-control" [(ngModel)]="model.toDate"  name="toDate" #toDate="ngModel"
+        
+                  [ngClass]="{ 'is-invalid': f.submitted && toDate.invalid, 
+                    'is-valid': f.submitted && toDate.valid }"
+                   required>
+                
+                   <div *ngIf="f.submitted && toDate.invalid" class="invalid-feedback">
+                       <div *ngIf="toDate.errors.required">Please provide toDate</div>
+                    
+                  
+                   </div> 
+               
+              </div>
+        
+            </div>
+            <div class="col-md-2">
+              <button class="btn btn-success search-btn"  (click)="filterData()" >{{field_name_return_search}}
+              
+              </button>
+             
+          </div>
+         
+            </form>
+            <form
+            class="form-row dateSectionMat"
+            name="form"
+            #f="ngForm"
+            (ngSubmit)="f.form.valid && filterData()"
+          >
+            &nbsp;&nbsp;<mat-form-field
+              style="width: 110px; margin-left: 10px; font-weight: bold"
+            >
+              <input
+                matInput
+                [matDatepicker]="picker"
+                [(ngModel)]="model.fromDate"
+                name="fromDate"
+                #fromDate="ngModel"
+                [ngClass]="{
+                  'is-invalid': f.submitted && fromDate.invalid,
+                  'is-valid': f.submitted && fromDate.valid
+                }"
+                required
+                placeholder={{field_name_return_fromdate}}
+              />
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <div *ngIf="f.submitted && fromDate.invalid" class="invalid-feedback">
+              <div *ngIf="fromDate.errors.required">Please provide fromDate</div>
+            </div>
+      
+            <mat-form-field style="width: 93px; margin-left: 10px; font-weight: bold">
+              <input
+                matInput
+                [matDatepicker]="picker1"
+                [(ngModel)]="model.toDate"
+                name="toDate"
+                #toDate="ngModel"
+                [ngClass]="{
+                  'is-invalid': f.submitted && toDate.invalid,
+                  'is-valid': f.submitted && toDate.valid
+                }"
+                required
+                placeholder={{field_name_return_todate}}
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker1"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+            <div *ngIf="f.submitted && toDate.invalid" class="invalid-feedback">
+              <div *ngIf="toDate.errors.required">Please provide toDate</div>
+            </div>
+            &nbsp;&nbsp;
+            <div style="width: 110px">
+              <button class="btn btn-success search-btn font-weight-bold">
+                {{ field_name_return_search }}
+              </button>
+            </div>
+          </form>
+      <div class="col-md-12 col-lg-12">
+        <div class="row">
+           
+              <div class="col-md-3">
+                <div class="form-group  has-search dateSection" style="display:flex;align-items:center">
+                  <!-- <span class="fa fa-search form-control-feedback"></span> -->
+             <input type="text" class="form-control" name="supplier_name" placeholder="Enter Supplier Name to search"
+               [(ngModel)]="supplier_name" (ngModelChange)="searchData('clear')">
+               <button class="btn btn-success" (click)="searchData('search')"><i class="fa fa-search" ></i> {{field_name_return_search}}</button>
+            </div>
+            <div
+            class="form-group has-search dateSectionMat"
+            style="display: flex; align-items: center"
+          >
+           <mat-form-field
+              class="example-full-width"
+              style="width: 200px; font-weight: bold"
+            >
+              <input
+                matInput
+                [(ngModel)]="supplier_name"
+                name="supplier_name"
+                (ngModelChange)="searchData('clear')"
+                placeholder="Enter First Name to search"
+              />
+            </mat-form-field>
+            <button
+              class="btn btn-success search-btn font-weight-bold"
+              style="margin-left: 42px"
+              (click)="searchData('search')"
+            >
+              {{ field_name_return_search }}
+            </button>
+           </div>
+            </div> 
+            <!-- <div class="col-sm-1">
+                <button type="button" (click)="downloadPdf()" class="btn btn-success">
+                  <i class="fa fa-file-pdf-o" aria-hidden="true"></i> {{field_name_return_pdf}}
+                  </button>
+               </div> 
+             <div class="col-sm-1">
+             <button type="button" (click)="generateCsv()" class="btn btn-success">
+              <i class="fa fa-building-o" aria-hidden="true"></i>{{field_name_return_csv}}
+              </button>
+             </div> -->
+         <!--   <div class="col-sm-1">
+           <button type="button" (click)="print()" class="btn btn-success">
+              <i class="fa fa-file-pdf-o" aria-hidden="true"></i> {{field_name_quotes_print}}
+              </button> 
+    
+           </div>  -->
+          <!--  <div class="col-sm-1">
+            <button type="button" (click)="downloadPdf()" class="btn btn-success">
+              <i class="fa fa-file-pdf-o" aria-hidden="true"></i>{{field_name_quotes_pdf}}
+              </button>
+           </div>  -->
+          <!--  <div class="col-sm-1">
+           <button type="button" (click)="generateCsv()" class="btn btn-success">
+            <i class="fa fa-building-o" aria-hidden="true"></i> {{field_name_quotes_csv}}
+            </button>
+           
+           </div> -->
+          <!--  <div class="col-md-1">
+            <button type="button" class="btn btn-info" 
+            routerLink=""><i class="fa fa-upload" aria-hidden="true"></i>{{field_name_quotes_import}}</button>
+          </div> -->
+          <!--  <div class="col-sm-1">
+            <button type="button" class="btn btn-info" 
+            routerLink=""> 
+             <i class="fa fa-arrows-h" aria-hidden="true"></i>Convert to Lead</button>
+          </div> -->
+          <!-- <div class="col-sm-2">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#csv" >{{field_name_return_upload_csv}} </button>
+          </div>
+           <div class="col-sm-2">
+            <button type="button" class="btn btn-info pull-right"
+            routerLink="/inventory/return">  <i class="fa fa-plus" aria-hidden="true"></i> {{field_name_return_addreturn}}</button>
+          </div> -->
+          <div class="dateSection">
+            <div class="col-sm-6">
+              <button
+                type="button"
+                (click)="downloadPdf()"
+                class="btn btn-success font-weight-bold"
+              >
+                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                {{ field_name_return_pdf }}
+              </button>
+            </div>
+            <div class="col-sm-6">
+              <button
+                type="button"
+                (click)="generateCsv()"
+                class="btn btn-success font-weight-bold"
+              >
+                <i class="fa fa-building-o" aria-hidden="true"></i
+                >{{ field_name_return_csv }}
+              </button>
+            </div>
+          </div>
+  
+          <div class="d-flex dateSectionMat">
+            <div class="col-md-6">
+              <button
+                type="button"
+                (click)="downloadPdf()"
+                class="btn btn-success font-weight-bold"
+              >
+                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                {{ field_name_return_pdf }}
+              </button>
+            </div>
+            <div class="col-md-6">
+              <button
+                type="button"
+                class="btn btn-info font-weight-bold"
+                routerLink="/inventory/return"
+              >
+                <i class="fa fa-plus" aria-hidden="true"></i
+                >{{ field_name_return_addreturn }}
+              </button>
+            </div>
+          </div>
+          <div class="dateSection">
+            <div class="col-md-6">
+              <button
+                class="btn btn-primary font-weight-bold"
+                data-toggle="modal"
+                data-target="#csv"
+              >
+                {{ field_name_return_upload_csv }}
+              </button>
+            </div>
+            <div class="col-md-6">
+              <button
+                type="button"
+                class="btn btn-info font-weight-bold"
+                routerLink="/inventory/return"
+              >
+                <i class="fa fa-plus" aria-hidden="true"></i
+                >{{ field_name_return_addreturn }}
+              </button>
+            </div>
+          </div>
+  
+          <div class="d-flex dateSectionMat">
+            <div class="col-md-6">
+              <button
+                type="button"
+                (click)="generateCsv()"
+                class="btn btn-success font-weight-bold"
+              >
+                <i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;&nbsp;{{
+                  field_name_return_csv
+                }}
+              </button>
+            </div>
+            <div class="col-md-6">
+              <button
+                class="btn btn-primary font-weight-bold"
+                data-toggle="modal"
+                data-target="#csv"
+              >
+                {{ field_name_return_upload_csv }}
+              </button>
+            </div>
+          </div>
+          </div> 
+      </div>
+  <!-- Modal for add new attachmenst files -->
+  <div class="modal fade" id="csv" tabindex="-1" role="dialog" >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">{{field_name_return_upload_csv}}</h4>
+        </div>
+        <form class="needs-validation" novalidate>
+          <div class="modal-body mt-2 mb-3">
+            <div class="row">
+  
+              <div class=" col-12 col-md-12">
+                <label for="file"> {{field_name_return_upload_files}}</label>
+                <input type="file" name="file" accept=".csv" id="file" class="form-control"
+                    [ngClass]="invalid_file ? 'is-invalid': 'is-valid'" (change)="upload($event)">
+                <div class="invalid-feedback">
+                  {{field_name_return_please_upload_csv}}
+                </div>
+                <div *ngIf="this.customerErrorName.length>0 || this.supplierErrorName.length>0 || this.productErrorName.length>0 || this.wareHouseError.length>0">
+                  <span style="font-size: 15px;">Following issues are encountered .please correct the issues before upload</span><br/>
+                  <span style="font-size: 15px;font-weight: 600" *ngIf="this.productErrorName.length>0">Products Section</span>  <br/>
+                  <span  style="font-size:small;color:red" *ngFor="let k of this.productErrorName">
+                   {{k}}<br/>
+                  </span>
+                  <span style="font-size: 15px;font-weight: 600" *ngIf="this.supplierErrorName.length>0">Suppliers Section</span>  <br/>
+                  <span  style="font-size:small;color:red" *ngFor="let k of this.supplierErrorName">
+                    {{k}}<br/>
+                   </span>
+                   <span style="font-size: 15px;font-weight: 600" *ngIf="this.customerErrorName.length>0">Customer Section</span>  <br/>
+                  <span  style="font-size:small;color:red" *ngFor="let k of this.customerErrorName">
+                    {{k}}<br/>
+                   </span>
+                   <span style="font-size: 15px;font-weight: 600" *ngIf="this.wareHouseError.length>0"> WareHouse Section</span>  <br/>
+                   <span  style="font-size:small;color:red" *ngFor="let k of this.wareHouseError">
+                     {{k}}<br/>
+                    </span>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeUpload()">{{'Cancel'|translate}}</button>
+            <button type="submit" class="btn btn-primary saveBtn" data-dismiss="modal"
+                    (click)="save($event)" [disabled]="invalid_file">{{'Upload Now'|translate}}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+      <hr>
+      <div class="col-md-9">
+        <div class="d-flex justify-content-around dateSection">
+          <span class="font-weight-bold">{{field_name_return_purchases_returned}}:{{purchaseReturnedCount}} </span>
+          <span class="font-weight-bold">{{field_name_return_purchases_amount}}:{{purchaseAmount}}&nbsp;&nbsp;{{this._dbService.getCurrentUserDetail().currency}} </span>  
+          <span class="font-weight-bold">{{field_name_return_invoices_returned}}: {{invoiceReturnedCount}} </span>
+          <span class="font-weight-bold">{{field_name_return_invoices_amount}}: {{invoiceAmount}}&nbsp;&nbsp;{{this._dbService.getCurrentUserDetail().currency}}</span>
+        
+        </div>
+        <div class="d-flex row justify-content-around dateSectionMat">
+          <span class="font-weight-bold col-md-12">{{field_name_return_purchases_returned}}:{{purchaseReturnedCount}} </span>
+          <span class="font-weight-bold col-md-12">{{field_name_return_purchases_amount}}:{{purchaseAmount}}&nbsp;&nbsp;{{this._dbService.getCurrentUserDetail().currency}} </span>  
+          <span class="font-weight-bold col-md-12">{{field_name_return_invoices_returned}}: {{invoiceReturnedCount}} </span>
+          <span class="font-weight-bold col-md-12">{{field_name_return_invoices_amount}}: {{invoiceAmount}}&nbsp;&nbsp;{{this._dbService.getCurrentUserDetail().currency}}</span>
+        
+        </div>
+      </div>
+      <div class="card-body product-table p-t-35">
+        <div class="table-responsive" >
+          <table id="contentToConvert" class="table" [mfData]="filteredTableDataArr" #mf="mfDataTable" >
+            <thead class="thead-light">
+              <tr style="white-space: nowrap">
+                <th width="20%" (click) ="sort('Id')"> 
+                  <mfDefaultSorter by="id">Id</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+               
+                <th width="20%" (click) ="sort('supplier_name')"> 
+                  <mfDefaultSorter by="supplier_name">{{field_name_return_supplier_name}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+              
+                <th width="20%" (click) ="sort('returns_date')"> 
+                  <mfDefaultSorter by="returns_date">{{field_name_return_date}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click) ="sort('product_name')"> 
+                  <mfDefaultSorter by="product_name">{{field_name_return_productname}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" *ngIf="SHOW_EDIT_DELETE">
+                  {{field_name_return_actions}}
+                 </th>
+              </tr>
+            </thead>
+            <tbody *ngIf="mf.data?.length >= 1">
+              <tr *ngFor="let obj of mf.data | orderBy: key: reverse | paginate: {itemsPerPage:5,currentPage:p,totalItems:returnDetailcount}; let i = index" >
+              
+                <td>{{obj.return_id}}</td>
+                <td>{{obj.supplier_name}}</td>
+              
+                <td>{{obj.returns_date}}</td>
+                <td>{{getProductDetails(obj.product_name)}}</td>
+                <td *ngIf="SHOW_EDIT_DELETE">
+             
+                  <i class="fa fa-edit" (click)="onClickEdit(obj)"></i> 
+  
+                    <span *ngIf="ALL_DELETE_ALLOWED"><i (click)="onClickDelete(obj)" class="fa fa-trash"></i></span>
+              </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="mf.data?.length <= 0">
+              <tr class="odd" style="opacity: 1;">
+                <td valign="top" colspan="8" style="text-align: center;" class="dataTables_empty">No data
+                  available
+                  in table</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr *ngIf="mf.data?.length > 0">
+                 <td colspan="4">
+                  <pagination-controls (pageChange)="pageChanged('schedule', (p = $event))">
+                          
+                  </pagination-controls>
+                                          </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+   </div>
+   </section>

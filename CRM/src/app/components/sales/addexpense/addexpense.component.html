@@ -1,0 +1,413 @@
+
+ <section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' >
+      <form class="form-horizontal form-material" name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()">
+        <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>Expenses Details!</strong>The form has the following errors that need to be corrected
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="card-header">
+          <h2> 
+              <span *ngIf="!isUpdate"> {{field_name_add_expense_addadd_expense}}</span> 
+              <span *ngIf="isUpdate">{{field_name_add_expense_update}}</span>
+          </h2>
+          </div>
+            <div class="card-body">
+              
+              <div class="form-group row" *ngIf="!isUpdate">
+                <label class="col-sm-2 col-form-label"  >{{field_name_add_expense_user_email}}
+                  <span class="text-danger font-weight-bold">
+                    *</span>
+                </label>
+                <div class="col-sm-10">
+                 
+                  <div class="ng-autocomplete col-sm-10" >
+                    <ng-autocomplete [data]="users" [searchKeyword]="users_keyword"    [initialValue]='users_keyword' 
+                    [itemTemplate]="itemTemplate"
+                      (inputChanged)='onChangeSearch($event)' (selected)='onUsersSelect($event)'  historyIdentifier="users"
+                      (inputFocused)='onFocused($event)' [notFoundTemplate]="notFoundTemplate"  [(ngModel)]="users.email"
+                      name="email" required  #email="ngModel" 
+                      [ngClass]="{ 'is-invalid': f.submitted && email.invalid, 
+                     'is-valid': f.submitted && email.valid }">
+                     
+                    </ng-autocomplete>
+                                      
+                    <ng-template #itemTemplate let-item>
+                      <a [innerHTML]="item.email"></a>
+                    </ng-template>
+        
+                    <ng-template #notFoundTemplate let-notFound>
+                      <div [innerHTML]="notFound"></div>
+                      
+                  
+                    </ng-template> 
+                    <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+                      <div *ngIf="email.errors.required">Please Provide User Email</div>
+            
+                     
+                    </div>
+                 
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row" *ngIf="isUpdate">
+                <label class="col-sm-2 col-form-label" >{{field_name_add_expense_user_email}}<span class="text-danger font-weight-bold">
+                    *</span></label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" [(ngModel)]="expenseDetail.email" name="email" readonly required
+                     #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid, 
+                    'is-valid': f.submitted && email.valid }" readonly />
+                </div>
+                <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+                  <div *ngIf="email.errors.required">Please provide User Email</div>
+        
+                 
+                </div> 
+              </div>
+                       
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">{{field_name_add_expense_date}}<span class="text-danger font-weight-bold"> *</span>
+              </label>
+              <div class="col-sm-10">
+                <input type="date" class="form-control" [(ngModel)]="expenseDetail.date" name="date"
+                required  #date="ngModel"  
+                [ngClass]="{ 'is-invalid': f.submitted && date.invalid, 
+                'is-valid': f.submitted && date.valid }"
+               required/>
+               <div *ngIf="f.submitted && date.invalid" class="invalid-feedback">
+                <div *ngIf="date.errors.required">Please provide Date</div>
+            </div>
+              </div>
+            </div>
+                  
+         
+            <div class="form-group row">
+              <label  for="expensesitem" class="col-sm-2 col-form-label">{{field_name_add_expense_add_expense_item}}<span
+                class="text-danger font-weight-bold">
+                *</span></label>
+                 <div class="col-sm-10">
+                 <select class="custom-select" name="expense_item" [(ngModel)]="expenseDetail.expense_item"
+                      #expense_item="ngModel" [ngClass]="{ 'is-invalid': f.submitted && expense_item.invalid, 
+                      'is-valid': f.submitted && expense_item.valid }" required>
+                     
+                      <option *ngFor="let obj of expenseItemDetail" [value]="obj.expense_item">{{obj.expense_item}}
+                      </option>
+                  </select> 
+                 <!--  <select type="expense_item" class="form-control" [(ngModel)]="expenseDetail.expense_item" name="expense_item"
+                  required  #expense_item="ngModel"  
+                  [ngClass]="{ 'is-invalid': f.submitted && expense_item.invalid, 
+                  'is-valid': f.submitted && expense_item.valid }"
+                 required>
+                 <option *ngFor="let obj of expenseItemDetail" [value]="obj.expense_item">{{obj.expense_item}}
+                </option>
+            </select> -->
+                 <div *ngIf="showError != ''" class="alert alert-danger">
+                  {{showError}}</div> 
+                  <div *ngIf="f.submitted && expense_item.invalid" class="invalid-feedback">
+                      <div *ngIf="expense_item.errors.required">Requred Expenses Item</div>
+                  </div>
+              </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">{{field_name_add_expense_amount}}<span class="text-danger font-weight-bold">
+              *</span>
+            </label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" [(ngModel)]="expenseDetail.amount" name="amount"
+              pattern="[0-9]*[.]?[0-9]+" #amount="ngModel"  
+              [ngClass]="{ 'is-invalid': f.submitted && amount.invalid, 
+              'is-valid': f.submitted && amount.valid }"
+             required/>
+             <div *ngIf="f.submitted && amount.invalid" class="invalid-feedback">
+              <div *ngIf="amount.errors.required">Please provide amount</div>
+           
+              <div *ngIf="amount.errors.pattern">only numbers allowed
+             </div>
+          </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label">{{field_name_add_expense_upload_files}}<span class="text-danger font-weight-bold">
+              </span>
+            </label>
+            <div class="col-sm-10">
+              <input type="file" class="form-control" name="files"  #files="ngModel"  [(ngModel)]="expenseDetail.files"
+                         (change)="selectImage($event)"/>
+            </div>
+          </div>
+           
+          <div class="form-group">
+            <div class="hoverable" *ngIf="preview && preview !== null">
+              <img [src]="preview" >
+              
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label class="col-sm-5 col-form-label">{{field_name_add_expense_created_by}}
+               
+              </label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" name="created_by"
+                [(ngModel)]="expenseDetail.created_by"
+                #created_by="ngModel" readonly>
+            </div>
+          </div>
+            <div class="form-group col-md-6">
+              <label class="col-sm-5 col-form-label">{{field_name_add_expense_created_time}}
+                
+              </label>
+              <div class="col-sm-10">
+               
+            
+                <input type="text" class="form-control" name="created_time"  
+                 readonly value="{{expenseDetail.created_time |  date : dateFormat:'GMT':locale}}">
+                 
+              
+              
+            </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label class="col-sm-5 col-form-label">{{field_name_add_expense_updated_by}}
+               
+              </label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" name="updated_by"
+                  [(ngModel)]="expenseDetail.updated_by"
+                  #updated_by="ngModel" readonly>
+            </div>
+          </div>
+            <div class="form-group col-md-6">
+              <label class="col-sm-5 col-form-label">{{field_name_add_expense_updated_time}}
+               
+              </label>
+              <div class="col-sm-10">
+              
+                <input type="text" class="form-control" name="modified_time"  
+                 readonly value=" {{expenseDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+              
+            </div>
+          </div>
+          </div>
+          
+          <button  class="btn btn-success btn-round">
+            <span *ngIf="!isUpdate">{{'Save' | translate}}</span>
+            <span *ngIf="isUpdate">{{'Update' | translate}}</span>
+        </button>
+     
+                 <button class="btn btn-danger btn-round" type="button" appCancelbutton>{{'Cancel' | translate}}</button>
+          </div>
+        </form>
+ 
+   </section>
+
+
+
+
+   <section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir='ltr' >
+  <form class="form-horizontal form-material" name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()">
+    <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+      <strong>Expenses Details!</strong>The form has the following errors that need to be corrected
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="card-header">
+      <h2> 
+          <span *ngIf="!isUpdate"> {{field_name_add_expense_addadd_expense}}</span> 
+          <span *ngIf="isUpdate">{{field_name_add_expense_update}}</span>
+      </h2>
+      </div>
+        <div class="card-body">
+          
+          <div class="form-group row" *ngIf="!isUpdate">
+            <label class="col-sm-2 col-form-label"  >{{field_name_add_expense_user_email}}
+              <span class="text-danger font-weight-bold">
+                *</span>
+            </label>
+            <div class="col-sm-10">
+             
+              <div class="ng-autocomplete col-sm-10" >
+                <ng-autocomplete [data]="users" [searchKeyword]="users_keyword"    [initialValue]='users_keyword' 
+                [itemTemplate]="itemTemplate"
+                  (inputChanged)='onChangeSearch($event)' (selected)='onUsersSelect($event)'  historyIdentifier="users"
+                  (inputFocused)='onFocused($event)' [notFoundTemplate]="notFoundTemplate"  [(ngModel)]="users.email"
+                  name="email" required  #email="ngModel" 
+                  [ngClass]="{ 'is-invalid': f.submitted && email.invalid, 
+                 'is-valid': f.submitted && email.valid }">
+                 
+                </ng-autocomplete>
+                                  
+                <ng-template #itemTemplate let-item>
+                  <a [innerHTML]="item.email"></a>
+                </ng-template>
+    
+                <ng-template #notFoundTemplate let-notFound>
+                  <div [innerHTML]="notFound"></div>
+                  
+              
+                </ng-template> 
+                <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+                  <div *ngIf="email.errors.required">Please Provide User Email</div>
+        
+                 
+                </div>
+             
+              </div>
+            </div>
+          </div>
+          <div class="form-group row" *ngIf="isUpdate">
+            <label class="col-sm-2 col-form-label" >{{field_name_add_expense_user_email}}<span class="text-danger font-weight-bold">
+                *</span></label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" [(ngModel)]="expenseDetail.email" name="email" readonly required
+                 #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid, 
+                'is-valid': f.submitted && email.valid }" readonly />
+            </div>
+            <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+              <div *ngIf="email.errors.required">Please provide User Email</div>
+    
+             
+            </div> 
+          </div>
+                   
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">{{field_name_add_expense_date}}<span class="text-danger font-weight-bold"> *</span>
+          </label>
+          <div class="col-sm-10">
+            <input type="date" class="form-control" [(ngModel)]="expenseDetail.date" name="date"
+            required  #date="ngModel"  
+            [ngClass]="{ 'is-invalid': f.submitted && date.invalid, 
+            'is-valid': f.submitted && date.valid }"
+           required/>
+           <div *ngIf="f.submitted && date.invalid" class="invalid-feedback">
+            <div *ngIf="date.errors.required">Please provide Date</div>
+        </div>
+          </div>
+        </div>
+              
+     
+        <div class="form-group row">
+          <label  for="expensesitem" class="col-sm-2 col-form-label">{{field_name_add_expense_add_expense_item}}<span
+            class="text-danger font-weight-bold">
+            *</span></label>
+             <div class="col-sm-10">
+             <select class="custom-select" name="expense_item" [(ngModel)]="expenseDetail.expense_item"
+                  #expense_item="ngModel" [ngClass]="{ 'is-invalid': f.submitted && expense_item.invalid, 
+                  'is-valid': f.submitted && expense_item.valid }" required>
+                 
+                  <option *ngFor="let obj of expenseItemDetail" [value]="obj.expense_item">{{obj.expense_item}}
+                  </option>
+              </select> 
+             <!--  <select type="expense_item" class="form-control" [(ngModel)]="expenseDetail.expense_item" name="expense_item"
+              required  #expense_item="ngModel"  
+              [ngClass]="{ 'is-invalid': f.submitted && expense_item.invalid, 
+              'is-valid': f.submitted && expense_item.valid }"
+             required>
+             <option *ngFor="let obj of expenseItemDetail" [value]="obj.expense_item">{{obj.expense_item}}
+            </option>
+        </select> -->
+             <div *ngIf="showError != ''" class="alert alert-danger">
+              {{showError}}</div> 
+              <div *ngIf="f.submitted && expense_item.invalid" class="invalid-feedback">
+                  <div *ngIf="expense_item.errors.required">Requred Expenses Item</div>
+              </div>
+          </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">{{field_name_add_expense_amount}}<span class="text-danger font-weight-bold">
+          *</span>
+        </label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" [(ngModel)]="expenseDetail.amount" name="amount"
+          pattern="[0-9]*[.]?[0-9]+" #amount="ngModel"  
+          [ngClass]="{ 'is-invalid': f.submitted && amount.invalid, 
+          'is-valid': f.submitted && amount.valid }"
+         required/>
+         <div *ngIf="f.submitted && amount.invalid" class="invalid-feedback">
+          <div *ngIf="amount.errors.required">Please provide amount</div>
+       
+          <div *ngIf="amount.errors.pattern">only numbers allowed
+         </div>
+      </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">{{field_name_add_expense_upload_files}}<span class="text-danger font-weight-bold">
+          </span>
+        </label>
+        <div class="col-sm-10">
+          <input type="file" class="form-control" name="files"  #files="ngModel"  [(ngModel)]="expenseDetail.files"
+                     (change)="selectImage($event)"/>
+        </div>
+      </div>
+       
+      <div class="form-group">
+        <div class="hoverable" *ngIf="preview && preview !== null">
+          <img [src]="preview" >
+          
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="col-sm-5 col-form-label">{{field_name_add_expense_created_by}}
+           
+          </label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="created_by"
+            [(ngModel)]="expenseDetail.created_by"
+            #created_by="ngModel" readonly>
+        </div>
+      </div>
+        <div class="form-group col-md-6">
+          <label class="col-sm-5 col-form-label">{{field_name_add_expense_created_time}}
+            
+          </label>
+          <div class="col-sm-10">
+           
+        
+            <input type="text" class="form-control" name="created_time"  
+             readonly value="{{expenseDetail.created_time |  date : dateFormat:'GMT':locale}}">
+             
+          
+          
+        </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="col-sm-5 col-form-label">{{field_name_add_expense_updated_by}}
+           
+          </label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="updated_by"
+              [(ngModel)]="expenseDetail.updated_by"
+              #updated_by="ngModel" readonly>
+        </div>
+      </div>
+        <div class="form-group col-md-6">
+          <label class="col-sm-5 col-form-label">{{field_name_add_expense_updated_time}}
+           
+          </label>
+          <div class="col-sm-10">
+          
+            <input type="text" class="form-control" name="modified_time"  
+             readonly value=" {{expenseDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+          
+        </div>
+      </div>
+      </div>
+      
+      <button  class="btn btn-success btn-round">
+        <span *ngIf="!isUpdate">{{'Save' | translate}}</span>
+        <span *ngIf="isUpdate">{{'Update' | translate}}</span>
+    </button>
+ 
+             <button class="btn btn-danger btn-round" type="button" appCancelbutton>{{'Cancel' | translate}}</button>
+      </div>
+    </form>
+
+</section>

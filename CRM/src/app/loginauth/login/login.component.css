@@ -1,0 +1,298 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+
+
+.login,
+.image {
+  min-height: 100vh;
+}
+.lang-image{
+	background-image: url('../../../assets/lang.png');
+    background-position: center center;
+    position: relative;
+    z-index: 18;
+    border-radius: 50%;
+    overflow: hidden;
+    width: 28px;
+    height: 30px;
+    margin-right: 1px;
+    margin-top: 8px;
+  
+}
+
+.login_btn:focus {
+	box-shadow: none !important;
+	outline: 0px !important;
+}
+.login_container {
+	padding: 0 2rem;
+}
+
+.form-control{
+	border-color:#0058D2 !important;
+}
+.logo-image{
+	background-image: url('../../../assets/website/318x318.png');
+    background-position: center center;
+  
+    z-index: 18;
+    padding: 190px;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    height: 410px;
+}
+.bg-image {
+  background-image: url('../../../assets/loginimg.png');
+  background-size: cover;
+  background-position: center center;
+}
+
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
+.auth__header {
+	padding: 13vh 1rem calc(11vh + 35px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #f0f0f0;
+	/* background-image: linear-gradient(#3280e4, #584dc3); */
+	background-image: linear-gradient(rgb(237, 171, 48), #2196F3 );
+	background-size: cover;
+	background-position: center center;
+	position: relative;
+	box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+.auth__header:before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+}
+
+.auth__logo {
+	position: relative;
+	z-index: 18;
+	background: #fff;
+	padding: 10px;
+	border-radius: 50%;
+	box-shadow: 0 2px 7px rgba(0, 0, 0, 0.15);
+	overflow: hidden;
+}
+
+.auth__body {
+	padding-bottom: 2rem;
+}
+
+.auth__form {
+	min-width: 280px;
+	max-width: 340px;
+	margin: auto;
+	margin-top: -40px;
+	padding: 0 10px;
+	position: relative;
+	z-index: 9;
+}
+
+.auth__form_body {
+	padding: 0.7rem 1.5rem 35px;
+	border-radius: 0.5rem;
+	background: #fff;
+	border: 1px solid #eee;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.auth__form_title {
+	font-size: 1.3rem;
+	text-align: center;
+	text-transform: uppercase;
+	margin-bottom: 1.2rem;
+}
+
+.auth__form_actions {
+	text-align: center;
+	padding: 0 2rem;
+	margin-top: -25px;
+}
+
+.auth__form_actions .btn {
+	border-radius: 30px;
+	box-shadow: 0 2px 12px rgba(50, 128, 228, 0.5);
+}
+
+
+
+
+
+.container{
+	height: 100%;
+	align-content: center;
+	}
+	
+	.card{
+	height: 370px;
+	margin-top: -79px;
+	margin-bottom: auto;
+	width: 400px;
+	background-color:#2196F3 !important;
+	}
+	
+
+	
+
+	.social_icon span{
+	font-size: 60px;
+	margin-left: 10px;
+	color: #FFC312;
+	}
+	
+	.social_icon span:hover{
+	color: white;
+	cursor: pointer;
+	}
+	
+	.card-header h3{
+	color: white;
+	}
+	
+	.social_icon{
+	position: absolute;
+	right: 20px;
+	top: -18px;
+	}
+	
+	.input-group-prepend span{
+	width: 50px;
+	background-color: rgb(237, 171, 48);
+	color: black;
+	border:0 !important;
+	}
+	
+	input:focus{
+	outline: 0 0 0 0  !important;
+	box-shadow: 0 0 0 0 !important;
+	
+	}
+	
+	.remember{
+	color: white;
+	}
+	
+	.remember input
+	{
+	width: 20px;
+	height: 20px;
+	margin-left: 15px;
+	margin-right: 5px;
+	}
+	
+	.login_btn{
+	color: white;
+	background-color: rgb(237, 171, 48);
+	
+	}
+	
+	/*.login_btn:hover{
+	color: black; */
+	/* background-color: white; 
+	}*/
+	
+	.links{
+	color: white;
+	}
+	
+	.links a{
+	margin-left: 4px;
+	}
+
+
+
+	/* new css start --------------------------------------------------------- */
+	
+	.loginimg {
+		height: 1003px;
+		margin-left: 334px;
+		width: 1184px;
+}
+
+
+.logo {
+	position: absolute;
+    width: 265px;
+    height: 265px;
+    left: 99px;
+    top: 132px;
+    overflow: visible;
+}
+
+.lang{
+
+	margin-bottom: 31px;
+    margin-left: 143px;
+}
+
+.selectbox{
+
+	position: absolute;
+    right: 970px;
+    top: 229px;
+	margin-right: 20px;
+
+   
+}
+
+
+
+
+.enteremail{
+
+	
+    margin-top: -558px;
+    margin-left: 116px;
+    width: 517px;
+    opacity: 1;
+	width: 25%;
+
+	margin-left: 46px;
+    margin-top: -551px;
+
+}
+
+.emailspan{
+
+	width: 49px;
+    height: 38px;
+    background-color: rgb(237, 171, 48);
+    color: black;
+    border: 0 !important;
+
+}
+
+.emailinput
+{
+
+	margin-left: 47px;
+    margin-top: -38px;
+}
+
+.col-auto::before {
+    position: absolute;
+    content: "\f0ac";
+    font-family: "FontAwesome";
+    font-weight: 700;
+    color: #0058D2;
+    float: right;
+    margin-block: 10px;
+    margin: 4px 3px 0px -18px;
+    z-index: 1;
+}
+
+  @media screen and (min-width: 481px) {
+	.imageLeft {
+		margin-left: 40px;
+	}
+  }

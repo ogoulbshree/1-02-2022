@@ -1,0 +1,461 @@
+
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' >
+  <div class="button-page">
+    <div class="row">
+      <div class="col-sm-12">
+        <form
+          class="form-horizontal form-material"
+          name="form"
+          #f="ngForm"
+          (ngSubmit)="f.form.valid && onSubmit()"
+        >
+          <div
+            *ngIf="f.form.invalid && f.submitted"
+            class="alert alert-danger alert-dismissible fade show"
+            role="alert"
+          >
+            <strong>Candidate Details!</strong>The form has the following errors
+            that need to be corrected
+            <button
+              type="button"
+              class="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="card-header">
+            <h2>
+              <span *ngIf="!isUpdate">{{field_name_hrms_candidate_add_candidate}}</span>
+              <span *ngIf="isUpdate">{{field_name_hrms_candidate_update}}</span>
+            </h2>
+          </div>
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_candidate_name}}<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="candidateDetail.candidate_name"
+                  name="candidate_name"
+                  #candidate_name="ngModel"
+                  [ngClass]="{
+                    'is-invalid': f.submitted && candidate_name.invalid,
+                    'is-valid': f.submitted && candidate_name.valid
+                  }"
+                  required
+                />
+  
+                <div
+                  *ngIf="f.submitted && candidate_name.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="candidate_name.errors.required">
+                    Please provide Name
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_candidate_email}}<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="email"
+                  class="form-control"
+                  [(ngModel)]="candidateDetail.candidate_email"
+                  name="candidate_email"
+                  #candidate_email="ngModel"
+                  [ngClass]="{
+                    'is-invalid': f.submitted && candidate_email.invalid,
+                    'is-valid': f.submitted && candidate_email.valid
+                  }"
+                  required
+                />
+  
+                <div
+                  *ngIf="f.submitted && candidate_email.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="candidate_email.errors.required">
+                    Please provide Email
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_candidate_phone}}<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="candidateDetail.candidate_phone"
+                  name="travel_date"
+                  #candidate_phone="ngModel"
+                  [ngClass]="{
+                    'is-invalid': f.submitted && candidate_phone.invalid,
+                    'is-valid': f.submitted && candidate_phone.valid
+                  }"
+                  required
+                />
+  
+                <div
+                  *ngIf="f.submitted && candidate_phone.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="candidate_phone.errors.required">
+                    Please provide Candidate Phone
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_candidate_resume}}<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="file"
+                  class="form-control"
+                  [(ngModel)]="candidateDetail.candidate_resume"
+                  name="candidate_resume"
+                  #candidate_resume="ngModel"
+                  accept="application/pdf"
+                  [ngClass]="{
+                    'is-invalid': f.submitted && candidate_resume.invalid,
+                    'is-valid': f.submitted && candidate_resume.valid
+                  }"
+                  
+                />
+                {{candidateDetail.candidate_resume || "No file uploaded yet."}}
+                <div
+                  *ngIf="f.submitted && candidate_resume.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="candidate_resume.errors.required">
+                    Please provide Candidate Resume
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_hrms_candidate_created_by}} </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="created_by"
+                    [(ngModel)]="candidateDetail.created_by"
+                    #created_by="ngModel"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_hrms_candidate_created_time}} </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="created_time"
+                    readonly
+                    value="{{ candidateDetail.created_time |  date : dateFormat:'GMT':locale }}"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_hrms_candidate_updated_by}} </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="updated_by"
+                    [(ngModel)]="candidateDetail.updated_by"
+                    #updated_by="ngModel"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_hrms_candidate_updated_time}} </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="modified_time"
+                    readonly
+                    value=" {{ candidateDetail.modified_time |  date : dateFormat:'GMT':locale }}"
+                  />
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-success btn-round">
+              <span *ngIf="!isUpdate">{{ "Save" | translate }}</span>
+              <span *ngIf="isUpdate">{{ "Update" | translate }}</span>
+            </button>
+  
+            <button
+              class="btn btn-danger btn-round"
+              type="button"
+              appCancelbutton
+            >
+              {{ "Cancel" | translate }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+</section>
+
+
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir='ltr' >
+  <div class="button-page">
+    <div class="row">
+      <div class="col-sm-12">
+        <form
+          class="form-horizontal form-material"
+          name="form"
+          #f="ngForm"
+          (ngSubmit)="f.form.valid && onSubmit()"
+        >
+          <div
+            *ngIf="f.form.invalid && f.submitted"
+            class="alert alert-danger alert-dismissible fade show"
+            role="alert"
+          >
+            <strong>Candidate Details!</strong>The form has the following errors
+            that need to be corrected
+            <button
+              type="button"
+              class="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="card-header">
+            <h2>
+              <span *ngIf="!isUpdate">{{field_name_hrms_candidate_add_candidate}}</span>
+              <span *ngIf="isUpdate">{{field_name_hrms_candidate_update}}</span>
+            </h2>
+          </div>
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_candidate_name}}<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="candidateDetail.candidate_name"
+                  name="candidate_name"
+                  #candidate_name="ngModel"
+                  [ngClass]="{
+                    'is-invalid': f.submitted && candidate_name.invalid,
+                    'is-valid': f.submitted && candidate_name.valid
+                  }"
+                  required
+                />
+  
+                <div
+                  *ngIf="f.submitted && candidate_name.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="candidate_name.errors.required">
+                    Please provide Name
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_candidate_email}}<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="email"
+                  class="form-control"
+                  [(ngModel)]="candidateDetail.candidate_email"
+                  name="candidate_email"
+                  #candidate_email="ngModel"
+                  [ngClass]="{
+                    'is-invalid': f.submitted && candidate_email.invalid,
+                    'is-valid': f.submitted && candidate_email.valid
+                  }"
+                  required
+                />
+  
+                <div
+                  *ngIf="f.submitted && candidate_email.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="candidate_email.errors.required">
+                    Please provide Email
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_candidate_phone}}<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="candidateDetail.candidate_phone"
+                  name="travel_date"
+                  #candidate_phone="ngModel"
+                  [ngClass]="{
+                    'is-invalid': f.submitted && candidate_phone.invalid,
+                    'is-valid': f.submitted && candidate_phone.valid
+                  }"
+                  required
+                />
+  
+                <div
+                  *ngIf="f.submitted && candidate_phone.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="candidate_phone.errors.required">
+                    Please provide Candidate Phone
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_candidate_resume}}<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="file"
+                  class="form-control"
+                  [(ngModel)]="candidateDetail.candidate_resume"
+                  name="candidate_resume"
+                  #candidate_resume="ngModel"
+                  accept="application/pdf"
+                  [ngClass]="{
+                    'is-invalid': f.submitted && candidate_resume.invalid,
+                    'is-valid': f.submitted && candidate_resume.valid
+                  }"
+                  
+                />
+                {{candidateDetail.candidate_resume || "No file uploaded yet."}}
+                <div
+                  *ngIf="f.submitted && candidate_resume.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="candidate_resume.errors.required">
+                    Please provide Candidate Resume
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_hrms_candidate_created_by}} </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="created_by"
+                    [(ngModel)]="candidateDetail.created_by"
+                    #created_by="ngModel"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_hrms_candidate_created_time}} </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="created_time"
+                    readonly
+                    value="{{ candidateDetail.created_time |  date : dateFormat:'GMT':locale }}"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_hrms_candidate_updated_by}} </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="updated_by"
+                    [(ngModel)]="candidateDetail.updated_by"
+                    #updated_by="ngModel"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_hrms_candidate_updated_time}} </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="modified_time"
+                    readonly
+                    value=" {{ candidateDetail.modified_time |  date : dateFormat:'GMT':locale }}"
+                  />
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-success btn-round">
+              <span *ngIf="!isUpdate">{{ "Save" | translate }}</span>
+              <span *ngIf="isUpdate">{{ "Update" | translate }}</span>
+            </button>
+  
+            <button
+              class="btn btn-danger btn-round"
+              type="button"
+              appCancelbutton
+            >
+              {{ "Cancel" | translate }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  </section>

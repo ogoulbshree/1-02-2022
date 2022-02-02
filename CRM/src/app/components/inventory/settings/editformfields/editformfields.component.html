@@ -1,0 +1,273 @@
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' >
+
+    <div class="container-fluid">
+        <div class="card">
+              <form class="form-horizontal form-material" name="form" #f="ngForm" >
+               
+                <div class="card-header">
+                  <h2> 
+                    Adding Dynamic Fields
+                     
+                  </h2>
+                  </div>
+                  <div class="card-body">
+                    <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label class="col-sm-5 col-form-label " for="componentName" >Select Component
+                            <span
+                            class="text-danger font-weight-bold">
+                            *</span>
+                          </label>
+                        <div class="col-10">
+                            <select placeholder="componentName" class="form-control" name="componentName"
+                                [(ngModel)]="componentName" (change)="onSelectComponentChange()" required>
+                                <option *ngFor="let obj of componentNameArr" [value]="obj">{{obj}}</option>
+                            </select>
+                        </div>
+                    </div>         
+      
+                    <div class="form-group col-md-6">
+                        <label class="col-sm-5 col-form-label">Select Field to edit 
+                            <span
+                            class="text-danger font-weight-bold">
+                            *</span>
+                          </label>
+                    
+                        <div class="col-10">
+                            <select placeholder="field_name" class="form-control" name="field_name"
+                                [(ngModel)]="currentFieldDetail" (change)="onSelectFieldChange()" required>
+                                <option [ngValue]="obj" *ngFor="let obj of currentFieldDetailArr">
+                                    {{obj.field_name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    </div>
+      
+      
+                    <!-- <div class="form-group col-md-8">
+                        <label class="col-sm-5 col-form-label">Current Field Value
+                            <span
+                            class="text-danger font-weight-bold">
+                            *</span>
+                          </label>
+                       
+                        <div class="col-10">
+                            <input type="text" placeholder="" class="form-control" name="currentFieldValue"
+                                [(ngModel)]="currentFieldDetail.field_value" required />
+                        </div>
+                    </div>
+     -->
+    
+    
+     <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label class="col-sm-5 col-form-label">Language
+                            <span
+                            class="text-danger font-weight-bold">
+                            *</span>
+                          </label>
+                       
+                        <div class="col-10">
+                            <select type="text" placeholder="" class="form-control" name="field_language"
+                             (change) = "onLanguageChange()"
+                                [(ngModel)]="currentLanguage" required >
+                                <option value="en">English</option>
+                                <option value="ar">Arabic</option>
+                                <option value="zh">Chinese</option>
+                                <option value="es">Spanish</option>
+                                <option value="fr">French</option>
+                                <option value="ru">Russian</option>
+                                <option value="ko">Korean</option>
+                                <option value="ja">Japanese</option>  
+                                <option value="tr">Turkish</option>  
+                              
+                                <!-- <option [ngValue]="obj" *ngFor="let obj of currentFieldDetailArr">
+                                    {{obj.field_language}}</option> -->
+                                </select>
+                        </div>
+                    </div> 
+    
+                    
+                    <div class="form-group col-md-6">
+                        <label class="col-sm-5 col-form-label">Current Field Value
+                            <span
+                            class="text-danger font-weight-bold">
+                            *</span>
+                        </label>
+                    
+                        <div class="col-10">
+                            <input type="text" placeholder="" class="form-control" name="currentFieldValue"
+                                [(ngModel)]="currentFieldValue" required />
+                        </div>
+                    </div>
+    </div>
+                  <!--   <div class="form-group row">
+                        <label class="col-md-3 col-form-label" for="inline-radios">Make the field ?</label>
+                        <div class="col-md-9 col-form-label">
+                            <div class="form-check form-check-inline mr-1" id="inline-radios">
+                                <input class="form-check-input" type="radio" name="inline-radios" id="inlineRadio1"
+                                    [(ngModel)]="currentFieldDetail.is_required" [value]="true">
+                                <label class="form-check-label" for="inlineRadio1">Mandatory</label>
+                            </div>
+                            <div class="form-check form-check-inline mr-1">
+                                <input class="form-check-input" type="radio" name="inline-radios" id="inlineRadio2"
+                                    [(ngModel)]="currentFieldDetail.is_required" [value]="false">
+                                <label class="form-check-label" for="inlineRadio2">Optional</label>
+                            </div>
+                        </div>
+                    </div> -->
+    
+                 
+                    <button class="btn btn-success btn-round text-center" (click)="onClickUpdate()">Update</button>
+                    <button class="btn btn-danger btn-round text-center " type="button"
+                    appCancelbutton>Cancel</button>
+                       
+        
+                </div>
+              </form>
+          
+          </div>
+          </div>
+    
+          </section>
+     
+    
+    
+          
+    
+          <section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir='ltr' >
+        <div class="container-fluid">
+            <div class="card">
+                  <form class="form-horizontal form-material" name="form" #f="ngForm" >
+                   
+                    <div class="card-header">
+                      <h2> 
+                        Adding Dynamic Fields
+                         
+                      </h2>
+                      </div>
+                      <div class="card-body">
+                        <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label class="col-sm-5 col-form-label " for="componentName" >Select Component
+                                <span
+                                class="text-danger font-weight-bold">
+                                *</span>
+                              </label>
+                            <div class="col-10">
+                                <select placeholder="componentName" class="form-control" name="componentName"
+                                    [(ngModel)]="componentName" (change)="onSelectComponentChange()" required>
+                                    <option *ngFor="let obj of componentNameArr" [value]="obj">{{obj}}</option>
+                                </select>
+                            </div>
+                        </div>         
+          
+                        <div class="form-group col-md-6">
+                            <label class="col-sm-5 col-form-label">Select Field to edit 
+                                <span
+                                class="text-danger font-weight-bold">
+                                *</span>
+                              </label>
+                        
+                            <div class="col-10">
+                                <select placeholder="field_name" class="form-control" name="field_name"
+                                    [(ngModel)]="currentFieldDetail" (change)="onSelectFieldChange()" required>
+                                    <option [ngValue]="obj" *ngFor="let obj of currentFieldDetailArr">
+                                        {{obj.field_name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        </div>
+          
+          
+                        <!-- <div class="form-group col-md-8">
+                            <label class="col-sm-5 col-form-label">Current Field Value
+                                <span
+                                class="text-danger font-weight-bold">
+                                *</span>
+                              </label>
+                           
+                            <div class="col-10">
+                                <input type="text" placeholder="" class="form-control" name="currentFieldValue"
+                                    [(ngModel)]="currentFieldDetail.field_value" required />
+                            </div>
+                        </div>
+         -->
+        
+        
+         <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label class="col-sm-5 col-form-label">Language
+                                <span
+                                class="text-danger font-weight-bold">
+                                *</span>
+                              </label>
+                           
+                            <div class="col-10">
+                                <select type="text" placeholder="" class="form-control" name="field_language"
+                                 (change) = "onLanguageChange()"
+                                    [(ngModel)]="currentLanguage" required >
+                                    <option value="en">English</option>
+                                    <option value="ar">Arabic</option>
+                                    <option value="zh">Chinese</option>
+                                    <option value="es">Spanish</option>
+                                    <option value="fr">French</option>
+                                    <option value="ru">Russian</option>
+                                    <option value="ko">Korean</option>
+                                    <option value="ja">Japanese</option>  
+                                    <option value="tr">Turkish</option>  
+                                  
+                                    <!-- <option [ngValue]="obj" *ngFor="let obj of currentFieldDetailArr">
+                                        {{obj.field_language}}</option> -->
+                                    </select>
+                            </div>
+                        </div> 
+        
+                        
+                        <div class="form-group col-md-6">
+                            <label class="col-sm-5 col-form-label">Current Field Value
+                                <span
+                                class="text-danger font-weight-bold">
+                                *</span>
+                            </label>
+                        
+                            <div class="col-10">
+                                <input type="text" placeholder="" class="form-control" name="currentFieldValue"
+                                    [(ngModel)]="currentFieldValue" required />
+                            </div>
+                        </div>
+        </div>
+                       <!--  <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="inline-radios">Make the field ?</label>
+                            <div class="col-md-9 col-form-label">
+                                <div class="form-check form-check-inline mr-1" id="inline-radios">
+                                    <input class="form-check-input" type="radio" name="inline-radios" id="inlineRadio1"
+                                        [(ngModel)]="currentFieldDetail.is_required" [value]="true">
+                                    <label class="form-check-label" for="inlineRadio1">Mandatory</label>
+                                </div>
+                                <div class="form-check form-check-inline mr-1">
+                                    <input class="form-check-input" type="radio" name="inline-radios" id="inlineRadio2"
+                                        [(ngModel)]="currentFieldDetail.is_required" [value]="false">
+                                    <label class="form-check-label" for="inlineRadio2">Optional</label>
+                                </div>
+                            </div>
+                        </div> -->
+        
+                     <!--    <button type="button" class="btn btn-danger btn-round text-center pull-right" (click)="onClickReset()">Reset
+                           </button> -->
+                      
+                           <button class="btn btn-success btn-round text-center" (click)="onClickUpdate()">Update</button>
+                           <button class="btn btn-danger btn-round text-center " type="button"
+                           appCancelbutton>Cancel</button>
+            
+                    </div>
+                  </form>
+              
+              </div>
+              </div>
+        
+              </section>
+         

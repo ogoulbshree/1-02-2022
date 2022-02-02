@@ -1,0 +1,559 @@
+
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' >
+  <div class="button-page">
+    <div class="row">
+      <div class="col-sm-12">
+        <form
+          class="form-horizontal form-material"
+          name="form"
+          #f="ngForm"
+          (ngSubmit)="f.form.valid && onSubmit()"
+        >
+          <div
+            *ngIf="f.form.invalid && f.submitted"
+            class="alert alert-danger alert-dismissible fade show"
+            role="alert"
+          >
+            <strong>Travel Details!</strong>The form has the following errors that
+            need to be corrected
+            <button
+              type="button"
+              class="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="card-header">
+            <h2>
+              <span *ngIf="!isUpdate">{{field_name_hrms_travel_add_travel}}</span>
+              <span *ngIf="isUpdate">{{field_name_hrms_travel_update}}</span>
+            </h2>
+          </div>
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >Travel Info<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="travelDetail.travel_info"
+                  name="travel_info"
+                  required
+                  pattern="^(?:[A-Za-z]+)(?:[A-Za-z _]*)$"
+                  #travel_info="ngModel"
+                  [ngClass]="{
+                    'is-invalid': f.submitted && travel_info.invalid,
+                    'is-valid': f.submitted && travel_info.valid
+                  }"
+                  required
+                />
+  
+                <div *ngIf="showError != ''" class="alert alert-danger">
+                  {{ showError }}
+                </div>
+  
+                <div
+                  *ngIf="f.submitted && travel_info.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="travel_info.errors.required">
+                    Please provide Travel Info
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_travel_employee_name}}<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              
+              <div class="col-sm-10">
+              <div class="ng-autocomplete">
+                  <ng-autocomplete [data]="employeeArray" [searchKeyword]="keyword"  [initialValue]='keyword' 
+                   (selected)='selectEvent($event)'
+                    (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
+                    [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" [(ngModel)]="travelDetail.employee_name"
+                    name="employee_id" #employee_id="ngModel"  required
+                    [ngClass]="{ 'is-invalid': f.submitted && employee_id.invalid, 
+                   'is-valid': f.submitted && employee_id.valid }">
+                  </ng-autocomplete>
+  
+                  <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.first_name"></a>
+                  </ng-template>
+               
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound">
+                    
+                    </div>
+                 
+                  
+                  </ng-template>
+                  <div *ngIf="f.submitted && employee_id.invalid" class="invalid-feedback">
+                    <div *ngIf="employee_id.errors.required">Please Select Employee</div>
+          
+                   
+                  </div>
+                  
+                </div></div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_travel_date}}<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="date"
+                  class="form-control"
+                  [(ngModel)]="travelDetail.travel_date"
+                  name="travel_date"
+                  #travel_date="ngModel"
+                  (change)="dateSelected()"
+                  [ngClass]="{
+                    'is-invalid': f.submitted && travel_date.invalid,
+                    'is-valid': f.submitted && travel_date.valid
+                  }"
+                  required
+                />
+  
+                <div
+                  *ngIf="f.submitted && travel_date.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="travel_date.errors.required">
+                    Please provide Travel Date
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_travel_return_date}}<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="date"
+                  class="form-control"
+                  [(ngModel)]="travelDetail.return_date"
+                  name="return_date"
+                  #return_date="ngModel"
+                  (change)="dateSelected()"
+                  [ngClass]="{
+                    'is-invalid': f.submitted && return_date.invalid,
+                    'is-valid': f.submitted && return_date.valid
+                  }"
+                  required
+                />
+  
+                <div
+                  *ngIf="f.submitted && return_date.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="return_date.errors.required">
+                    Please provide Return Date
+                  </div>
+                </div>
+                <div *ngIf="this.dateErrorFlag" style="color:red">
+                  Travel date Should be greater than return date
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_travel_ticket_info}}<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="travelDetail.ticket_info"
+                  name="ticket_info"
+                  required
+                  pattern="^(?:[A-Za-z]+)(?:[A-Za-z _]*)$"
+                  #ticket_info="ngModel"
+                  [ngClass]="{
+                    'is-invalid': f.submitted && ticket_info.invalid,
+                    'is-valid': f.submitted && ticket_info.valid
+                  }"
+                  required
+                />
+  
+                <div
+                  *ngIf="f.submitted && ticket_info.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="ticket_info.errors.required">
+                    Please provide TIcket Info
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_hrms_travel_created_by}} </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="created_by"
+                    [(ngModel)]="travelDetail.created_by"
+                    #created_by="ngModel"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_hrms_travel_created_time}} </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="created_time"
+                    readonly
+                    value="{{ travelDetail.created_time |  date : dateFormat:'GMT':locale }}"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_hrms_travel_updated_by}} </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="updated_by"
+                    [(ngModel)]="travelDetail.updated_by"
+                    #updated_by="ngModel"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_hrms_travel_updated_time}} </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="modified_time"
+                    readonly
+                    value=" {{ travelDetail.modified_time |  date : dateFormat:'GMT':locale }}"
+                  />
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-success btn-round">
+              <span *ngIf="!isUpdate">{{ "Save" | translate }}</span>
+              <span *ngIf="isUpdate">{{ "Update" | translate }}</span>
+            </button>
+  
+            <button
+              class="btn btn-danger btn-round"
+              type="button"
+              appCancelbutton
+            >
+              {{ "Cancel" | translate }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+</section>
+
+
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir='ltr' >
+  <div class="button-page">
+    <div class="row">
+      <div class="col-sm-12">
+        <form
+          class="form-horizontal form-material"
+          name="form"
+          #f="ngForm"
+          (ngSubmit)="f.form.valid && onSubmit()"
+        >
+          <div
+            *ngIf="f.form.invalid && f.submitted"
+            class="alert alert-danger alert-dismissible fade show"
+            role="alert"
+          >
+            <strong>Travel Details!</strong>The form has the following errors that
+            need to be corrected
+            <button
+              type="button"
+              class="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="card-header">
+            <h2>
+              <span *ngIf="!isUpdate">{{field_name_hrms_travel_add_travel}}</span>
+              <span *ngIf="isUpdate">{{field_name_hrms_travel_update}}</span>
+            </h2>
+          </div>
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >Travel Info<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="travelDetail.travel_info"
+                  name="travel_info"
+                  required
+                  pattern="^(?:[A-Za-z]+)(?:[A-Za-z _]*)$"
+                  #travel_info="ngModel"
+                  [ngClass]="{
+                    'is-invalid': f.submitted && travel_info.invalid,
+                    'is-valid': f.submitted && travel_info.valid
+                  }"
+                  required
+                />
+  
+                <div *ngIf="showError != ''" class="alert alert-danger">
+                  {{ showError }}
+                </div>
+  
+                <div
+                  *ngIf="f.submitted && travel_info.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="travel_info.errors.required">
+                    Please provide Travel Info
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_travel_employee_name}}<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              
+              <div class="col-sm-10">
+              <div class="ng-autocomplete">
+                  <ng-autocomplete [data]="employeeArray" [searchKeyword]="keyword"  [initialValue]='keyword' 
+                   (selected)='selectEvent($event)'
+                    (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
+                    [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" [(ngModel)]="travelDetail.employee_name"
+                    name="employee_id" #employee_id="ngModel"  required
+                    [ngClass]="{ 'is-invalid': f.submitted && employee_id.invalid, 
+                   'is-valid': f.submitted && employee_id.valid }">
+                  </ng-autocomplete>
+  
+                  <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.first_name"></a>
+                  </ng-template>
+               
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound">
+                    
+                    </div>
+                 
+                  
+                  </ng-template>
+                  <div *ngIf="f.submitted && employee_id.invalid" class="invalid-feedback">
+                    <div *ngIf="employee_id.errors.required">Please Select Employee</div>
+          
+                   
+                  </div>
+                  
+                </div></div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_travel_date}}<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="date"
+                  class="form-control"
+                  [(ngModel)]="travelDetail.travel_date"
+                  name="travel_date"
+                  #travel_date="ngModel"
+                  (change)="dateSelected()"
+                  [ngClass]="{
+                    'is-invalid': f.submitted && travel_date.invalid,
+                    'is-valid': f.submitted && travel_date.valid
+                  }"
+                  required
+                />
+  
+                <div
+                  *ngIf="f.submitted && travel_date.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="travel_date.errors.required">
+                    Please provide Travel Date
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_travel_return_date}}<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="date"
+                  class="form-control"
+                  [(ngModel)]="travelDetail.return_date"
+                  name="return_date"
+                  #return_date="ngModel"
+                  (change)="dateSelected()"
+                  [ngClass]="{
+                    'is-invalid': f.submitted && return_date.invalid,
+                    'is-valid': f.submitted && return_date.valid
+                  }"
+                  required
+                />
+  
+                <div
+                  *ngIf="f.submitted && return_date.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="return_date.errors.required">
+                    Please provide Return Date
+                  </div>
+                </div>
+                <div *ngIf="this.dateErrorFlag" style="color:red">
+                  Travel date Should be greater than return date
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_travel_ticket_info}}<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="travelDetail.ticket_info"
+                  name="ticket_info"
+                  required
+                  pattern="^(?:[A-Za-z]+)(?:[A-Za-z _]*)$"
+                  #ticket_info="ngModel"
+                  [ngClass]="{
+                    'is-invalid': f.submitted && ticket_info.invalid,
+                    'is-valid': f.submitted && ticket_info.valid
+                  }"
+                  required
+                />
+  
+                <div
+                  *ngIf="f.submitted && ticket_info.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="ticket_info.errors.required">
+                    Please provide TIcket Info
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_hrms_travel_created_by}} </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="created_by"
+                    [(ngModel)]="travelDetail.created_by"
+                    #created_by="ngModel"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_hrms_travel_created_time}} </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="created_time"
+                    readonly
+                    value="{{ travelDetail.created_time |  date : dateFormat:'GMT':locale }}"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_hrms_travel_updated_by}} </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="updated_by"
+                    [(ngModel)]="travelDetail.updated_by"
+                    #updated_by="ngModel"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_hrms_travel_updated_time}} </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="modified_time"
+                    readonly
+                    value=" {{ travelDetail.modified_time |  date : dateFormat:'GMT':locale }}"
+                  />
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-success btn-round">
+              <span *ngIf="!isUpdate">{{ "Save" | translate }}</span>
+              <span *ngIf="isUpdate">{{ "Update" | translate }}</span>
+            </button>
+  
+            <button
+              class="btn btn-danger btn-round"
+              type="button"
+              appCancelbutton
+            >
+              {{ "Cancel" | translate }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  </section>

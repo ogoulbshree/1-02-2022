@@ -1,0 +1,659 @@
+
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' >
+
+<h2 mat-dialog-title>{{field_name_hrms_employee_Add_employee}}</h2>
+<form
+  class="form-horizontal"
+  name="form"
+  #f="ngForm"
+  (ngSubmit)="f.form.valid && submit()"
+>
+  <mat-dialog-content class="mat-typography">
+    <div class="row" *ngIf="employeeDetail">
+      <div class="col-md-6">
+        {{field_name_hrms_employee_first_name}} :<br />
+        <input
+          tabindex="1"
+          type="text"
+          class="form-control"
+          name="first_name"
+          pattern="[a-zA-Z ]+"
+          [(ngModel)]="employeeDetail.first_name"
+          maxlength="20"
+          minlength="1"
+          #first_name="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && first_name.invalid,
+            'is-valid': f.submitted && first_name.valid
+          }"
+          required
+        />
+
+        <div *ngIf="f.submitted && first_name.invalid" class="invalid-feedback">
+          <div *ngIf="first_name.errors.required">
+            Please provide first name
+          </div>
+        </div>
+        <br />
+        {{field_name_hrms_employee_mobile}} :<br />
+        <input
+          tabindex="2"
+          type="number"
+          class="form-control"
+          name="phone"
+          #phone="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && phone.invalid,
+            'is-valid': f.submitted && phone.valid
+          }"
+          [(ngModel)]="employeeDetail.phone"
+          required
+        />
+        <div *ngIf="f.submitted && phone.invalid" class="invalid-feedback">
+          <div *ngIf="phone.errors.required">Please provide phone</div>
+        </div>
+        <br />
+
+        {{field_name_hrms_employee_designation}} :<br />
+
+        <select
+          tabindex="3"
+          type="text"
+          class="custom-select"
+          [(ngModel)]="employeeDetail.designation"
+          name="designation"
+          #designation="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && designation.invalid,
+            'is-valid': f.submitted && designation.valid
+          }"
+          (change)="selectedDesignation($event)"
+          [(ngModel)]="employeeDetail.designation"
+          required
+        >
+          <option
+            *ngFor="let obj of designationDetail"
+            [value]="obj.designation_name"
+          >
+            {{ obj.designation_name }}
+          </option>
+        </select>
+        <div
+          *ngIf="f.submitted && designation.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="designation.errors.required">
+            Please provide designation
+          </div>
+        </div>
+        <br />
+
+        {{field_name_hrms_employee_status}} :<br />
+
+        <select
+          tabindex="4"
+          type="text"
+          class="custom-select"
+          [(ngModel)]="employeeDetail.employee_status"
+          name="employee_status"
+          #employee_status="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && employee_status.invalid,
+            'is-valid': f.submitted && employee_status.valid
+          }"
+          [(ngModel)]="employeeDetail.employee_status"
+          required
+        >
+          <option
+            *ngFor="let obj of employeestatusDetail"
+            [value]="obj.employee_status"
+          >
+            {{ obj.employee_status }}
+          </option>
+        </select>
+        <div
+          *ngIf="f.submitted && employee_status.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="employee_status.errors.required">
+            Please provide Employee Status
+          </div>
+        </div>
+      {{field_name_hrms_employee_assigned_to}} :<br />
+
+        <select
+          tabindex="5"
+          type="text"
+          class="custom-select"
+          name="assigned_to"
+          #assigned_to="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && assigned_to.invalid,
+            'is-valid': f.submitted && assigned_to.valid
+          }"
+          [(ngModel)]="employeeDetail.assigned_to"
+          required
+        >
+          <option value="self">Self</option>
+          <option *ngFor="let obj of employeeArr" [value]="obj.employee_id">
+            {{ obj.first_name }}
+          </option>
+        </select>
+        <div
+          *ngIf="f.submitted && assigned_to.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="assigned_to.errors.required">
+            Please provide Assigned To
+          </div>
+        </div>
+        <br />
+        {{field_name_hrms_employee_leaves_avaialable}} :<br />
+
+        <input
+          readonly
+          type="number"
+          class="form-control"
+          name="leaves_available"
+          [(ngModel)]="employeeDetail.leaves_available"
+        />
+        <br />
+      </div>
+      <div class="col-md-6">
+        {{field_name_hrms_employee_last_name}} :<br />
+        <input
+          tabindex="1"
+          pattern="[a-zA-Z ]+"
+          maxlength="20"
+          minlength="1"
+          type="text"
+          class="form-control"
+          name="last_name"
+          #last_name="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && last_name.invalid,
+            'is-valid': f.submitted && last_name.valid
+          }"
+          [(ngModel)]="employeeDetail.last_name"
+          required
+        />
+        <div *ngIf="f.submitted && last_name.invalid" class="invalid-feedback">
+          <div *ngIf="last_name.errors.required">Please provide last_name</div>
+        </div>
+        <br />
+        {{field_name_hrms_employee_email_id}} :<br />
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="employeeDetail.email"
+          name="email"
+          pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+          #email="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && email.invalid,
+            'is-valid': f.submitted && email.valid
+          }"
+          required
+        />
+        
+        <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+          <div *ngIf="email.errors.required">Please provide Email</div>
+          <div *ngIf="email.errors.pattern">
+            Email format should be
+            <small class="text-success"><b>jhon@abc.com</b></small>
+          </div>
+        </div>
+        <!-- <input
+          tabindex="2"
+          type="text"
+          class="form-control"
+          name="email"
+          #email="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && email.invalid,
+            'is-valid': f.submitted && email.valid
+          }"
+          [(ngModel)]="employeeDetail.email"
+          required
+        />
+        <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+          <div *ngIf="email.errors.required">Please provide email</div>
+        </div> -->
+        <br />
+
+        {{field_name_hrms_employee_join_date}} :<br />
+        <input
+          tabindex="3"
+          type="date"
+          class="form-control"
+          name="joining_date"
+          #joining_date="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && joining_date.invalid,
+            'is-valid': f.submitted && joining_date.valid
+          }"
+          [(ngModel)]="employeeDetail.joining_date"
+          required
+        />
+        <div
+          *ngIf="f.submitted && joining_date.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="joining_date.errors.required">
+            Please provide Joining Date 
+          </div>
+        </div>
+        <br />
+
+        <span *ngIf="this.employee">{{field_name_hrms_employee_uploaded_picture}} :<br /></span>
+        <img
+          *ngIf="this.employee"
+          height="50"
+          [src]="employeeDetail.profile_picture"
+        />
+        <span *ngIf="!this.employee">{{field_name_hrms_employee_uploaded_picture}} :<br /></span>
+        <input
+          tabindex="4"
+          type="file"
+          class="form-control"
+          name="profile_picture"
+          accept="image/png, image/gif, image/jpeg"
+          (change)="selectImage($event)"
+        />
+
+        <br />
+        {{field_name_hrms_employee_bank_name}} :<br />
+        <input
+          tabindex="5"
+          type="text"
+          class="form-control"
+          name="employee_bank"
+          maxlength="20"
+          minlength="1"
+          #employee_bank="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && employee_bank.invalid,
+            'is-valid': f.submitted && employee_bank.valid
+          }"
+          [(ngModel)]="employeeDetail.employee_bank"
+          required
+        />
+        <div
+          *ngIf="f.submitted && employee_bank.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="employee_bank.errors.required">
+            Please provide Bank name
+          </div>
+        </div>
+        <br />
+        {{field_name_hrms_employee_account_number}} :<br />
+        <input
+          tabindex="6"
+          type="text"
+          axlength="20"
+          minlength="6"
+          class="form-control"
+          name="employee_account_number"
+          #employee_account_number="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && employee_account_number.invalid,
+            'is-valid': f.submitted && employee_account_number.valid
+          }"
+          [(ngModel)]="employeeDetail.employee_account_number"
+          required
+        />
+        <div
+          *ngIf="f.submitted && employee_account_number.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="employee_account_number.errors.required">
+            Please provide Account Number
+          </div>
+        </div>
+        <br />
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close class="btn btn-danger">{{'Cancel'|translate}}</button>
+
+    <button type="submit" mat-button class="btn btn-success">{{'Save'|translate}}</button>
+  </mat-dialog-actions>
+</form>
+</section>
+
+
+
+
+
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir='ltr' >
+
+  <h2 mat-dialog-title>{{field_name_hrms_employee_Add_employee}}</h2>
+  <form
+    class="form-horizontal"
+    name="form"
+    #f="ngForm"
+    (ngSubmit)="f.form.valid && submit()"
+  >
+    <mat-dialog-content class="mat-typography">
+      <div class="row" *ngIf="employeeDetail">
+        <div class="col-md-6">
+          {{field_name_hrms_employee_first_name}} :<br />
+          <input
+            tabindex="1"
+            type="text"
+            class="form-control"
+            name="first_name"
+            pattern="[a-zA-Z ]+"
+            [(ngModel)]="employeeDetail.first_name"
+            maxlength="20"
+            minlength="1"
+            #first_name="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && first_name.invalid,
+              'is-valid': f.submitted && first_name.valid
+            }"
+            required
+          />
+  
+          <div *ngIf="f.submitted && first_name.invalid" class="invalid-feedback">
+            <div *ngIf="first_name.errors.required">
+              Please provide first name
+            </div>
+          </div>
+          <br />
+          {{field_name_hrms_employee_mobile}} :<br />
+          <input
+            tabindex="2"
+            type="number"
+            class="form-control"
+            name="phone"
+            #phone="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && phone.invalid,
+              'is-valid': f.submitted && phone.valid
+            }"
+            [(ngModel)]="employeeDetail.phone"
+            required
+          />
+          <div *ngIf="f.submitted && phone.invalid" class="invalid-feedback">
+            <div *ngIf="phone.errors.required">Please provide phone</div>
+          </div>
+          <br />
+  
+          {{field_name_hrms_employee_designation}} :<br />
+  
+          <select
+            tabindex="3"
+            type="text"
+            class="custom-select"
+            [(ngModel)]="employeeDetail.designation"
+            name="designation"
+            #designation="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && designation.invalid,
+              'is-valid': f.submitted && designation.valid
+            }"
+            (change)="selectedDesignation($event)"
+            [(ngModel)]="employeeDetail.designation"
+            required
+          >
+            <option
+              *ngFor="let obj of designationDetail"
+              [value]="obj.designation_name"
+            >
+              {{ obj.designation_name }}
+            </option>
+          </select>
+          <div
+            *ngIf="f.submitted && designation.invalid"
+            class="invalid-feedback"
+          >
+            <div *ngIf="designation.errors.required">
+              Please provide designation
+            </div>
+          </div>
+          <br />
+  
+          {{field_name_hrms_employee_status}} :<br />
+  
+          <select
+            tabindex="4"
+            type="text"
+            class="custom-select"
+            [(ngModel)]="employeeDetail.employee_status"
+            name="employee_status"
+            #employee_status="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && employee_status.invalid,
+              'is-valid': f.submitted && employee_status.valid
+            }"
+            [(ngModel)]="employeeDetail.employee_status"
+            required
+          >
+            <option
+              *ngFor="let obj of employeestatusDetail"
+              [value]="obj.employee_status"
+            >
+              {{ obj.employee_status }}
+            </option>
+          </select>
+          <div
+            *ngIf="f.submitted && employee_status.invalid"
+            class="invalid-feedback"
+          >
+            <div *ngIf="employee_status.errors.required">
+              Please provide Employee Status
+            </div>
+          </div>
+        {{field_name_hrms_employee_assigned_to}} :<br />
+  
+          <select
+            tabindex="5"
+            type="text"
+            class="custom-select"
+            name="assigned_to"
+            #assigned_to="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && assigned_to.invalid,
+              'is-valid': f.submitted && assigned_to.valid
+            }"
+            [(ngModel)]="employeeDetail.assigned_to"
+            required
+          >
+            <option value="self">Self</option>
+            <option *ngFor="let obj of employeeArr" [value]="obj.employee_id">
+              {{ obj.first_name }}
+            </option>
+          </select>
+          <div
+            *ngIf="f.submitted && assigned_to.invalid"
+            class="invalid-feedback"
+          >
+            <div *ngIf="assigned_to.errors.required">
+              Please provide Assigned To
+            </div>
+          </div>
+          <br />
+          {{field_name_hrms_employee_leaves_avaialable}} :<br />
+  
+          <input
+            readonly
+            type="number"
+            class="form-control"
+            name="leaves_available"
+            [(ngModel)]="employeeDetail.leaves_available"
+          />
+          <br />
+        </div>
+        <div class="col-md-6">
+          {{field_name_hrms_employee_last_name}} :<br />
+          <input
+            tabindex="1"
+            pattern="[a-zA-Z ]+"
+            maxlength="20"
+            minlength="1"
+            type="text"
+            class="form-control"
+            name="last_name"
+            #last_name="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && last_name.invalid,
+              'is-valid': f.submitted && last_name.valid
+            }"
+            [(ngModel)]="employeeDetail.last_name"
+            required
+          />
+          <div *ngIf="f.submitted && last_name.invalid" class="invalid-feedback">
+            <div *ngIf="last_name.errors.required">Please provide last_name</div>
+          </div>
+          <br />
+          {{field_name_hrms_employee_email_id}} :<br />
+          <input
+            type="text"
+            tabindex="2"
+            class="form-control"
+            [(ngModel)]="employeeDetail.email"
+            name="email"
+            pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+            #email="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && email.invalid,
+              'is-valid': f.submitted && email.valid
+            }"
+            required
+          />
+          
+          <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+            <div *ngIf="email.errors.required">Please provide Email</div>
+            <div *ngIf="email.errors.pattern">
+              Email format should be
+              <small class="text-success"><b>jhon@abc.com</b></small>
+            </div>
+          </div>
+          <!-- <input
+            tabindex="2"
+            type="text"
+            class="form-control"
+            name="email"
+            #email="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && email.invalid,
+              'is-valid': f.submitted && email.valid
+            }"
+            [(ngModel)]="employeeDetail.email"
+            required
+          />
+          <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+            <div *ngIf="email.errors.required">Please provide email</div>
+          </div> -->
+          <br />
+  
+          {{field_name_hrms_employee_join_date}} :<br />
+          <input
+            tabindex="3"
+            type="date"
+            class="form-control"
+            name="joining_date"
+            #joining_date="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && joining_date.invalid,
+              'is-valid': f.submitted && joining_date.valid
+            }"
+            [(ngModel)]="employeeDetail.joining_date"
+            required
+          />
+          <div
+            *ngIf="f.submitted && joining_date.invalid"
+            class="invalid-feedback"
+          >
+            <div *ngIf="joining_date.errors.required">
+              Please provide Joining Date 
+            </div>
+          </div>
+          <br />
+  
+          <span *ngIf="this.employee">{{field_name_hrms_employee_uploaded_picture}} :<br /></span>
+          <img
+            *ngIf="this.employee"
+            height="50"
+            [src]="employeeDetail.profile_picture"
+          />
+          <span *ngIf="!this.employee">{{field_name_hrms_employee_uploaded_picture}} :<br /></span>
+          <input
+            tabindex="4"
+            type="file"
+            class="form-control"
+            name="profile_picture"
+            accept="image/png, image/gif, image/jpeg"
+            (change)="selectImage($event)"
+          />
+  
+          <br />
+          {{field_name_hrms_employee_bank_name}} :<br />
+          <input
+            tabindex="5"
+            type="text"
+            class="form-control"
+            name="employee_bank"
+            maxlength="20"
+            minlength="1"
+            #employee_bank="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && employee_bank.invalid,
+              'is-valid': f.submitted && employee_bank.valid
+            }"
+            [(ngModel)]="employeeDetail.employee_bank"
+            required
+          />
+          <div
+            *ngIf="f.submitted && employee_bank.invalid"
+            class="invalid-feedback"
+          >
+            <div *ngIf="employee_bank.errors.required">
+              Please provide Bank name
+            </div>
+          </div>
+          <br />
+          {{field_name_hrms_employee_account_number}} :<br />
+          <input
+            tabindex="6"
+            type="text"
+            axlength="20"
+            minlength="6"
+            class="form-control"
+            name="employee_account_number"
+            #employee_account_number="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && employee_account_number.invalid,
+              'is-valid': f.submitted && employee_account_number.valid
+            }"
+            [(ngModel)]="employeeDetail.employee_account_number"
+            required
+          />
+          <div
+            *ngIf="f.submitted && employee_account_number.invalid"
+            class="invalid-feedback"
+          >
+            <div *ngIf="employee_account_number.errors.required">
+              Please provide Account Number
+            </div>
+          </div>
+          <br />
+        </div>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close class="btn btn-danger">{{'Cancel'|translate}}</button>
+  
+      <button type="submit" mat-button class="btn btn-success">{{'Save'|translate}}</button>
+    </mat-dialog-actions>
+  </form>
+  </section>

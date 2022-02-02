@@ -1,0 +1,1334 @@
+
+ 
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' >
+    <div class="container-fluid">
+      <h3 class="text-center">{{field_name_leads_leaddetails}}</h3>
+      <div class="card">
+        <div class="card-body">
+          <form class="form-horizontal" name="form" #f="ngForm" (ngSubmit)="f.form.valid &&  onSubmit()">
+            <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+              <strong>Leads Details!</strong>The form has the following errors that need to be corrected
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="card-header">
+              <h2>
+                <span *ngIf="!isUpdate">{{field_name_leads_add}}</span> 
+                  <span *ngIf="isUpdate">{{field_name_leads_update}}</span>
+              </h2>
+              
+            </div>
+            <div class="card-body">
+      <!-- <section id="tabs" class="project-tab"> -->
+               <!--    <div class="container"> -->
+                   <!--    <div class="row"> -->
+                         <!--  <div class="col-md-12"> -->
+                              <nav>
+                                  <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                                      <a class="nav-item nav-link active" id="nav-contact-info-tab" data-toggle="tab" href="#nav-contact-info" role="tab" aria-controls="nav-contact-info" aria-selected="true"> {{field_name_leads_contact_info}} </a>
+                                      <a class="nav-item nav-link" id="nav-address-info-tab" data-toggle="tab" href="#nav-address-info" role="tab" aria-controls="nav-address-info" aria-selected="false">{{field_name_leads_address_info}}</a>
+                                      <a class="nav-item nav-link" id="nav-other-info-tab" data-toggle="tab" href="#nav-other-info" role="tab" aria-controls="nav-other-info" aria-selected="false">    {{field_name_leads_other_info}} </a>
+                                    <!--   <a class="nav-item nav-link" id="nav-attachment-info-tab" data-toggle="tab" href="#nav-attachment-info" role="tab" aria-controls="nav-attachment-info" aria-selected="false">{{field_name_leads_notes_attachments}}</a> -->
+                                     <!--  <a class="nav-item nav-link" id="nav-activity-info-tab" data-toggle="tab" href="#nav-activity-info" role="tab" aria-controls="nav-activity-info" aria-selected="false"> {{field_name_leads_activity_info}}</a> -->
+                                      <a class="nav-item nav-link" id="nav-convert-info-tab" data-toggle="tab" href="#nav-convert-info" role="tab" aria-controls="nav-convert-info" aria-selected="false">{{field_name_marketing_convert_to_customer}}
+                                        </a>
+                                  </div>
+                              </nav>
+                              <div class="tab-content" id="nav-tabContent" *ngIf="this.leadDetail">
+                                  <div class="tab-pane fade show active" id="nav-contact-info" role="tabpanel" aria-labelledby="nav-contact-info-tab">
+                                    <div class="panel-body">
+                                      <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                          <label class="col-sm-5 col-form-label">{{field_name_leads_salutation}}
+                                            <span class="text-danger font-weight-bold">
+                                            </span>
+                                          </label>
+                                          <div class="col-sm-10">
+                    
+                                            <select class="custom-select" name="salutation" [(ngModel)]="leadDetail.salutation"
+                                             >
+                                              <!--  [ngClass]="{ 'is-invalid': f.submitted && salutation.invalid,
+                                               'is-valid': f.submitted && salutation.valid}" required -->
+                                          
+                                              <option value="Mr">Mr</option>
+                                              <option value="Mrs">Mrs</option>
+                                              <option value="Prof">Prof</option>
+                                              <option value="Dr">Dr</option>
+                                            </select>
+                    
+                                            <!--   <div *ngIf="f.submitted && salutation.invalid "class="invalid-feedback">
+                                                <div
+                                                    *ngIf="salutation.errors.required ">Please provide first_name</div>
+                                                    <div *ngIf="salutation.errors.pattern"> Provide proper first_name 
+                                                    </div></div> -->
+                                          </div>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                          <label class="col-sm-5 col-form-label">{{field_name_leads_first_name}}
+                                            <span class="text-danger font-weight-bold">
+                                              *</span>
+                                          </label>
+                                          <div class="col-sm-10">
+                                            <input type="text" class="form-control" name="first_name" pattern="[a-zA-Z ]+"
+                                              [(ngModel)]="leadDetail.first_name" #first_name="ngModel"  maxlength="20" minlength="1"
+                                              [ngClass]="{ 'is-invalid': f.submitted && first_name.invalid,
+                                             'is-valid': f.submitted && first_name.valid}" required >
+                                             <div *ngIf="f.submitted && first_name.invalid "class="invalid-feedback">
+                                              <div
+                                                  *ngIf="first_name.errors.required ">Please provide first name</div>
+                                                  <div *ngIf="first_name.errors.pattern"> Please provide only alphabets
+                                                  </div>
+                                                  <div *ngIf="first_name.errors.maxlength"> Please provide maxlength 20 Characters
+                                                  </div>
+                                                  <div *ngIf="first_name.errors.minlength"> Please provide maxlength 20 Characters
+                                                  </div>
+                                                </div>
+                                          </div>
+                                        </div>
+                    
+                                        <div class="form-group col-md-4">
+                                          <label class="col-sm-5 col-form-label"> {{field_name_leads_last_name}}
+                                            <span class="text-danger font-weight-bold">
+                                              *</span>
+                                          </label>
+                                          <div class="col-sm-10">
+                                            <input type="text" class="form-control" name="last_name" pattern="[a-zA-Z ]+"
+                                              [(ngModel)]="leadDetail.last_name" #last_name="ngModel" maxlength="20" minlength="1"
+                                              [ngClass]="{ 'is-invalid': f.submitted && last_name.invalid,
+                                             'is-valid': f.submitted && last_name.valid}" required >
+                                             <div *ngIf="f.submitted && last_name.invalid "class="invalid-feedback">
+                                              <div
+                                                  *ngIf="last_name.errors.required ">Please provide last name</div>
+                                                  <div *ngIf=" last_name.errors.pattern">Please provide only alphabets
+                                                  </div>
+                                                  <div *ngIf="last_name.errors.maxlength"> Please provide maxlength 20 Characters
+                                                  </div>
+                                                  <div *ngIf="last_name.errors.minlength"> Please provide maxlength 20 Characters
+                                                  </div>
+                                          </div>
+                                          </div>
+                                        </div>
+                    
+                                      </div>
+                    
+                    
+                                      <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                          <label class="col-sm-5 col-form-label">{{field_name_leads_email}}<span
+                                            class="text-danger font-weight-bold">
+                                            *</span></label>
+                                          <div class="col-sm-10">
+                                            <input type="text" class="form-control" [(ngModel)]="leadDetail.email" name="email"
+                                            pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" #email="ngModel"
+                                            [ngClass]="{ 'is-invalid': f.submitted && email.invalid, 
+                                            'is-valid': f.submitted && email.valid }"
+                                        required >
+                                        <div *ngIf="showError != ''" class="alert alert-danger">
+                                          {{showError}}</div>
+                                    
+                                        <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+                                          <div *ngIf="email.errors.required">Please provide Email</div>
+                                      <div *ngIf="email.errors.pattern">Email format should be <small  class="text-success"><b>jhon@abc.com</b></small>
+                                      </div>
+                                      </div>
+                                          </div>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                          <label class="col-sm-5 col-form-label">{{field_name_leads_phone}}<span
+                                            class="text-danger font-weight-bold">
+                                            *</span></label>
+                                          <div class="col-sm-10">
+                                            <input type="text" class="form-control" [(ngModel)]="leadDetail.phone" name="phone"
+                                             required pattern="^(?:[0-9()\-+]+)(?:[0-9()\-+]+)$" #phone="ngModel" 
+                                             [ngClass]="{ 'is-invalid': f.submitted && phone.invalid, 
+                                             'is-valid': f.submitted && phone.valid }"
+                                            required>
+                                         
+                                            <div *ngIf="f.submitted && phone.invalid" class="invalid-feedback">
+                                                <div *ngIf="phone.errors.required">Please provide phone number</div>
+                                             
+                                            <div *ngIf="phone.errors.pattern">Phone number should be only numbers
+                                               </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                          <label class="col-sm-5 col-form-label">{{field_name_leads_home_phone}}<span class="text-danger font-weight-bold">
+                                              *</span></label>
+                                          <div class="col-sm-10">
+                                            <input type="text" class="form-control" [(ngModel)]="leadDetail.home_phone" name="home_phone"
+                                              #home_phone="ngModel" pattern="^(?:[0-9()\-+]+)(?:[0-9()\-+]+)$"
+                                           [ngClass]="{ 'is-invalid': f.submitted && home_phone.invalid, 
+                                                 'is-valid': f.submitted && home_phone.valid }"
+                                                required >
+                                          
+                                                <div *ngIf="f.submitted && home_phone.invalid" class="invalid-feedback">
+                                                    <div *ngIf="home_phone.errors.required">Please provide Home number</div>
+                                                 
+                                                <div *ngIf="home_phone.errors.pattern">Home number should be only numbers
+                                                   </div>
+                                                </div> 
+                                          </div>
+                                        </div>
+                    
+                                      </div>
+                    
+                    
+                                      <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                          <label class="col-sm-5 col-form-label">{{field_name_leads_company_name}}<span
+                                            class="text-danger font-weight-bold">
+                                            </span></label>
+                                          <div class="col-sm-10">
+                                            <input type="text" class="form-control" [(ngModel)]="leadDetail.company_name" name="company_name"
+                                            pattern="[a-zA-Z0-9 ]+" >
+                                         <!-- [ngClass]="{'is-invalid': f.submitted && company_name.invalid, 
+                                            'is-valid': f.submitted && company_name.valid }"
+                                        required >  -->
+                                         
+                                          </div>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                          <label class="col-sm-5 col-form-label">{{field_name_leads_account_number}}<span
+                                            class="text-danger font-weight-bold">
+                                            </span></label>
+                                          <div class="col-sm-10">
+                                            <input type="text" class="form-control" [(ngModel)]="leadDetail.account_name" 
+                                            name="account_name" #account_name="ngModel"
+                                            pattern="[a-zA-Z0-9 ]+" [ngClass]="{ 'is-invalid': f.submitted && account_name.invalid,
+                                            'is-valid': f.submitted && account_name.valid}"  >
+                                             <div *ngIf="f.submitted && account_name.invalid "class="invalid-feedback">
+                                             <div
+                                                 *ngIf="account_name.errors.required ">Please provide Account Name</div>
+                                                 <div *ngIf="account_name.errors.pattern"> only number and Alphabets Allowed.
+                                                 </div>
+                                              
+                                                 
+                                               </div>
+                                          </div>
+                                        </div>
+                                                      
+                                                        <div class="form-group col-md-4">
+                                                          <label class="col-sm-5 col-form-label">{{field_name_leads_title}}<span
+                                                            class="text-danger font-weight-bold">
+                                                            </span></label>
+                                                          <div class="col-sm-10">
+                                                            <input type="text" class="form-control" [(ngModel)]="leadDetail.title" name="title"
+                                                             #title="ngModel"  pattern="[a-zA-Z ]+"
+                                                             [ngClass]="{ 'is-invalid': f.submitted && title.invalid, 
+                                                             'is-valid': f.submitted && title.valid }"
+                                                            > 
+                                                         
+                                                          <div *ngIf="f.submitted && title.invalid" class="invalid-feedback">
+                                                                <div *ngIf="title.errors.required">Please provide title</div>
+                                                             
+                                                            <div *ngIf="title.errors.pattern"> please provide alphabets only
+                                                               </div>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                        </div>
+    
+                                        <div class="form-row">
+    
+                                  <div class="form-group col-md-4">
+                                    <label class="col-sm-5 col-form-label">{{field_name_leads_department}}<span
+                                      class="text-danger font-weight-bold">
+                                      </span></label>
+                                    <div class="col-sm-10">
+                                      <select type="text" class="custom-select" [(ngModel)]="leadDetail.department" name="department"
+                                        #department="ngModel" >
+                                   <!--    [ngClass]="{ 'is-invalid': f.submitted && department.invalid, 
+                                       'is-valid': f.submitted && department.valid }"
+                                      required>  -->
+                                   
+                                      <option *ngFor="let obj of departmentDetail" [value]="obj.department_name">{{obj.department_name}}
+                                      </option>
+                                    </select>
+                                   <!--  <div *ngIf="f.submitted && department.invalid" class="invalid-feedback">
+                                          <div *ngIf="department.errors.required">Please provide department</div>
+                                       
+                                      <div *ngIf="department.errors.pattern">Phone number should be only text
+                                         </div>
+                                      </div>  -->
+                                    </div>
+                                  </div>
+                    
+                                  <div class="form-group col-md-4">
+                                    <label class="col-sm-5 col-form-label">{{field_name_leads_Fax}} <span class="text-danger font-weight-bold">
+                                      </span></label>
+                                    <div class="col-sm-10">
+                                      <input type="text" class="form-control" [(ngModel)]="leadDetail.fax" name="fax" #fax="ngModel">
+                                      <!--  [ngClass]="{ 'is-invalid': f.submitted && fax.invalid, 
+                                          'is-valid': f.submitted && fax.valid }"
+                                      required /> -->
+                                      <!--   <div *ngIf="f.submitted && fax.invalid" class="invalid-feedback">
+                                        <div *ngIf="fax.errors.required"> Please provide fax</div>
+                                    <div *ngIf="fax.errors.pattern">Email format should be <small  class="text-success"><b>jhon@abc.com</b></small>
+                                    </div>
+                                    </div> -->
+                                    </div>
+                                  </div>
+                    
+                                  <div class="form-group col-md-4">
+                                    <label class="col-sm-5 col-form-label">{{field_name_leads_DOB}}<span class="text-danger font-weight-bold">
+                                      </span></label>
+                                      <div class="col-sm-10">
+                                      <input type="date" class="form-control" [(ngModel)]="leadDetail.dob" name="dob">
+                                      <!--   ngbDatepicker #d="ngbDatepicker"> -->
+                                      <!--   <div class="input-group-append">
+                                              <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
+                                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                                              </button>
+                                            </div> -->
+                                    </div>
+                                  </div>
+                                      </div>
+                    
+                    
+                                      <div class="form-row">
+                                       
+                                       
+                                      
+                                        <div class="form-group col-md-4">
+                                          <label class="col-sm-5 col-form-label">{{field_name_leads_source}}<span
+                                            class="text-danger font-weight-bold">
+                                            </span></label>
+                                          <div class="col-sm-10">
+                                            <select type="text" class="custom-select" [(ngModel)]="leadDetail.source" name="source"
+                                             #source="ngModel" >
+                                       <!--   [ngClass]="{ 'is-invalid': f.submitted && source.invalid, 
+                                             'is-valid': f.submitted && source.valid }"
+                                            required> -->
+                                            <option *ngFor="let obj of sourceDetail" [value]="obj.source_name">{{obj.source_name}}
+                                            </option>
+                                          </select>
+                                         
+                                           <!--  <div *ngIf="f.submitted && source.invalid" class="invalid-feedback">
+                                                <div *ngIf="source.errors.required">Please provide source</div>
+                                             
+                                            <div *ngIf="source.errors.pattern">Phone number should be only text
+                                               </div>
+                                            </div> -->
+                                          </div>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                          <label class="col-sm-5 col-form-label">{{field_name_leads_opportunity_percentage}}<span
+                                            class="text-danger font-weight-bold">
+                                            </span></label>
+                                          <div class="col-sm-10">
+                                            <select   class="custom-select" 
+                                            [(ngModel)]="leadDetail.opportunity_percentage" name="opportunity_percentage">
+                                            <option value="10">10</option>
+                                              <option value="20">20</option>
+                                              <option value="30">30</option>
+                                              <option value="40">40</option>
+                                              <option value="50">50</option>
+                                              <option value="60">60</option>
+                                               <option value="70">70</option>
+                                               <option value="80">80</option>
+                                               <option value="90">90</option>
+                                               <option value="100">100</option>
+                                          </select> 
+                                           <!--  <div *ngIf="f.submitted && dob.invalid" class="invalid-feedback">
+                                                <div *ngIf="dob.errors.required">Please provide dob</div>
+                                             
+                                            <div *ngIf="dob.errors.pattern">Phone number should be only text
+                                               </div>
+                                            </div> -->
+                                          </div>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                          <label class="col-sm-5 col-form-label">{{field_name_leads_linked_in_url}}<span
+                                            class="text-danger font-weight-bold">
+                                            </span></label>
+                                          <div class="col-sm-10">
+                                            <div class="input-group">
+                                            <input type="text" class="form-control" [(ngModel)]="leadDetail.linked_in_url" name="linked_in_url">
+                                           <!--    ngbDatepicker #d="ngbDatepicker"> -->
+                                            
+                                            </div>
+                                           <!--  <div *ngIf="f.submitted && dob.invalid" class="invalid-feedback">
+                                                <div *ngIf="dob.errors.required">Please provide dob</div>
+                                             
+                                            <div *ngIf="dob.errors.pattern">Phone number should be only text
+                                               </div>
+                                            </div> -->
+                                          </div>
+                                        </div>
+                                      </div>
+                                    
+                                       
+                                    </div>
+                                  </div>
+                                  <div class="tab-pane fade" id="nav-address-info" role="tabpanel" aria-labelledby="nav-address-info-tab">
+                                    <div class="panel-body">
+                                      <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                          <label class="col-sm-5 col-form-label">{{field_name_leads_mailing_city}}
+                                            <span class="text-danger font-weight-bold">
+                                            </span>
+                                          </label>
+                                          <div class="col-sm-10">
+                                            <input type="text" class="form-control" name="mailing_city"
+                                              [(ngModel)]="leadDetail.mailing_city" #mailing_city="ngModel">
+                                            <!--  [ngClass]="{ 'is-invalid': f.submitted && mailing_city.invalid,
+                                                     'is-valid': f.submitted && mailing_city.valid}" required /> -->
+                                            <!--  <div *ngIf="f.submitted && mailing_city.invalid "class="invalid-feedback">
+                                                      <div
+                                                          *ngIf="mailing_city.errors.required ">Please provide mailing_city</div>
+                                                          <div *ngIf="mailing_city.errors.pattern"> Provide proper mailing_city 
+                                                          </div></div> -->
+                                          </div>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                          <label class="col-sm-5 col-form-label">{{field_name_leads_mailing_address}}
+                                            <span class="text-danger font-weight-bold">
+                                            </span>
+                                          </label>
+                                          <div class="col-sm-10">
+                                            <input type="text" class="form-control" name="mailing_address"
+                                              [(ngModel)]="leadDetail.mailing_address" #mailing_address="ngModel">
+                                            <!--  [ngClass]="{ 'is-invalid': f.submitted && mailing_address.invalid,
+                                                   'is-valid': f.submitted && mailing_address.valid}" required /> -->
+                                            <!--  <div *ngIf="f.submitted && mailing_address.invalid "class="invalid-feedback">
+                                                    <div
+                                                        *ngIf="mailing_address.errors.required ">Please provide mailing_address</div>
+                                                        <div *ngIf="mailing_address.errors.pattern"> Provide proper mailing_address 
+                                                        </div></div> -->
+                                          </div>
+                                        </div>
+                    
+                                        <div class="form-group col-md-4">
+                                          <label class="col-sm-5 col-form-label">  {{field_name_leads_other_address}}
+                                            <span class="text-danger font-weight-bold">
+                                            </span>
+                                          </label>
+                                          <div class="col-sm-10">
+                                            <input type="text" class="form-control" name="other_address"
+                                              [(ngModel)]="leadDetail.other_address" #other_address="ngModel">
+                                            <!--   [ngClass]="{ 'is-invalid': f.submitted && other_address.invalid,
+                                                   'is-valid': f.submitted && other_address.valid}" required /> -->
+                                            <!--   <div *ngIf="f.submitted && other_address.invalid "class="invalid-feedback">
+                                                    <div
+                                                        *ngIf="other_address.errors.required ">Please provide last_name</div>
+                                                        <div *ngIf=" other_address.errors.pattern"> Provide proper last_name 
+                                                        </div>
+                                                </div> -->
+                                          </div>
+                                        </div>
+                    
+                                      </div>
+                    
+                    
+                                      <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                          <label class="col-sm-5 col-form-label">{{field_name_leads_mailing_state}}<span class="text-danger font-weight-bold">
+                                            </span></label>
+                                          <div class="col-sm-10">
+                                            <input type="text" class="form-control" [(ngModel)]="leadDetail.mailing_state"
+                                              name="mailing_state" #mailing_state="ngModel">
+                                            <!--  [ngClass]="{ 'is-invalid': f.submitted && mailing_state.invalid, 
+                                                      'is-valid': f.submitted && mailing_state.valid }"
+                                                  required /> -->
+                                            <!--  <div *ngIf="f.submitted && mailing_state.invalid" class="invalid-feedback">
+                                                    <div *ngIf="mailing_state.errors.required"> Please provide mailing_state</div>
+                                                <div *ngIf="mailing_state.errors.pattern">Email format should be <small  class="text-success"><b>jhon@abc.com</b></small>
+                                                </div>
+                                                </div> -->
+                                          </div>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                          <label class="col-sm-5 col-form-label"> {{field_name_leads_mailing_Postal_code}}<span
+                                              class="text-danger font-weight-bold">
+                                            </span></label>
+                                          <div class="col-sm-10">
+                                            <input type="text" class="form-control" [(ngModel)]="leadDetail.mailing_Postal_code"
+                                              name=" mailing_Postal_code" #mailing_Postal_code="ngModel">
+                                            <!--  [ngClass]="{ 'is-invalid': f.submitted &&  mailing_Postal_code.invalid, 
+                                                       'is-valid': f.submitted &&  mailing_Postal_code.valid }"
+                                                      required/> -->
+                    
+                                            <!--  <div *ngIf="f.submitted &&  mailing_Postal_code.invalid" class="invalid-feedback">
+                                                          <div *ngIf=" mailing_Postal_code.errors.required">Please provide  mailing_Postal_code</div>
+                                                       
+                                                      <div *ngIf=" mailing_Postal_code.errors.pattern">Phone number should be only numbers
+                                                         </div>
+                                                      </div> -->
+                                          </div>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                          <label class="col-sm-5 col-form-label">{{field_name_leads_mailing_country}}<span class="text-danger font-weight-bold">
+                                            </span></label>
+                                          <div class="col-sm-10">
+                                            <input type="text" class="form-control" [(ngModel)]="leadDetail.mailing_country"
+                                              name="mailing_country" #mailing_country="ngModel">
+                                            <!--  [ngClass]="{ 'is-invalid': f.submitted && mailing_country.invalid, 
+                                                       'is-valid': f.submitted && mailing_country.valid }"
+                                                      required/> -->
+                                            <!-- 
+                                                      <div *ngIf="f.submitted && mailing_country.invalid" class="invalid-feedback">
+                                                          <div *ngIf="mailing_country.errors.required">Please provide mailing_country</div>
+                                                       
+                                                      <div *ngIf="mailing_country.errors.pattern">Phone number should be only numbers
+                                                         </div>
+                                                      </div> -->
+                                          </div>
+                                        </div>
+                    
+                                      </div>
+                    
+                    
+                                    </div>
+                                  </div>
+                                  <div class="tab-pane fade" id="nav-other-info" role="tabpanel" aria-labelledby="nav-other-info-tab">
+                                    <div class="panel-body">
+                                      <div class="form-row">
+                    
+                    
+                                        <div class="form-group col-md-10">
+                                          <label for="exampleFormControlTextarea1">{{field_name_leads_description}}</label>
+                                          <textarea class="form-control" id="" rows="3" [(ngModel)]="leadDetail.description" 
+                                                            name="description" #description="ngModel"></textarea>
+                                        </div>
+                    
+                                      </div>
+                    
+                                    </div>
+                                  </div>
+    
+                                  <!-- <div class="tab-pane fade" id="nav-attachment-info" role="tabpanel" aria-labelledby="nav-attachment-info-tab">
+                                    <div class="panel-body">
+                                      <div class="col-md-8">
+                                        <div class="custom-file">
+                                          <input type="file" name="files"  #files="ngModel"  [(ngModel)]="leadDetail.files"
+                                                    
+                                         (change)="selectImage($event)"/>
+                                        </div>
+                                      </div>
+                                    
+                                   
+                    
+                                    </div>
+                                </div> -->
+    
+                            <!--     <div class="tab-pane fade" id="nav-activity-info" role="tabpanel" aria-labelledby="nav-activity-info-tab">
+                                  <div class="panel-body">
+    
+    
+                                    <table  class="table table-striped" [mfData]="activityDetail" #mf="mfDataTable" 
+                                    [mfRowsOnPage]="rowsOnPage">
+                                      <thead class="thead-light">
+                                        <tr>
+                  
+                                         
+                                          <th width="20%">
+                                            <mfDefaultSorter by="record_type">{{field_name_leads_activity_type}}</mfDefaultSorter>
+                                          </th>
+                                         
+                                          <th width="20%">
+                                            <mfDefaultSorter by="subject">{{field_name_leads_subject}}</mfDefaultSorter>
+                                          </th>
+                                          <th width="20%">
+                                              <mfDefaultSorter by="due_date">{{field_name_leads_due_date}}</mfDefaultSorter>
+                                            </th>
+                                         
+                                          <th width="20%" *ngIf="SHOW_EDIT_DELETE">
+                                              <mfDefaultSorter>{{field_name_leads_activity_actions}}</mfDefaultSorter>
+                                            </th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr *ngFor="let obj of activityDetail | filter:searchText let i = index">
+                                        
+                                          <td>{{obj.record_type}}</td>
+                                          <td>{{obj.subject}}</td>
+                                    
+                                          <td>{{obj.due_date}}</td>
+                                     
+                                    
+                                          <td *ngIf="SHOW_EDIT_DELETE">
+                   
+                                            <i class="fa fa-edit" (click)="onClickEdit(obj)"></i> 
+                              
+                                              <span *ngIf="ALL_DELETE_ALLOWED"><i (click)="onClickDelete(obj)" class="fa fa-trash"></i></span>
+                                        </td>
+                                        </tr>
+                                      </tbody>
+                                      <tfoot>
+                                        <tr>
+                                          <td colspan="4">
+                                            <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25,50]"></mfBootstrapPaginator>
+                                          </td>
+                                        </tr>
+                                    
+                                      </tfoot>
+                                    </table>
+                                  </div>
+                                </div> -->
+    
+    
+                                <div class="tab-pane fade" id="nav-convert-info" role="tabpanel" aria-labelledby="nav-convert-info-tab">
+                                  
+                                  <div class="panel-body">
+                                    <div class="col-md-8">
+                                    
+                                      <div class="form-check form-check-inline mr-1" id="convertIt">
+                                        <input class="form-check-input" type="radio"
+                                            name="convertIt"
+                                            [(ngModel)]="convertIt"
+                                            [value]="true">
+                                        <label class="form-check-label"
+                                            for="inlineRadio2">  {{field_name_marketing_convert_to_customer}}</label>
+                                      </div>  
+                                    
+                                    </div>
+                                  
+                               
+                                    </div> 
+    
+                                             
+                      <div class="form-row">
+                        <div class="form-group col-md-3">
+                          <label class="col-sm-5 col-form-label">{{field_name_leads_created_by}}
+                           
+                          </label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" name="created_by"
+                            [(ngModel)]="leadDetail.created_by"
+                            #created_by="ngModel" readonly>
+                        </div>
+                      </div>
+                        <div class="form-group col-md-3">
+                          <label class="col-sm-5 col-form-label">{{field_name_leads_created_time}}
+                            
+                          </label>
+                          <div class="col-sm-10">
+                           
+                        
+                            <input type="text" class="form-control" name="created_time"  
+                             readonly value="{{leadDetail.created_time |  date : dateFormat:'GMT':locale}}">
+                             
+                          
+                          
+                        </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                          <label class="col-sm-5 col-form-label">{{field_name_leads_updated_by}}
+                           
+                          </label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" name="updated_by"
+                              [(ngModel)]="leadDetail.updated_by"
+                              #updated_by="ngModel" readonly>
+                        </div>
+                      </div>
+                        <div class="form-group col-md-3">
+                          <label class="col-sm-5 col-form-label">{{field_name_leads_updated_time}}
+                           
+                          </label>
+                          <div class="col-sm-10">
+                          
+                            <input type="text" class="form-control" name="modified_time"  
+                             readonly value=" {{leadDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+                          
+                        </div>
+                      </div>
+                        </div>
+                        
+                      
+                         </div>
+                        
+                        
+                              
+                        <!--   </div> -->
+                      <!-- </div> -->
+                 <!--  </div> -->
+              <!-- </section> -->
+           
+          <button class="btn btn-danger btn-round text-center pull-right" style=" margin-top: 73px;" type="button"
+          appCancelbutton>{{'Cancel'|translate}}</button>
+                   <button class="btn btn-success btn-round text-center pull-right" style=" margin-top: 73px;">
+                     <span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+                     <span *ngIf="isUpdate">{{'Update'|translate}}</span></button>
+                     </div>
+                   </div>  
+                  
+                   </form>
+                   
+                   </div>
+                   </div>
+                   </div>
+        </section>
+    
+    
+    
+    
+    
+        
+     
+    
+        <section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir='ltr' >
+      <div class="container-fluid">
+        <h3 class="text-center">{{field_name_leads_leaddetails}}</h3>
+        <div class="card">
+          <div class="card-body">
+            <form class="form-horizontal" name="form" #f="ngForm" (ngSubmit)="f.form.valid &&  onSubmit()">
+              <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Leads Details!</strong>The form has the following errors that need to be corrected
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="card-header">
+                <h2>
+                  <span *ngIf="!isUpdate">{{field_name_leads_add}}</span> 
+                    <span *ngIf="isUpdate">{{field_name_leads_update}}</span>
+                </h2>
+                
+              </div>
+              <div class="card-body">
+        <!-- <section id="tabs" class="project-tab"> -->
+                 <!--    <div class="container"> -->
+                     <!--    <div class="row"> -->
+                           <!--  <div class="col-md-12"> -->
+                                <nav>
+                                    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                                        <a class="nav-item nav-link active" id="nav-contact-info-tab" data-toggle="tab" href="#nav-contact-info" role="tab" aria-controls="nav-contact-info" aria-selected="true"> {{field_name_leads_contact_info}} </a>
+                                        <a class="nav-item nav-link" id="nav-address-info-tab" data-toggle="tab" href="#nav-address-info" role="tab" aria-controls="nav-address-info" aria-selected="false">{{field_name_leads_address_info}}</a>
+                                        <a class="nav-item nav-link" id="nav-other-info-tab" data-toggle="tab" href="#nav-other-info" role="tab" aria-controls="nav-other-info" aria-selected="false">    {{field_name_leads_other_info}} </a>
+                                      <!--   <a class="nav-item nav-link" id="nav-attachment-info-tab" data-toggle="tab" href="#nav-attachment-info" role="tab" aria-controls="nav-attachment-info" aria-selected="false">{{field_name_leads_notes_attachments}}</a> -->
+                                       <!--  <a class="nav-item nav-link" id="nav-activity-info-tab" data-toggle="tab" href="#nav-activity-info" role="tab" aria-controls="nav-activity-info" aria-selected="false"> {{field_name_leads_activity_info}}</a> -->
+                                        <a class="nav-item nav-link" id="nav-convert-info-tab" data-toggle="tab" href="#nav-convert-info" role="tab" aria-controls="nav-convert-info" aria-selected="false">{{field_name_marketing_convert_to_customer}}
+                                          </a>
+                                    </div>
+                                </nav>
+                                <div class="tab-content" id="nav-tabContent" *ngIf="this.leadDetail">
+                                  <div class="tab-pane fade show active" id="nav-contact-info" role="tabpanel" aria-labelledby="nav-contact-info-tab">
+                                    <div class="panel-body">
+                                      <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                          <label class="col-sm-5 col-form-label">{{field_name_leads_salutation}}
+                                            <span class="text-danger font-weight-bold">
+                                            </span>
+                                          </label>
+                                          <div class="col-sm-10">
+                    
+                                            <select class="custom-select" name="salutation" [(ngModel)]="leadDetail.salutation"
+                                             >
+                                              <!--  [ngClass]="{ 'is-invalid': f.submitted && salutation.invalid,
+                                               'is-valid': f.submitted && salutation.valid}" required -->
+                                            
+                                              <option value="Mr">Mr</option>
+                                              <option value="Mrs">Mrs</option>
+                                              <option value="Prof">Prof</option>
+                                              <option value="Dr">Dr</option>
+                                            </select>
+                    
+                                            <!--   <div *ngIf="f.submitted && salutation.invalid "class="invalid-feedback">
+                                                <div
+                                                    *ngIf="salutation.errors.required ">Please provide first_name</div>
+                                                    <div *ngIf="salutation.errors.pattern"> Provide proper first_name 
+                                                    </div></div> -->
+                                          </div>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                          <label class="col-sm-5 col-form-label">{{field_name_leads_first_name}}
+                                            <span class="text-danger font-weight-bold">
+                                              *</span>
+                                          </label>
+                                          <div class="col-sm-10">
+                                            <input type="text" class="form-control" name="first_name" pattern="[a-zA-Z ]+"
+                                              [(ngModel)]="leadDetail.first_name" #first_name="ngModel"  maxlength="20" minlength="1"
+                                               [ngClass]="{ 'is-invalid': f.submitted && first_name.invalid,
+                                             'is-valid': f.submitted && first_name.valid}" required >
+                                             <div *ngIf="f.submitted && first_name.invalid "class="invalid-feedback">
+                                              <div
+                                                  *ngIf="first_name.errors.required ">Please provide first name</div>
+                                                  <div *ngIf="first_name.errors.pattern"> Please provide only alphabets
+                                                  </div>
+                                                  <div *ngIf="first_name.errors.maxlength"> Please provide maxlength 20 Characters
+                                                  </div>
+                                                  <div *ngIf="first_name.errors.minlength"> Please provide maxlength 20 Characters
+                                                  </div>
+                                                </div>
+                                          </div>
+                                        </div>
+                    
+                                        <div class="form-group col-md-4">
+                                          <label class="col-sm-5 col-form-label"> {{field_name_leads_last_name}}
+                                            <span class="text-danger font-weight-bold">
+                                              *</span>
+                                          </label>
+                                          <div class="col-sm-10">
+                                            <input type="text" class="form-control" name="last_name" pattern="[a-zA-Z ]+"
+                                              [(ngModel)]="leadDetail.last_name" #last_name="ngModel" maxlength="20" minlength="1"
+                                              [ngClass]="{ 'is-invalid': f.submitted && last_name.invalid,
+                                             'is-valid': f.submitted && last_name.valid}" required >
+                                             <div *ngIf="f.submitted && last_name.invalid "class="invalid-feedback">
+                                              <div
+                                                  *ngIf="last_name.errors.required ">Please provide last name</div>
+                                                  <div *ngIf=" last_name.errors.pattern">Please provide only alphabets
+                                                  </div>
+                                                  <div *ngIf="last_name.errors.maxlength"> Please provide maxlength 20 Characters
+                                                  </div>
+                                                  <div *ngIf="last_name.errors.minlength"> Please provide maxlength 20 Characters
+                                                  </div>
+                                          </div>
+                                          </div>
+                                        </div>
+                    
+                                      </div>
+                    
+                    
+                                      <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                          <label class="col-sm-5 col-form-label">{{field_name_leads_email}}<span
+                                            class="text-danger font-weight-bold">
+                                            *</span></label>
+                                          <div class="col-sm-10">
+                                            <input type="text" class="form-control" [(ngModel)]="leadDetail.email" name="email"
+                                            pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" #email="ngModel"
+                                            [ngClass]="{ 'is-invalid': f.submitted && email.invalid, 
+                                            'is-valid': f.submitted && email.valid }"
+                                        required >
+                                        <div *ngIf="showError != ''" class="alert alert-danger">
+                                          {{showError}}</div>
+                                    
+                                        <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+                                          <div *ngIf="email.errors.required">Please provide Email</div>
+                                      <div *ngIf="email.errors.pattern">Email format should be <small  class="text-success"><b>jhon@abc.com</b></small>
+                                      </div>
+                                      </div>
+                                          </div>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                          <label class="col-sm-5 col-form-label">{{field_name_leads_phone}}<span
+                                            class="text-danger font-weight-bold">
+                                            *</span></label>
+                                          <div class="col-sm-10">
+                                            <input type="text" class="form-control" [(ngModel)]="leadDetail.phone" name="phone"
+                                             required pattern="^(?:[0-9()\-+]+)(?:[0-9()\-+]+)$" #phone="ngModel" 
+                                             [ngClass]="{ 'is-invalid': f.submitted && phone.invalid, 
+                                             'is-valid': f.submitted && phone.valid }"
+                                            required>
+                                         
+                                            <div *ngIf="f.submitted && phone.invalid" class="invalid-feedback">
+                                                <div *ngIf="phone.errors.required">Please provide phone number</div>
+                                             
+                                            <div *ngIf="phone.errors.pattern">Phone number should be only numbers
+                                               </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                          <label class="col-sm-5 col-form-label">{{field_name_leads_home_phone}}<span class="text-danger font-weight-bold">
+                                              *</span></label>
+                                          <div class="col-sm-10">
+                                            <input type="text" class="form-control" [(ngModel)]="leadDetail.home_phone" name="home_phone"
+                                              #home_phone="ngModel" pattern="^(?:[0-9()\-+]+)(?:[0-9()\-+]+)$"
+                                           [ngClass]="{ 'is-invalid': f.submitted && home_phone.invalid, 
+                                                 'is-valid': f.submitted && home_phone.valid }"
+                                                required >
+                                          
+                                                <div *ngIf="f.submitted && home_phone.invalid" class="invalid-feedback">
+                                                    <div *ngIf="home_phone.errors.required">Please provide Home number</div>
+                                                 
+                                                <div *ngIf="home_phone.errors.pattern">Home number should be only numbers
+                                                   </div>
+                                                </div> 
+                                          </div>
+                                        </div>
+                    
+                                      </div>
+                    
+                    
+                                      <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                          <label class="col-sm-5 col-form-label">{{field_name_leads_company_name}}<span
+                                            class="text-danger font-weight-bold">
+                                            </span></label>
+                                          <div class="col-sm-10">
+                                            <input type="text" class="form-control" [(ngModel)]="leadDetail.company_name" name="company_name"
+                                            pattern="[a-zA-Z0-9 ]+" >
+                                         <!-- [ngClass]="{'is-invalid': f.submitted && company_name.invalid, 
+                                            'is-valid': f.submitted && company_name.valid }"
+                                        required >  -->
+                                         
+                                          </div>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                          <label class="col-sm-5 col-form-label">{{field_name_leads_account_number}}<span
+                                            class="text-danger font-weight-bold">
+                                            </span></label>
+                                          <div class="col-sm-10">
+                                            <input type="text" class="form-control" [(ngModel)]="leadDetail.account_name" 
+                                            name="account_name" #account_name="ngModel"
+                                            pattern="[a-zA-Z0-9 ]+" [ngClass]="{ 'is-invalid': f.submitted && account_name.invalid,
+                                            'is-valid': f.submitted && account_name.valid}"  >
+                                             <div *ngIf="f.submitted && account_name.invalid "class="invalid-feedback">
+                                             <div
+                                                 *ngIf="account_name.errors.required ">Please provide Account Name</div>
+                                                 <div *ngIf="account_name.errors.pattern"> only number and Alphabets Allowed.
+                                                 </div>
+                                              
+                                                 
+                                               </div>
+                                          </div>
+                                        </div>
+                                                      
+                                                        <div class="form-group col-md-4">
+                                                          <label class="col-sm-5 col-form-label">{{field_name_leads_title}}<span
+                                                            class="text-danger font-weight-bold">
+                                                            </span></label>
+                                                          <div class="col-sm-10">
+                                                            <input type="text" class="form-control" [(ngModel)]="leadDetail.title" name="title"
+                                                             #title="ngModel"  pattern="[a-zA-Z ]+"
+                                                             [ngClass]="{ 'is-invalid': f.submitted && title.invalid, 
+                                                             'is-valid': f.submitted && title.valid }"
+                                                            > 
+                                                         
+                                                          <div *ngIf="f.submitted && title.invalid" class="invalid-feedback">
+                                                                <div *ngIf="title.errors.required">Please provide title</div>
+                                                             
+                                                            <div *ngIf="title.errors.pattern"> please provide alphabets only
+                                                               </div>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                      
+                                        </div>
+    
+                                        <div class="form-row">
+    
+                                  <div class="form-group col-md-4">
+                                    <label class="col-sm-5 col-form-label">{{field_name_leads_department}}<span
+                                      class="text-danger font-weight-bold">
+                                      </span></label>
+                                    <div class="col-sm-10">
+                                      <select type="text" class="custom-select" [(ngModel)]="leadDetail.department" name="department"
+                                        #department="ngModel" >
+                                   <!--    [ngClass]="{ 'is-invalid': f.submitted && department.invalid, 
+                                       'is-valid': f.submitted && department.valid }"
+                                      required>  -->
+                                   
+                                      <option *ngFor="let obj of departmentDetail" [value]="obj.department_name">{{obj.department_name}}
+                                      </option>
+                                    </select>
+                                   <!--  <div *ngIf="f.submitted && department.invalid" class="invalid-feedback">
+                                          <div *ngIf="department.errors.required">Please provide department</div>
+                                       
+                                      <div *ngIf="department.errors.pattern">Phone number should be only text
+                                         </div>
+                                      </div>  -->
+                                    </div>
+                                  </div>
+                    
+                                  <div class="form-group col-md-4">
+                                    <label class="col-sm-5 col-form-label">{{field_name_leads_Fax}} <span class="text-danger font-weight-bold">
+                                      </span></label>
+                                    <div class="col-sm-10">
+                                      <input type="text" class="form-control" [(ngModel)]="leadDetail.fax" name="fax" #fax="ngModel">
+                                      <!--  [ngClass]="{ 'is-invalid': f.submitted && fax.invalid, 
+                                          'is-valid': f.submitted && fax.valid }"
+                                      required /> -->
+                                      <!--   <div *ngIf="f.submitted && fax.invalid" class="invalid-feedback">
+                                        <div *ngIf="fax.errors.required"> Please provide fax</div>
+                                    <div *ngIf="fax.errors.pattern">Email format should be <small  class="text-success"><b>jhon@abc.com</b></small>
+                                    </div>
+                                    </div> -->
+                                    </div>
+                                  </div>
+                    
+                                  <div class="form-group col-md-4">
+                                    <label class="col-sm-5 col-form-label">{{field_name_leads_DOB}}<span class="text-danger font-weight-bold">
+                                      </span></label>
+                                      <div class="col-sm-10">
+                                      <input type="date" class="form-control" [(ngModel)]="leadDetail.dob" name="dob">
+                                      <!--   ngbDatepicker #d="ngbDatepicker"> -->
+                                      <!--   <div class="input-group-append">
+                                              <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
+                                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                                              </button>
+                                            </div> -->
+                                    </div>
+                                  </div>
+                                      </div>
+                    
+                    
+                                      <div class="form-row">
+                                       
+                                       
+                                      
+                                        <div class="form-group col-md-4">
+                                          <label class="col-sm-5 col-form-label">{{field_name_leads_source}}<span
+                                            class="text-danger font-weight-bold">
+                                            </span></label>
+                                          <div class="col-sm-10">
+                                            <select type="text" class="custom-select" [(ngModel)]="leadDetail.source" name="source"
+                                             #source="ngModel" >
+                                       <!--   [ngClass]="{ 'is-invalid': f.submitted && source.invalid, 
+                                             'is-valid': f.submitted && source.valid }"
+                                            required> -->
+                                            <option *ngFor="let obj of sourceDetail" [value]="obj.source_name">{{obj.source_name}}
+                                            </option>
+                                          </select>
+                                         
+                                           <!--  <div *ngIf="f.submitted && source.invalid" class="invalid-feedback">
+                                                <div *ngIf="source.errors.required">Please provide source</div>
+                                             
+                                            <div *ngIf="source.errors.pattern">Phone number should be only text
+                                               </div>
+                                            </div> -->
+                                          </div>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                          <label class="col-sm-5 col-form-label">{{field_name_leads_opportunity_percentage}}<span
+                                            class="text-danger font-weight-bold">
+                                            </span></label>
+                                          <div class="col-sm-10">
+                                            <select   class="custom-select" 
+                                            [(ngModel)]="leadDetail.opportunity_percentage" name="opportunity_percentage">
+                                            <option value="10">10</option>
+                                              <option value="20">20</option>
+                                              <option value="30">30</option>
+                                              <option value="40">40</option>
+                                              <option value="50">50</option>
+                                              <option value="60">60</option>
+                                               <option value="70">70</option>
+                                               <option value="80">80</option>
+                                               <option value="90">90</option>
+                                               <option value="100">100</option>
+                                          </select> 
+                                           <!--  <div *ngIf="f.submitted && dob.invalid" class="invalid-feedback">
+                                                <div *ngIf="dob.errors.required">Please provide dob</div>
+                                             
+                                            <div *ngIf="dob.errors.pattern">Phone number should be only text
+                                               </div>
+                                            </div> -->
+                                          </div>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                          <label class="col-sm-5 col-form-label">{{field_name_leads_linked_in_url}}<span
+                                            class="text-danger font-weight-bold">
+                                            </span></label>
+                                          <div class="col-sm-10">
+                                            <div class="input-group">
+                                            <input type="text" class="form-control" [(ngModel)]="leadDetail.linked_in_url" name="linked_in_url">
+                                           <!--    ngbDatepicker #d="ngbDatepicker"> -->
+                                            
+                                            </div>
+                                           <!--  <div *ngIf="f.submitted && dob.invalid" class="invalid-feedback">
+                                                <div *ngIf="dob.errors.required">Please provide dob</div>
+                                             
+                                            <div *ngIf="dob.errors.pattern">Phone number should be only text
+                                               </div>
+                                            </div> -->
+                                          </div>
+                                        </div>
+                                      </div>
+                                    
+                                       
+                                    </div>
+                                  </div>
+                                    <div class="tab-pane fade" id="nav-address-info" role="tabpanel" aria-labelledby="nav-address-info-tab">
+                                      <div class="panel-body">
+                                        <div class="form-row">
+                                          <div class="form-group col-md-4">
+                                            <label class="col-sm-5 col-form-label">{{field_name_leads_mailing_city}}
+                                              <span class="text-danger font-weight-bold">
+                                              </span>
+                                            </label>
+                                            <div class="col-sm-10">
+                                              <input type="text" class="form-control" name="mailing_city"
+                                                [(ngModel)]="leadDetail.mailing_city" #mailing_city="ngModel">
+                                              <!--  [ngClass]="{ 'is-invalid': f.submitted && mailing_city.invalid,
+                                                       'is-valid': f.submitted && mailing_city.valid}" required /> -->
+                                              <!--  <div *ngIf="f.submitted && mailing_city.invalid "class="invalid-feedback">
+                                                        <div
+                                                            *ngIf="mailing_city.errors.required ">Please provide mailing_city</div>
+                                                            <div *ngIf="mailing_city.errors.pattern"> Provide proper mailing_city 
+                                                            </div></div> -->
+                                            </div>
+                                          </div>
+                                          <div class="form-group col-md-4">
+                                            <label class="col-sm-5 col-form-label">{{field_name_leads_mailing_address}}
+                                              <span class="text-danger font-weight-bold">
+                                              </span>
+                                            </label>
+                                            <div class="col-sm-10">
+                                              <input type="text" class="form-control" name="mailing_address"
+                                                [(ngModel)]="leadDetail.mailing_address" #mailing_address="ngModel">
+                                              <!--  [ngClass]="{ 'is-invalid': f.submitted && mailing_address.invalid,
+                                                     'is-valid': f.submitted && mailing_address.valid}" required /> -->
+                                              <!--  <div *ngIf="f.submitted && mailing_address.invalid "class="invalid-feedback">
+                                                      <div
+                                                          *ngIf="mailing_address.errors.required ">Please provide mailing_address</div>
+                                                          <div *ngIf="mailing_address.errors.pattern"> Provide proper mailing_address 
+                                                          </div></div> -->
+                                            </div>
+                                          </div>
+                      
+                                          <div class="form-group col-md-4">
+                                            <label class="col-sm-5 col-form-label">  {{field_name_leads_other_address}}
+                                              <span class="text-danger font-weight-bold">
+                                              </span>
+                                            </label>
+                                            <div class="col-sm-10">
+                                              <input type="text" class="form-control" name="other_address"
+                                                [(ngModel)]="leadDetail.other_address" #other_address="ngModel">
+                                              <!--   [ngClass]="{ 'is-invalid': f.submitted && other_address.invalid,
+                                                     'is-valid': f.submitted && other_address.valid}" required /> -->
+                                              <!--   <div *ngIf="f.submitted && other_address.invalid "class="invalid-feedback">
+                                                      <div
+                                                          *ngIf="other_address.errors.required ">Please provide last_name</div>
+                                                          <div *ngIf=" other_address.errors.pattern"> Provide proper last_name 
+                                                          </div>
+                                                  </div> -->
+                                            </div>
+                                          </div>
+                      
+                                        </div>
+                      
+                      
+                                        <div class="form-row">
+                                          <div class="form-group col-md-4">
+                                            <label class="col-sm-5 col-form-label">{{field_name_leads_mailing_state}}<span class="text-danger font-weight-bold">
+                                              </span></label>
+                                            <div class="col-sm-10">
+                                              <input type="text" class="form-control" [(ngModel)]="leadDetail.mailing_state"
+                                                name="mailing_state" #mailing_state="ngModel">
+                                              <!--  [ngClass]="{ 'is-invalid': f.submitted && mailing_state.invalid, 
+                                                        'is-valid': f.submitted && mailing_state.valid }"
+                                                    required /> -->
+                                              <!--  <div *ngIf="f.submitted && mailing_state.invalid" class="invalid-feedback">
+                                                      <div *ngIf="mailing_state.errors.required"> Please provide mailing_state</div>
+                                                  <div *ngIf="mailing_state.errors.pattern">Email format should be <small  class="text-success"><b>jhon@abc.com</b></small>
+                                                  </div>
+                                                  </div> -->
+                                            </div>
+                                          </div>
+                                          <div class="form-group col-md-4">
+                                            <label class="col-sm-5 col-form-label"> {{field_name_leads_mailing_Postal_code}}<span
+                                                class="text-danger font-weight-bold">
+                                              </span></label>
+                                            <div class="col-sm-10">
+                                              <input type="text" class="form-control" [(ngModel)]="leadDetail.mailing_Postal_code"
+                                                name=" mailing_Postal_code" #mailing_Postal_code="ngModel">
+                                              <!--  [ngClass]="{ 'is-invalid': f.submitted &&  mailing_Postal_code.invalid, 
+                                                         'is-valid': f.submitted &&  mailing_Postal_code.valid }"
+                                                        required/> -->
+                      
+                                              <!--  <div *ngIf="f.submitted &&  mailing_Postal_code.invalid" class="invalid-feedback">
+                                                            <div *ngIf=" mailing_Postal_code.errors.required">Please provide  mailing_Postal_code</div>
+                                                         
+                                                        <div *ngIf=" mailing_Postal_code.errors.pattern">Phone number should be only numbers
+                                                           </div>
+                                                        </div> -->
+                                            </div>
+                                          </div>
+                                          <div class="form-group col-md-4">
+                                            <label class="col-sm-5 col-form-label">{{field_name_leads_mailing_country}}<span class="text-danger font-weight-bold">
+                                              </span></label>
+                                            <div class="col-sm-10">
+                                              <input type="text" class="form-control" [(ngModel)]="leadDetail.mailing_country"
+                                                name="mailing_country" #mailing_country="ngModel">
+                                              <!--  [ngClass]="{ 'is-invalid': f.submitted && mailing_country.invalid, 
+                                                         'is-valid': f.submitted && mailing_country.valid }"
+                                                        required/> -->
+                                              <!-- 
+                                                        <div *ngIf="f.submitted && mailing_country.invalid" class="invalid-feedback">
+                                                            <div *ngIf="mailing_country.errors.required">Please provide mailing_country</div>
+                                                         
+                                                        <div *ngIf="mailing_country.errors.pattern">Phone number should be only numbers
+                                                           </div>
+                                                        </div> -->
+                                            </div>
+                                          </div>
+                      
+                                        </div>
+                      
+                      
+                                      </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="nav-other-info" role="tabpanel" aria-labelledby="nav-other-info-tab">
+                                      <div class="panel-body">
+                                        <div class="form-row">
+                      
+                      
+                                          <div class="form-group col-md-10">
+                                            <label for="exampleFormControlTextarea1">{{field_name_leads_description}}</label>
+                                            <textarea class="form-control" id="" rows="3" [(ngModel)]="leadDetail.description" 
+                                                            name="description" #description="ngModel"  ></textarea>
+                                          </div>
+                      
+                                        </div>
+                      
+                                      </div>
+                                    </div>
+      
+                                    <!-- <div class="tab-pane fade" id="nav-attachment-info" role="tabpanel" aria-labelledby="nav-attachment-info-tab">
+                                      <div class="panel-body">
+                                        <div class="col-md-8">
+                                          <div class="custom-file">
+                                            <input type="file" name="files"  #files="ngModel"  [(ngModel)]="leadDetail.files"
+                                                      
+                                           (change)="selectImage($event)"/>
+                                          </div>
+                                        </div>
+                                      
+                                     
+                      
+                                      </div>
+                                  </div> -->
+      
+                              <!--     <div class="tab-pane fade" id="nav-activity-info" role="tabpanel" aria-labelledby="nav-activity-info-tab">
+                                    <div class="panel-body">
+      
+      
+                                      <table  class="table table-striped" [mfData]="activityDetail" #mf="mfDataTable" 
+                                      [mfRowsOnPage]="rowsOnPage">
+                                        <thead class="thead-light">
+                                          <tr>
+                    
+                                           
+                                            <th width="20%">
+                                              <mfDefaultSorter by="record_type">{{field_name_leads_activity_type}}</mfDefaultSorter>
+                                            </th>
+                                           
+                                            <th width="20%">
+                                              <mfDefaultSorter by="subject">{{field_name_leads_subject}}</mfDefaultSorter>
+                                            </th>
+                                            <th width="20%">
+                                                <mfDefaultSorter by="due_date">{{field_name_leads_due_date}}</mfDefaultSorter>
+                                              </th>
+                                           
+                                            <th width="20%" *ngIf="SHOW_EDIT_DELETE">
+                                                <mfDefaultSorter>{{field_name_leads_activity_actions}}</mfDefaultSorter>
+                                              </th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr *ngFor="let obj of activityDetail | filter:searchText let i = index">
+                                           
+                                            <td>{{obj.record_type}}</td>
+                                            <td>{{obj.subject}}</td>
+                                      
+                                            <td>{{obj.due_date}}</td>
+                                      
+                                      
+                                            <td *ngIf="SHOW_EDIT_DELETE">
+                   
+                                              <i class="fa fa-edit" (click)="onClickEdit(obj)"></i> 
+                                
+                                                <span *ngIf="ALL_DELETE_ALLOWED"><i (click)="onClickDelete(obj)" class="fa fa-trash"></i></span>
+                                          </td>
+                                          </tr>
+                                        </tbody>
+                                        <tfoot>
+                                          <tr>
+                                            <td colspan="4">
+                                              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25,50]"></mfBootstrapPaginator>
+                                            </td>
+                                          </tr>
+                                      
+                                        </tfoot>
+                                      </table>
+                                    </div>
+                                  </div> -->
+      
+      
+                                  <div class="tab-pane fade" id="nav-convert-info" role="tabpanel" aria-labelledby="nav-convert-info-tab">
+                                    
+                                    <div class="panel-body">
+                                      <div class="col-md-8">
+                                      
+                                        <div class="form-check form-check-inline mr-1" id="convertIt">
+                                          <input class="form-check-input" type="radio"
+                                              name="convertIt"
+                                              [(ngModel)]="convertIt"
+                                              [value]="true">
+                                          <label class="form-check-label"
+                                              for="inlineRadio2">  {{field_name_marketing_convert_to_customer}}</label>
+                                        </div>  
+                                      
+                                      </div>
+                                    
+                                 
+                                      </div> 
+      
+                                               
+                        <div class="form-row">
+                          <div class="form-group col-md-3">
+                            <label class="col-sm-5 col-form-label">{{field_name_leads_created_by}}
+                             
+                            </label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" name="created_by"
+                              [(ngModel)]="leadDetail.created_by"
+                              #created_by="ngModel" readonly>
+                          </div>
+                        </div>
+                          <div class="form-group col-md-3">
+                            <label class="col-sm-5 col-form-label">{{field_name_leads_created_time}}
+                              
+                            </label>
+                            <div class="col-sm-10">
+                             
+                          
+                              <input type="text" class="form-control" name="created_time"  
+                               readonly value="{{leadDetail.created_time |  date : dateFormat:'GMT':locale}}">
+                               
+                            
+                            
+                          </div>
+                          </div>
+                          <div class="form-group col-md-3">
+                            <label class="col-sm-5 col-form-label">{{field_name_leads_updated_by}}
+                             
+                            </label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" name="updated_by"
+                                [(ngModel)]="leadDetail.updated_by"
+                                #updated_by="ngModel" readonly>
+                          </div>
+                        </div>
+                          <div class="form-group col-md-3">
+                            <label class="col-sm-5 col-form-label">{{field_name_leads_updated_time}}
+                             
+                            </label>
+                            <div class="col-sm-10">
+                            
+                              <input type="text" class="form-control" name="modified_time"  
+                               readonly value=" {{leadDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+                            
+                          </div>
+                        </div>
+                          </div>
+                          
+                        
+                           </div>
+                          
+                          
+                                
+                          <!--   </div> -->
+                        <!-- </div> -->
+                   <!--  </div> -->
+                <!-- </section> -->
+              
+          <button class="btn btn-danger btn-round text-center pull-right" style=" margin-top: 73px;" type="button"
+          appCancelbutton>{{'Cancel'|translate}}</button>
+                     <button class="btn btn-success btn-round text-center pull-right" style=" margin-top: 73px;">
+                       <span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+                       <span *ngIf="isUpdate">{{'Update'|translate}}</span></button>
+                       </div>
+                     </div>  
+                    
+                     </form>
+                     
+                     </div>
+                     </div>
+                     </div>
+          </section>

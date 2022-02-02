@@ -1,0 +1,192 @@
+.line-container {
+    height: 300px;
+    width: 100%;
+    display: block;
+  }
+  .gauge-container {
+    height: 300px;
+    width: 100%;
+    display: block;
+  }
+  
+  .dashcard{
+    border-radius: 2em !important;
+    border: solid black 1px !important;
+    margin-bottom: 10%;
+  }
+  
+  .dashtitle{
+    text-transform: none !important;
+    font-weight: 400 !important;
+    font-size: 22px !important;
+  }
+  .dashtitle > .fa{
+    margin: 5px
+  }
+  
+  .dashtitle > .ti-stats-up{
+    margin: 5px
+  }
+  
+  [lang="ar"] .dashtitle{
+    float: right;
+  }
+  
+  .dashbody > .btn{
+    width: 80%;
+    margin-left: 10%;
+    height: 60px;
+    justify-content: center;
+    margin-top: 10px;
+    border-radius: 0.5em;
+    font-size: 27px;
+    font-weight: 100;
+    pointer-events: none;
+    color: white;
+    border-color: transparent;
+    margin-bottom: 1%;
+  }
+  
+  .optionsDiv{
+    display: none;
+  }
+  
+  .optionsDiv > .btn{
+    width: 60%;
+    margin-left: 20%;
+    height: 50px;
+    margin-top: 10px;
+    border-radius: 0.5em;
+    font-size: 16px !important;
+    font-weight: 550;
+    border-color: transparent;
+    margin-bottom: 1%;
+    line-height: 2.3;
+    
+  }
+  
+  .viewmore{
+    font-size: 12px;
+    color: grey;
+    margin-left: 75%;
+  }
+  
+  [lang="ar"] .viewmore{
+    margin-left: 0 !important;
+    margin-right: 75%;
+  }
+  
+  .viewmore:hover{
+    color: grey;
+  }
+  
+  .viewmorehr{
+    margin-top: 0;
+  }
+  
+  /* new code */
+  
+  .card-box {
+    position: relative;
+    color: #fff;
+    padding: 20px 10px 40px;
+    margin: 20px 0px;
+  }
+  .card-box:hover {
+    text-decoration: none;
+    color: #f1f1f1;
+  }
+  .card-box:hover .icon i {
+    font-size: 100px;
+    transition: 1s;
+    -webkit-transition: 1s;
+  }
+  .card-box .inner {
+    padding: 5px 10px 0 10px;
+  }
+  .card-box h3 {
+    font-size: 27px;
+    font-weight: bold;
+    margin: 0 0 8px 0;
+    white-space: nowrap;
+    padding: 0;
+    text-align: left;
+  }
+  .card-box p {
+    font-size: 15px;
+  }
+  .card-box .icon {
+    position: absolute;
+    top: auto;
+    bottom: 5px;
+    right: 5px;
+    z-index: 0;
+    font-size: 72px;
+    color: rgba(0, 0, 0, 0.15);
+  }
+  .card-box .card-box-footer {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    text-align: center;
+    padding: 3px 0;
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(0, 0, 0, 0.1);
+    width: 100%;
+    text-decoration: none;
+  }
+  .card-box:hover .card-box-footer {
+    background: rgba(0, 0, 0, 0.3);
+  }
+  .bg-blue {
+    background-color: #00c0ef !important;
+  }
+  .bg-green {
+    background-color: #00a65a !important;
+  }
+  .bg-orange {
+    background-color: #f39c12 !important;
+  }
+  .bg-red {
+    background-color: #d9534f !important;
+  }
+  
+  .bg-Crimson{
+    background-color:#6d8d17 !important;
+  }
+  .bg-Cerulean{
+    background-color: #a55b10 !important;
+  }
+  .statistic-box{
+  height: 135px;
+  }
+  .routerlink{
+    font: 700 !important;
+    font-size: large !important;
+  
+  }
+  
+  label {
+    font-size: large !important;
+  }
+
+  @media  screen and (min-width: 600px) {
+ 
+    .dateSectionMat{
+      display: none !important;;
+    }
+    .dateSection{
+      display: flex;
+    }
+    
+}
+ 
+@media  screen and (max-width: 599px) {
+
+  .dateSectionMat{
+    display: flex;
+  }
+  .dateSection{
+    display: none !important;
+  }
+}

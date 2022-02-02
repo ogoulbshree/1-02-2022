@@ -1,0 +1,938 @@
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir="rtl">
+  <div class="container-fluid">
+    <h3 class="text-center">{{ field_name_visits_Know_your_location }}</h3>
+    <div class="card">
+      <div class="card-body">
+        <div class="row" *ngIf="this.addVisitDetail">
+          <div class="container-fluid">
+            <agm-map
+              style="height: 335px"
+              [latitude]="latitude"
+              [longitude]="longitude"
+              [zoom]="zoom"
+              (mapClick)="mapClicked($event)"
+            >
+              <agm-marker
+                [latitude]="latitude"
+                [longitude]="longitude"
+                (click)="onClickMarker(infoWindow, $event)"
+              >
+                <agm-info-window
+                  *ngIf="isUpdate"
+                  #infoWindow
+                  [latitude]="latitude"
+                  [longitude]="longitude"
+                >
+                  <div>
+                    <h6>Email: {{ addVisitDetail.email }}</h6>
+                    <br />
+                    <h6>Name: {{ addVisitDetail.first_name }}</h6>
+                    <a (click)="openMapInNewTab(latitude, longitude)"> More</a>
+                  </div>
+                </agm-info-window>
+              </agm-marker>
+            </agm-map>
+          </div>
+
+          <div class="container-fluid">
+            <form
+              class="form-horizontal form-material"
+              name="form"
+              #f="ngForm"
+              (ngSubmit)="f.form.valid && onSubmit()"
+            >
+              <div
+                *ngIf="f.form.invalid && f.submitted"
+                class="alert alert-danger alert-dismissible fade show"
+                role="alert"
+              >
+                <strong>Visits Details!</strong>The form has the following
+                errors that need to be corrected
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="alert"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="card-header">
+                <h2>
+                  <span *ngIf="!isUpdate">{{
+                    field_name_visits_addvisits
+                  }}</span>
+                  <span *ngIf="isUpdate">{{ field_name_visits_update }}</span>
+                </h2>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-4" *ngIf="!isUpdate">
+                  <label class="col-sm-5 col-form-label"
+                    >{{ field_name_visits_user_email }}
+                    <span class="text-danger font-weight-bold"> *</span>
+                  </label>
+                  <div class="col-sm-10">
+                    <div class="ng-autocomplete">
+                      <ng-autocomplete
+                        [data]="salesUsers"
+                        [searchKeyword]="keyword"
+                        (inputChanged)="onChangeSearch($event)"
+                        (inputFocused)="onFocused($event)"
+                        (selected)="onSalesSelect($event)"
+                        [itemTemplate]="itemTemplate"
+                        [notFoundTemplate]="notFoundTemplate"
+                        [(ngModel)]="selectedUser.email"
+                        name="email"
+                        #email="ngModel"
+                        required
+                        [ngClass]="{
+                          'is-invalid': f.submitted && email.invalid,
+                          'is-valid': f.submitted && email.valid
+                        }"
+                      >
+                      </ng-autocomplete>
+
+                      <ng-template #itemTemplate let-item>
+                        <a [innerHTML]="item.email"></a>
+                      </ng-template>
+
+                      <ng-template #notFoundTemplate let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                      </ng-template>
+                      <div
+                      *ngIf="f.submitted && email.invalid"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="email.errors.required">
+                        Please Provide Email 
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-4" *ngIf="!isUpdate">
+                  <label class="col-sm-5 col-form-label"
+                    >{{ field_name_visits_customer_name
+                    }}<span class="text-danger font-weight-bold">
+                      *</span
+                    ></label
+                  >
+                  <div class="col-sm-10">
+                    <div class="ng-autocomplete">
+                      <ng-autocomplete
+                        [data]="customers"
+                        [searchKeyword]="keyword"
+                        
+                        (selected)="selectEvent($event)"
+                        (inputChanged)="onChangeSearch($event)"
+                        (inputFocused)="onFocused($event)"
+                        [itemTemplate]="itemTemplate"
+                        [notFoundTemplate]="notFoundTemplate"
+                        [(ngModel)]="selectedCustomer.first_name"
+                        name="first_name"
+                        #first_name="ngModel"
+                        required
+                        [ngClass]="{
+                          'is-invalid': f.submitted && first_name.invalid,
+                          'is-valid': f.submitted && first_name.valid
+                        }"
+                        
+                      >
+                      </ng-autocomplete>
+
+                      <ng-template #itemTemplate let-item>
+                        <a [innerHTML]="item.first_name"></a>
+                      </ng-template>
+
+                      <ng-template #notFoundTemplate let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                      </ng-template>
+                      <div
+                      *ngIf="f.submitted && first_name.invalid"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="first_name.errors.required">
+                        Please Provide First Name 
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 form-group" *ngIf="isUpdate">
+                  <label class="col-sm-5 col-form-label"
+                    >{{ field_name_visits_user_email }}<span class="text-danger font-weight-bold"> *</span>
+                  </label>
+                  <div class="col-sm-10">
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="addVisitDetail.sales_email"
+                      name="sales_email"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4 form-group" *ngIf="isUpdate">
+                  <label class="col-sm-5 col-form-label"
+                    >{{ field_name_visits_customer_name
+                    }}<span class="text-danger font-weight-bold"> *</span>
+                  </label>
+                  <div class="col-sm-10">
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="addVisitDetail.first_name"
+                      name="first_name"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4 form-group">
+                  <div class="col-sm-10">
+                    <label class="col-sm-5 col-form-label"
+                      >{{ field_name_visits_phone
+                      }}<span class="text-danger font-weight-bold">
+                        *</span
+                      ></label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      #phone="ngModel"
+                      [(ngModel)]="addVisitDetail.phone"
+                      name="phone"
+                      readonly
+                      [ngClass]="{
+                        'is-invalid': f.submitted && phone.invalid,
+                        'is-valid': f.submitted && phone.valid
+                      }"
+                      required
+                    />
+                    <div
+                      *ngIf="f.submitted && phone.invalid"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="phone.errors.required">
+                        Please select customer to get phone details
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 form-group">
+                  <div class="col-sm-10">
+                    <label class="col-sm-5 col-form-label"
+                      >{{ field_name_visits_email
+                      }}<span class="text-danger font-weight-bold">
+                        *</span
+                      ></label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="addVisitDetail.email"
+                      #email="ngModel"
+                      name="email"
+                      readonly
+                      [ngClass]="{
+                        'is-invalid': f.submitted && email.invalid,
+                        'is-valid': f.submitted && email.valid
+                      }"
+                      required
+                    />
+                    <div
+                      *ngIf="f.submitted && email.invalid"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="email.errors.required">
+                        Please select customer to get email details
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-md-4 form-group">
+                  <div class="col-sm-10">
+                    <label class="col-sm-5 col-form-label"
+                      >{{ field_name_visits_last_name
+                      }}<span class="text-danger font-weight-bold">
+                        *</span
+                      ></label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="addVisitDetail.last_name"
+                      #last_name="ngModel"
+                      name="last_name"
+                      readonly
+                      [ngClass]="{
+                        'is-invalid': f.submitted && last_name.invalid,
+                        'is-valid': f.submitted && last_name.valid
+                      }"
+                      required
+                    />
+                    <div
+                      *ngIf="f.submitted && last_name.invalid"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="last_name.errors.required">
+                        Please select customer to get last_name details
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4 form-group">
+                  <div class="col-sm-10">
+                    <label class="col-sm-5 col-form-label"
+                      >{{ field_name_visits_company_name
+                      }}<span class="text-danger font-weight-bold"> </span
+                    ></label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="addVisitDetail.company_name"
+                      name="company_name"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4 form-group">
+                  <div class="col-sm-10">
+                    <label class="col-sm-5 col-form-label"
+                      >{{ field_name_visits_department
+                      }}<span class="text-danger font-weight-bold"> </span
+                    ></label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="addVisitDetail.department"
+                      name="department"
+                      readonly
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-md-4 form-group">
+                  <div class="col-sm-10">
+                    <label class="col-sm-5 col-form-label"
+                      >{{ field_name_visits_address
+                      }}<span class="text-danger font-weight-bold"> </span
+                    ></label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="addVisitDetail.other_address"
+                      name="other_address"
+                      readonly
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                  <label class="col-sm-5 col-form-label"
+                    >{{ field_name_visits_follow_update
+                    }}<span class="text-danger font-weight-bold"> </span
+                  ></label>
+                  <div class="col-sm-10">
+                    <div class="input-group">
+                      <input
+                        type="date"
+                        class="form-control"
+                        placeholder="YYYY-MM-DD"
+                        [(ngModel)]="addVisitDetail.follow_up_date"
+                        name="follow_up_date"
+                        #follow_up_date="ngModel"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4 form-group">
+                  <label class="col-sm-5 col-form-label"
+                    >{{ field_name_visits_notes
+                    }}<span class="text-danger font-weight-bold">
+                      *</span
+                    ></label
+                  >
+                  <div class="col-sm-10">
+                    <textarea
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="addVisitDetail.visits_note"
+                      pattern="^(\s|\S)*(\S)+(\s|\S)*$"
+                      name="visits_note"
+                      #visits_note="ngModel"
+                      [ngClass]="{
+                        'is-invalid': f.submitted && visits_note.invalid,
+                        'is-valid': f.submitted && visits_note.valid
+                      }"
+                      required
+                    ></textarea>
+                    <div
+                      *ngIf="f.submitted && visits_note.invalid"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="visits_note.errors.required">
+                        Please add note
+                      </div>
+                      <div *ngIf="visits_note.errors.pattern">
+                        Provide alphabets only
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-3">
+                  <label class="col-sm-5 col-form-label">
+                    {{ field_name_visits_created_by }}
+                  </label>
+                  <div class="col-sm-10">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="created_by"
+                      [(ngModel)]="addVisitDetail.created_by"
+                      #created_by="ngModel"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="form-group col-md-3">
+                  <label class="col-sm-5 col-form-label"
+                    >{{ field_name_visits_created_time }}
+                  </label>
+                  <div class="col-sm-10">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="created_time"
+                      readonly
+                      value="{{ addVisitDetail.created_time |  date : dateFormat:'GMT':locale }}"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label class="col-sm-5 col-form-label"
+                    >{{ field_name_visits_updated_by }}
+                  </label>
+                  <div class="col-sm-10">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="updated_by"
+                      [(ngModel)]="addVisitDetail.updated_by"
+                      #updated_by="ngModel"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="form-group col-md-3">
+                  <label class="col-sm-5 col-form-label"
+                    >{{ field_name_visits_updated_time }}
+                  </label>
+                  <div class="col-sm-10">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="modified_time"
+                      readonly
+                      value=" {{
+                        addVisitDetail.modified_time |  date : dateFormat:'GMT':locale
+                      }}"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <button class="btn btn-success btn-round text-center">
+                <span *ngIf="!isUpdate">{{ "Save" | translate }}</span>
+                <span *ngIf="isUpdate">{{ "Update" | translate }}</span>
+              </button>
+              <button
+                class="btn btn-danger btn-round text-center"
+                type="button"
+                appCancelbutton
+              >
+                {{ "Cancel" | translate }}
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng2-toasty [position]="'top-center'"></ng2-toasty>
+</section>
+
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir="ltr">
+  <div class="container-fluid">
+    <h3 class="text-center">{{ field_name_visits_Know_your_location }}</h3>
+    <div class="card">
+      <div class="card-body">
+        <div class="row" *ngIf="this.addVisitDetail">
+          <div class="container-fluid">
+            <agm-map
+              style="height: 335px"
+              [latitude]="latitude"
+              [longitude]="longitude"
+              [zoom]="zoom"
+              (mapClick)="mapClicked($event)"
+            >
+              <agm-marker
+                [latitude]="latitude"
+                [longitude]="longitude"
+                (click)="onClickMarker(infoWindow, $event)"
+              >
+                <agm-info-window
+                  *ngIf="isUpdate"
+                  #infoWindow
+                  [latitude]="latitude"
+                  [longitude]="longitude"
+                >
+                  <div>
+                    <h6>Email: {{ addVisitDetail.email }}</h6>
+                    <br />
+                    <h6>Name: {{ addVisitDetail.first_name }}</h6>
+                    <a (click)="openMapInNewTab(latitude, longitude)"> More</a>
+                  </div>
+                </agm-info-window>
+              </agm-marker>
+            </agm-map>
+          </div>
+          <div class="container-fluid">
+            <form
+              class="form-horizontal form-material"
+              name="form"
+              #f="ngForm"
+              (ngSubmit)="f.form.valid && onSubmit()"
+            >
+              <div
+                *ngIf="f.form.invalid && f.submitted"
+                class="alert alert-danger alert-dismissible fade show"
+                role="alert"
+              >
+                <strong>Visits Details!</strong>The form has the following
+                errors that need to be corrected
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="alert"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="card-header">
+                <h2>
+                  <span *ngIf="!isUpdate">{{
+                    field_name_visits_addvisits
+                  }}</span>
+                  <span *ngIf="isUpdate">{{ field_name_visits_update }}</span>
+                </h2>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-4" *ngIf="!isUpdate">
+                  <label class="col-sm-5 col-form-label"
+                    >{{field_name_visits_user_email}}
+                    <span class="text-danger font-weight-bold"> *</span>
+                  </label>
+                  <div class="col-sm-10">
+                    <div class="ng-autocomplete">
+                      <ng-autocomplete
+                        [data]="salesUsers"
+                        [searchKeyword]="newkeyword"
+                        (inputChanged)="onChangeSearch($event)"
+                        (inputFocused)="onFocused($event)"
+                        (selected)="onSalesSelect($event)"
+                        [itemTemplate]="itemTemplate"
+                        [notFoundTemplate]="notFoundTemplate"
+                        [(ngModel)]="selectedUser.email"
+                        name="email"
+                        #email="ngModel"
+                        required
+                        [ngClass]="{
+                          'is-invalid': f.submitted && email.invalid,
+                          'is-valid': f.submitted && email.valid
+                        }"
+                      >
+                      </ng-autocomplete>
+
+                      <ng-template #itemTemplate let-item>
+                        <a [innerHTML]="item.email"></a>
+                      </ng-template>
+
+                      <ng-template #notFoundTemplate let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                      </ng-template>
+                      <div
+                      *ngIf="f.submitted && email.invalid"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="email.errors.required">
+                        Please Provide Email 
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 form-group" *ngIf="isUpdate">
+                  <label class="col-sm-5 col-form-label"
+                    >{{field_name_visits_user_email}}<span class="text-danger font-weight-bold"> *</span>
+                  </label>
+                  <div class="col-sm-10">
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="addVisitDetail.sales_email"
+                      name="sales_email"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="form-group col-md-4" *ngIf="!isUpdate">
+                  <label class="col-sm-5 col-form-label"
+                    >{{ field_name_visits_customer_name
+                    }}<span class="text-danger font-weight-bold">
+                      *</span
+                    ></label
+                  >
+                  <div class="col-sm-10">
+                    <div class="ng-autocomplete">
+                      <ng-autocomplete
+                        [data]="customers"
+                        [searchKeyword]="keyword"
+                        (selected)="selectEvent($event)"
+                        (inputChanged)="onChangeSearch($event)"
+                        (inputFocused)="onFocused($event)"
+                        [itemTemplate]="itemTemplate"
+                        [notFoundTemplate]="notFoundTemplate"
+                        [(ngModel)]="selectedCustomer.first_name"
+                        name="first_name"
+                        #first_name="ngModel"
+                        required
+                        [ngClass]="{
+                          'is-invalid': f.submitted && first_name.invalid,
+                          'is-valid': f.submitted && first_name.valid
+                        }"
+                      >
+                      </ng-autocomplete>
+
+                      <ng-template #itemTemplate let-item>
+                        <a [innerHTML]="item.first_name"></a>
+                      </ng-template>
+
+                      <ng-template #notFoundTemplate let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                      </ng-template>
+                      <div
+                      *ngIf="f.submitted && first_name.invalid"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="first_name.errors.required">
+                        Please Provide First Name 
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 form-group" *ngIf="isUpdate">
+                  <label class="col-sm-5 col-form-label"
+                    >{{ field_name_visits_customer_name
+                    }}<span class="text-danger font-weight-bold"> *</span>
+                  </label>
+                  <div class="col-sm-10">
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="addVisitDetail.first_name"
+                      name="first_name"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4 form-group">
+                  <div class="col-sm-10">
+                    <label class="col-sm-5 col-form-label"
+                      >{{ field_name_visits_phone
+                      }}<span class="text-danger font-weight-bold">
+                        *</span
+                      ></label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      #phone="ngModel"
+                      [(ngModel)]="addVisitDetail.phone"
+                      name="phone"
+                      readonly
+                      [ngClass]="{
+                        'is-invalid': f.submitted && phone.invalid,
+                        'is-valid': f.submitted && phone.valid
+                      }"
+                      required
+                    />
+                    <div
+                      *ngIf="f.submitted && phone.invalid"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="phone.errors.required">
+                        Please select customer to get phone details
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 form-group">
+                  <div class="col-sm-10">
+                    <label class="col-sm-5 col-form-label"
+                      >{{ field_name_visits_email
+                      }}<span class="text-danger font-weight-bold">
+                        *</span
+                      ></label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="addVisitDetail.email"
+                      #email="ngModel"
+                      name="email"
+                      readonly
+                      [ngClass]="{
+                        'is-invalid': f.submitted && email.invalid,
+                        'is-valid': f.submitted && email.valid
+                      }"
+                      required
+                    />
+                    <div
+                      *ngIf="f.submitted && email.invalid"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="email.errors.required">
+                        Please select customer to get email details
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-md-4 form-group">
+                  <div class="col-sm-10">
+                    <label class="col-sm-5 col-form-label"
+                      >{{ field_name_visits_last_name
+                      }}<span class="text-danger font-weight-bold">
+                        *</span
+                      ></label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="addVisitDetail.last_name"
+                      #last_name="ngModel"
+                      name="last_name"
+                      readonly
+                      [ngClass]="{
+                        'is-invalid': f.submitted && last_name.invalid,
+                        'is-valid': f.submitted && last_name.valid
+                      }"
+                      required
+                    />
+                    <div
+                      *ngIf="f.submitted && last_name.invalid"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="last_name.errors.required">
+                        Please select customer to get last name details
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4 form-group">
+                  <div class="col-sm-10">
+                    <label class="col-sm-5 col-form-label"
+                      >{{ field_name_visits_company_name
+                      }}<span class="text-danger font-weight-bold"> </span
+                    ></label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="addVisitDetail.company_name"
+                      name="company_name"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4 form-group">
+                  <div class="col-sm-10">
+                    <label class="col-sm-5 col-form-label"
+                      >{{ field_name_visits_department
+                      }}<span class="text-danger font-weight-bold"> </span
+                    ></label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="addVisitDetail.department"
+                      name="department"
+                      readonly
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-md-4 form-group">
+                  <div class="col-sm-10">
+                    <label class="col-sm-5 col-form-label"
+                      >{{ field_name_visits_address
+                      }}<span class="text-danger font-weight-bold"> </span
+                    ></label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="addVisitDetail.other_address"
+                      name="other_address"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="form-group col-md-4">
+                  <label class="col-sm-5 col-form-label"
+                    >{{ field_name_visits_follow_update
+                    }}<span class="text-danger font-weight-bold"> </span
+                  ></label>
+                  <div class="col-sm-10">
+                    <div class="input-group">
+                      <input
+                        type="date"
+                        class="form-control"
+                        placeholder="YYYY-MM-DD"
+                        [(ngModel)]="addVisitDetail.follow_up_date"
+                        name="follow_up_date"
+                        #follow_up_date="ngModel"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 form-group">
+                  <label class="col-sm-5 col-form-label"
+                    >{{ field_name_visits_notes
+                    }}<span class="text-danger font-weight-bold">
+                      *</span
+                    ></label
+                  >
+                  <div class="col-sm-10">
+                    <textarea
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="addVisitDetail.visits_note"
+                      pattern="^(\s|\S)*(\S)+(\s|\S)*$"
+                      name="visits_note"
+                      #visits_note="ngModel"
+                      [ngClass]="{
+                        'is-invalid': f.submitted && visits_note.invalid,
+                        'is-valid': f.submitted && visits_note.valid
+                      }"
+                      required
+                    ></textarea>
+                    <div
+                      *ngIf="f.submitted && visits_note.invalid"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="visits_note.errors.required">
+                        Please add note
+                      </div>
+                      <div *ngIf="visits_note.errors.pattern">
+                        Provide alphabets only
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-3">
+                  <label class="col-sm-5 col-form-label">
+                    {{ field_name_visits_created_by }}
+                  </label>
+                  <div class="col-sm-10">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="created_by"
+                      [(ngModel)]="addVisitDetail.created_by"
+                      #created_by="ngModel"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="form-group col-md-3">
+                  <label class="col-sm-5 col-form-label"
+                    >{{ field_name_visits_created_time }}
+                  </label>
+                  <div class="col-sm-10">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="created_time"
+                      readonly
+                      value="{{ addVisitDetail.created_time |  date : dateFormat:'GMT':locale }}"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group col-md-3">
+                  <label class="col-sm-5 col-form-label"
+                    >{{ field_name_visits_updated_by }}
+                  </label>
+                  <div class="col-sm-10">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="updated_by"
+                      [(ngModel)]="addVisitDetail.updated_by"
+                      #updated_by="ngModel"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="form-group col-md-3">
+                  <label class="col-sm-5 col-form-label"
+                    >{{ field_name_visits_updated_time }}
+                  </label>
+                  <div class="col-sm-10">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="modified_time"
+                      readonly
+                      value=" {{
+                        addVisitDetail.modified_time |  date : dateFormat:'GMT':locale
+                      }}"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <button class="btn btn-success btn-round text-center">
+                <span *ngIf="!isUpdate">{{ "Save" | translate }}</span>
+                <span *ngIf="isUpdate">{{ "Update" | translate }}</span>
+              </button>
+              <button
+                class="btn btn-danger btn-round text-center"
+                type="button"
+                appCancelbutton
+              >
+                {{ "Cancel" | translate }}
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng2-toasty [position]="'top-center'"></ng2-toasty>
+</section>

@@ -1,0 +1,517 @@
+<section *ngIf="this._uiservice.langDataSource.value == 'ar' && this.quoteDetail" dir='rtl' >
+
+  <div class="container-fluid">
+    <h3 class="text-center">{{field_name_quotes_details}}</h3>
+    <div class="card">
+      <div class="card-body">
+
+  <div *ngIf="print" class="btn-toolbar text-center well1">
+    <button  (click)=" exportToPrint()" type="button" class="btn btn-success col-xs-5 margin-left">
+      <i class="fa fa-print" aria-hidden="true"></i>{{field_name_quotes_print}}
+    </button>
+  </div>
+  
+  <form id="contentToConvert" class="form-horizontal form-material" name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()">
+     <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+      <strong>Quotation Details!</strong>The form has the following errors that need to be corrected
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="card-header">
+      <h2>
+        <span *ngIf="!isUpdate">{{field_name_quotes_addquotes}}</span>
+        <span *ngIf="isUpdate">{{field_name_quotes_update}}</span>
+        
+      </h2>
+    </div>
+    <div class="card-body">
+  
+      <div class="form-row">
+      <div class="form-group col-md-4" *ngIf="!isUpdate">
+        <label class="col-sm-5 col-form-label"  >{{field_name_quotes_customername}}
+          <span class="text-danger font-weight-bold">
+            *</span>
+        </label>
+        <div class="col-sm-10">
+         
+          <div class="ng-autocomplete">
+            <ng-autocomplete [data]="customers" [searchKeyword]="customer_keyword" [itemTemplate]="itemTemplate"
+              (inputChanged)='onChangeSearch($event)' (selected)='onCustomerSelect($event)'  historyIdentifier="customers"
+              (inputFocused)='onFocused($event)' [notFoundTemplate]="notFoundTemplate" [(ngModel)]="customers.first_name"
+              name="first_name" required  #first_name="ngModel" 
+                        [ngClass]="{ 'is-invalid': f.submitted && first_name.invalid, 
+                       'is-valid': f.submitted && first_name.valid }">
+             
+            </ng-autocomplete>
+            
+            <ng-template #itemTemplate let-item>
+              <a [innerHTML]="item.first_name"></a>
+            </ng-template>
+
+            <ng-template #notFoundTemplate let-notFound>
+              <div [innerHTML]="notFound"></div>
+              
+          
+            </ng-template> 
+            <div *ngIf="f.submitted && first_name.invalid" class="invalid-feedback">
+              <div *ngIf="first_name.errors.required">Please Provide First Name</div>
+    
+             
+            </div>
+           
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-4" *ngIf="isUpdate">
+        <label class="col-sm-5 col-form-label" >{{field_name_quotes_customername}}<span class="text-danger font-weight-bold">
+            *</span></label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" [(ngModel)]="quoteDetail.first_name" name="first_name" readonly required
+             #first_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && first_name.invalid, 
+            'is-valid': f.submitted && first_name.valid }" readonly />
+        </div>
+        <div *ngIf="f.submitted && first_name.invalid" class="invalid-feedback">
+          <div *ngIf="first_name.errors.required">Please provide Customer Name</div>
+
+         
+        </div> 
+      </div> 
+      <div class="form-group col-md-4">
+        <label class="col-sm-5 col-form-label">{{field_name_quotes_mobile}}<span class="text-danger font-weight-bold">
+            *</span></label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" [(ngModel)]="quoteDetail.phone" name="phone" required
+          pattern="^[0-9()\-+\s]+$" #phone="ngModel" [ngClass]="{ 'is-invalid': f.submitted && phone.invalid, 
+          'is-valid': f.submitted && phone.valid }" readonly >
+          <div *ngIf="f.submitted && phone.invalid "class="invalid-feedback">
+            <div
+                *ngIf="phone.errors.required ">Please select customer to get phone details </div>
+               
+              </div>
+
+        </div>
+      </div> 
+
+      <div class="form-group col-md-4">
+        <label class="col-sm-5 col-form-label">{{field_name_quotes_quotationdate}}
+          <span class="text-danger font-weight-bold">
+            *</span>
+        </label>
+        <div class="col-sm-10">
+          <input type="date" class="form-control" [(ngModel)]="quoteDetail.quotation_date" name="quotation_date"
+            #quotation_date="ngModel" [ngClass]="{ 'is-invalid': f.submitted && quotation_date.invalid, 
+            'is-valid': f.submitted && quotation_date.valid }" required />
+            <div *ngIf="f.submitted && quotation_date.invalid "class="invalid-feedback">
+              <div
+                  *ngIf="quotation_date.errors.required ">Please Provide Quotation Date </div>
+                 
+                </div>
+        </div>
+      </div>
+      </div>
+      <div class="form-row">
+      <div class="form-group col-md-4">
+        <label class="col-sm-5 col-form-label">{{field_name_quotes_productname}}
+          <span class="text-danger font-weight-bold">
+            *</span>
+        </label>
+        <div class="col-sm-10" >
+          <mat-form-field class="example-full-width" appearance="none" floatLabel="never" >
+            <input type="text" matInput [matAutocomplete]="auto" [formControl]="userControl"
+              [(ngModel)]="quoteDetail.product_name" name="product_name" required>
+              <mat-error *ngIf="userControl.hasError('required')">Please choose any products</mat-error>
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let product of filteredProducts | async" [value]="selectedProducts">
+              <div (click)="optionClicked($event, product)"required >
+                <mat-checkbox [checked]="product.selected" (change)="toggleSelection(product)"
+                  (click)="$event.stopPropagation()">
+                  {{ product.product_name }}
+                </mat-checkbox>
+              </div>
+            </mat-option>
+          </mat-autocomplete>
+         
+         
+        </mat-form-field>
+        </div>
+      </div>
+</div>
+  
+     <div class="table-responsive" *ngIf="selectedProducts.length">
+        <table class="table" [mfData]="selectedProducts" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage">
+          <thead class="thead-light">
+            <tr>
+              <th width="20%">
+                <mfDefaultSorter by="product_name">{{field_name_quotes_productname}}</mfDefaultSorter>
+              </th>
+              <th width="20%">
+                <mfDefaultSorter by="customer_name">{{field_name_quotes_product_category}}</mfDefaultSorter>
+              </th>
+              <th width="20%">
+                <mfDefaultSorter by="mobile">{{field_name_quotes_product_rate}}</mfDefaultSorter>
+              </th>
+              <th width="20%">
+                <mfDefaultSorter by="mobile">{{field_name_quotes_product_quantity}}</mfDefaultSorter>
+              </th>
+              <th width="20%">
+                <mfDefaultSorter by="quotation_date">{{field_name_quotes_product_discount}}</mfDefaultSorter>
+              </th>
+              <th width="20%">
+                <mfDefaultSorter by="quotation_date">{{field_name_quotes_product_actual_rate}}</mfDefaultSorter>
+              </th>
+              <th width="20%">
+                <mfDefaultSorter by="product_name">{{field_name_quotes_product_total}} </mfDefaultSorter>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let obj of mf.data;let i=index">
+              <td>{{obj.product_name}}</td>
+              <td>{{obj.category_name}}</td>
+              <td>{{obj.cost}}</td>
+              <td>
+                <input type="text" name="quantity-{{i}}" [(ngModel)]="obj.quantity" (keyup)="onChangeProductQnt(i, $event)">
+              </td>
+              <td>
+                <input type="text" name="discount-{{i}}" [(ngModel)]="obj.discount"
+                  (keyup)="onChangeProductDiscount(i, $event)">
+              </td>
+              <td>{{obj.cost*obj.quantity}}</td>
+              <td>{{obj.product_Total}}</td>
+            </tr>
+            <tr>
+              <td colspan="6"></td>
+              <td colspan="3">{{field_name_quotes_product_total}}: {{total_cost}}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="">
+                <mfBootstrapPaginator [rowsOnPageSet]="[]"></mfBootstrapPaginator>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div> 
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label class="col-sm-5 col-form-label"> {{field_name_quotes_created_by}}
+           
+          </label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="created_by"
+            [(ngModel)]="quoteDetail.created_by"
+            #created_by="ngModel" readonly>
+        </div>
+      </div>
+        <div class="form-group col-md-3">
+          <label class="col-sm-5 col-form-label">{{field_name_quotes_created_time}}
+            
+          </label>
+          <div class="col-sm-10">
+           
+        
+            <input type="text" class="form-control" name="created_time"  
+             readonly value="{{quoteDetail.created_time |  date : dateFormat:'GMT':locale}}">
+             
+          
+          
+        </div>
+        </div>
+        <div class="form-group col-md-3">
+          <label class="col-sm-5 col-form-label">{{field_name_quotes_updated_by}}
+           
+          </label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="updated_by"
+              [(ngModel)]="quoteDetail.updated_by"
+              #updated_by="ngModel" readonly>
+        </div>
+      </div>
+        <div class="form-group col-md-3">
+          <label class="col-sm-5 col-form-label">  {{field_name_quotes_updated_time}}
+           
+          </label>
+          <div class="col-sm-10">
+          
+            <input type="text" class="form-control" name="modified_time"  
+             readonly value=" {{quoteDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+          
+        </div>
+      </div>
+        </div>
+       
+<button class="btn btn-danger btn-round text-center pull-right" type="button" appCancelbutton>{{'Cancel'|translate}}</button>
+<button  class="btn btn-success btn-round text-center pull-right">
+<span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+  <span *ngIf="isUpdate">{{'Update'|translate}}</span></button>
+    </div>
+  </form>
+ 
+</div>
+</div>
+</div>
+
+</section>
+
+
+
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value != 'ar' &&  this.quoteDetail" dir='ltr' >
+
+  <div class="container-fluid">
+    <h3 class="text-center">{{field_name_quotes_details}}</h3>
+    <div class="card">
+      <div class="card-body">
+
+  <div *ngIf="print" class="btn-toolbar text-center well1">
+    <button (click)=" exportToPrint()" type="button" class="btn btn-success col-xs-5 margin-left">
+      <i class="fa fa-print" aria-hidden="true"></i>{{field_name_quotes_print}}
+    </button>
+  </div>
+  
+  <form id="contentToConvert" class="form-horizontal form-material" name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()">
+     <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+      <strong>Quotation Details!</strong>The form has the following errors that need to be corrected
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="card-header">
+      <h2>
+        <span *ngIf="!isUpdate">{{field_name_quotes_addquotes}}</span>
+        <span *ngIf="isUpdate">{{field_name_quotes_update}}</span>
+      </h2>
+    </div>
+    <div class="card-body">
+  
+      <div class="form-row">
+      <div class="form-group col-md-4" *ngIf="!isUpdate">
+        <label class="col-sm-5 col-form-label"  >{{field_name_quotes_customername}}
+          <span class="text-danger font-weight-bold">
+            *</span>
+        </label>
+        <div class="col-sm-10">
+         
+          <div class="ng-autocomplete">
+            <ng-autocomplete [data]="customers" [searchKeyword]="customer_keyword" [itemTemplate]="itemTemplate"
+              (inputChanged)='onChangeSearch($event)' (selected)='onCustomerSelect($event)'  historyIdentifier="customers"
+              (inputFocused)='onFocused($event)' [notFoundTemplate]="notFoundTemplate" [(ngModel)]="customers.first_name"
+              name="first_name" required  #first_name="ngModel" 
+                        [ngClass]="{ 'is-invalid': f.submitted && first_name.invalid, 
+                       'is-valid': f.submitted && first_name.valid }">
+             
+            </ng-autocomplete>
+            
+            <ng-template #itemTemplate let-item>
+              <a [innerHTML]="item.first_name"></a>
+            </ng-template>
+
+            <ng-template #notFoundTemplate let-notFound>
+              <div [innerHTML]="notFound"></div>
+              
+          
+            </ng-template> 
+            <div *ngIf="f.submitted && first_name.invalid" class="invalid-feedback">
+              <div *ngIf="first_name.errors.required">Please Provide First Name</div>
+    
+             
+            </div>
+           
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-4" *ngIf="isUpdate">
+        <label class="col-sm-5 col-form-label" >{{field_name_quotes_customername}}<span class="text-danger font-weight-bold">
+            *</span></label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" [(ngModel)]="quoteDetail.first_name" name="first_name" readonly required
+             #first_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && first_name.invalid, 
+            'is-valid': f.submitted && first_name.valid }" readonly />
+        </div>
+        <div *ngIf="f.submitted && first_name.invalid" class="invalid-feedback">
+          <div *ngIf="first_name.errors.required">Please provide Customer Name</div>
+
+         
+        </div> 
+      </div> 
+      <div class="form-group col-md-4">
+        <label class="col-sm-5 col-form-label">{{field_name_quotes_mobile}}<span class="text-danger font-weight-bold">
+            *</span></label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" [(ngModel)]="quoteDetail.phone" name="phone" required
+          pattern="^[0-9()\-+\s]+$" #phone="ngModel" [ngClass]="{ 'is-invalid': f.submitted && phone.invalid, 
+          'is-valid': f.submitted && phone.valid }" readonly >
+          <div *ngIf="f.submitted && phone.invalid "class="invalid-feedback">
+            <div
+                *ngIf="phone.errors.required ">Please select customer to get phone details </div>
+               
+              </div>
+
+        </div>
+      </div> 
+
+      <div class="form-group col-md-4">
+        <label class="col-sm-5 col-form-label">{{field_name_quotes_quotationdate}}
+          <span class="text-danger font-weight-bold">
+            *</span>
+        </label>
+        <div class="col-sm-10">
+          <input type="date" class="form-control" [(ngModel)]="quoteDetail.quotation_date" name="quotation_date"
+            #quotation_date="ngModel" [ngClass]="{ 'is-invalid': f.submitted && quotation_date.invalid, 
+            'is-valid': f.submitted && quotation_date.valid }" required />
+            <div *ngIf="f.submitted && quotation_date.invalid "class="invalid-feedback">
+              <div
+                  *ngIf="quotation_date.errors.required ">Please Provide Quotation Date </div>
+                 
+                </div>
+        </div>
+      </div>
+      </div>
+      <div class="form-row">
+      <div class="form-group col-md-4">
+        <label class="col-sm-5 col-form-label">{{field_name_quotes_productname}}
+          <span class="text-danger font-weight-bold">
+            *</span>
+        </label>
+        <div class="col-sm-10" >
+          <mat-form-field class="example-full-width" appearance="none" floatLabel="never" >
+            <input type="text" matInput [matAutocomplete]="auto" [formControl]="userControl"
+              [(ngModel)]="quoteDetail.product_name" name="product_name" required>
+              <mat-error *ngIf="userControl.hasError('required')">Please choose any products</mat-error>
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let product of filteredProducts | async" [value]="selectedProducts">
+              <div (click)="optionClicked($event, product)"required >
+                <mat-checkbox [checked]="product.selected" (change)="toggleSelection(product)"
+                  (click)="$event.stopPropagation()">
+                  {{ product.product_name }}
+                </mat-checkbox>
+              </div>
+            </mat-option>
+          </mat-autocomplete>
+         
+         
+        </mat-form-field>
+        </div>
+      </div>
+</div>
+  
+     <div class="table-responsive" *ngIf="selectedProducts.length">
+        <table class="table" [mfData]="selectedProducts" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage">
+          <thead class="thead-light">
+            <tr>
+              <th width="20%">
+                <mfDefaultSorter by="product_name">{{field_name_quotes_productname}}</mfDefaultSorter>
+              </th>
+              <th width="20%">
+                <mfDefaultSorter by="customer_name">{{field_name_quotes_product_category}}</mfDefaultSorter>
+              </th>
+              <th width="20%">
+                <mfDefaultSorter by="mobile">{{field_name_quotes_product_rate}}</mfDefaultSorter>
+              </th>
+              <th width="20%">
+                <mfDefaultSorter by="mobile">{{field_name_quotes_product_quantity}}</mfDefaultSorter>
+              </th>
+              <th width="20%">
+                <mfDefaultSorter by="quotation_date">{{field_name_quotes_product_discount}}</mfDefaultSorter>
+              </th>
+              <th width="20%">
+                <mfDefaultSorter by="quotation_date">{{field_name_quotes_product_actual_rate}}</mfDefaultSorter>
+              </th>
+              <th width="20%">
+                <mfDefaultSorter by="product_name">{{field_name_quotes_product_total}} </mfDefaultSorter>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let obj of mf.data;let i=index">
+              <td>{{obj.product_name}}</td>
+              <td>{{obj.category_name}}</td>
+              <td>{{obj.cost}}</td>
+              <td>
+                <input type="text" name="quantity-{{i}}" [(ngModel)]="obj.quantity" (keyup)="onChangeProductQnt(i, $event)">
+              </td>
+              <td>
+                <input type="text" name="discount-{{i}}" [(ngModel)]="obj.discount"
+                  (keyup)="onChangeProductDiscount(i, $event)">
+              </td>
+              <td>{{obj.cost*obj.quantity}}</td>
+              <td>{{obj.product_Total}}</td>
+            </tr>
+            <tr>
+              <td colspan="6"></td>
+              <td colspan="3">{{field_name_quotes_product_total}}: {{total_cost}}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="">
+                <mfBootstrapPaginator [rowsOnPageSet]="[]"></mfBootstrapPaginator>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div> 
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label class="col-sm-5 col-form-label"> {{field_name_quotes_created_by}}
+           
+          </label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="created_by"
+            [(ngModel)]="quoteDetail.created_by"
+            #created_by="ngModel" readonly>
+        </div>
+      </div>
+        <div class="form-group col-md-3">
+          <label class="col-sm-5 col-form-label">{{field_name_quotes_created_time}}
+            
+          </label>
+          <div class="col-sm-10">
+           
+        
+            <input type="text" class="form-control" name="created_time"  
+             readonly value="{{quoteDetail.created_time |  date : dateFormat:'GMT':locale}}">
+             
+          
+          
+        </div>
+        </div>
+        <div class="form-group col-md-3">
+          <label class="col-sm-5 col-form-label">{{field_name_quotes_updated_by}}
+           
+          </label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="updated_by"
+              [(ngModel)]="quoteDetail.updated_by"
+              #updated_by="ngModel" readonly>
+        </div>
+      </div>
+        <div class="form-group col-md-3">
+          <label class="col-sm-5 col-form-label">  {{field_name_quotes_updated_time}}
+           
+          </label>
+          <div class="col-sm-10">
+          
+            <input type="text" class="form-control" name="modified_time"  
+             readonly value=" {{quoteDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+          
+        </div>
+      </div>
+        </div>
+       
+<button class="btn btn-danger btn-round text-center pull-right" type="button" appCancelbutton>{{'Cancel'|translate}}</button>
+<button  class="btn btn-success btn-round text-center pull-right">
+<span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+  <span *ngIf="isUpdate">{{'Update'|translate}}</span></button>
+    </div>
+  </form>
+ 
+</div>
+</div>
+</div>
+  
+  </section>

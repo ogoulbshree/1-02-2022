@@ -1,0 +1,116 @@
+<!-- <full-calendar defaultView="dayGridMonth" 
+							 (dateClick)="handle_click($event)"
+							 (eventClick)="handle_event_click($event)"
+							 [plugins]="calendarPlugins"
+							 [events]="events"
+							 (touchstart)="touched($event)"
+							 ></full-calendar> -->
+
+
+<app-event-popup [x]="x" [y]="y" *ngIf="x && y"
+							 (event)="get_event($event)"
+							 [event_obj]="event"></app-event-popup>
+
+
+   
+                                        <!-- Calender App Start here-->
+                                       <!--  <div class="row">
+                                            <div class="row p-5" style="width: 100%;">
+                                                <div class="card p-3" style="width: 100%;">
+                                                    <div class="row text-center">
+                                                        <div class="col-md-4">
+                                                            <div class="btn-group">
+                                                                <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()">
+                                                                    Previous
+                                                                </div>
+                                                                <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
+                                                                    Today
+                                                                </div>
+                                                                <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()">
+                                                                    Next
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+                                                        </div>
+  
+                                                        <div class="col-md-4">
+                                                            <button class="btn btn-primary" (click)="addEvent()">
+                                                        Add More
+                                                      </button>
+                                                        </div>
+  
+                                                    </div>
+                                                    <br />
+  
+                                                 
+                                                    <div [ngSwitch]="view">
+                                                        <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events" [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)" (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+                                                        </mwl-calendar-month-view>
+                                                        <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+                                                        </mwl-calendar-week-view>
+                                                        <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+                                                        </mwl-calendar-day-view>
+                                                    </div>
+  
+  
+                                                    <ng-template #modalContent let-close="close">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" *ngIf="ActionBtn">Update Event</h5>
+                                                            <h5 class="modal-title" *ngIf="!ActionBtn">Create Event</h5>
+                                                            <button type="button" class="close" (click)="close()">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form class="row">
+                                                                <div class="form-group col-12 col-md-6">
+                                                                    <label for="title1">Title</label>
+    
+                                                                    <input type="text" class="form-control" name="title" [(ngModel)]="calendar.title">
+                                                                </div>
+  
+                                                                <div class="form-group col-12 col-md-6">
+                                                                    <label for="typ">Type</label>
+                                                                    <input type="text" class="form-control" name="type" [(ngModel)]="calendar.type">
+                                                                </div>
+  
+                                                                <div class="form-group col-12 col-md-6">
+                                                                    <label for="start1">Start</label>
+                                                                    <input type="date" class="form-control"  name="start" [(ngModel)]="calendar.start">
+                                                                </div>
+  
+                                                                <div class="form-group col-12 col-md-6">
+                                                                    <label for="end1">End</label>
+                                                                    <input type="date" class="form-control"  name="end" [(ngModel)]="calendar.end">
+                                                                </div>
+                                                                <div class="form-group col-12 col-md-12">
+                                                                  <label for="email">Email</label>
+                                                                  <input type="email" class="form-control" id="email" name="email" [(ngModel)]="calendar.email">
+                                                              </div>
+  
+                                                      
+  
+                                                                <div class="form-group col-12 col-md-12">
+                                                                    <label for="adenda">Description  (Agenda)</label>
+                                                                    <textarea class="form-control" id="adenda" name="description" [(ngModel)]="calendar.description"></textarea>
+                                                                </div>
+  
+                                                            </form>
+                                                        </div>
+                                                        <div class="modal-footer">
+  
+                                                            <button type="button" class="btn btn-outline-secondary" (click)="close()">
+                                                          OK
+                                                        </button>
+  
+                                                            <input type="submit" value="Update" (click)="update()" *ngIf="ActionBtn" class="btn btn-primary">
+                                                            <input type="submit" value="Delete" (click)="deleteCalender(updatedId)" *ngIf="ActionBtn" class="btn btn-secondary">
+                                                            <input type="submit" value="Create" (click)="Create()" *ngIf="!ActionBtn" class="btn btn-primary">
+                                                        </div>
+                                                    </ng-template>
+                                                </div>
+                                            </div>
+  
+                                      </div> -->

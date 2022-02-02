@@ -1,0 +1,444 @@
+
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' >
+
+
+  <div class="container-fluid">
+    <h3 class="text-center">{{field_name_hrms_notice_details}}</h3>
+   
+    <div class="card">
+      <div class="card-body">
+        
+                <form class="form-horizontal form-material" name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()">
+                  <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Noticetab Details!</strong>The form has the following errors that need to be corrected
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                    <div class="card-header">
+                        <h2> 
+                            <span *ngIf="!isUpdate">{{field_name_hrms_notice_add_notice}}</span> 
+                            <span *ngIf="isUpdate">{{field_name_hrms_notice_update}}</span>
+                        </h2>
+                        </div>
+                        <div class="card-body">
+                            <!--  <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Category Id<span
+                                  class="text-danger font-weight-bold">
+                                  *</span></label>
+                                <div class="col-sm-10">
+                                  <input type="text" class="form-control" [(ngModel)]="categoryDetail.category_id" name="category_id"
+                                  required pattern="[a-zA-Z0-9]+" #category_id="ngModel"  
+                                  [ngClass]="{ 'is-invalid': f.submitted && category_id.invalid, 
+                                  'is-valid': f.submitted && category_id.valid }"
+                                 required/>
+                                 <div *ngIf="f.submitted && category_id.invalid" class="invalid-feedback">
+                                  <div *ngIf="category_id.errors.required"> Please provide product id</div>
+                               
+                              <div *ngIf="category_id.errors.pattern">Id should be only in Alphanumeric
+                                 </div>
+                              </div>
+                                </div>
+                              </div>  -->
+                              <div class="form-row">
+                              <div class="form-group col-md-4">
+                              <label class="col-sm-5 col-form-label">{{field_name_hrms_notice_type}}<span
+                                  class="text-danger font-weight-bold">
+                                  *</span></label>
+                                <div class="col-sm-10">
+                                  <input type="text" class="form-control" [(ngModel)]="noticetabDetail.notice_type" 
+                                  name="notice_type"
+                                  required  pattern="^(?:[A-Za-z]+)(?:[A-Za-z _]*)$" #notice_type="ngModel"  
+                                  [ngClass]="{ 'is-invalid': f.submitted && notice_type.invalid, 
+                                  'is-valid': f.submitted && notice_type.valid }"
+                                 required/>
+                                 
+                      <div *ngIf="showError != ''" class="alert alert-danger">
+                             {{showError}}</div>
+                                 <div *ngIf="f.submitted && notice_type.invalid" class="invalid-feedback">
+                                  <div *ngIf="notice_type.errors.required"> Please provide notice_type</div>
+                               
+                              <div *ngIf="notice_type.errors.pattern">Id should be only in Alphabets
+                                 </div>
+                              </div>
+                                </div>
+                              </div>
+
+
+
+
+                              <div class="form-group col-md-4">
+                                <label class="col-sm-5 col-form-label">{{field_name_hrms_notice_date}}<span
+                                    class="text-danger font-weight-bold">
+                                    *</span></label>
+                                  <div class="col-sm-10">
+                                    <input type="date" class="form-control" [(ngModel)]="noticetabDetail.notice_date" 
+                                    name="notice_date"
+                                    required  #notice_date="ngModel"  
+                                    [ngClass]="{ 'is-invalid': f.submitted && notice_date.invalid, 
+                                    'is-valid': f.submitted && notice_date.valid }"
+                                   required/>
+                        
+                                   <div *ngIf="f.submitted && notice_date.invalid" class="invalid-feedback">
+                                    <div *ngIf="notice_date.errors.required"> Please provide notice date</div>
+                                 
+                                <div *ngIf="notice_date.errors.pattern">Id should be only in Alphabets
+                                   </div>
+                                </div>
+                                  </div>
+                                </div>
+
+
+
+                                <div class="form-group col-md-4">
+                                    <label class="col-sm-5 col-form-label">{{field_name_hrms_notice_attchmnet}}<span
+                                        class="text-danger font-weight-bold">
+                                        *</span></label>
+                                      <div class="col-sm-10">
+                                        <input type="file" class="form-control" [(ngModel)]="noticetabDetail.attatchment" 
+                                        name="attatchment" (change)="selectImage($event)"
+                                          #attatchment="ngModel"  
+                                        [ngClass]="{ 'is-invalid': f.submitted && attatchment.invalid, 
+                                        'is-valid': f.submitted && attatchment.valid }"
+                                       />
+                            
+                                       <div *ngIf="f.submitted && attatchment.invalid" class="invalid-feedback">
+                                        <div *ngIf="attatchment.errors.required"> Please provide attatchment</div>
+                                     
+                                    <div *ngIf="attatchment.errors.pattern">Id should be only in Alphabets
+                                       </div>
+                                    </div>
+                                      </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="hoverable" *ngIf="preview && preview !== null">
+                                        <img [src]="preview" >
+                                        
+                                        </div>
+                                        </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label class="col-sm-5 col-form-label">{{field_name_hrms_notice_by}}<span
+                                            class="text-danger font-weight-bold">
+                                            *</span></label>
+                                          <div class="col-sm-10">
+                                            <input type="text" class="form-control" [(ngModel)]="noticetabDetail.notice_by" 
+                                            name="notice_by"
+                                            required  #notice_by="ngModel"  
+                                            [ngClass]="{ 'is-invalid': f.submitted && notice_by.invalid, 
+                                            'is-valid': f.submitted && notice_by.valid }"
+                                           required/>
+                                
+                                           <div *ngIf="f.submitted && notice_by.invalid" class="invalid-feedback">
+                                            <div *ngIf="notice_by.errors.required"> Please provide notice_by</div>
+                                         
+                                        <div *ngIf="notice_by.errors.pattern">Id should be only in Alphabets
+                                           </div>
+                                        </div>
+                                          </div>
+                                        </div>
+
+
+
+
+
+                                        <div class="form-group col-md-4">
+                                            
+                                            <label class="col-sm-5 col-form-label">{{field_name_hrms_notice_description}}<span
+                                                class="text-danger font-weight-bold">
+                                                *</span></label>
+                                                <div class="col-sm-10">
+                                 <textarea class="form-control" id="" rows="3" [(ngModel)]="noticetabDetail.description" 
+                                            name="description" #description="ngModel"  >
+                                        </textarea>
+                                             </div>
+                                         </div>
+
+                              
+                              </div>
+  
+                              <div class="form-row">
+                                <div class="form-group col-md-3">
+                                  <label class="col-sm-5 col-form-label">{{field_name_hrms_notice_created_by}}
+                                   
+                                  </label>
+                                  <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="created_by"
+                                    [(ngModel)]="noticetabDetail.created_by"
+                                    #created_by="ngModel" readonly>
+                                </div>
+                              </div>
+                                <div class="form-group col-md-3">
+                                  <label class="col-sm-5 col-form-label">{{field_name_hrms_notice_created_time}}
+                                    
+                                  </label>
+                                  <div class="col-sm-10">
+                                   
+                                
+                                    <input type="text" class="form-control" name="created_time"  
+                                     readonly value="{{noticetabDetail.created_time |  date : dateFormat:'GMT':locale}}">
+                                     
+                                  
+                                  
+                                </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                  <label class="col-sm-5 col-form-label">{{field_name_hrms_notice_updated_by}}
+                                   
+                                  </label>
+                                  <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="updated_by"
+                                      [(ngModel)]="noticetabDetail.updated_by"
+                                      #updated_by="ngModel" readonly>
+                                </div>
+                              </div>
+                                <div class="form-group col-md-3">
+                                  <label class="col-sm-5 col-form-label">{{field_name_hrms_notice_updated_time}}
+                                   
+                                  </label>
+                                  <div class="col-sm-10">
+                                  
+                                    <input type="text" class="form-control" name="modified_time"  
+                                     readonly value=" {{noticetabDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+                                  
+                                </div>
+                              </div>
+                                </div>  
+                              <button  class="btn btn-success btn-round">
+                                <span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+                                <span *ngIf="isUpdate">{{'Update'|translate}}</span>
+                            </button>
+                          
+                                     <button class="btn btn-danger btn-round" type="button"   appCancelbutton >{{'Cancel'|translate}}</button>
+                            </div>
+                </form>
+      </div>
+    </div>
+  </div>
+        
+              </section>
+
+
+
+              
+  <section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir='ltr' >
+
+
+  <div class="container-fluid">
+    <h3 class="text-center">{{field_name_hrms_notice_details}}</h3>
+   
+    <div class="card">
+      <div class="card-body">
+        
+                <form class="form-horizontal form-material" name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()">
+                  <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Noticetab Details!</strong>The form has the following errors that need to be corrected
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                    <div class="card-header">
+                        <h2> 
+                            <span *ngIf="!isUpdate">{{field_name_hrms_notice_add_notice}}</span> 
+                            <span *ngIf="isUpdate">{{field_name_hrms_notice_update}}</span>
+                        </h2>
+                        </div>
+                        <div class="card-body">
+                            <!--  <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Category Id<span
+                                  class="text-danger font-weight-bold">
+                                  *</span></label>
+                                <div class="col-sm-10">
+                                  <input type="text" class="form-control" [(ngModel)]="categoryDetail.category_id" name="category_id"
+                                  required pattern="[a-zA-Z0-9]+" #category_id="ngModel"  
+                                  [ngClass]="{ 'is-invalid': f.submitted && category_id.invalid, 
+                                  'is-valid': f.submitted && category_id.valid }"
+                                 required/>
+                                 <div *ngIf="f.submitted && category_id.invalid" class="invalid-feedback">
+                                  <div *ngIf="category_id.errors.required"> Please provide product id</div>
+                               
+                              <div *ngIf="category_id.errors.pattern">Id should be only in Alphanumeric
+                                 </div>
+                              </div>
+                                </div>
+                              </div>  -->
+                              <div class="form-row">
+                              <div class="form-group col-md-4">
+                              <label class="col-sm-5 col-form-label">{{field_name_hrms_notice_type}}<span
+                                  class="text-danger font-weight-bold">
+                                  *</span></label>
+                                <div class="col-sm-10">
+                                  <input type="text" class="form-control" [(ngModel)]="noticetabDetail.notice_type" 
+                                  name="notice_type"
+                                  required  pattern="^(?:[A-Za-z]+)(?:[A-Za-z _]*)$" #notice_type="ngModel"  
+                                  [ngClass]="{ 'is-invalid': f.submitted && notice_type.invalid, 
+                                  'is-valid': f.submitted && notice_type.valid }"
+                                 required/>
+                                 
+                      <div *ngIf="showError != ''" class="alert alert-danger">
+                             {{showError}}</div>
+                                 <div *ngIf="f.submitted && notice_type.invalid" class="invalid-feedback">
+                                  <div *ngIf="notice_type.errors.required"> Please provide notice_type</div>
+                               
+                              <div *ngIf="notice_type.errors.pattern">Id should be only in Alphabets
+                                 </div>
+                              </div>
+                                </div>
+                              </div>
+
+
+
+
+                              <div class="form-group col-md-4">
+                                <label class="col-sm-5 col-form-label">{{field_name_hrms_notice_date}}<span
+                                    class="text-danger font-weight-bold">
+                                    *</span></label>
+                                  <div class="col-sm-10">
+                                    <input type="date" class="form-control" [(ngModel)]="noticetabDetail.notice_date" 
+                                    name="notice_date"
+                                    required  #notice_date="ngModel"  
+                                    [ngClass]="{ 'is-invalid': f.submitted && notice_date.invalid, 
+                                    'is-valid': f.submitted && notice_date.valid }"
+                                   required/>
+                        
+                                   <div *ngIf="f.submitted && notice_date.invalid" class="invalid-feedback">
+                                    <div *ngIf="notice_date.errors.required"> Please provide notice date</div>
+                                 
+                                <div *ngIf="notice_date.errors.pattern">Id should be only in Alphabets
+                                   </div>
+                                </div>
+                                  </div>
+                                </div>
+
+
+
+                                <div class="form-group col-md-4">
+                                    <label class="col-sm-5 col-form-label">{{field_name_hrms_notice_attchmnet}}<span
+                                        class="text-danger font-weight-bold">
+                                        *</span></label>
+                                      <div class="col-sm-10">
+                                        <input type="file" class="form-control" [(ngModel)]="noticetabDetail.attatchment" 
+                                        name="attatchment" (change)="selectImage($event)"
+                                          #attatchment="ngModel"  
+                                        [ngClass]="{ 'is-invalid': f.submitted && attatchment.invalid, 
+                                        'is-valid': f.submitted && attatchment.valid }"
+                                       />
+                            
+                                       <div *ngIf="f.submitted && attatchment.invalid" class="invalid-feedback">
+                                        <div *ngIf="attatchment.errors.required"> Please provide attatchment</div>
+                                     
+                                    <div *ngIf="attatchment.errors.pattern">Id should be only in Alphabets
+                                       </div>
+                                    </div>
+                                      </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="hoverable" *ngIf="preview && preview !== null">
+                                        <img [src]="preview" >
+                                        
+                                        </div>
+                                        </div>
+
+                                    <div class="form-group col-md-4">
+                                        <label class="col-sm-5 col-form-label">{{field_name_hrms_notice_by}}<span
+                                            class="text-danger font-weight-bold">
+                                            *</span></label>
+                                          <div class="col-sm-10">
+                                            <input type="text" class="form-control" [(ngModel)]="noticetabDetail.notice_by" 
+                                            name="notice_by"
+                                            required  #notice_by="ngModel"  
+                                            [ngClass]="{ 'is-invalid': f.submitted && notice_by.invalid, 
+                                            'is-valid': f.submitted && notice_by.valid }"
+                                           required/>
+                                
+                                           <div *ngIf="f.submitted && notice_by.invalid" class="invalid-feedback">
+                                            <div *ngIf="notice_by.errors.required"> Please provide notice_by</div>
+                                         
+                                        <div *ngIf="notice_by.errors.pattern">Id should be only in Alphabets
+                                           </div>
+                                        </div>
+                                          </div>
+                                        </div>
+
+
+
+
+
+                                        <div class="form-group col-md-4">
+                                            
+                                            <label class="col-sm-5 col-form-label">{{field_name_hrms_notice_description}}<span
+                                                class="text-danger font-weight-bold">
+                                                *</span></label>
+                                                <div class="col-sm-10">
+                                 <textarea class="form-control" id="" rows="3" [(ngModel)]="noticetabDetail.description" 
+                                            name="description" #description="ngModel"  >
+                                        </textarea>
+                                             </div>
+                                         </div>
+
+                              
+                              </div>
+  
+                              <div class="form-row">
+                                <div class="form-group col-md-3">
+                                  <label class="col-sm-5 col-form-label">{{field_name_hrms_notice_created_by}}
+                                   
+                                  </label>
+                                  <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="created_by"
+                                    [(ngModel)]="noticetabDetail.created_by"
+                                    #created_by="ngModel" readonly>
+                                </div>
+                              </div>
+                                <div class="form-group col-md-3">
+                                  <label class="col-sm-5 col-form-label">{{field_name_hrms_notice_created_time}}
+                                    
+                                  </label>
+                                  <div class="col-sm-10">
+                                   
+                                
+                                    <input type="text" class="form-control" name="created_time"  
+                                     readonly value="{{noticetabDetail.created_time |  date : dateFormat:'GMT':locale}}">
+                                     
+                                  
+                                  
+                                </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                  <label class="col-sm-5 col-form-label">{{field_name_hrms_notice_updated_by}}
+                                   
+                                  </label>
+                                  <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="updated_by"
+                                      [(ngModel)]="noticetabDetail.updated_by"
+                                      #updated_by="ngModel" readonly>
+                                </div>
+                              </div>
+                                <div class="form-group col-md-3">
+                                  <label class="col-sm-5 col-form-label">{{field_name_hrms_notice_updated_time}}
+                                   
+                                  </label>
+                                  <div class="col-sm-10">
+                                  
+                                    <input type="text" class="form-control" name="modified_time"  
+                                     readonly value=" {{noticetabDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+                                  
+                                </div>
+                              </div>
+                                </div>  
+                              <button  class="btn btn-success btn-round">
+                                <span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+                                <span *ngIf="isUpdate">{{'Update'|translate}}</span>
+                            </button>
+                          
+                                     <button class="btn btn-danger btn-round" type="button"   appCancelbutton >{{'Cancel'|translate}}</button>
+                            </div>
+                </form>
+              </div>
+            </div>
+          </div>
+              </section>
+

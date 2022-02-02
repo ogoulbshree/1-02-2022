@@ -1,0 +1,634 @@
+
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' >
+  <br>
+  
+    
+  <form class="form-row" name="form" #f="ngForm">
+    <div class="form-group row col-md-4">
+      <label class="col-sm-3 col-form-label">
+       {{field_name_hrms_policy_fromdate}}<span class="text-danger font-weight-bold"> *</span></label
+      >
+      <div class="col-sm-8">
+        <input
+          type="date"
+          class="form-control"
+          max="{{ date | date: 'yyyy-MM-dd' }}"
+          [(ngModel)]="model.fromDate"
+          name="fromDate"
+          #fromDate="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && fromDate.invalid,
+            'is-valid': f.submitted && fromDate.valid
+          }"
+          required
+        />
+
+        <div *ngIf="f.submitted && fromDate.invalid" class="invalid-feedback">
+          <div *ngIf="fromDate.errors.required">Please provide fromDate</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row col-md-4">
+      <label class="col-sm-3 col-form-label">
+        {{field_name_hrms_policy_todate}}<span class="text-danger font-weight-bold"> *</span></label
+      >
+      <div class="col-sm-8">
+        <input
+          type="date"
+          class="form-control"
+          [(ngModel)]="model.toDate"
+          name="toDate"
+          #toDate="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && toDate.invalid,
+            'is-valid': f.submitted && toDate.valid
+          }"
+          required
+        />
+        <div *ngIf="f.submitted && toDate.invalid" class="invalid-feedback">
+          <div *ngIf="toDate.errors.required">Please provide toDate</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-success search-btn" (click)="filterData()">
+        {{field_name_hrms_policy_search}}
+      </button>
+    </div>
+  </form>
+  <form
+  class="form-row dateSectionMat"
+  name="form"
+  #f="ngForm"
+  (ngSubmit)="f.form.valid && filterData()"
+>
+  &nbsp;&nbsp;<mat-form-field
+    style="width: 110px; margin-left: 10px; font-weight: bold"
+  >
+    <input
+      matInput
+      [matDatepicker]="picker"
+      [(ngModel)]="model.fromDate"
+      name="fromDate"
+      #fromDate="ngModel"
+      [ngClass]="{
+        'is-invalid': f.submitted && fromDate.invalid,
+        'is-valid': f.submitted && fromDate.valid
+      }"
+      required
+      placeholder={{field_name_hrms_policy_fromdate}}
+    />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <div *ngIf="f.submitted && fromDate.invalid" class="invalid-feedback">
+    <div *ngIf="fromDate.errors.required">Please provide fromDate</div>
+  </div>
+
+  <mat-form-field style="width: 93px; margin-left: 10px; font-weight: bold">
+    <input
+      matInput
+      [matDatepicker]="picker1"
+      [(ngModel)]="model.toDate"
+      name="toDate"
+      #toDate="ngModel"
+      [ngClass]="{
+        'is-invalid': f.submitted && toDate.invalid,
+        'is-valid': f.submitted && toDate.valid
+      }"
+      required
+      placeholder={{field_name_hrms_policy_todate}}
+    />
+    <mat-datepicker-toggle
+      matSuffix
+      [for]="picker1"
+    ></mat-datepicker-toggle>
+    <mat-datepicker #picker1></mat-datepicker>
+  </mat-form-field>
+  <div *ngIf="f.submitted && toDate.invalid" class="invalid-feedback">
+    <div *ngIf="toDate.errors.required">Please provide toDate</div>
+  </div>
+  &nbsp;&nbsp;
+  <div style="width: 110px">
+    <button class="btn btn-success search-btn font-weight-bold">
+      {{ field_name_hrms_policy_search }}
+    </button>
+  </div>
+</form>
+     <div class="col-md-12 col-lg-12">
+       <div class="row">
+    
+             <div class="col-md-3">
+               <div class="form-group  has-search dateSection" style="display:flex;align-items:center">
+                <input type="text" class="form-control" name="policy_name" placeholder="Enter Policy Name to search"
+                [(ngModel)]="policy_name" (ngModelChange)="searchData('clear')">
+                <button class="btn btn-success" (click)="searchData('search')"><i class="fa fa-search" ></i> {{field_name_hrms_policy_search}}</button>
+                 <!-- <span class="fa fa-search form-control-feedback"></span> -->
+            <!-- <input type="text" class="form-control" name="search" placeholder="Search Here" autocomplete="off" [(ngModel)]="searchText"> -->
+           </div>
+           <div
+           class="form-group has-search dateSectionMat"
+           style="display: flex; align-items: center"
+         >
+          <mat-form-field
+             class="example-full-width"
+             style="width: 200px; font-weight: bold"
+           >
+             <input
+               matInput
+               [(ngModel)]="policy_name"
+               name="policy_name"
+               (ngModelChange)="searchData('clear')"
+               placeholder="Enter First Name to search"
+             />
+           </mat-form-field>
+           <button
+             class="btn btn-success search-btn font-weight-bold"
+             style="margin-right: 80px"
+             (click)="searchData('search')"
+           >
+             {{ field_name_hrms_policy_search }}
+           </button>
+          </div>
+           </div> 
+          
+           <div class="dateSection">
+            <div class="col-sm-6">
+              <button
+                type="button"
+                (click)="downloadPdf()"
+                class="btn btn-success font-weight-bold"
+              >
+                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                {{ field_name_hrms_policy_pdf }}
+              </button>
+            </div>
+            <div class="col-sm-6">
+              <button
+                type="button"
+                (click)="generateCsv()"
+                class="btn btn-success font-weight-bold"
+              >
+                <i class="fa fa-building-o" aria-hidden="true"></i
+                >{{ field_name_hrms_policy_csv }}
+              </button>
+            </div>
+          </div>
+  
+          <div class="d-flex dateSectionMat">
+            <div class="col-md-6">
+              <button
+                type="button"
+                (click)="downloadPdf()"
+                class="btn btn-success font-weight-bold"
+              >
+                <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                {{ field_name_hrms_policy_pdf }}
+              </button>
+            </div>
+            <div class="col-md-6">
+              <button
+                type="button"
+                class="btn btn-info font-weight-bold"
+                routerLink="/hrms/settings/policy"
+              >
+                <i class="fa fa-plus" aria-hidden="true"></i
+                >{{ field_name_hrms_policy_add_policy }}
+              </button>
+            </div>
+          </div>
+          <div class="dateSection">
+            <div class="col-md-12">
+              <button
+                type="button"
+                class="btn btn-info font-weight-bold"
+                routerLink="/hrms/settings/policy"
+              >
+                <i class="fa fa-plus" aria-hidden="true"></i
+                >{{ field_name_hrms_policy_add_policy }}
+              </button>
+            </div>
+          </div>
+  
+          <div class="d-flex dateSectionMat">
+            <div class="col-md-12">
+              <button
+                type="button"
+                (click)="generateCsv()"
+                class="btn btn-success font-weight-bold"
+              >
+                <i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;&nbsp;{{
+                  field_name_hrms_policy_csv
+                }}
+              </button>
+            </div>
+          </div>
+         </div> 
+     </div>
+        
+     <div class="card-body product-table p-t-35">
+       <div class="table-responsive">
+         <table class="table" [mfData]="filteredTableDataArr" #mf="mfDataTable">
+           <thead class="thead-light">
+             <tr style="white-space: nowrap">
+              <th width="10%" (click) ="sort('SLNO')">
+                   <mfDefaultSorter by="">{{'SL NO'| translate}}</mfDefaultSorter>
+                   <i class="fa fa-sort"></i>
+                 </th> 
+          
+                 <th width="20%" (click) ="sort('policy_id')">
+                  <mfDefaultSorter by="policy_name">{{field_name_hrms_policy_id}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="10%" (click) ="sort('policy_name')">
+                  <mfDefaultSorter by="policy_name">{{field_name_hrms_policy_name}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                 <th width="10%" (click) ="sort('policy_name')">
+                 <mfDefaultSorter by="policy_name">{{field_name_hrms_policy_size}}</mfDefaultSorter>
+                 <i class="fa fa-sort"></i>
+               </th>
+               <th width="20%" (click) ="sort('file')">
+                <mfDefaultSorter by="file">{{field_name_hrms_policy_file}}</mfDefaultSorter>
+                <i class="fa fa-sort"></i>
+              </th>
+              <th width="10%" (click) ="sort('Download')">
+                <mfDefaultSorter by="">{{field_name_hrms_policy_download}}</mfDefaultSorter>
+              </th>
+              
+           
+               <th width="10%" *ngIf="SHOW_EDIT_DELETE">
+                {{field_name_hrms_actons}}
+               </th>
+             </tr>
+           </thead>
+           <tbody *ngIf="mf.data?.length >= 1">
+            <tr *ngFor="let obj of mf.data | orderBy: key: reverse | paginate: {itemsPerPage:5,currentPage:p,totalItems:policyDetailsCount}; let i = index" >
+               <td>{{i+1}}</td>
+               <td>{{obj.policy_id}}</td>
+             
+               <td>{{obj.policy_name}}</td>
+               <td>{{obj.size}} Bytes</td>
+               <td>{{obj.files}}</td>
+            
+             
+    
+     
+              <!--  <td><img [src]="obj.file" style="height: 50px;width: 50px; border-radius: 50%;"> </td> -->
+               <td>
+          <!--  <a class="download" (click)="download(i)">Download</a>  -->
+        <a [href]="obj.files" download target="_blank"   >
+                  Download
+                </a> 
+              </td>
+               
+               <td *ngIf="SHOW_EDIT_DELETE">
+              
+                 <i class="fa fa-edit" (click)="onClickEdit(obj)"></i> 
+   
+                   <span *ngIf="ALL_DELETE_ALLOWED"><i (click)="onClickDelete(obj)" class="fa fa-trash"></i></span>
+             </td>
+             </tr>
+           </tbody>
+           <tbody *ngIf="mf.data?.length <= 0">
+            <tr class="odd" style="opacity: 1;">
+              <td valign="top" colspan="8" style="text-align: center;" class="dataTables_empty">No data
+                available
+                in table</td>
+            </tr>
+          </tbody>
+           <tfoot>
+              <tr>
+                  <td colspan="4">
+                    <pagination-controls (pageChange)="pageChanged('schedule', (p = $event))">
+                        
+                    </pagination-controls>
+                  </td>
+                 </tr>
+           </tfoot>
+         </table>
+       </div>
+     </div>
+       
+</section>
+
+
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir='ltr' >
+  <br>
+  
+    
+  <form class="form-row dateSection" name="form" #f="ngForm">
+    <div class="form-group row col-md-4">
+      <label class="col-sm-3 col-form-label">
+       {{field_name_hrms_policy_fromdate}}<span class="text-danger font-weight-bold"> *</span></label
+      >
+      <div class="col-sm-8">
+        <input
+          type="date"
+          class="form-control"
+          max="{{ date | date: 'yyyy-MM-dd' }}"
+          [(ngModel)]="model.fromDate"
+          name="fromDate"
+          #fromDate="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && fromDate.invalid,
+            'is-valid': f.submitted && fromDate.valid
+          }"
+          required
+        />
+
+        <div *ngIf="f.submitted && fromDate.invalid" class="invalid-feedback">
+          <div *ngIf="fromDate.errors.required">Please provide fromDate</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row col-md-4">
+      <label class="col-sm-3 col-form-label">
+        {{field_name_hrms_policy_todate}}<span class="text-danger font-weight-bold"> *</span></label
+      >
+      <div class="col-sm-8">
+        <input
+          type="date"
+          class="form-control"
+          [(ngModel)]="model.toDate"
+          name="toDate"
+          #toDate="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && toDate.invalid,
+            'is-valid': f.submitted && toDate.valid
+          }"
+          required
+        />
+        <div *ngIf="f.submitted && toDate.invalid" class="invalid-feedback">
+          <div *ngIf="toDate.errors.required">Please provide toDate</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-success search-btn" (click)="filterData()">
+        {{field_name_hrms_policy_search}}
+      </button>
+    </div>
+  </form>
+  <form
+  class="form-row dateSectionMat"
+  name="form"
+  #f="ngForm"
+  (ngSubmit)="f.form.valid && filterData()"
+>
+  &nbsp;&nbsp;<mat-form-field
+    style="width: 110px; margin-left: 10px; font-weight: bold"
+  >
+    <input
+      matInput
+      [matDatepicker]="picker"
+      [(ngModel)]="model.fromDate"
+      name="fromDate"
+      #fromDate="ngModel"
+      [ngClass]="{
+        'is-invalid': f.submitted && fromDate.invalid,
+        'is-valid': f.submitted && fromDate.valid
+      }"
+      required
+      placeholder={{field_name_hrms_policy_fromdate}}
+    />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <div *ngIf="f.submitted && fromDate.invalid" class="invalid-feedback">
+    <div *ngIf="fromDate.errors.required">Please provide fromDate</div>
+  </div>
+
+  <mat-form-field style="width: 93px; margin-left: 10px; font-weight: bold">
+    <input
+      matInput
+      [matDatepicker]="picker1"
+      [(ngModel)]="model.toDate"
+      name="toDate"
+      #toDate="ngModel"
+      [ngClass]="{
+        'is-invalid': f.submitted && toDate.invalid,
+        'is-valid': f.submitted && toDate.valid
+      }"
+      required
+      placeholder={{field_name_hrms_policy_todate}}
+    />
+    <mat-datepicker-toggle
+      matSuffix
+      [for]="picker1"
+    ></mat-datepicker-toggle>
+    <mat-datepicker #picker1></mat-datepicker>
+  </mat-form-field>
+  <div *ngIf="f.submitted && toDate.invalid" class="invalid-feedback">
+    <div *ngIf="toDate.errors.required">Please provide toDate</div>
+  </div>
+  &nbsp;&nbsp;
+  <div style="width: 110px">
+    <button class="btn btn-success search-btn font-weight-bold">
+      {{ field_name_hrms_policy_search }}
+    </button>
+  </div>
+</form>
+     <div class="col-md-12 col-lg-12">
+       <div class="row">
+    
+             <div class="col-md-3">
+               <div class="form-group  has-search dateSection" style="display:flex;align-items:center">
+                <input type="text" class="form-control" name="policy_name" placeholder="Enter Policy Name to search"
+                [(ngModel)]="policy_name" (ngModelChange)="searchData('clear')">
+                <button class="btn btn-success" (click)="searchData('search')"><i class="fa fa-search" ></i> {{field_name_hrms_policy_search}}</button>
+                 <!-- <span class="fa fa-search form-control-feedback"></span> -->
+            <!-- <input type="text" class="form-control" name="search" placeholder="Search Here" autocomplete="off" [(ngModel)]="searchText"> -->
+           </div>
+           <div
+           class="form-group has-search dateSectionMat"
+           style="display: flex; align-items: center"
+         >
+          <mat-form-field
+             class="example-full-width"
+             style="width: 200px; font-weight: bold"
+           >
+             <input
+               matInput
+               [(ngModel)]="policy_name"
+               name="policy_name"
+               (ngModelChange)="searchData('clear')"
+               placeholder="Enter First Name to search"
+             />
+           </mat-form-field>
+           <button
+             class="btn btn-success search-btn font-weight-bold"
+             style="margin-left: 42px"
+             (click)="searchData('search')"
+           >
+             {{ field_name_hrms_policy_search }}
+           </button>
+          </div>
+           </div> 
+        
+         <div class="dateSection">
+          <div class="col-sm-6">
+            <button
+              type="button"
+              (click)="downloadPdf()"
+              class="btn btn-success font-weight-bold"
+            >
+              <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+              {{ field_name_hrms_policy_pdf }}
+            </button>
+          </div>
+          <div class="col-sm-6">
+            <button
+              type="button"
+              (click)="generateCsv()"
+              class="btn btn-success font-weight-bold"
+            >
+              <i class="fa fa-building-o" aria-hidden="true"></i
+              >{{ field_name_hrms_policy_csv }}
+            </button>
+          </div>
+        </div>
+
+        <div class="d-flex dateSectionMat">
+          <div class="col-md-6">
+            <button
+              type="button"
+              (click)="downloadPdf()"
+              class="btn btn-success font-weight-bold"
+            >
+              <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+              {{ field_name_hrms_policy_pdf }}
+            </button>
+          </div>
+          <div class="col-md-6">
+            <button
+              type="button"
+              class="btn btn-info font-weight-bold"
+              routerLink="/hrms/settings/policy"
+            >
+              <i class="fa fa-plus" aria-hidden="true"></i
+              >{{ field_name_hrms_policy_add_policy }}
+            </button>
+          </div>
+        </div>
+        <div class="dateSection">
+          <div class="col-md-12">
+            <button
+              type="button"
+              class="btn btn-info font-weight-bold"
+              routerLink="/hrms/settings/policy"
+            >
+              <i class="fa fa-plus" aria-hidden="true"></i
+              >{{ field_name_hrms_policy_add_policy }}
+            </button>
+          </div>
+        </div>
+
+        <div class="d-flex dateSectionMat">
+          <div class="col-md-12">
+            <button
+              type="button"
+              (click)="generateCsv()"
+              class="btn btn-success font-weight-bold"
+            >
+              <i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;&nbsp;{{
+                field_name_hrms_policy_csv
+              }}
+            </button>
+          </div>
+        </div>
+         </div> 
+     </div>
+        
+     <div class="card-body product-table p-t-35">
+       <div class="table-responsive">
+         <table class="table" [mfData]="filteredTableDataArr" #mf="mfDataTable">
+           <thead class="thead-light">
+             <tr style="white-space: nowrap">
+              <th width="10%" (click) ="sort('SLNO')">
+                   <mfDefaultSorter by="">{{'SL NO'| translate}}</mfDefaultSorter>
+                   <i class="fa fa-sort"></i>
+                 </th> 
+          
+                 <th width="20%" (click) ="sort('policy_id')">
+                  <mfDefaultSorter by="policy_name">{{field_name_hrms_policy_id}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="10%" (click) ="sort('policy_name')">
+                  <mfDefaultSorter by="policy_name">{{field_name_hrms_policy_name}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                 <th width="10%" (click) ="sort('policy_name')">
+                 <mfDefaultSorter by="policy_name">{{field_name_hrms_policy_size}}</mfDefaultSorter>
+                 <i class="fa fa-sort"></i>
+               </th>
+               <th width="20%" (click) ="sort('file')">
+                <mfDefaultSorter by="file">{{field_name_hrms_policy_file}}</mfDefaultSorter>
+                <i class="fa fa-sort"></i>
+              </th>
+              <th width="10%" (click) ="sort('Download')">
+                <mfDefaultSorter by="">{{field_name_hrms_policy_download}}</mfDefaultSorter>
+              </th>
+              
+           
+               <th width="10%" *ngIf="SHOW_EDIT_DELETE">
+                {{field_name_hrms_actons}}
+               </th>
+             </tr>
+           </thead>
+           <tbody *ngIf="mf.data?.length >= 1">
+            <tr *ngFor="let obj of mf.data | orderBy: key: reverse | paginate: {itemsPerPage:5,currentPage:p,totalItems:policyDetailsCount}; let i = index" >
+               <td>{{i+1}}</td>
+               <td>{{obj.policy_id}}</td>
+             
+               <td>{{obj.policy_name}}</td>
+               <td>{{obj.size}} Bytes</td>
+               <td>{{obj.files}}</td>
+            
+             
+    
+     
+              <!--  <td><img [src]="obj.file" style="height: 50px;width: 50px; border-radius: 50%;"> </td> -->
+               <td>
+          <!--  <a class="download" (click)="download(i)">Download</a>  -->
+        <a [href]="obj.files" download target="_blank"   >
+                  Download
+                </a> 
+              </td>
+               
+               <td *ngIf="SHOW_EDIT_DELETE">
+              
+                 <i class="fa fa-edit" (click)="onClickEdit(obj)"></i> 
+   
+                   <span *ngIf="ALL_DELETE_ALLOWED"><i (click)="onClickDelete(obj)" class="fa fa-trash"></i></span>
+             </td>
+             </tr>
+           </tbody>
+           <tbody *ngIf="mf.data?.length <= 0">
+            <tr class="odd" style="opacity: 1;">
+              <td valign="top" colspan="8" style="text-align: center;" class="dataTables_empty">No data
+                available
+                in table</td>
+            </tr>
+          </tbody>
+           <tfoot>
+              <tr>
+                  <td colspan="4">
+                    <pagination-controls (pageChange)="pageChanged('schedule', (p = $event))">
+                        
+                    </pagination-controls>
+                  </td>
+                 </tr>
+           </tfoot>
+         </table>
+       </div>
+     </div>
+       
+  </section>
+   

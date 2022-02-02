@@ -1,0 +1,499 @@
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir="rtl">
+  <div class="container-fluid">
+    <h3 class="text-center">{{ field_name_visits_Search_Visits }}</h3>
+    <div class="col-md-12 col-lg-12">
+      <div class="row dateSection">
+        <div class="col-md-3">
+          <input
+            style="margin-top: 25px"
+            type="text"
+            class="form-control"
+            name="email"
+            placeholder="Enter Sales User Email to search"
+            [(ngModel)]="email"
+            (ngModelChange)="searchVisits('clear')"
+          />
+        </div>
+        <div class="col-md-1">
+          <div
+            class="btn btn-success"
+            style="margin-top: 30px"
+            (click)="searchVisits('search')"
+          >
+            <i class="fa fa-search"></i>
+            {{ field_name_visits_search }}
+          </div>
+        </div>
+        <div class="col-md-1">
+          <button
+            type="button"
+            class="btn btn-info"
+            style="margin-top: 30px"
+            routerLink="/sales/addvisits"
+          >
+            <i class="fa fa-plus" aria-hidden="true"></i
+            >{{ field_name_visits_addvisits }}
+          </button>
+          <!--    </span> -->
+        </div>
+      </div>
+      <div class="row dateSectionMat">
+        <div class="d-flex">
+          <div class="col-md-8">
+            <mat-form-field
+              class="example-full-width"
+              style="font-weight: bold"
+            >
+              <input
+                matInput
+                [(ngModel)]="first_name"
+                name="first_name"
+                (ngModelChange)="searchData('clear')"
+                placeholder="Enter First Name to search"
+              />
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <button
+              class="btn btn-success search-btn font-weight-bold"
+              (click)="searchData('search')"
+            >
+              {{ field_name_visits_search }}
+            </button>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <button
+            type="button"
+            class="btn btn-info"
+           
+            routerLink="/sales/addvisits"
+          >
+            <i class="fa fa-plus" aria-hidden="true"></i
+            >{{ field_name_visits_addvisits }}
+          </button>
+          <!--    </span> -->
+        </div>
+      </div>
+    </div>
+    <br />
+
+    <div class="col-md-12 col-lg-12">
+      <div class="row">
+        <!--   <div class="col-sm-1">
+    <button type="button" (click)="exportToPrint()" class="btn btn-success">
+      <i class="fa fa-file-pdf-o" aria-hidden="true"></i> {{field_name_visits_print}}
+      </button>
+   </div> 
+   <div class="col-sm-1">
+      <button type="button" (click)="downloadPdf()" class="btn btn-success">
+        <i class="fa fa-file-pdf-o" aria-hidden="true"></i>{{field_name_visits_pdf}}
+        </button>
+     </div> 
+   <div class="col-sm-1">
+   <button type="button" (click)="generateCsv()" class="btn btn-success">
+    <i class="fa fa-building-o" aria-hidden="true"></i>{{field_name_visits_csv}}
+    </button>
+   </div>
+   <div class="col-md-1">
+    <button type="button" class="btn btn-info" 
+    routerLink=""><i class="fa fa-upload" aria-hidden="true"></i>{{field_name_visits_import}}</button>
+  </div> -->
+        <!--  <div class="col-sm-1">
+    <button type="button" class="btn btn-info" 
+    routerLink="">  <i class="fa fa-arrows-h" aria-hidden="true"></i>Convert to Lead</button>
+  </div> -->
+      </div>
+    </div>
+    <div class="row" *ngIf="visitLists">
+      <div class="col-md-12">
+        <agm-map
+          style="height: 335px"
+          [latitude]="latitude"
+          [longitude]="longitude"
+          [zoom]="zoom"
+          [zoomControl]="false"
+          [disableDefaultUI]="false"
+          (mapClick)="mapClicked($event)"
+        >
+          <agm-marker
+            *ngFor="let visit of visitLists"
+            [latitude]="visit.lat"
+            [longitude]="visit.long"
+            [label]="visit.name"
+            [agmFitBounds]="true"
+            (click)="onClickMarker(infoWindow, $event)"
+          >
+            <agm-info-window
+              #infoWindow
+              [latitude]="visit.lat"
+              [longitude]="visit.long"
+            >
+              <div>
+                <h6>Email: {{ visit.email }}</h6>
+                <br />
+                <h6>Name: {{visit.first_name}</h6>
+                <a (click)="openMapInNewTab(visit.lat, visit.long)">
+                  {{ "More" | translate }}</a
+                >
+              </div>
+            </agm-info-window>
+          </agm-marker>
+        </agm-map>
+      </div>
+      <div class="col-md-12 mt-4">
+        <div class="card-body product-table p-t-35">
+          <div class="table-responsive" id="contentToConvert">
+            <table class="table" #mf="mfDataTable" [mfData]="visitLists">
+              <thead class="thead-light">
+                <tr style="white-space: nowrap">
+                  <!--   <th width="20%">
+                                          <mfDefaultSorter by="object_id">{{'Customer id' | translate}}</mfDefaultSorter>
+                                      </th>  -->
+                  <th width="20%" (click)="sort('sales_email')">
+                    <mfDefaultSorter by="sales_email">{{
+                      field_name_visits_user_email
+                    }}</mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" (click)="sort('first_name')">
+                    <mfDefaultSorter by="first_name">{{
+                      field_name_visits_customer_name
+                    }}</mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" (click)="sort('email')">
+                    <mfDefaultSorter by="email">{{
+                      field_name_visits_email
+                    }}</mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" (click)="sort('phone')">
+                    <mfDefaultSorter by="phone">{{
+                      field_name_visits_phone
+                    }}</mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+
+                  <th width="20%" (click)="sort('last_name')">
+                    <mfDefaultSorter by="last_name">{{
+                      field_name_visits_last_name
+                    }}</mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" *ngIf="SHOW_EDIT_DELETE">
+                    {{ field_name_visits_actions }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody *ngIf="mf.data?.length >= 1">
+                <tr
+                  *ngFor="
+                    let obj of mf.data
+                      | orderBy: key:reverse
+                      | paginate
+                        : {
+                            itemsPerPage: 5,
+                            currentPage: p,
+                            totalItems: addVisitCount
+                          };
+                    let i = index
+                  "
+                >
+                  <!--    <td>{{obj.object_id}}</td>   -->
+                  <!--    <td>{{getEmailFromUid(obj.vendor_id)}}</td>  -->
+                  <td>{{ obj.sales_email }}</td>
+                  <td>{{ obj.first_name }}</td>
+                  <td>{{ obj.email }}</td>
+                  <td>{{ obj.phone }}</td>
+
+                  <td>{{ obj.last_name }}</td>
+                  <td *ngIf="SHOW_EDIT_DELETE">
+                    <i class="fa fa-edit" (click)="onClickEdit(obj)"></i>
+
+                    <span *ngIf="ALL_DELETE_ALLOWED"
+                      ><i (click)="onClickDelete(obj)" class="fa fa-trash"></i
+                    ></span>
+                  </td>
+                </tr>
+              </tbody>
+
+              <tbody *ngIf="mf.data?.length <= 0">
+                <tr class="odd" style="opacity: 1">
+                  <td
+                    valign="top"
+                    colspan="8"
+                    style="text-align: center"
+                    class="dataTables_empty"
+                  >
+                    No data available in table
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot *ngIf="mf.data?.length > 0">
+                <tr>
+                  <td colspan="4">
+                    <pagination-controls
+                      (pageChange)="pageChanged('schedule', (p = $event))"
+                    >
+                    </pagination-controls>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir="ltr">
+  <div class="container-fluid">
+    <h3 class="text-center">{{ field_name_visits_Search_Visits }}</h3>
+    <div class="col-md-12 col-lg-12">
+      <div class="row dateSection">
+        <div class="col-md-3">
+          <input
+            style="margin-top: 25px"
+            type="text"
+            class="form-control"
+            name="email"
+            placeholder="Enter Sales User Email to search"
+            [(ngModel)]="email"
+            (ngModelChange)="searchVisits('clear')"
+          />
+        </div>
+        <div class="col-md-1">
+          <div
+            class="btn btn-success"
+            style="margin-top: 30px"
+            (click)="searchVisits('search')"
+          >
+            <i class="fa fa-search"></i>
+            {{ field_name_visits_search }}
+          </div>
+        </div>
+        <div class="col-md-1">
+          <button
+            type="button"
+            class="btn btn-info"
+            style="margin-top: 30px"
+            routerLink="/sales/addvisits"
+          >
+            <i class="fa fa-plus" aria-hidden="true"></i
+            >{{ field_name_visits_addvisits }}
+          </button>
+          <!--    </span> -->
+        </div>
+      </div>
+      <div class="row dateSectionMat">
+        <div class="d-flex">
+          <div class="col-md-8">
+            <mat-form-field
+              class="example-full-width"
+              style="font-weight: bold"
+            >
+              <input
+                matInput
+                [(ngModel)]="email"
+                name="email"
+                (ngModelChange)="searchVisits('clear')"
+                placeholder="Enter First Name to search"
+              />
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <button
+              class="btn btn-success search-btn font-weight-bold"
+              (click)="searchVisits('search')"
+            >
+              {{ field_name_visits_search }}
+            </button>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <button
+            type="button"
+            class="btn btn-info"
+           
+            routerLink="/sales/addvisits"
+          >
+            <i class="fa fa-plus" aria-hidden="true"></i
+            >{{ field_name_visits_addvisits }}
+          </button>
+          <!--    </span> -->
+        </div>
+      </div>
+    </div>
+    <br />
+
+    <div class="col-md-12 col-lg-12">
+      <div class="row">
+        <!--   <div class="col-sm-1">
+    <button type="button" (click)="exportToPrint()" class="btn btn-success">
+      <i class="fa fa-file-pdf-o" aria-hidden="true"></i> {{field_name_visits_print}}
+      </button>
+   </div> 
+   <div class="col-sm-1">
+      <button type="button" (click)="downloadPdf()" class="btn btn-success">
+        <i class="fa fa-file-pdf-o" aria-hidden="true"></i>{{field_name_visits_pdf}}
+        </button>
+     </div> 
+   <div class="col-sm-1">
+   <button type="button" (click)="generateCsv()" class="btn btn-success">
+    <i class="fa fa-building-o" aria-hidden="true"></i>{{field_name_visits_csv}}
+    </button>
+   </div>
+   <div class="col-md-1">
+    <button type="button" class="btn btn-info" 
+    routerLink=""><i class="fa fa-upload" aria-hidden="true"></i>{{field_name_visits_import}}</button>
+  </div> -->
+        <!--  <div class="col-sm-1">
+    <button type="button" class="btn btn-info" 
+    routerLink="">  <i class="fa fa-arrows-h" aria-hidden="true"></i>Convert to Lead</button>
+  </div> -->
+      </div>
+    </div>
+    <div class="row" *ngIf="visitLists">
+      <div class="col-md-12">
+        <agm-map
+          style="height: 335px"
+          [latitude]="latitude"
+          [longitude]="longitude"
+          [zoom]="zoom"
+          [zoomControl]="false"
+          [disableDefaultUI]="false"
+          (mapClick)="mapClicked($event)"
+        >
+          <agm-marker
+            *ngFor="let visit of visitLists"
+            [latitude]="visit.lat"
+            [longitude]="visit.long"
+            [label]="visit.name"
+            [agmFitBounds]="true"
+            (click)="onClickMarker(infoWindow, $event)"
+          >
+            <agm-info-window
+              #infoWindow
+              [latitude]="visit.lat"
+              [longitude]="visit.long"
+            >
+              <div>
+                <h6>Email: {{ visit.email }}</h6>
+                <br />
+                <h6>Name: {{visit.first_name}</h6>
+                <a (click)="openMapInNewTab(visit.lat, visit.long)">
+                  {{ "More" | translate }}</a
+                >
+              </div>
+            </agm-info-window>
+          </agm-marker>
+        </agm-map>
+      </div>
+      <div class="col-md-12 mt-4">
+        <div class="card-body product-table p-t-35">
+          <div class="table-responsive" id="contentToConvert">
+            <table class="table" #mf="mfDataTable" [mfData]="visitLists">
+              <thead class="thead-light">
+                <tr style="white-space: nowrap">
+                  <!--   <th width="20%">
+                                          <mfDefaultSorter by="object_id">{{'Customer id' | translate}}</mfDefaultSorter>
+                                      </th>  -->
+                  <th width="20%" (click)="sort('sales_email')">
+                    <mfDefaultSorter by="sales_email">{{
+                      field_name_visits_user_email
+                    }}</mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" (click)="sort('first_name')">
+                    <mfDefaultSorter by="first_name">{{
+                      field_name_visits_customer_name
+                    }}</mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" (click)="sort('email')">
+                    <mfDefaultSorter by="email">{{
+                      field_name_visits_email
+                    }}</mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" (click)="sort('phone')">
+                    <mfDefaultSorter by="phone">{{
+                      field_name_visits_phone
+                    }}</mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+
+                  <th width="20%" (click)="sort('last_name')">
+                    <mfDefaultSorter by="last_name">{{
+                      field_name_visits_last_name
+                    }}</mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" *ngIf="SHOW_EDIT_DELETE">
+                    {{ field_name_visits_actions }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody *ngIf="mf.data?.length >= 1">
+                <tr
+                  *ngFor="
+                    let obj of mf.data
+                      | orderBy: key:reverse
+                      | paginate
+                        : {
+                            itemsPerPage: 5,
+                            currentPage: p,
+                            totalItems: addVisitCount
+                          };
+                    let i = index
+                  "
+                >
+                  <!--    <td>{{obj.object_id}}</td>   -->
+                  <!--    <td>{{getEmailFromUid(obj.vendor_id)}}</td>  -->
+                  <td>{{ obj.sales_email }}</td>
+                  <td>{{ obj.first_name }}</td>
+                  <td>{{ obj.email }}</td>
+                  <td>{{ obj.phone }}</td>
+
+                  <td>{{ obj.last_name }}</td>
+                  <td *ngIf="SHOW_EDIT_DELETE">
+                    <i class="fa fa-edit" (click)="onClickEdit(obj)"></i>
+
+                    <span *ngIf="ALL_DELETE_ALLOWED"
+                      ><i (click)="onClickDelete(obj)" class="fa fa-trash"></i
+                    ></span>
+                  </td>
+                </tr>
+              </tbody>
+
+              <tbody *ngIf="mf.data?.length <= 0">
+                <tr class="odd" style="opacity: 1">
+                  <td
+                    valign="top"
+                    colspan="8"
+                    style="text-align: center"
+                    class="dataTables_empty"
+                  >
+                    No data available in table
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot *ngIf="mf.data?.length > 0">
+                <tr>
+                  <td colspan="4">
+                    <pagination-controls
+                      (pageChange)="pageChanged('schedule', (p = $event))"
+                    >
+                    </pagination-controls>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

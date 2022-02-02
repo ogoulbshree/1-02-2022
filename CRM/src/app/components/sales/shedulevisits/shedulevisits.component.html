@@ -1,0 +1,679 @@
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir="rtl">
+  <div class="container-fluid">
+    <h3 class="text-center">{{ field_name_shedule_visits_details }}</h3>
+    <div class="card">
+      <div class="card-body">
+        <form
+          class="form-horizontal form-material"
+          name="form"
+          #f="ngForm"
+          (ngSubmit)="f.form.valid && onSubmit()"
+        >
+          <div
+            *ngIf="f.form.invalid && f.submitted"
+            class="alert alert-danger alert-dismissible fade show"
+            role="alert"
+          >
+            <strong>Schedule Details!</strong>The form has the following errors
+            that need to be corrected
+            <button
+              type="button"
+              class="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="card-header">
+            <h2>
+              <span *ngIf="!isUpdate">{{
+                field_name_shedule_visits_addshedule_visits
+              }}</span>
+              <span *ngIf="isUpdate">{{
+                field_name_shedule_visits_update
+              }}</span>
+            </h2>
+          </div>
+          <div class="card-body" *ngIf="this.scheduleVisit">
+            <div class="form-row">
+              <div class="form-group col-md-4" *ngIf="!isUpdate">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_shedule_visits_salesemail }}
+                  <span class="text-danger font-weight-bold"> *</span>
+                </label>
+                <div class="col-sm-10">
+                  <div class="ng-autocomplete">
+                    <ng-autocomplete
+                      [data]="salesUsers"
+                      [searchKeyword]="keyword"
+                      (inputChanged)="onChangeSearch()"
+                      (inputFocused)="onFocused($event)"
+                      (selected)="onSalesSelect($event)"
+                      [itemTemplate]="itemTemplate"
+                      [notFoundTemplate]="notFoundTemplate"
+                      
+                    >
+                    </ng-autocomplete>
+
+                    <ng-template #itemTemplate let-item>
+                      <a [innerHTML]="item.email"></a>
+                    </ng-template>
+
+                    <ng-template #notFoundTemplate let-notFound>
+                      <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                   
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group col-md-4" *ngIf="!isUpdate">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_shedule_visits_customer_name }}
+                  <span class="text-danger font-weight-bold"> *</span>
+                </label>
+                <div class="col-sm-10">
+                  <div class="ng-autocomplete">
+                    <ng-autocomplete
+                      [data]="vendorLists"
+                      [searchKeyword]="customer_keyword"
+                      [itemTemplate]="itemTemplate"
+                      (inputChanged)="onChangeSearch()"
+                      (selected)="onCustomerSelect($event)"
+                      historyIdentifier="vendorLists"
+                      (inputFocused)="onFocused($event)"
+                      [notFoundTemplate]="notFoundTemplate"
+                      
+                    >
+                    </ng-autocomplete>
+
+                    <ng-template #itemTemplate let-item>
+                      <a [innerHTML]="item.first_name"></a>
+                    </ng-template>
+
+                    <ng-template #notFoundTemplate let-notFound>
+                      <div [innerHTML]="notFound"></div>
+                    </ng-template>
+
+                   
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group col-md-4" *ngIf="isUpdate">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_shedule_visits_salesemail
+                  }}<span class="text-danger font-weight-bold"> *</span></label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="scheduleVisit.email"
+                    name="email"
+                    readonly
+                    #email="ngModel"
+                    readonly
+                  />
+                </div>
+                <!--  <div *ngIf="f.submitted && sales_email.invalid" class="invalid-feedback">
+              <div *ngIf="sales_email.errors.required">{{'Please provide sales_email' | translate}}</div>
+  
+             
+            </div>  -->
+              </div>
+              <div class="form-group col-md-4" *ngIf="isUpdate">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_shedule_visits_customer_name }}
+                  <span class="text-danger font-weight-bold"> *</span>
+                </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="scheduleVisit.first_name"
+                    name="first_name"
+                    readonly
+                    #first_name="ngModel"
+                    [ngClass]="{
+                      'is-invalid': f.submitted && first_name.invalid,
+                      'is-valid': f.submitted && first_name.valid
+                    }"
+                    readonly
+                  />
+                </div>
+                <div
+                  *ngIf="f.submitted && first_name.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="first_name.errors.required">
+                    Please provide Customer Name
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_shedule_visits_phone }}
+                  <span class="text-danger font-weight-bold"> *</span>
+                </label>
+
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="scheduleVisit.phone"
+                    #phone="ngModel"
+                    name="phone"
+                    readonly
+                    pattern="^[0-9()\-+\s]+$"
+                    #phone="ngModel"
+                    [ngClass]="{
+                      'is-invalid': f.submitted && phone.invalid,
+                      'is-valid': f.submitted && phone.valid
+                    }"
+                    required
+                  />
+                  <div
+                    *ngIf="f.submitted && phone.invalid"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="phone.errors.required">
+                      Please select customer to get phone details
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label class="col-sm-5 col-form-label">{{
+                  field_name_shedule_visits_address
+                }}</label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="scheduleVisit.other_address"
+                    name="other_address"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_shedule_visits_date }}
+                  <span class="text-danger font-weight-bold"> *</span>
+                </label>
+                <div class="col-sm-10">
+                  <input
+                    type="date"
+                    class="form-control"
+                    [(ngModel)]="scheduleVisit.date"
+                    #date="ngModel"
+                    name="date"
+                    [ngClass]="{
+                      'is-invalid': f.submitted && date.invalid,
+                      'is-valid': f.submitted && date.valid
+                    }"
+                    required
+                  />
+                  <div
+                    *ngIf="f.submitted && date.invalid"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="date.errors.required">Please provide date</div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_shedule_visits_time }}
+                  <span class="text-danger font-weight-bold"> *</span>
+                </label>
+                <div class="col-sm-10">
+                  <input
+                    type="time"
+                    class="form-control"
+                    [(ngModel)]="scheduleVisit.time"
+                    #time="ngModel"
+                    name="time"
+                    [ngClass]="{
+                      'is-invalid': f.submitted && time.invalid,
+                      'is-valid': f.submitted && time.valid
+                    }"
+                    required
+                  />
+                  <div
+                    *ngIf="f.submitted && time.invalid"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="time.errors.required">Please provide time</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_shedule_visits_created_by }}
+                </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="created_by"
+                    [(ngModel)]="scheduleVisit.created_by"
+                    #created_by="ngModel"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_shedule_visits_created_time }}
+                </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="created_time"
+                    readonly
+                    value="{{ scheduleVisit.created_time |  date : dateFormat:'GMT':locale }}"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_shedule_visits_updated_by }}
+                </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="updated_by"
+                    [(ngModel)]="scheduleVisit.updated_by"
+                    #updated_by="ngModel"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_shedule_visits_updated_time }}
+                </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="modified_time"
+                    readonly
+                    value=" {{ scheduleVisit.modified_time |  date : dateFormat:'GMT':locale }}"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <button
+              class="btn btn-danger btn-round text-center pull-right"
+              style="margin-top: 73px"
+              type="button"
+              appCancelbutton
+            >
+              {{ "Cancel" | translate }}
+            </button>
+            <button
+              class="btn btn-success btn-round text-center pull-right"
+              style="margin-top: 73px"
+            >
+              <span *ngIf="!isUpdate">{{ "Save" | translate }}</span>
+              <span *ngIf="isUpdate">{{ "Update" | translate }}</span>
+            </button>
+          </div>
+        </form>
+        <div class="col-md-12"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir="ltr">
+  <div class="container-fluid">
+    <h3 class="text-center">{{ field_name_shedule_visits_details }}</h3>
+    <div class="card">
+      <div class="card-body">
+        <form
+          class="form-horizontal form-material"
+          name="form"
+          #f="ngForm"
+          (ngSubmit)="f.form.valid && onSubmit()"
+        >
+          <div
+            *ngIf="f.form.invalid && f.submitted"
+            class="alert alert-danger alert-dismissible fade show"
+            role="alert"
+          >
+            <strong>Schedule Details!</strong>The form has the following errors
+            that need to be corrected
+            <button
+              type="button"
+              class="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="card-header">
+            <h2>
+              <span *ngIf="!isUpdate">{{
+                field_name_shedule_visits_addshedule_visits
+              }}</span>
+              <span *ngIf="isUpdate">{{
+                field_name_shedule_visits_update
+              }}</span>
+            </h2>
+          </div>
+          <div class="card-body" *ngIf="this.scheduleVisit">
+            <div class="form-row">
+              <div class="form-group col-md-4" *ngIf="!isUpdate">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_shedule_visits_salesemail }}
+                  <span class="text-danger font-weight-bold"> *</span>
+                </label>
+                <div class="col-sm-10">
+                  <div class="ng-autocomplete">
+                    <ng-autocomplete
+                      [data]="salesUsers"
+                      [searchKeyword]="keyword"
+                      (inputChanged)="onChangeSearch()"
+                      (inputFocused)="onFocused($event)"
+                      (selected)="onSalesSelect($event)"
+                      [itemTemplate]="itemTemplate"
+                      [notFoundTemplate]="notFoundTemplate"
+                      
+                    >
+                    </ng-autocomplete>
+
+                    <ng-template #itemTemplate let-item>
+                      <a [innerHTML]="item.email"></a>
+                    </ng-template>
+
+                    <ng-template #notFoundTemplate let-notFound>
+                      <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                   
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group col-md-4" *ngIf="!isUpdate">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_shedule_visits_customer_name }}
+                  <span class="text-danger font-weight-bold"> *</span>
+                </label>
+                <div class="col-sm-10">
+                  <div class="ng-autocomplete">
+                    <ng-autocomplete
+                      [data]="vendorLists"
+                      [searchKeyword]="customer_keyword"
+                      [itemTemplate]="itemTemplate"
+                      (inputChanged)="onChangeSearch()"
+                      (selected)="onCustomerSelect($event)"
+                      historyIdentifier="vendorLists"
+                      (inputFocused)="onFocused($event)"
+                      [notFoundTemplate]="notFoundTemplate"
+                      
+                    >
+                    </ng-autocomplete>
+
+                    <ng-template #itemTemplate let-item>
+                      <a [innerHTML]="item.first_name"></a>
+                    </ng-template>
+
+                    <ng-template #notFoundTemplate let-notFound>
+                      <div [innerHTML]="notFound"></div>
+                    </ng-template>
+
+                    
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group col-md-4" *ngIf="isUpdate">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_shedule_visits_salesemail
+                  }}<span class="text-danger font-weight-bold"> *</span></label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="scheduleVisit.email"
+                    name="email"
+                    readonly
+                    #email="ngModel"
+                    readonly
+                  />
+                </div>
+                <!--  <div *ngIf="f.submitted && sales_email.invalid" class="invalid-feedback">
+                <div *ngIf="sales_email.errors.required">{{'Please provide sales_email' | translate}}</div>
+    
+               
+              </div>  -->
+              </div>
+              <div class="form-group col-md-4" *ngIf="isUpdate">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_shedule_visits_customer_name
+                  }}<span class="text-danger font-weight-bold"> *</span></label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="scheduleVisit.first_name"
+                    name="first_name"
+                    readonly
+                    #first_name="ngModel"
+                    [ngClass]="{
+                      'is-invalid': f.submitted && first_name.invalid,
+                      'is-valid': f.submitted && first_name.valid
+                    }"
+                    readonly
+                  />
+                </div>
+                <div
+                  *ngIf="f.submitted && first_name.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="first_name.errors.required">
+                    Please provide Customer Name
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_shedule_visits_phone }}
+                  <span class="text-danger font-weight-bold"> *</span>
+                </label>
+
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="scheduleVisit.phone"
+                    #phone="ngModel"
+                    name="phone"
+                    readonly
+                    pattern="^[0-9()\-+\s]+$"
+                    #phone="ngModel"
+                    [ngClass]="{
+                      'is-invalid': f.submitted && phone.invalid,
+                      'is-valid': f.submitted && phone.valid
+                    }"
+                    required
+                  />
+                  <div
+                    *ngIf="f.submitted && phone.invalid"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="phone.errors.required">
+                      Please select customer to get phone details
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label class="col-sm-5 col-form-label">{{
+                  field_name_shedule_visits_address
+                }}</label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="scheduleVisit.other_address"
+                    name="other_address"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_shedule_visits_date }}
+                  <span class="text-danger font-weight-bold"> *</span>
+                </label>
+                <div class="col-sm-10">
+                  <input
+                    type="date"
+                    class="form-control"
+                    [(ngModel)]="scheduleVisit.date"
+                    #date="ngModel"
+                    name="date"
+                    [ngClass]="{
+                      'is-invalid': f.submitted && date.invalid,
+                      'is-valid': f.submitted && date.valid
+                    }"
+                    required
+                  />
+                  <div
+                    *ngIf="f.submitted && date.invalid"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="date.errors.required">Please provide date</div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_shedule_visits_time }}
+                  <span class="text-danger font-weight-bold"> *</span>
+                </label>
+                <div class="col-sm-10">
+                  <input
+                    type="time"
+                    class="form-control"
+                    [(ngModel)]="scheduleVisit.time"
+                    #time="ngModel"
+                    name="time"
+                    [ngClass]="{
+                      'is-invalid': f.submitted && time.invalid,
+                      'is-valid': f.submitted && time.valid
+                    }"
+                    required
+                  />
+                  <div
+                    *ngIf="f.submitted && time.invalid"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="time.errors.required">Please provide time</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_shedule_visits_created_by }}
+                </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="created_by"
+                    [(ngModel)]="scheduleVisit.created_by"
+                    #created_by="ngModel"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_shedule_visits_created_time }}
+                </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="created_time"
+                    readonly
+                    value="{{ scheduleVisit.created_time |  date : dateFormat:'GMT':locale }}"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_shedule_visits_updated_by }}
+                </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="updated_by"
+                    [(ngModel)]="scheduleVisit.updated_by"
+                    #updated_by="ngModel"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_shedule_visits_updated_time }}
+                </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="modified_time"
+                    readonly
+                    value=" {{ scheduleVisit.modified_time |  date : dateFormat:'GMT':locale }}"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <button
+              class="btn btn-danger btn-round text-center pull-right"
+              style="margin-top: 73px"
+              type="button"
+              appCancelbutton
+            >
+              {{ "Cancel" | translate }}
+            </button>
+            <button
+              class="btn btn-success btn-round text-center pull-right"
+              style="margin-top: 73px"
+            >
+              <span *ngIf="!isUpdate">{{ "Save" | translate }}</span>
+              <span *ngIf="isUpdate">{{ "Update" | translate }}</span>
+            </button>
+          </div>
+        </form>
+        <div class="col-md-12"></div>
+      </div>
+    </div>
+  </div>
+</section>

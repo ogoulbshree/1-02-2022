@@ -1,0 +1,708 @@
+
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' >
+
+  
+  <div class="container-fluid">
+    <h3 class="text-center">{{field_name_hrms_payroll_details}}</h3>
+
+    <div class="card">
+      <div class="card-body">
+        <form
+          class="form-horizontal"
+          name="form"
+          #f="ngForm"
+          (ngSubmit)="f.form.valid && onSubmit()"
+        >
+          <div
+            *ngIf="f.form.invalid && f.submitted"
+            class="alert alert-danger alert-dismissible fade show"
+            role="alert"
+          >
+            <strong>Payroll Details!</strong>The form has the following errors
+            that need to be corrected
+            <button
+              type="button"
+              class="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="card-header">
+            <h2>
+              <span *ngIf="!isUpdate">{{field_name_hrms_payroll_add_payroll}}</span>
+              <span *ngIf="isUpdate">{{field_name_hrms_payroll_update}}</span>
+            </h2>
+          </div>
+          <div class="card-body">
+            <nav>
+              <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                <a
+                  class="nav-item nav-link active"
+                  id="nav-contact-info-tab"
+                  data-toggle="tab"
+                  href="#nav-contact-info"
+                  role="tab"
+                  aria-controls="nav-contact-info"
+                  aria-selected="true"
+                >
+                  {{field_name_hrms_payroll_emplyee_info}}
+                </a>
+                <a
+                  class="nav-item nav-link"
+                  id="nav-address-info-tab"
+                  data-toggle="tab"
+                  href="#nav-address-info"
+                  role="tab"
+                  aria-controls="nav-address-info"
+                  aria-selected="false"
+                >
+                {{field_name_hrms_payroll_salary_info}}
+                </a>
+              </div>
+            </nav>
+
+            <div class="tab-content" id="nav-tabContent">
+              <div
+                class="tab-pane fade show active"
+                id="nav-contact-info"
+                role="tabpanel"
+                aria-labelledby="nav-contact-info-tab"
+              >
+                <div class="panel-body">
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label class="col-sm-5 col-form-label"
+                        >{{field_name_hrms_payroll_employee_name}}
+                        <span class="text-danger font-weight-bold"> *</span>
+                      </label>
+                      <div class="col-sm-10">
+                        <div class="ng-autocomplete">
+                          <ng-autocomplete
+                            [data]="employeeArray"
+                            [searchKeyword]="keyword"
+                            [initialValue]="keyword"
+                            (selected)="selectEvent($event)"
+                            (inputChanged)="onChangeSearch($event)"
+                            (inputFocused)="onFocused($event)"
+                            [itemTemplate]="itemTemplate"
+                            [notFoundTemplate]="notFoundTemplate"
+                            [(ngModel)]="selectedEmployee.first_name"
+                            name="first_name"
+                            #first_name="ngModel"
+                            required
+                            [ngClass]="{
+                              'is-invalid': f.submitted && first_name.invalid,
+                              'is-valid': f.submitted && first_name.valid
+                            }"
+                          >
+                          </ng-autocomplete>
+
+                          <ng-template #itemTemplate let-item>
+                            <a [innerHTML]="item.first_name"></a>
+                          </ng-template>
+
+                          <ng-template #notFoundTemplate let-notFound>
+                            <div [innerHTML]="notFound"></div>
+                          </ng-template>
+                          <div
+                            *ngIf="f.submitted && first_name.invalid"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="first_name.errors.required">
+                              Please Provide First Name
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                      <label class="col-sm-5 col-form-label">
+                      {{field_name_hrms_payroll_last_name}}
+                        <span class="text-danger font-weight-bold"> *</span>
+                      </label>
+                      <div class="col-sm-10">
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="last_name"
+                          pattern="[a-zA-Z ]+"
+                          [(ngModel)]="selectedEmployee.last_name"
+                          maxlength="20"
+                          minlength="1"
+                          #last_name="ngModel"
+                          [ngClass]="{
+                            'is-invalid': f.submitted && last_name.invalid,
+                            'is-valid': f.submitted && last_name.valid
+                          }"
+                          readonly
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label class="col-sm-5 col-form-label"
+                        >{{field_name_hrms_payroll_email}}
+                        <span class="text-danger font-weight-bold">
+                          *</span
+                        ></label
+                      >
+                      <div class="col-sm-10">
+                        <input
+                          type="text"
+                          class="form-control"
+                          [(ngModel)]="selectedEmployee.email"
+                          name="email"
+                          #email="ngModel"
+                          readonly
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label class="col-sm-5 col-form-label"
+                        >{{field_name_hrms_payroll_phone}}<span class="text-danger font-weight-bold">
+                          *</span
+                        ></label
+                      >
+                      <div class="col-sm-10">
+                        <input
+                          type="text"
+                          class="form-control"
+                          [(ngModel)]="selectedEmployee.phone"
+                          name="phone"
+                          #phone="ngModel"
+                          [ngClass]="{
+                            'is-invalid': f.submitted && phone.invalid,
+                            'is-valid': f.submitted && phone.valid
+                          }"
+                          readonly
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label class="col-sm-5 col-form-label"
+                        >{{field_name_hrms_payroll_designation}}<span class="text-danger font-weight-bold">
+                          *</span
+                        ></label
+                      >
+                      <div class="col-sm-10">
+                        <select
+                          type="text"
+                          class="custom-select"
+                          [(ngModel)]="selectedEmployee.designation"
+                          name="designation"
+                          #designation="ngModel"
+                          
+                        >
+                          <option
+                            *ngFor="let obj of designationDetail"
+                            [value]="obj.designation_name" disabled
+                          >
+                            {{ obj.designation_name }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="tab-pane fade"
+                id="nav-address-info"
+                role="tabpanel"
+                aria-labelledby="nav-address-info-tab"
+              >
+                <div class="panel-body">
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label class="col-sm-5 col-form-label"
+                        >{{field_name_hrms_payroll_basic_salary}}
+                        <span class="text-danger font-weight-bold"> </span>
+                      </label>
+                      <div class="col-sm-10">
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="basic_salary"
+                          [(ngModel)]="payrollDetail.basic_salary"
+                          #basic_salary="ngModel"
+                          (change)="updateNetSalary()"
+                          [ngClass]="{
+                            'is-invalid': f.submitted && basic_salary.invalid,
+                            'is-valid': f.submitted && basic_salary.valid
+                          }"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label class="col-sm-5 col-form-label"
+                        >{{field_name_hrms_payroll_transportaion_allowance}}
+                        <span class="text-danger font-weight-bold"> </span>
+                      </label>
+                      <div class="col-sm-10">
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="allowance_transportation"
+                          [(ngModel)]="payrollDetail.allowance_transportation"
+                          #allowance_transportation="ngModel"
+                          (change)="updateNetSalary()"
+                          [ngClass]="{
+                            'is-invalid': f.submitted && allowance_transportation.invalid,
+                            'is-valid': f.submitted && allowance_transportation.valid
+                          }"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                      <label class="col-sm-5 col-form-label">
+                        {{field_name_hrms_payroll_food_allowance}}
+                        <span class="text-danger font-weight-bold"> </span>
+                      </label>
+                      <div class="col-sm-10">
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="allowance_food"
+                          [(ngModel)]="payrollDetail.allowance_food"
+                          #allowance_food="ngModel"
+                          (change)="updateNetSalary()"
+                          [ngClass]="{
+                            'is-invalid': f.submitted && allowance_food.invalid,
+                            'is-valid': f.submitted && allowance_food.valid
+                          }"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label class="col-sm-5 col-form-label"
+                        >{{field_name_hrms_payroll_acccomadation_allowance}}<span
+                          class="text-danger font-weight-bold"
+                        >
+                        </span
+                      ></label>
+                      <div class="col-sm-10">
+                        <input
+                          type="text"
+                          class="form-control"
+                          [(ngModel)]="payrollDetail.allowance_accomadation"
+                          name="allowance_accomadation"
+                          #allowance_accomadation="ngModel"
+                          (change)="updateNetSalary()"
+                          [ngClass]="{
+                            'is-invalid': f.submitted && allowance_accomadation.invalid,
+                            'is-valid': f.submitted && allowance_accomadation.valid
+                          }"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label class="col-sm-5 col-form-label">
+                        {{field_name_hrms_payroll_net_salary}}<span class="text-danger font-weight-bold">
+                        </span
+                      ></label>
+                      <div class="col-sm-10">
+                        <input
+                          type="text"
+                          class="form-control"
+                          [(ngModel)]="payrollDetail.net_salary"
+                          name="net_salary"
+                          #net_salary="ngModel"
+                          readonly
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button
+                class="btn btn-danger btn-round text-center pull-right"
+                style="margin-top: 73px"
+                type="button"
+                appCancelbutton
+              >
+                {{'Cancel'|translate}}
+              </button>
+              <button
+                class="btn btn-success btn-round text-center pull-right"
+                style="margin-top: 73px"
+              >
+                <span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+                <span *ngIf="isUpdate">{{'Update'|translate}}</span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+</section>
+
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir="ltr">
+  <div class="container-fluid">
+    <h3 class="text-center">{{field_name_hrms_payroll_details}}</h3>
+
+    <div class="card">
+      <div class="card-body">
+        <form
+          class="form-horizontal"
+          name="form"
+          #f="ngForm"
+          (ngSubmit)="f.form.valid && onSubmit()"
+        >
+          <div
+            *ngIf="f.form.invalid && f.submitted"
+            class="alert alert-danger alert-dismissible fade show"
+            role="alert"
+          >
+            <strong>Payroll Details!</strong>The form has the following errors
+            that need to be corrected
+            <button
+              type="button"
+              class="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="card-header">
+            <h2>
+              <span *ngIf="!isUpdate">{{field_name_hrms_payroll_add_payroll}}</span>
+              <span *ngIf="isUpdate">{{field_name_hrms_payroll_update}}</span>
+            </h2>
+          </div>
+          <div class="card-body">
+            <nav>
+              <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                <a
+                  class="nav-item nav-link active"
+                  id="nav-contact-info-tab"
+                  data-toggle="tab"
+                  href="#nav-contact-info"
+                  role="tab"
+                  aria-controls="nav-contact-info"
+                  aria-selected="true"
+                >
+                  {{field_name_hrms_payroll_emplyee_info}}
+                </a>
+                <a
+                  class="nav-item nav-link"
+                  id="nav-address-info-tab"
+                  data-toggle="tab"
+                  href="#nav-address-info"
+                  role="tab"
+                  aria-controls="nav-address-info"
+                  aria-selected="false"
+                >
+                {{field_name_hrms_payroll_salary_info}}
+                </a>
+              </div>
+            </nav>
+
+            <div class="tab-content" id="nav-tabContent">
+              <div
+                class="tab-pane fade show active"
+                id="nav-contact-info"
+                role="tabpanel"
+                aria-labelledby="nav-contact-info-tab"
+              >
+                <div class="panel-body">
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label class="col-sm-5 col-form-label"
+                        >{{field_name_hrms_payroll_employee_name}}
+                        <span class="text-danger font-weight-bold"> *</span>
+                      </label>
+                      <div class="col-sm-10">
+                        <div class="ng-autocomplete">
+                          <ng-autocomplete
+                            [data]="employeeArray"
+                            [searchKeyword]="keyword"
+                            [initialValue]="keyword"
+                            (selected)="selectEvent($event)"
+                            (inputChanged)="onChangeSearch($event)"
+                            (inputFocused)="onFocused($event)"
+                            [itemTemplate]="itemTemplate"
+                            [notFoundTemplate]="notFoundTemplate"
+                            [(ngModel)]="selectedEmployee.first_name"
+                            name="first_name"
+                            #first_name="ngModel"
+                            required
+                            [ngClass]="{
+                              'is-invalid': f.submitted && first_name.invalid,
+                              'is-valid': f.submitted && first_name.valid
+                            }"
+                          >
+                          </ng-autocomplete>
+
+                          <ng-template #itemTemplate let-item>
+                            <a [innerHTML]="item.first_name"></a>
+                          </ng-template>
+
+                          <ng-template #notFoundTemplate let-notFound>
+                            <div [innerHTML]="notFound"></div>
+                          </ng-template>
+                          <div
+                            *ngIf="f.submitted && first_name.invalid"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="first_name.errors.required">
+                              Please Provide First Name
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                      <label class="col-sm-5 col-form-label">
+                      {{field_name_hrms_payroll_last_name}}
+                        <span class="text-danger font-weight-bold"> *</span>
+                      </label>
+                      <div class="col-sm-10">
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="last_name"
+                          pattern="[a-zA-Z ]+"
+                          [(ngModel)]="selectedEmployee.last_name"
+                          maxlength="20"
+                          minlength="1"
+                          #last_name="ngModel"
+                          [ngClass]="{
+                            'is-invalid': f.submitted && last_name.invalid,
+                            'is-valid': f.submitted && last_name.valid
+                          }"
+                          readonly
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label class="col-sm-5 col-form-label"
+                        >{{field_name_hrms_payroll_email}}
+                        <span class="text-danger font-weight-bold">
+                          *</span
+                        ></label
+                      >
+                      <div class="col-sm-10">
+                        <input
+                          type="text"
+                          class="form-control"
+                          [(ngModel)]="selectedEmployee.email"
+                          name="email"
+                          #email="ngModel"
+                          readonly
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label class="col-sm-5 col-form-label"
+                        >{{field_name_hrms_payroll_phone}}<span class="text-danger font-weight-bold">
+                          *</span
+                        ></label
+                      >
+                      <div class="col-sm-10">
+                        <input
+                          type="text"
+                          class="form-control"
+                          [(ngModel)]="selectedEmployee.phone"
+                          name="phone"
+                          #phone="ngModel"
+                          [ngClass]="{
+                            'is-invalid': f.submitted && phone.invalid,
+                            'is-valid': f.submitted && phone.valid
+                          }"
+                          readonly
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label class="col-sm-5 col-form-label"
+                        >{{field_name_hrms_payroll_designation}}<span class="text-danger font-weight-bold">
+                          *</span
+                        ></label
+                      >
+                      <div class="col-sm-10">
+                        <select
+                          type="text"
+                          class="custom-select"
+                          [(ngModel)]="selectedEmployee.designation"
+                          name="designation"
+                          #designation="ngModel"
+                          
+                        >
+                          <option
+                            *ngFor="let obj of designationDetail"
+                            [value]="obj.designation_name" disabled
+                          >
+                            {{ obj.designation_name }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="tab-pane fade"
+                id="nav-address-info"
+                role="tabpanel"
+                aria-labelledby="nav-address-info-tab"
+              >
+                <div class="panel-body">
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label class="col-sm-5 col-form-label"
+                        >{{field_name_hrms_payroll_basic_salary}}
+                        <span class="text-danger font-weight-bold"> </span>
+                      </label>
+                      <div class="col-sm-10">
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="basic_salary"
+                          [(ngModel)]="payrollDetail.basic_salary"
+                          #basic_salary="ngModel"
+                          (change)="updateNetSalary()"
+                          [ngClass]="{
+                            'is-invalid': f.submitted && basic_salary.invalid,
+                            'is-valid': f.submitted && basic_salary.valid
+                          }"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label class="col-sm-5 col-form-label"
+                        >{{field_name_hrms_payroll_transportaion_allowance}}
+                        <span class="text-danger font-weight-bold"> </span>
+                      </label>
+                      <div class="col-sm-10">
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="allowance_transportation"
+                          [(ngModel)]="payrollDetail.allowance_transportation"
+                          #allowance_transportation="ngModel"
+                          (change)="updateNetSalary()"
+                          [ngClass]="{
+                            'is-invalid': f.submitted && allowance_transportation.invalid,
+                            'is-valid': f.submitted && allowance_transportation.valid
+                          }"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                      <label class="col-sm-5 col-form-label">
+                        {{field_name_hrms_payroll_food_allowance}}
+                        <span class="text-danger font-weight-bold"> </span>
+                      </label>
+                      <div class="col-sm-10">
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="allowance_food"
+                          [(ngModel)]="payrollDetail.allowance_food"
+                          #allowance_food="ngModel"
+                          (change)="updateNetSalary()"
+                          [ngClass]="{
+                            'is-invalid': f.submitted && allowance_food.invalid,
+                            'is-valid': f.submitted && allowance_food.valid
+                          }"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label class="col-sm-5 col-form-label"
+                        >{{field_name_hrms_payroll_acccomadation_allowance}}<span
+                          class="text-danger font-weight-bold"
+                        >
+                        </span
+                      ></label>
+                      <div class="col-sm-10">
+                        <input
+                          type="text"
+                          class="form-control"
+                          [(ngModel)]="payrollDetail.allowance_accomadation"
+                          name="allowance_accomadation"
+                          #allowance_accomadation="ngModel"
+                          (change)="updateNetSalary()"
+                          [ngClass]="{
+                            'is-invalid': f.submitted && allowance_accomadation.invalid,
+                            'is-valid': f.submitted && allowance_accomadation.valid
+                          }"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label class="col-sm-5 col-form-label">
+                        {{field_name_hrms_payroll_net_salary}}<span class="text-danger font-weight-bold">
+                        </span
+                      ></label>
+                      <div class="col-sm-10">
+                        <input
+                          type="text"
+                          class="form-control"
+                          [(ngModel)]="payrollDetail.net_salary"
+                          name="net_salary"
+                          #net_salary="ngModel"
+                          readonly
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button
+                class="btn btn-danger btn-round text-center pull-right"
+                style="margin-top: 73px"
+                type="button"
+                appCancelbutton
+              >
+              {{'Cancel'|translate}}
+            </button>
+            <button
+              class="btn btn-success btn-round text-center pull-right"
+              style="margin-top: 73px"
+            >
+              <span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+              <span *ngIf="isUpdate">{{'Update'|translate}}</span>
+            </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

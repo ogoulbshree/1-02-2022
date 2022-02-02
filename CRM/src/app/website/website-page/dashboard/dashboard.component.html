@@ -1,0 +1,236 @@
+<section *ngIf="this._uiService.langDataSource.value == 'ar'" dir="rtl">
+    <br />
+    <br />
+    <div class="grey-bg container-fluid">
+      <section id="minimal-statistics">
+        <form
+          class="form-row"
+          name="form"
+          #f="ngForm"
+          (ngSubmit)="f.form.valid && filterData()"
+        >
+          <div class="form-group row col-md-4">
+            <label class="col-sm-3 col-form-label">
+              {{field_name_service_fromdate}}<span class="text-danger font-weight-bold"> *</span></label
+            >
+            <div class="col-sm-8">
+              <input
+                type="date"
+                class="form-control"
+                [(ngModel)]="model.fromDate"
+                name="fromDate"
+                #fromDate="ngModel"
+                [ngClass]="{
+                  'is-invalid': f.submitted && fromDate.invalid,
+                  'is-valid': f.submitted && fromDate.valid
+                }"
+                required
+              />
+  
+              <div
+                *ngIf="f.submitted && fromDate.invalid"
+                class="invalid-feedback"
+              >
+                <div *ngIf="fromDate.errors.required">
+                  Please provide fromDate
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row col-md-4">
+            <label class="col-sm-3 col-form-label">
+              {{field_name_service_todate}}<span class="text-danger font-weight-bold"> *</span></label
+            >
+            <div class="col-sm-8">
+              <input
+                type="date"
+                class="form-control"
+                [(ngModel)]="model.toDate"
+                name="toDate"
+                #toDate="ngModel"
+                [ngClass]="{
+                  'is-invalid': f.submitted && toDate.invalid,
+                  'is-valid': f.submitted && toDate.valid
+                }"
+                required
+              />
+  
+              <div *ngIf="f.submitted && toDate.invalid" class="invalid-feedback">
+                <div *ngIf="toDate.errors.required">Please provide toDate</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-success search-btn">{{field_name_search}}</button>
+          </div>
+        </form>
+        <div class="row">
+          <!--   <div class="col-12 mt-3 mb-1">
+                <h4 class="text-uppercase">Minimal Statistics Cards</h4>
+                <p>Statistics on minimal cards.</p>
+              </div> -->
+        </div>
+        <div class="row">
+         
+          <!--  <div class="col-xl-3 col-sm-6 col-12">
+                <div class="card">
+                  <div class="card-content">
+                    <div class="card-body">
+                      <div class="media d-flex">
+                        <div class="align-self-center">
+                          <i class="fa fa-briefcase warning font-large-2 float-left"></i>
+                        </div>
+                        <div class="media-body text-right">
+                          <h3>{{totalcases}}</h3>
+                          <span> {{field_name_service_cases}}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+          <div class="col-xl-3 col-sm-6 col-12">
+            <div class="card">
+              <div class="card-content">
+                <div class="card-body">
+                  <div class="media d-flex">
+                    <div class="align-self-center">
+                      <i
+                        class="fa fa-question-circle-o success font-large-2 float-left"
+                      ></i>
+                    </div>
+                    <div class="media-body text-right">
+                      <h3 *ngIf="filterFlagEnabled">{{ totalFAQCount }}</h3>
+                      <h3 *ngIf="!filterFlagEnabled">{{ totalfaq }}</h3>
+                      <span>{{ field_name_service_faq }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+        </div>
+      </section>
+   
+    </div>
+  </section>
+  
+  <section *ngIf="this._uiService.langDataSource.value != 'ar'" dir="ltr">
+    <br />
+    <br />
+    <div class="grey-bg container-fluid">
+      <section id="minimal-statistics">
+        <form
+          class="form-row"
+          name="form"
+          #f="ngForm"
+          (ngSubmit)="f.form.valid && filterData()"
+        >
+          <div class="form-group row col-md-4">
+            <label class="col-sm-3 col-form-label">
+              {{field_name_service_fromdate}}<span class="text-danger font-weight-bold"> *</span></label
+            >
+            <div class="col-sm-8">
+              <input
+                type="date"
+                class="form-control"
+                [(ngModel)]="model.fromDate"
+                name="fromDate"
+                #fromDate="ngModel"
+                [ngClass]="{
+                  'is-invalid': f.submitted && fromDate.invalid,
+                  'is-valid': f.submitted && fromDate.valid
+                }"
+                required
+              />
+  
+              <div
+                *ngIf="f.submitted && fromDate.invalid"
+                class="invalid-feedback"
+              >
+                <div *ngIf="fromDate.errors.required">
+                  Please provide fromDate
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row col-md-4">
+            <label class="col-sm-3 col-form-label">
+              {{field_name_service_todate}}<span class="text-danger font-weight-bold"> *</span></label
+            >
+            <div class="col-sm-8">
+              <input
+                type="date"
+                class="form-control"
+                [(ngModel)]="model.toDate"
+                name="toDate"
+                #toDate="ngModel"
+                [ngClass]="{
+                  'is-invalid': f.submitted && toDate.invalid,
+                  'is-valid': f.submitted && toDate.valid
+                }"
+                required
+              />
+  
+              <div *ngIf="f.submitted && toDate.invalid" class="invalid-feedback">
+                <div *ngIf="toDate.errors.required">Please provide toDate</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-success search-btn">{{field_name_search}}</button>
+          </div>
+        </form>
+        <div class="row">
+          <!--   <div class="col-12 mt-3 mb-1">
+                <h4 class="text-uppercase">Minimal Statistics Cards</h4>
+                <p>Statistics on minimal cards.</p>
+              </div> -->
+        </div>
+        <div class="row">
+         
+          <!--  <div class="col-xl-3 col-sm-6 col-12">
+                <div class="card">
+                  <div class="card-content">
+                    <div class="card-body">
+                      <div class="media d-flex">
+                        <div class="align-self-center">
+                          <i class="fa fa-briefcase warning font-large-2 float-left"></i>
+                        </div>
+                        <div class="media-body text-right">
+                          <h3>{{totalcases}}</h3>
+                          <span> {{field_name_service_cases}}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+          <div class="col-xl-3 col-sm-6 col-12">
+            <div class="card">
+              <div class="card-content">
+                <div class="card-body">
+                  <div class="media d-flex">
+                    <div class="align-self-center">
+                      <i
+                        class="fa fa-question-circle-o success font-large-2 float-left"
+                      ></i>
+                    </div>
+                    <div class="media-body text-right">
+                      <h3 *ngIf="filterFlagEnabled">{{ totalFAQCount }}</h3>
+                      <h3 *ngIf="!filterFlagEnabled">{{ totalfaq }}</h3>
+                      <span>{{ field_name_service_faq }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+        </div>
+      </section>
+   
+    </div>
+  </section>
+  

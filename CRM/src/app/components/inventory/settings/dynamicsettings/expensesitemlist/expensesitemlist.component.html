@@ -1,0 +1,251 @@
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' >
+
+
+
+<br>
+
+
+<!-- <div class="form-row">
+  <div class="form-group row col-md-4">
+      <label class="col-sm-3 col-form-label"> {{'From Date' | translate}}<span
+        class="text-danger font-weight-bold">
+        *</span></label>
+      <div class="col-sm-8">
+          <input type="date" class="form-control" [(ngModel)]="fromDate" />
+      </div>
+    </div>
+    <div class="form-group row col-md-4">
+      <label class="col-sm-3 col-form-label"> {{'To Date' | translate}}<span
+        class="text-danger font-weight-bold">
+        *</span></label>
+      <div class="col-sm-8">
+          <input type="date" class="form-control" [(ngModel)]="toDate" />
+     
+      </div>
+    </div>
+    <div class="col-md-2">
+          <button class="btn btn-success search-btn" (click)="filterData()">{{'Search' | translate}}</button>
+         
+      </div>
+    </div> -->
+<div class="col-md-12 col-lg-12">
+  <div class="row">
+     
+        <div class="col-md-2">
+          <div class="form-group  has-search">
+            <span class="fa fa-search form-control-feedback"></span>
+       <input type="text" class="form-control" name="expense_item" placeholder="Enter Expense Item to search"
+         [(ngModel)]="expense_item" (ngModelChange)="searchData()">
+      </div>
+      </div>   
+    <!--  <div class="col-sm-1">
+      <button type="button" (click)="exportToPrint()" class="btn btn-success">
+        <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Print
+        </button>
+     </div> 
+     <div class="col-sm-1">
+        <button type="button" (click)="downloadPdf()" class="btn btn-success">
+          <i class="fa fa-file-pdf-o" aria-hidden="true"></i> pdf
+          </button>
+       </div> 
+     <div class="col-sm-1">
+     <button type="button" (click)="generateCsv()" class="btn btn-success">
+      <i class="fa fa-building-o" aria-hidden="true"></i> CSV
+      </button>
+     </div>
+     <div class="col-md-1">
+      <button type="button" class="btn btn-info" 
+      routerLink=""><i class="fa fa-upload" aria-hidden="true"></i>Import</button>
+    </div> -->
+    <!--  <div class="col-sm-1">
+      <button type="button" class="btn btn-info" 
+      routerLink="">  <i class="fa fa-arrows-h" aria-hidden="true"></i>Convert to Lead</button>
+    </div> -->
+     <div class="col-sm-2">
+    <!--   <span *ngIf="CAN_ADD"> -->
+        <button type="button" class="btn btn-success btn-color btn-bg-color col-xs-5 margin-left">
+        <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+        <a  routerLink="/inventory/settings/dynamicsettings/addexpensesitem" 
+        routerLinkActive="active" class="routerlink" style="color: white;">{{field_name_expense_item_addexpense_item}}</a> 
+      </button>
+     <!--  </span> -->
+    
+    </div>
+    </div> 
+</div>
+   
+<div class="card-body product-table p-t-35">
+  <div class="table-responsive">
+    <table class="table" [mfData]="filteredTableDataArr" #mf="mfDataTable" >
+      <thead class="thead-light">
+        <tr>
+         <th width="20%">
+              <mfDefaultSorter by="">{{'SL NO'| translate}}</mfDefaultSorter>
+            </th> 
+     
+          <th width="20%">
+            <mfDefaultSorter by="expense_item">{{field_name_expense_item_name}}</mfDefaultSorter>
+          </th>
+          
+      
+          <th width="20%" *ngIf="SHOW_EDIT_DELETE">
+           {{field_name_expense_item_actions}} 
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let obj of mf.data | orderBy: key: reverse | paginate: {itemsPerPage:5,currentPage:p,totalItems:expenseItemCount}; let i = index" >
+          <td>{{i+1}}</td>
+          <td>{{obj.expense_item}}</td>
+        
+           
+          <td *ngIf="SHOW_EDIT_DELETE">
+             
+            <i class="fa fa-edit" (click)="onClickEdit(obj)"></i> 
+
+              <span *ngIf="ALL_DELETE_ALLOWED"><i (click)="onClickDelete(obj)" class="fa fa-trash"></i></span>
+        </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="4">
+            <pagination-controls (pageChange)="pageChanged('schedule', (p = $event))">
+                          
+            </pagination-controls>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+</section>
+
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir='ltr' >
+
+
+
+  <br>
+  
+  
+  <!-- <div class="form-row">
+    <div class="form-group row col-md-4">
+        <label class="col-sm-3 col-form-label"> {{'From Date' | translate}}<span
+          class="text-danger font-weight-bold">
+          *</span></label>
+        <div class="col-sm-8">
+            <input type="date" class="form-control" [(ngModel)]="fromDate" />
+        </div>
+      </div>
+      <div class="form-group row col-md-4">
+        <label class="col-sm-3 col-form-label"> {{'To Date' | translate}}<span
+          class="text-danger font-weight-bold">
+          *</span></label>
+        <div class="col-sm-8">
+            <input type="date" class="form-control" [(ngModel)]="toDate" />
+       
+        </div>
+      </div>
+      <div class="col-md-2">
+            <button class="btn btn-success search-btn" (click)="filterData()">{{'Search' | translate}}</button>
+           
+        </div>
+      </div> -->
+  <div class="col-md-12 col-lg-12">
+    <div class="row">
+       
+          <div class="col-md-2">
+            <div class="form-group  has-search">
+              <span class="fa fa-search form-control-feedback"></span>
+         <input type="text" class="form-control" name="expense_item" placeholder="Enter Expense Item to search"
+           [(ngModel)]="expense_item" (ngModelChange)="searchData()">
+        </div>
+        </div>   
+      <!--  <div class="col-sm-1">
+        <button type="button" (click)="exportToPrint()" class="btn btn-success">
+          <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Print
+          </button>
+       </div> 
+       <div class="col-sm-1">
+          <button type="button" (click)="downloadPdf()" class="btn btn-success">
+            <i class="fa fa-file-pdf-o" aria-hidden="true"></i> pdf
+            </button>
+         </div> 
+       <div class="col-sm-1">
+       <button type="button" (click)="generateCsv()" class="btn btn-success">
+        <i class="fa fa-building-o" aria-hidden="true"></i> CSV
+        </button>
+       </div>
+       <div class="col-md-1">
+        <button type="button" class="btn btn-info" 
+        routerLink=""><i class="fa fa-upload" aria-hidden="true"></i>Import</button>
+      </div> -->
+      <!--  <div class="col-sm-1">
+        <button type="button" class="btn btn-info" 
+        routerLink="">  <i class="fa fa-arrows-h" aria-hidden="true"></i>Convert to Lead</button>
+      </div> -->
+       <div class="col-sm-2">
+      <!--   <span *ngIf="CAN_ADD"> -->
+          <button type="button" class="btn btn-success btn-color btn-bg-color col-xs-5 margin-left">
+          <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+          <a  routerLink="/inventory/settings/dynamicsettings/addexpensesitem" 
+          routerLinkActive="active" class="routerlink" style="color: white;">{{field_name_expense_item_addexpense_item}}</a> 
+        </button>
+       <!--  </span> -->
+      
+      </div>
+      </div> 
+  </div>
+     
+  <div class="card-body product-table p-t-35">
+    <div class="table-responsive">
+      <table class="table" [mfData]="filteredTableDataArr" #mf="mfDataTable" >
+        <thead class="thead-light">
+          <tr>
+           <th width="20%">
+                <mfDefaultSorter by="">{{'SL NO'| translate}}</mfDefaultSorter>
+              </th> 
+       
+            <th width="20%">
+              <mfDefaultSorter by="expense_item">{{field_name_expense_item_name}}</mfDefaultSorter>
+            </th>
+            
+        
+            <th width="20%" *ngIf="SHOW_EDIT_DELETE">
+             {{field_name_expense_item_actions}} 
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let obj of mf.data | orderBy: key: reverse | paginate: {itemsPerPage:5,currentPage:p,totalItems:expenseItemCount}; let i = index" >
+            <td>{{i+1}}</td>
+            <td>{{obj.expense_item}}</td>
+          
+             
+            <td *ngIf="SHOW_EDIT_DELETE">
+               
+              <i class="fa fa-edit" (click)="onClickEdit(obj)"></i> 
+  
+                <span *ngIf="ALL_DELETE_ALLOWED"><i (click)="onClickDelete(obj)" class="fa fa-trash"></i></span>
+          </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              <pagination-controls (pageChange)="pageChanged('schedule', (p = $event))">
+                            
+              </pagination-controls>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  </section>

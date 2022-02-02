@@ -1,0 +1,253 @@
+
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar' && this.departmentDetail" dir='rtl' >
+
+
+<div class="button-page">
+    <div class="row">
+  
+        <div class="col-sm-12">
+        
+                <form class="form-horizontal form-material" name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()">
+                  <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Department Details!</strong>The form has the following errors that need to be corrected
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                    <div class="card-header">
+                        <h2> 
+                            <span *ngIf="!isUpdate">{{field_name_department_adddepartment}}</span> 
+                            <span *ngIf="isUpdate">{{field_name_department_update}}</span>
+                        </h2>
+                        </div>
+                        <div class="card-body">
+                            <!--  <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Category Id<span
+                                  class="text-danger font-weight-bold">
+                                  *</span></label>
+                                <div class="col-sm-10">
+                                  <input type="text" class="form-control" [(ngModel)]="categoryDetail.category_id" name="category_id"
+                                  required pattern="[a-zA-Z0-9]+" #category_id="ngModel"  
+                                  [ngClass]="{ 'is-invalid': f.submitted && category_id.invalid, 
+                                  'is-valid': f.submitted && category_id.valid }"
+                                 required/>
+                                 <div *ngIf="f.submitted && category_id.invalid" class="invalid-feedback">
+                                  <div *ngIf="category_id.errors.required"> Please provide product id</div>
+                               
+                              <div *ngIf="category_id.errors.pattern">Id should be only in Alphanumeric
+                                 </div>
+                              </div>
+                                </div>
+                              </div>  -->
+                            <div class="form-group row">
+                              <label class="col-sm-2 col-form-label">{{field_name_department_name}}<span
+                                  class="text-danger font-weight-bold">
+                                  *</span></label>
+                                <div class="col-sm-10">
+                                  <input type="text" class="form-control" [(ngModel)]="departmentDetail.department_name" 
+                                  name="department_name"
+                                  required  pattern="^(?:[A-Za-z]+)(?:[A-Za-z _]*)$" #department_name="ngModel"  
+                                  [ngClass]="{ 'is-invalid': f.submitted && department_name.invalid, 
+                                  'is-valid': f.submitted && department_name.valid }"
+                                 required/>
+                                 
+                      <div *ngIf="showError != ''" class="alert alert-danger">
+                             {{showError}}</div>
+                                 <div *ngIf="f.submitted && department_name.invalid" class="invalid-feedback">
+                                  <div *ngIf="department_name.errors.required"> Please provide Department</div>
+                               
+                              <div *ngIf="department_name.errors.pattern">Id should be only in Alphabets
+                                 </div>
+                              </div>
+                                </div>
+                              </div>
+  
+                              <div class="form-row">
+                                <div class="form-group col-md-3">
+                                  <label class="col-sm-5 col-form-label">{{field_name_department_created_by}}
+                                   
+                                  </label>
+                                  <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="created_by"
+                                    [(ngModel)]="departmentDetail.created_by"
+                                    #created_by="ngModel" readonly>
+                                </div>
+                              </div>
+                                <div class="form-group col-md-3">
+                                  <label class="col-sm-5 col-form-label">{{field_name_department_created_time}}
+                                    
+                                  </label>
+                                  <div class="col-sm-10">
+                                   
+                                
+                                    <input type="text" class="form-control" name="created_time"  
+                                     readonly value="{{departmentDetail.created_time |  date : dateFormat:'GMT':locale}}">
+                                     
+                                  
+                                  
+                                </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                  <label class="col-sm-5 col-form-label">{{field_name_department_updated_by}}
+                                   
+                                  </label>
+                                  <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="updated_by"
+                                      [(ngModel)]="departmentDetail.updated_by"
+                                      #updated_by="ngModel" readonly>
+                                </div>
+                              </div>
+                                <div class="form-group col-md-3">
+                                  <label class="col-sm-5 col-form-label">{{field_name_department_updated_time}}
+                                   
+                                  </label>
+                                  <div class="col-sm-10">
+                                  
+                                    <input type="text" class="form-control" name="modified_time"  
+                                     readonly value=" {{departmentDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+                                  
+                                </div>
+                              </div>
+                                </div>  
+                              <button  class="btn btn-success btn-round">
+                                <span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+                                <span *ngIf="isUpdate">{{'Update'|translate}}</span>
+                            </button>
+                          
+                                     <button class="btn btn-danger btn-round" type="button"   appCancelbutton >{{'Cancel'|translate}}</button>
+                            </div>
+                </form>
+           
+            </div>
+        </div></div>
+
+      </section>
+
+
+      
+
+
+      <section *ngIf="this._uiservice.langDataSource.value != 'ar' && this.departmentDetail" dir='ltr' >
+
+
+  <div class="button-page">
+      <div class="row">
+    
+          <div class="col-sm-12">
+          
+                  <form class="form-horizontal form-material" name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()">
+                    <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+                      <strong>Department Details!</strong>The form has the following errors that need to be corrected
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                      <div class="card-header">
+                          <h2> 
+                              <span *ngIf="!isUpdate">{{field_name_department_adddepartment}}</span> 
+                              <span *ngIf="isUpdate">{{field_name_department_update}}</span>
+                          </h2>
+                          </div>
+                          <div class="card-body">
+                              <!--  <div class="form-group row">
+                                  <label class="col-sm-2 col-form-label">Category Id<span
+                                    class="text-danger font-weight-bold">
+                                    *</span></label>
+                                  <div class="col-sm-10">
+                                    <input type="text" class="form-control" [(ngModel)]="categoryDetail.category_id" name="category_id"
+                                    required pattern="[a-zA-Z0-9]+" #category_id="ngModel"  
+                                    [ngClass]="{ 'is-invalid': f.submitted && category_id.invalid, 
+                                    'is-valid': f.submitted && category_id.valid }"
+                                   required/>
+                                   <div *ngIf="f.submitted && category_id.invalid" class="invalid-feedback">
+                                    <div *ngIf="category_id.errors.required"> Please provide product id</div>
+                                 
+                                <div *ngIf="category_id.errors.pattern">Id should be only in Alphanumeric
+                                   </div>
+                                </div>
+                                  </div>
+                                </div>  -->
+                              <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">{{field_name_department_name}}<span
+                                    class="text-danger font-weight-bold">
+                                    *</span></label>
+                                  <div class="col-sm-10">
+                                    <input type="text" class="form-control" [(ngModel)]="departmentDetail.department_name" 
+                                    name="department_name"
+                                    required  pattern="^(?:[A-Za-z]+)(?:[A-Za-z _]*)$" #department_name="ngModel"  
+                                    [ngClass]="{ 'is-invalid': f.submitted && department_name.invalid, 
+                                    'is-valid': f.submitted && department_name.valid }"
+                                   required/>
+                                   
+                        <div *ngIf="showError != ''" class="alert alert-danger">
+                               {{showError}}</div>
+                                   <div *ngIf="f.submitted && department_name.invalid" class="invalid-feedback">
+                                    <div *ngIf="department_name.errors.required"> Please provide Department</div>
+                                 
+                                <div *ngIf="department_name.errors.pattern">Id should be only in Alphabets
+                                   </div>
+                                </div>
+                                  </div>
+                                </div>
+    
+                                <div class="form-row">
+                                  <div class="form-group col-md-3">
+                                    <label class="col-sm-5 col-form-label">{{field_name_department_created_by}}
+                                     
+                                    </label>
+                                    <div class="col-sm-10">
+                                      <input type="text" class="form-control" name="created_by"
+                                      [(ngModel)]="departmentDetail.created_by"
+                                      #created_by="ngModel" readonly>
+                                  </div>
+                                </div>
+                                  <div class="form-group col-md-3">
+                                    <label class="col-sm-5 col-form-label">{{field_name_department_created_time}}
+                                      
+                                    </label>
+                                    <div class="col-sm-10">
+                                     
+                                  
+                                      <input type="text" class="form-control" name="created_time"  
+                                       readonly value="{{departmentDetail.created_time |  date : dateFormat:'GMT':locale}}">
+                                       
+                                    
+                                    
+                                  </div>
+                                  </div>
+                                  <div class="form-group col-md-3">
+                                    <label class="col-sm-5 col-form-label">{{field_name_department_updated_by}}
+                                     
+                                    </label>
+                                    <div class="col-sm-10">
+                                      <input type="text" class="form-control" name="updated_by"
+                                        [(ngModel)]="departmentDetail.updated_by"
+                                        #updated_by="ngModel" readonly>
+                                  </div>
+                                </div>
+                                  <div class="form-group col-md-3">
+                                    <label class="col-sm-5 col-form-label">{{field_name_department_updated_time}}
+                                     
+                                    </label>
+                                    <div class="col-sm-10">
+                                    
+                                      <input type="text" class="form-control" name="modified_time"  
+                                       readonly value=" {{departmentDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+                                    
+                                  </div>
+                                </div>
+                                  </div>  
+                                <button  class="btn btn-success btn-round">
+                                  <span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+                                  <span *ngIf="isUpdate">{{'Update'|translate}}</span>
+                              </button>
+                            
+                                       <button class="btn btn-danger btn-round" type="button"   appCancelbutton >{{'Cancel'|translate}}</button>
+                              </div>
+                  </form>
+             
+              </div>
+          </div></div>
+  
+        </section>

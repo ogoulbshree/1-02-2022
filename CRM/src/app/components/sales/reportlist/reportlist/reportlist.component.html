@@ -1,0 +1,2143 @@
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir="ltr">
+  <div class="container-fluid">
+    <h3 class="text-center">{{ field_name_report_headding }}</h3>
+    <div class="card">
+      <div class="card-body" style="min-height: 450px">
+        <form [formGroup]="form" *ngIf="this.form">
+          <div class="form-group row col-md-12">
+            <label class="col-md-6 col-form-label">
+              <h4 class="">{{ field_name_report_section }}</h4>
+
+              <h6>{{ field_name_report_select_dropdown }}</h6></label
+            >
+          </div>
+          <div class="displayInSmallScreen form-group row col-md-12">
+            <div class="col-md-2 alignToCenter">
+              <label
+                ><span style="color: red">*</span>
+                {{ field_name_report_select_section }} :
+              </label>
+              &nbsp; &nbsp;
+              <select
+                class="form-control"
+                formControlName="sectionType"
+                id="sectionType"
+                (change)="onChange($event)"
+              >
+                <option [value]="" disabled [selected]="true">
+                  Choose Section
+                </option>
+                <option *ngFor="let item of sectionArr" [ngValue]="item.name">
+                  {{ item.name }}
+                </option>
+              </select>
+              <br />
+              <div *ngIf="form.value.sectionType == ''" style="color: red">
+                Section Required
+              </div>
+              <br />
+            </div>
+            <div class="col-md-6 alignToCenter">
+              <label
+                ><span style="color: red">*</span>
+                {{ field_name_report_view_as }} :
+              </label>
+              &nbsp; &nbsp;<select
+                class="form-control"
+                formControlName="viewType"
+              >
+                <option value="" disabled [selected]="true">
+                  Choose View Type
+                </option>
+                <option>Monthly</option>
+                <option>Yearly</option></select
+              >&nbsp;
+              <select class="form-control" formControlName="yearSelected">
+                <option value="" disabled [selected]="true">Choose Year</option>
+                <option>2021</option>
+                <option>2022</option>
+              </select>
+              <select
+                class="form-control"
+                *ngIf="this.form.value.viewType == 'Monthly'"
+                formControlName="monthSelected"
+              >
+                <option value="" disabled [selected]="true">
+                  Choose Month
+                </option>
+                <option *ngFor="let item of monthsArray" [ngValue]="item.value">
+                  {{ item.name }}
+                </option>
+              </select>
+              <br />
+              <div *ngIf="form.value.viewType == ''" style="color: red">
+                View Type Required
+              </div>
+              <!-- <div *ngIf="( form.value.viewType != ''  && form.value.viewType == 'Monthly' &&  form.value.monthSelected == '' && form.value.yearSelected == '')" style="color: red">Month & Year Required</div> -->
+              <div
+                *ngIf="
+                  form.value.viewType != '' &&
+                  form.value.viewType == 'Yearly' &&
+                  form.value.yearSelected == ''
+                "
+                style="color: red"
+              >
+                Year Required
+              </div>
+              <div
+                *ngIf="
+                  form.value.viewType != '' &&
+                  form.value.viewType == 'Monthly' &&
+                  (form.value.monthSelected == '' ||
+                    form.value.yearSelected == '')
+                "
+                style="color: red"
+              >
+                Month & Year Required
+              </div>
+              <br />
+            </div>
+            <div class="col-md-2 alignToCenter">
+              <label>
+                <span style="color: red">*</span>
+                {{ field_name_report_select_chart }} :
+              </label>
+              &nbsp; &nbsp;<select
+                class="form-control"
+                formControlName="chartType"
+              >
+                <option value="" disabled [selected]="true">
+                  Choose Chart Type
+                </option>
+                <option>bar</option>
+                <option>pie</option>
+                <option>doughnut</option>
+                <option>table</option>
+              </select>
+              <br />
+              <div *ngIf="form.value.chartType == ''" style="color: red">
+                Chart Required
+              </div>
+              <br />
+            </div>
+            <div class="col-md-2 alignToCenter">
+              <button
+                class="btn btn-primary search-btn"
+                (click)="getChart()"
+                [disabled]="!form.valid"
+              >
+                {{ field_name_report_search }}
+              </button>
+            </div>
+          </div>
+          <div class="displayInLargeScreen form-group row col-md-12">
+            <div class="col-sm-4">
+            <label
+                ><span style="color: red">*</span>
+                {{ field_name_report_select_section }} :
+              </label>
+               &nbsp;
+              <select
+                formControlName="sectionType"
+                id="sectionType"
+                (change)="onChange($event)"
+              >
+                <option [value]="" disabled [selected]="true">
+                  Choose Section
+                </option>
+                <option *ngFor="let item of sectionArr" [ngValue]="item.name">
+                  {{ item.name }}
+                </option>
+              </select>
+              <div *ngIf="form.value.sectionType == ''" style="color: red;margin-top: -6px">
+                Section Required
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <label
+                ><span style="color: red">*</span>
+                {{ field_name_report_view_as }} :
+              </label>
+              &nbsp;<select formControlName="viewType">
+                <option value="" disabled [selected]="true">
+                  Choose View Type
+                </option>
+                <option>Monthly</option>
+                <option>Yearly</option></select
+              >&nbsp;
+              <select formControlName="yearSelected">
+                <option value="" disabled [selected]="true">Choose Year</option>
+                <option>2021</option>
+                <option>2022</option>
+              </select>
+              <select
+                *ngIf="this.form.value.viewType == 'Monthly'"
+                formControlName="monthSelected"
+              >
+                <option value="" disabled [selected]="true">
+                  Choose Month
+                </option>
+                <option *ngFor="let item of monthsArray" [ngValue]="item.value">
+                  {{ item.name }}
+                </option>
+              </select>
+              <div
+                *ngIf="form.value.viewType == ''"
+                style="color: red; margin-top: -6px"
+              >
+                View Type Required
+              </div>
+              <!-- <div *ngIf="( form.value.viewType != ''  && form.value.viewType == 'Monthly' &&  form.value.monthSelected == '' && form.value.yearSelected == '')" style="color: red;margin-top:-10px">Month & Year Required</div> -->
+              <div
+                *ngIf="
+                  form.value.viewType != '' &&
+                  form.value.viewType == 'Yearly' &&
+                  form.value.yearSelected == ''
+                "
+                style="color: red; margin-top: -6px"
+              >
+                Year Required
+              </div>
+              <div
+                *ngIf="
+                  form.value.viewType != '' &&
+                  form.value.viewType == 'Monthly' &&
+                  (form.value.monthSelected == '' ||
+                    form.value.yearSelected == '')
+                "
+                style="color: red; margin-top: -6px"
+              >
+                Month & Year Required
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <label>
+                <span style="color: red">*</span>
+                {{ field_name_report_select_chart }} :
+              </label>
+               &nbsp;<select formControlName="chartType">
+                <option value="" disabled [selected]="true">
+                  Choose Chart Type
+                </option>
+                <option>bar</option>
+                <option>pie</option>
+                <option>doughnut</option>
+                <option>table</option>
+              </select>
+
+              &nbsp;
+              <button
+                class="btn btn-primary search-btn font-weight-bold"
+                (click)="getChart()"
+                [disabled]="!form.valid"
+              >
+                {{ field_name_report_search }}
+              </button>
+              <div *ngIf="form.value.chartType == ''" style="color: red;margin-top: -16px">
+                Chart Required
+              </div>
+            </div>
+          </div>
+          <div [ngStyle]="{ display: !this.showTableFlag ? 'flex' : 'none' }">
+            <div id="divChart" [ngStyle]="{
+              display: this.chartSearchCompleted ? 'flex' : 'none'
+            }">
+              <canvas
+                id="myChart"
+                width="400"
+                height="400"
+                style="margin-left: 100%"
+              ></canvas>
+            </div>
+            <div
+              *ngIf="
+                this.chartSearchCompleted &&
+                this.form.value.viewType == 'Yearly' &&
+                this.globalDataArray.length > 0
+              "
+            >
+              <h3>{{ this.form.value.sectionType }}</h3>
+              <br />
+              <span class="row">
+                <table class="percentageTable">
+                  <tr>
+                    <th class="borderBlack">Month</th>
+                    <th class="borderBlack">Percentage</th>
+                  </tr>
+                  <tr *ngFor="let k of globalDataArray">
+                    <td *ngIf="k" class="borderBlack">
+                      {{ this.getIndex(k) }}
+                    </td>
+                    <td *ngIf="k" class="borderBlack">
+                      {{ this.getPercentage(k) }}
+                    </td>
+                  </tr>
+                </table>
+              </span>
+            </div>
+            <div
+              *ngIf="
+                this.chartSearchCompleted &&
+                this.form.value.viewType == 'Monthly' &&
+                this.globalDataArray.length > 0
+              "
+            >
+              <h3>{{ this.form.value.sectionType }}</h3>
+              <br />
+              <span class="row">
+                <table class="percentageTable">
+                  <tr>
+                    <th class="borderBlack">Day in Month</th>
+                    <th class="borderBlack">Percentage</th>
+                  </tr>
+                  <tr *ngFor="let k of globalDataArray">
+                    <td *ngIf="k" class="borderBlack">
+                      {{ this.getIndexMonthly(k) }}
+                    </td>
+                    <td *ngIf="k" class="borderBlack">
+                      {{ this.getPercentage(k) }}
+                    </td>
+                  </tr>
+                </table>
+              </span>
+            </div>
+          </div>
+          <div
+            *ngIf="this.showTableFlag && this.form.value.chartType == 'table'"
+          >
+            <div
+              class="card-body product-table p-t-35"
+              *ngIf="this.form.value.sectionType == 'Customers Table'"
+            >
+              <div style="font-size: 20px; font-weight: bold">
+                {{ field_name_customer_table }}
+              </div>
+              <div class="table-responsive">
+                <table
+                  id="contentToConvert"
+                  class="table table-striped"
+                  [mfData]="selectedArr"
+                  #mf1="mfDataTable"
+                >
+                <thead class="thead-light">
+                  <tr>
+                    <th width="20%" (click)="sortCustomers('first_name')">
+                      <mfDefaultSorter by="first_name">{{
+                        field_name_customers_first_name
+                      }}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sortCustomers('last_name')">
+                      <mfDefaultSorter by="last_name">{{
+                        field_name_customers_last_name
+                      }}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sortCustomers('email')">
+                      <mfDefaultSorter by="email">{{
+                        field_name_customers_email
+                      }}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sortCustomers('phone')">
+                      <mfDefaultSorter by="phone">{{
+                        field_name_customers_phone
+                      }}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter>{{
+                        field_name_customers_actions
+                      }}</mfDefaultSorter>
+                    </th>
+                  </tr>
+                </thead>
+
+                  <tbody *ngIf="selectedArr.length > 0">
+                    <tr
+                      *ngFor="
+                        let obj of mf1.data
+                          | orderBy: key:reverse
+                          | paginate
+                            : {
+                                id: 'customers',
+                                itemsPerPage: 5,
+                                currentPage: reportPagination,
+                                totalItems: selectedCount
+                              };
+                        let i = index
+                      "
+                    >
+                      <td>{{ obj.first_name }}</td>
+
+                      <td>{{ obj.last_name }}</td>
+                      <td>{{ obj.email }}</td>
+                      <td>{{ obj.phone }}</td>
+
+                      <td>
+                        <i
+                          class="fa fa-edit"
+                          (click)="onClickEdit('customers', obj)"
+                        ></i>
+
+                        <!-- <span
+                          ><i
+                            (click)="onClickDelete('customers', obj)"
+                            class="fa fa-trash"
+                          ></i
+                        ></span> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="selectedArr.length == 0">
+                    No Records Found
+                  </tbody>
+                  <tfoot *ngIf="selectedArr.length > 0">
+                    <tr>
+                      <td colspan="4">
+                        <pagination-controls
+                          id="customers"
+                          (pageChange)="
+                            pageChanged(
+                              'customers',
+                              (customerPagination = $event)
+                            )
+                          "
+                        >
+                        </pagination-controls>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <!--Deals-->
+            <div
+              class="card-body product-table p-t-35"
+              *ngIf="this.form.value.sectionType == 'Deals Table'"
+            >
+              <div style="font-size: 20px; font-weight: bold"> {{ field_name_deals_table }}</div>
+              <div class="table-responsive">
+                <table
+                  id="contentToConvert"
+                  class="table table-striped"
+                  [mfData]="selectedArr"
+                  #mf2="mfDataTable"
+                >
+                <thead class="thead-light">
+                  <tr>
+                    <th width="20%">
+                      <mfDefaultSorter by="deal_name">{{
+                        field_name_deals_deal_name
+                      }}</mfDefaultSorter>
+                    </th>
+    
+                    <th width="20%">
+                      <mfDefaultSorter by="amount">{{
+                        field_name_deals_amount
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="expected_close_date">{{
+                        field_name_deals_expected_date
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="salesstage_name">{{
+                        field_name_deals_sales_stage
+                      }}</mfDefaultSorter>
+                    </th>
+    
+                    <th width="20%">
+                      <mfDefaultSorter by="assigned_to">{{
+                        field_name_deals_assigned_to
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="status">{{
+                        field_name_deals_status
+                      }}</mfDefaultSorter>
+                    </th>
+    
+                    <th width="20%">
+                      <mfDefaultSorter by="product_name">{{
+                        field_name_deals_product_name
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter>{{
+                        field_name_customers_actions
+                      }}</mfDefaultSorter>
+                    </th>
+                  </tr>
+                </thead>
+
+                  <tbody *ngIf="selectedArr.length > 0">
+                    <tr
+                      *ngFor="
+                        let obj of mf2.data
+                          | orderBy: key:reverse
+                          | paginate
+                            : {
+                                id: 'deals',
+                                itemsPerPage: 5,
+                                currentPage: reportPagination,
+                                totalItems: selectedCount
+                              };
+                        let i = index
+                      "
+                    >
+                      <td>{{ obj.deal_name }}</td>
+                      <td>{{ obj.amount }}</td>
+                      <td>{{ obj.expected_close_date }}</td>
+                      <td>{{ obj.salesstage_name }}</td>
+
+                      <td>{{ obj.assigned_to }}</td>
+                      <td>{{ obj.status }}</td>
+
+                      <td>{{ displayFn(obj.product_name) }}</td>
+
+                      <td>
+                        <i
+                          class="fa fa-edit"
+                          (click)="onClickEdit('deals', obj)"
+                        ></i>
+
+                        <!-- <span
+                          ><i
+                            (click)="onClickDelete('deals', obj)"
+                            class="fa fa-trash"
+                          ></i
+                        ></span> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="selectedArr.length == 0">
+                    No Records found
+                  </tbody>
+                  <tfoot *ngIf="selectedArr.length > 0">
+                    <tr>
+                      <td colspan="4">
+                        <pagination-controls
+                          id="deals"
+                          (pageChange)="
+                            pageChanged('deals', (dealsPagination = $event))
+                          "
+                        >
+                        </pagination-controls>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <!--Products-->
+            <div
+              class="card-body product-table p-t-35"
+              *ngIf="this.form.value.sectionType == 'Product Table'"
+            >
+              <div style="font-size: 20px; font-weight: bold">
+                {{ field_name_products_table }}
+              </div>
+              <div class="table-responsive">
+                <table
+                  id="contentToConvert"
+                  class="table table-striped"
+                  [mfData]="selectedArr"
+                  #mf3="mfDataTable"
+                >
+                <thead class="thead-light">
+                  <tr>
+                    <th width="20%">
+                      <mfDefaultSorter by="product_name">{{
+                        field_name_product_name
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="currency_name">{{
+                        field_name_product_currency
+                      }}</mfDefaultSorter>
+                    </th>
+    
+                    <th width="20%">
+                      <mfDefaultSorter by="cost">{{
+                        field_name_cost
+                      }}</mfDefaultSorter>
+                    </th>
+    
+                    <th width="20%">
+                      <mfDefaultSorter by="supplier_name">{{
+                        field_name_supplier_name
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter>{{
+                        field_name_customers_actions
+                      }}</mfDefaultSorter>
+                    </th>
+                  </tr>
+                </thead>
+
+                  <tbody *ngIf="selectedArr.length > 0">
+                    <tr
+                      *ngFor="
+                        let obj of mf3.data
+                          | orderBy: key:reverse
+                          | paginate
+                            : {
+                                id: 'products',
+                                itemsPerPage: 5,
+                                currentPage: reportPagination,
+                                totalItems: selectedCount
+                              };
+                        let i = index
+                      "
+                    >
+                      <td>{{ obj.product_name }}</td>
+                      <td>{{ obj.currency_name }}</td>
+                      <td>{{ obj.cost }}</td>
+                      <td>{{ obj.supplier_name }}</td>
+
+                      <td>
+                        <i
+                          class="fa fa-edit"
+                          (click)="onClickEdit('products', obj)"
+                        ></i>
+
+                        <!-- <span
+                          ><i
+                            (click)="onClickDelete('products', obj)"
+                            class="fa fa-trash"
+                          ></i
+                        ></span> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="selectedArr.length == 0">
+                    No Records Found
+                  </tbody>
+
+                  <tfoot *ngIf="selectedArr.length > 0">
+                    <tr>
+                      <td colspan="4">
+                        <pagination-controls
+                          id="products"
+                          (pageChange)="
+                            pageChanged(
+                              'products',
+                              (productsPagiantion = $event)
+                            )
+                          "
+                        >
+                        </pagination-controls>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <!--Quotes-->
+            <div
+              class="card-body product-table p-t-35"
+              *ngIf="this.form.value.sectionType == 'Quotation Table'"
+            >
+              <div style="font-size: 20px; font-weight: bold">  {{ field_name_quotes_table }}</div>
+              <div class="table-responsive">
+                <table
+                  id="contentToConvert"
+                  class="table table-striped"
+                  [mfData]="selectedArr"
+                  #mf4="mfDataTable"
+                >
+                <thead class="thead-light">
+                  <tr>
+                    <th width="20%">
+                      <mfDefaultSorter by="quote_id">{{
+                        field_name_quotes_quotation_id
+                      }}</mfDefaultSorter>
+                    </th>
+    
+                    <th width="20%">
+                      <mfDefaultSorter by="first_name">{{
+                        field_name_quotes_customername
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="quotation_date">{{
+                        field_name_quotes_quotationdate
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="product_name">{{
+                        field_name_quotes_productname
+                      }}</mfDefaultSorter>
+                    </th>
+    
+                    <th width="20%">
+                      <mfDefaultSorter>{{
+                        field_name_customers_actions
+                      }}</mfDefaultSorter>
+                    </th>
+                  </tr>
+                </thead>
+
+                  <tbody *ngIf="selectedArr.length > 0">
+                    <tr
+                      *ngFor="
+                        let obj of mf4.data
+                          | orderBy: key:reverse
+                          | paginate
+                            : {
+                                id: 'quotes',
+                                itemsPerPage: 5,
+                                currentPage: reportPagination,
+                                totalItems: selectedCount
+                              };
+                        let i = index
+                      "
+                    >
+                      <td>{{ obj.quote_id }}</td>
+
+                      <td>{{ obj.first_name }}</td>
+
+                      <td>{{ obj.quotation_date }}</td>
+                      <td>{{ getProductDetails(obj.product_name) }}</td>
+
+                      <td>
+                        <i
+                          class="fa fa-edit"
+                          (click)="onClickEdit('quotes', obj)"
+                        ></i>
+
+                        <!-- <span
+                          ><i
+                            (click)="onClickDelete('quotes', obj)"
+                            class="fa fa-trash"
+                          ></i
+                        ></span> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="selectedArr.length == 0">
+                    No Records Found
+                  </tbody>
+                  <tfoot *ngIf="selectedArr.length > 0">
+                    <tr>
+                      <td colspan="4">
+                        <pagination-controls
+                          id="quotes"
+                          (pageChange)="
+                            pageChanged('quotes', (quotesPagiantion = $event))
+                          "
+                        >
+                        </pagination-controls>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <!---Leads-->
+            <div
+              class="card-body product-table p-t-35"
+              *ngIf="this.form.value.sectionType == 'Leads Table'"
+            >
+              <div style="font-size: 20px; font-weight: bold"> {{ field_name_leads_table }}</div>
+              <div class="table-responsive">
+                <table
+                  id="contentToConvert"
+                  class="table table-striped"
+                  [mfData]="selectedArr"
+                  #mf6="mfDataTable"
+                >
+                <thead class="thead-light">
+                  <tr>
+                    <!--  <th width="20%">
+                        <mfDefaultSorter by="user_id">ID</mfDefaultSorter>
+                      </th> -->
+    
+                    <th width="20%" (click)="sort('first_name')">
+                      <mfDefaultSorter by="first_name">{{
+                        field_name_customers_first_name
+                      }}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sort('last_name')">
+                      <mfDefaultSorter by="last_name">{{
+                        field_name_customers_last_name
+                      }}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sort('email')">
+                      <mfDefaultSorter by="email">{{
+                        field_name_customers_email
+                      }}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sort('phone')">
+                      <mfDefaultSorter by="phone">{{
+                        field_name_customers_phone
+                      }}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+    
+                    <!--  <th width="20%">
+                          <mfDefaultSorter by="files">ImageUrl</mfDefaultSorter>
+          
+                        </th> -->
+    
+                    <th width="20%">
+                      <mfDefaultSorter>{{
+                        field_name_customers_actions
+                      }}</mfDefaultSorter>
+                    </th>
+                  </tr>
+                </thead>
+    
+
+                  <tbody *ngIf="selectedArr.length > 0">
+                    <tr
+                      *ngFor="
+                        let obj of mf6.data
+                          | orderBy: key:reverse
+                          | paginate
+                            : {
+                                id: 'leads',
+                                itemsPerPage: 5,
+                                currentPage: reportPagination,
+                                totalItems: selectedCount
+                              };
+                        let i = index
+                      "
+                    >
+                      <!--  <td>{{obj.user_id}}</td> -->
+                      <td>{{ obj.first_name }}</td>
+
+                      <td>{{ obj.last_name }}</td>
+                      <td>{{ obj.email }}</td>
+                      <td>{{ obj.phone }}</td>
+
+                      <!--      
+                    <td>
+                        <button type="button" class="btn btn-primary" (click)="onClickEdit(obj)"> <i class="fa fa-edit"></i></button> 
+                        <button type="button" class="btn btn-danger" (click)="onClickDelete(obj)"> <i class="fa fa-trash"></i></button>  
+                        </td> -->
+
+                      <td>
+                        <i
+                          class="fa fa-edit"
+                          (click)="onClickEdit('leads', obj)"
+                        ></i>
+
+                        <!-- <span
+                          ><i
+                            (click)="onClickDelete('leads', obj)"
+                            class="fa fa-trash"
+                          ></i
+                        ></span> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="selectedArr.length == 0">
+                    No Records Found
+                  </tbody>
+                  <tfoot *ngIf="selectedArr.length > 0">
+                    <tr>
+                      <td colspan="4">
+                        <pagination-controls
+                          id="leads"
+                          (pageChange)="
+                            pageChanged('leads', (leadsPagination = $event))
+                          "
+                        >
+                        </pagination-controls>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <!--Schedule Visits-->
+            <div
+              class="card-body product-table p-t-35"
+              *ngIf="this.form.value.sectionType == 'Schedule Visit Table'"
+            >
+              <div style="font-size: 20px; font-weight: bold">
+                {{ field_name_schedule_table }}
+              </div>
+              <div class="table-responsive">
+                <table
+                  id="contentToConvert"
+                  class="table table-striped"
+                  [mfData]="selectedArr"
+                  #mf8="mfDataTable"
+                >
+                <thead class="thead-light">
+                  <tr>
+                    <th width="20%">
+                      <mfDefaultSorter by="customer_name">{{
+                        field_name_shedule_visits_salesemail
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="first_name">{{
+                        field_name_shedule_visits_customer_name
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="phone">{{
+                        field_name_shedule_visits_created_by
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="date">{{
+                        field_name_shedule_visits_date
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="time">{{
+                        field_name_shedule_visits_time
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      {{ field_name_customers_actions }}
+                    </th>
+                  </tr>
+                </thead>
+
+                  <tbody *ngIf="selectedArr.length > 0">
+                    <tr
+                      *ngFor="
+                        let obj of mf8.data
+                          | orderBy: key:reverse
+                          | paginate
+                            : {
+                                id: 'scheduleVisit',
+                                itemsPerPage: 5,
+                                currentPage: reportPagination,
+                                totalItems: selectedCount
+                              };
+                        let i = index
+                      "
+                    >
+                      <td>{{ obj.email }}</td>
+                      <td>{{ obj.first_name }}</td>
+                      <td>{{ obj.created_by }}</td>
+                      <td>{{ obj.date }}</td>
+                      <td>{{ obj.time }}</td>
+
+                      <td>
+                        <i
+                          class="fa fa-edit"
+                          (click)="onClickEdit('schedule', obj)"
+                        ></i>
+
+                        <!-- <span
+                          ><i
+                            (click)="onClickDelete('schedule', obj)"
+                            class="fa fa-trash"
+                          ></i
+                        ></span> -->
+                      </td>
+                    </tr>
+                  </tbody>
+
+                  <tbody *ngIf="selectedArr.length == 0">
+                    No Records Found
+                  </tbody>
+
+                  <tfoot *ngIf="selectedArr.length > 0">
+                    <tr>
+                      <td colspan="4">
+                        <pagination-controls
+                          id="scheduleVisit"
+                          (pageChange)="
+                            pageChanged('schedule', (reportPagination = $event))
+                          "
+                        >
+                        </pagination-controls>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <!--Add Visits -->
+            <div
+              class="card-body product-table p-t-35"
+              *ngIf="this.form.value.sectionType == 'Add Visits Table'"
+            >
+              <div style="font-size: 20px; font-weight: bold">
+                {{ field_name_visits_table }}
+              </div>
+              <div class="table-responsive">
+                <table
+                  id="contentToConvert"
+                  class="table table-striped"
+                  [mfData]="selectedArr"
+                  #mf9="mfDataTable"
+                >
+                <thead class="thead-light">
+                  <tr>
+                    <th width="20%">
+                      <mfDefaultSorter by="created_by">{{
+                        field_name_customers_email
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%" (click)="sort('first_name')">
+                      <mfDefaultSorter by="first_name">{{
+                        field_name_shedule_visits_customer_name
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="email">{{
+                        field_name_customers_email
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="phone">{{
+                        field_name_customers_phone
+                      }}</mfDefaultSorter>
+                    </th>
+    
+                    <th width="20%">
+                      <mfDefaultSorter by="last_name">{{
+                        field_name_customers_last_name
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      {{ field_name_customers_actions }}
+                    </th>
+                  </tr>
+                </thead>
+                  <tbody *ngIf="selectedArr.length > 0">
+                    <tr
+                      *ngFor="
+                        let obj of mf9.data
+                          | orderBy: key:reverse
+                          | paginate
+                            : {
+                                id: 'addVisit',
+                                itemsPerPage: 5,
+                                currentPage: reportPagination,
+                                totalItems: selectedCount
+                              };
+                        let i = index
+                      "
+                    >
+                      <td>{{ obj.created_by }}</td>
+                      <td>{{ obj.first_name }}</td>
+                      <td>{{ obj.email }}</td>
+                      <td>{{ obj.phone }}</td>
+
+                      <td>{{ obj.last_name }}</td>
+                      <td>
+                        <i
+                          class="fa fa-edit"
+                          (click)="onClickEdit('addVisits', obj)"
+                        ></i>
+
+                        <!-- <span
+                          ><i
+                            (click)="onClickDelete('addVisits', obj)"
+                            class="fa fa-trash"
+                          ></i
+                        ></span> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="selectedArr.length == 0">
+                    No Records Found
+                  </tbody>
+                  <tfoot *ngIf="selectedArr.length > 0">
+                    <tr>
+                      <td colspan="4">
+                        <pagination-controls
+                          id="addVisit"
+                          (pageChange)="
+                            pageChanged('addVisit', (page = $event))
+                          "
+                        >
+                        </pagination-controls>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir="rtl">
+  <div class="container-fluid">
+    <h3 class="text-center">{{ field_name_report_headding }}</h3>
+    <div class="card">
+      <div class="card-body" style="min-height: 450px">
+        <form [formGroup]="form"  *ngIf="this.form">
+          <div class="form-group row col-md-12">
+            <label class="col-md-6 col-form-label">
+              <h4 class="">{{ field_name_report_section }}</h4>
+
+              <h6>{{ field_name_report_select_dropdown }}</h6></label
+            >
+          </div>
+          <div class="displayInSmallScreen form-group row col-md-12">
+            <div class="col-md-2 alignToCenter">
+              <label
+                ><span style="color: red">*</span>
+                {{ field_name_report_select_section }} :
+              </label>
+              &nbsp; &nbsp;
+              <select
+                class="form-control"
+                formControlName="sectionType"
+                id="sectionType"
+                (change)="onChange($event)"
+              >
+                <option [value]="" disabled [selected]="true">
+                  Choose Section
+                </option>
+                <option *ngFor="let item of sectionArr" [ngValue]="item.name">
+                  {{ item.name }}
+                </option>
+              </select>
+              <br />
+              <div *ngIf="form.value.sectionType == ''" style="color: red">
+                Section Required
+              </div>
+              <br />
+            </div>
+            <div class="col-md-6 alignToCenter">
+              <label
+                ><span style="color: red">*</span>
+                {{ field_name_report_view_as }} :
+              </label>
+              &nbsp; &nbsp;<select
+                class="form-control"
+                formControlName="viewType"
+              >
+                <option value="" disabled [selected]="true">
+                  Choose View Type
+                </option>
+                <option>Monthly</option>
+                <option>Yearly</option></select
+              >&nbsp;
+              <select class="form-control" formControlName="yearSelected">
+                <option value="" disabled [selected]="true">Choose Year</option>
+                <option>2021</option>
+                <option>2022</option>
+              </select>
+              <select
+                class="form-control"
+                *ngIf="this.form.value.viewType == 'Monthly'"
+                formControlName="monthSelected"
+              >
+                <option value="" disabled [selected]="true">
+                  Choose Month
+                </option>
+                <option *ngFor="let item of monthsArray" [ngValue]="item.value">
+                  {{ item.name }}
+                </option>
+              </select>
+              <br />
+              <div *ngIf="form.value.viewType == ''" style="color: red">
+                View Type Required
+              </div>
+              <!-- <div *ngIf="( form.value.viewType != ''  && form.value.viewType == 'Monthly' &&  form.value.monthSelected == '' && form.value.yearSelected == '')" style="color: red">Month & Year Required</div> -->
+              <div
+                *ngIf="
+                  form.value.viewType != '' &&
+                  form.value.viewType == 'Yearly' &&
+                  form.value.yearSelected == ''
+                "
+                style="color: red"
+              >
+                Year Required
+              </div>
+              <div
+                *ngIf="
+                  form.value.viewType != '' &&
+                  form.value.viewType == 'Monthly' &&
+                  (form.value.monthSelected == '' ||
+                    form.value.yearSelected == '')
+                "
+                style="color: red"
+              >
+                Month & Year Required
+              </div>
+              <br />
+            </div>
+            <div class="col-md-2 alignToCenter">
+              <label>
+                <span style="color: red">*</span>
+                {{ field_name_report_select_chart }} :
+              </label>
+              &nbsp; &nbsp;<select
+                class="form-control"
+                formControlName="chartType"
+              >
+                <option value="" disabled [selected]="true">
+                  Choose Chart Type
+                </option>
+                <option>bar</option>
+                <option>pie</option>
+                <option>doughnut</option>
+                <option>table</option>
+              </select>
+              <br />
+              <div *ngIf="form.value.chartType == ''" style="color: red">
+                Chart Required
+              </div>
+            </div>
+            <div class="col-md-2 alignToCenter">
+              <button
+                class="btn btn-primary search-btn"
+                (click)="getChart()"
+                [disabled]="!form.valid"
+              >
+                {{ field_name_report_search }}
+              </button>
+            </div>
+          </div>
+          <div class="displayInLargeScreen form-group row col-md-12">
+            <div class="col-sm-3">
+              <label
+                ><span style="color: red">*</span>
+                {{ field_name_report_select_section }} :
+              </label>
+              &nbsp; &nbsp;
+              <select
+                formControlName="sectionType"
+                id="sectionType"
+                (change)="onChange($event)"
+              >
+                <option [value]="" disabled [selected]="true">
+                  Choose Section
+                </option>
+                <option *ngFor="let item of sectionArr" [ngValue]="item.name">
+                  {{ item.name }}
+                </option>
+              </select>
+              <div *ngIf="form.value.sectionType == ''" style="color: red">
+                Section Required
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <label
+                ><span style="color: red">*</span>
+                {{ field_name_report_view_as }} :
+              </label>
+              &nbsp; &nbsp;<select formControlName="viewType">
+                <option value="" disabled [selected]="true">
+                  Choose View Type
+                </option>
+                <option>Monthly</option>
+                <option>Yearly</option></select
+              >&nbsp;
+              <select formControlName="yearSelected">
+                <option value="" disabled [selected]="true">Choose Year</option>
+                <option>2021</option>
+                <option>2022</option>
+              </select>
+              <select
+                *ngIf="this.form.value.viewType == 'Monthly'"
+                formControlName="monthSelected"
+              >
+                <option value="" disabled [selected]="true">
+                  Choose Month
+                </option>
+                <option *ngFor="let item of monthsArray" [ngValue]="item.value">
+                  {{ item.name }}
+                </option>
+              </select>
+              <div
+                *ngIf="form.value.viewType == ''"
+                style="color: red; margin-top: -10px"
+              >
+                View Type Required
+              </div>
+              <!-- <div *ngIf="( form.value.viewType != ''  && form.value.viewType == 'Monthly' &&  form.value.monthSelected == '' && form.value.yearSelected == '')" style="color: red;margin-top:-10px">Month & Year Required</div> -->
+              <div
+                *ngIf="
+                  form.value.viewType != '' &&
+                  form.value.viewType == 'Yearly' &&
+                  form.value.yearSelected == ''
+                "
+                style="color: red; margin-top: -10px"
+              >
+                Year Required
+              </div>
+              <div
+                *ngIf="
+                  form.value.viewType != '' &&
+                  form.value.viewType == 'Monthly' &&
+                  (form.value.monthSelected == '' ||
+                    form.value.yearSelected == '')
+                "
+                style="color: red; margin-top: -10px"
+              >
+                Month & Year Required
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <label>
+                <span style="color: red">*</span>
+                {{ field_name_report_select_chart }} :
+              </label>
+              &nbsp; &nbsp;<select formControlName="chartType">
+                <option value="" disabled [selected]="true">
+                  Choose Chart Type
+                </option>
+                <option>bar</option>
+                <option>pie</option>
+                <option>doughnut</option>
+                <option>table</option>
+              </select>
+
+              &nbsp; &nbsp;
+              <button
+                class="btn btn-primary search-btn"
+                (click)="getChart()"
+                [disabled]="!form.valid"
+              >
+                {{ field_name_report_search }}
+              </button>
+              <div *ngIf="form.value.chartType == ''" style="color: red">
+                Chart Required
+              </div>
+            </div>
+          </div>
+          <div
+            [ngStyle]="{ display: !this.showTableFlag ? 'flex' : 'none' }"
+          >
+            <div id="divChart">
+              <canvas
+                id="myChart"
+                width="400"
+                height="400"
+                style="margin-left: 100%"
+              ></canvas>
+            </div>
+            <div
+              *ngIf="
+                this.chartSearchCompleted &&
+                this.form.value.viewType == 'Yearly' &&
+                this.globalDataArray.length > 0
+              "
+            >
+              <h3>{{ this.form.value.sectionType }}</h3>
+              <br />
+              <span class="row">
+                <table class="percentageTable">
+                  <tr>
+                    <th class="borderBlack">Month</th>
+                    <th class="borderBlack">Percentage</th>
+                  </tr>
+                  <tr *ngFor="let k of globalDataArray">
+                    <td *ngIf="k" class="borderBlack">
+                      {{ this.getIndex(k) }}
+                    </td>
+                    <td *ngIf="k" class="borderBlack">
+                      {{ this.getPercentage(k) }}
+                    </td>
+                  </tr>
+                </table>
+              </span>
+            </div>
+            <div
+              *ngIf="
+                this.chartSearchCompleted &&
+                this.form.value.viewType == 'Monthly' &&
+                this.globalDataArray.length > 0
+              "
+            >
+              <h3>{{ this.form.value.sectionType }}</h3>
+              <br />
+              <span class="row">
+                <table class="percentageTable">
+                  <tr>
+                    <th class="borderBlack">Day in Month</th>
+                    <th class="borderBlack">Percentage</th>
+                  </tr>
+                  <tr *ngFor="let k of globalDataArray">
+                    <td *ngIf="k" class="borderBlack">
+                      {{ this.getIndexMonthly(k) }}
+                    </td>
+                    <td *ngIf="k" class="borderBlack">
+                      {{ this.getPercentage(k) }}
+                    </td>
+                  </tr>
+                </table>
+              </span>
+            </div>
+          </div>
+          <div
+            *ngIf="this.showTableFlag && this.form.value.chartType == 'table'"
+          >
+            <div
+              class="card-body product-table p-t-35"
+              *ngIf="this.form.value.sectionType == 'Customers Table'"
+            >
+              <div style="font-size: 20px; font-weight: bold">
+                {{ field_name_customer_table }}
+              </div>
+              <div class="table-responsive">
+                <table
+                  id="contentToConvert"
+                  class="table table-striped"
+                  [mfData]="selectedArr"
+                  #mf1="mfDataTable"
+                >
+                <thead class="thead-light">
+                  <tr>
+                    <th width="20%" (click)="sortCustomers('first_name')">
+                      <mfDefaultSorter by="first_name">{{
+                        field_name_customers_first_name
+                      }}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sortCustomers('last_name')">
+                      <mfDefaultSorter by="last_name">{{
+                        field_name_customers_last_name
+                      }}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sortCustomers('email')">
+                      <mfDefaultSorter by="email">{{
+                        field_name_customers_email
+                      }}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sortCustomers('phone')">
+                      <mfDefaultSorter by="phone">{{
+                        field_name_customers_phone
+                      }}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter>{{
+                        field_name_customers_actions
+                      }}</mfDefaultSorter>
+                    </th>
+                  </tr>
+                </thead>
+
+                  <tbody *ngIf="selectedArr.length > 0">
+                    <tr
+                      *ngFor="
+                        let obj of mf1.data
+                          | orderBy: key:reverse
+                          | paginate
+                            : {
+                                id: 'customers',
+                                itemsPerPage: 5,
+                                currentPage: customerPagination,
+                                totalItems: selectedArr.length
+                              };
+                        let i = index
+                      "
+                    >
+                      <td>{{ obj.first_name }}</td>
+
+                      <td>{{ obj.last_name }}</td>
+                      <td>{{ obj.email }}</td>
+                      <td>{{ obj.phone }}</td>
+
+                      <td>
+                        <i
+                          class="fa fa-edit"
+                          (click)="onClickEdit('customers', obj)"
+                        ></i>
+
+                        <!-- <span
+                          ><i
+                            (click)="onClickDelete('customers', obj)"
+                            class="fa fa-trash"
+                          ></i
+                        ></span> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="selectedArr.length == 0">
+                    No Records Found
+                  </tbody>
+                  <tfoot *ngIf="selectedArr.length > 0">
+                    <tr>
+                      <td colspan="4">
+                        <pagination-controls
+                          id="customers"
+                          (pageChange)="
+                            pageChanged(
+                              'customers',
+                              (customerPagination = $event)
+                            )
+                          "
+                        >
+                        </pagination-controls>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <!--Deals-->
+            <div
+              class="card-body product-table p-t-35"
+              *ngIf="this.form.value.sectionType == 'Deals Table'"
+            >
+              <div style="font-size: 20px; font-weight: bold">{{ field_name_deals_table }}</div>
+              <div class="table-responsive">
+                <table
+                  id="contentToConvert"
+                  class="table table-striped"
+                  [mfData]="selectedArr"
+                  #mf2="mfDataTable"
+                >
+                <thead class="thead-light">
+                  <tr>
+                    <th width="20%">
+                      <mfDefaultSorter by="deal_name">{{
+                        field_name_deals_deal_name
+                      }}</mfDefaultSorter>
+                    </th>
+    
+                    <th width="20%">
+                      <mfDefaultSorter by="amount">{{
+                        field_name_deals_amount
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="expected_close_date">{{
+                        field_name_deals_expected_date
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="salesstage_name">{{
+                        field_name_deals_sales_stage
+                      }}</mfDefaultSorter>
+                    </th>
+    
+                    <th width="20%">
+                      <mfDefaultSorter by="assigned_to">{{
+                        field_name_deals_assigned_to
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="status">{{
+                        field_name_deals_status
+                      }}</mfDefaultSorter>
+                    </th>
+    
+                    <th width="20%">
+                      <mfDefaultSorter by="product_name">{{
+                        field_name_deals_product_name
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter>{{
+                        field_name_customers_actions
+                      }}</mfDefaultSorter>
+                    </th>
+                  </tr>
+                </thead>
+
+                  <tbody *ngIf="selectedArr.length > 0">
+                    <tr
+                      *ngFor="
+                        let obj of mf2.data
+                          | orderBy: key:reverse
+                          | paginate
+                            : {
+                                id: 'deals',
+                                itemsPerPage: 5,
+                                currentPage: dealsPagination,
+                                totalItems: totalDealsCount
+                              };
+                        let i = index
+                      "
+                    >
+                      <td>{{ obj.deal_name }}</td>
+                      <td>{{ obj.amount }}</td>
+                      <td>{{ obj.expected_close_date }}</td>
+                      <td>{{ obj.salesstage_name }}</td>
+
+                      <td>{{ obj.assigned_to }}</td>
+                      <td>{{ obj.status }}</td>
+
+                      <td>{{ displayFn(obj.product_name) }}</td>
+
+                      <td>
+                        <i
+                          class="fa fa-edit"
+                          (click)="onClickEdit('deals', obj)"
+                        ></i>
+
+                        <!-- <span
+                          ><i
+                            (click)="onClickDelete('deals', obj)"
+                            class="fa fa-trash"
+                          ></i
+                        ></span> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="selectedArr.length == 0">
+                    No Records found
+                  </tbody>
+                  <tfoot *ngIf="selectedArr.length > 0">
+                    <tr>
+                      <td colspan="4">
+                        <pagination-controls
+                          id="deals"
+                          (pageChange)="
+                            pageChanged('deals', (dealsPagination = $event))
+                          "
+                        >
+                        </pagination-controls>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <!--Products-->
+            <div
+              class="card-body product-table p-t-35"
+              *ngIf="this.form.value.sectionType == 'Product Table'"
+            >
+              <div style="font-size: 20px; font-weight: bold">
+                {{ field_name_products_table }}
+              </div>
+              <div class="table-responsive">
+                <table
+                  id="contentToConvert"
+                  class="table table-striped"
+                  [mfData]="selectedArr"
+                  #mf3="mfDataTable"
+                >
+                <thead class="thead-light">
+                  <tr>
+                    <th width="20%">
+                      <mfDefaultSorter by="product_name">{{
+                        field_name_product_name
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="currency_name">{{
+                        field_name_product_currency
+                      }}</mfDefaultSorter>
+                    </th>
+    
+                    <th width="20%">
+                      <mfDefaultSorter by="cost">{{
+                        field_name_cost
+                      }}</mfDefaultSorter>
+                    </th>
+    
+                    <th width="20%">
+                      <mfDefaultSorter by="supplier_name">{{
+                        field_name_supplier_name
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter>{{
+                        field_name_customers_actions
+                      }}</mfDefaultSorter>
+                    </th>
+                  </tr>
+                </thead>
+
+                  <tbody *ngIf="selectedArr.length > 0">
+                    <tr
+                      *ngFor="
+                        let obj of mf3.data
+                          | orderBy: key:reverse
+                          | paginate
+                            : {
+                                id: 'products',
+                                itemsPerPage: 5,
+                                currentPage: productsPagiantion,
+                                totalItems: 6
+                              };
+                        let i = index
+                      "
+                    >
+                      <td>{{ obj.product_name }}</td>
+                      <td>{{ obj.currency_name }}</td>
+                      <td>{{ obj.cost }}</td>
+                      <td>{{ obj.supplier_name }}</td>
+
+                      <td>
+                        <i
+                          class="fa fa-edit"
+                          (click)="onClickEdit('products', obj)"
+                        ></i>
+
+                        <!-- <span
+                          ><i
+                            (click)="onClickDelete('products', obj)"
+                            class="fa fa-trash"
+                          ></i
+                        ></span> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="selectedArr.length == 0">
+                    No Records Found
+                  </tbody>
+
+                  <tfoot *ngIf="selectedArr.length > 0">
+                    <tr>
+                      <td colspan="4">
+                        <pagination-controls
+                          id="products"
+                          (pageChange)="
+                            pageChanged(
+                              'products',
+                              (productsPagiantion = $event)
+                            )
+                          "
+                        >
+                        </pagination-controls>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <!--Quotes-->
+            <div
+              class="card-body product-table p-t-35"
+              *ngIf="this.form.value.sectionType == 'Quotation Table'"
+            >
+              <div style="font-size: 20px; font-weight: bold">{{ field_name_quotes_table }}</div>
+              <div class="table-responsive">
+                <table
+                  id="contentToConvert"
+                  class="table table-striped"
+                  [mfData]="selectedArr"
+                  #mf4="mfDataTable"
+                >
+                <thead class="thead-light">
+                  <tr>
+                    <th width="20%">
+                      <mfDefaultSorter by="quote_id">{{
+                        field_name_quotes_quotation_id
+                      }}</mfDefaultSorter>
+                    </th>
+    
+                    <th width="20%">
+                      <mfDefaultSorter by="first_name">{{
+                        field_name_quotes_customername
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="quotation_date">{{
+                        field_name_quotes_quotationdate
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="product_name">{{
+                        field_name_quotes_productname
+                      }}</mfDefaultSorter>
+                    </th>
+    
+                    <th width="20%">
+                      <mfDefaultSorter>{{
+                        field_name_customers_actions
+                      }}</mfDefaultSorter>
+                    </th>
+                  </tr>
+                </thead>
+
+                  <tbody *ngIf="selectedArr.length > 0">
+                    <tr
+                      *ngFor="
+                        let obj of mf4.data
+                          | orderBy: key:reverse
+                          | paginate
+                            : {
+                                id: 'quotes',
+                                itemsPerPage: 5,
+                                currentPage: quotesPagiantion,
+                                totalItems: totalQuotesCount
+                              };
+                        let i = index
+                      "
+                    >
+                      <td>{{ obj.quote_id }}</td>
+
+                      <td>{{ obj.first_name }}</td>
+
+                      <td>{{ obj.quotation_date }}</td>
+                      <td>{{ getProductDetails(obj.product_name) }}</td>
+
+                      <td>
+                        <i
+                          class="fa fa-edit"
+                          (click)="onClickEdit('quotes', obj)"
+                        ></i>
+
+                        <!-- <span
+                          ><i
+                            (click)="onClickDelete('quotes', obj)"
+                            class="fa fa-trash"
+                          ></i
+                        ></span> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="selectedArr.length == 0">
+                    No Records Found
+                  </tbody>
+                  <tfoot *ngIf="selectedArr.length > 0">
+                    <tr>
+                      <td colspan="4">
+                        <pagination-controls
+                          id="quotes"
+                          (pageChange)="
+                            pageChanged('quotes', (quotesPagiantion = $event))
+                          "
+                        >
+                        </pagination-controls>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <!---Leads-->
+            <div
+              class="card-body product-table p-t-35"
+              *ngIf="this.form.value.sectionType == 'Leads Table'"
+            >
+              <div style="font-size: 20px; font-weight: bold">{{ field_name_leads_table }}</div>
+              <div class="table-responsive">
+                <table
+                  id="contentToConvert"
+                  class="table table-striped"
+                  [mfData]="selectedArr"
+                  #mf6="mfDataTable"
+                >
+                <thead class="thead-light">
+                  <tr>
+                    <!--  <th width="20%">
+                        <mfDefaultSorter by="user_id">ID</mfDefaultSorter>
+                      </th> -->
+    
+                    <th width="20%" (click)="sort('first_name')">
+                      <mfDefaultSorter by="first_name">{{
+                        field_name_customers_first_name
+                      }}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sort('last_name')">
+                      <mfDefaultSorter by="last_name">{{
+                        field_name_customers_last_name
+                      }}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sort('email')">
+                      <mfDefaultSorter by="email">{{
+                        field_name_customers_email
+                      }}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sort('phone')">
+                      <mfDefaultSorter by="phone">{{
+                        field_name_customers_phone
+                      }}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+    
+                    <!--  <th width="20%">
+                          <mfDefaultSorter by="files">ImageUrl</mfDefaultSorter>
+          
+                        </th> -->
+    
+                    <th width="20%">
+                      <mfDefaultSorter>{{
+                        field_name_customers_actions
+                      }}</mfDefaultSorter>
+                    </th>
+                  </tr>
+                </thead>
+                  <tbody *ngIf="selectedArr.length > 0">
+                    <tr
+                      *ngFor="
+                        let obj of mf6.data
+                          | orderBy: key:reverse
+                          | paginate
+                            : {
+                                id: 'leads',
+                                itemsPerPage: 5,
+                                currentPage: leadsPagination,
+                                totalItems: totalLeadsCount
+                              };
+                        let i = index
+                      "
+                    >
+                      <!--  <td>{{obj.user_id}}</td> -->
+                      <td>{{ obj.first_name }}</td>
+
+                      <td>{{ obj.last_name }}</td>
+                      <td>{{ obj.email }}</td>
+                      <td>{{ obj.phone }}</td>
+
+                      <!--      
+                    <td>
+                        <button type="button" class="btn btn-primary" (click)="onClickEdit(obj)"> <i class="fa fa-edit"></i></button> 
+                        <button type="button" class="btn btn-danger" (click)="onClickDelete(obj)"> <i class="fa fa-trash"></i></button>  
+                        </td> -->
+
+                      <td>
+                        <i
+                          class="fa fa-edit"
+                          (click)="onClickEdit('leads', obj)"
+                        ></i>
+
+                        <!-- <span
+                          ><i
+                            (click)="onClickDelete('leads', obj)"
+                            class="fa fa-trash"
+                          ></i
+                        ></span> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="selectedArr.length == 0">
+                    No Records Found
+                  </tbody>
+                  <tfoot *ngIf="selectedArr.length > 0">
+                    <tr>
+                      <td colspan="4">
+                        <pagination-controls
+                          id="leads"
+                          (pageChange)="
+                            pageChanged('leads', (leadsPagination = $event))
+                          "
+                        >
+                        </pagination-controls>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <!--Schedule Visits-->
+            <div
+              class="card-body product-table p-t-35"
+              *ngIf="this.form.value.sectionType == 'Schedule Visit Table'"
+            >
+              <div style="font-size: 20px; font-weight: bold">
+                {{ field_name_schedule_table }}
+              </div>
+              <div class="table-responsive">
+                <table
+                  id="contentToConvert"
+                  class="table table-striped"
+                  [mfData]="selectedArr"
+                  #mf8="mfDataTable"
+                >
+                <thead class="thead-light">
+                  <tr>
+                    <th width="20%">
+                      <mfDefaultSorter by="customer_name">{{
+                        field_name_shedule_visits_salesemail
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="first_name">{{
+                        field_name_shedule_visits_customer_name
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="phone">{{
+                        field_name_shedule_visits_created_by
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="date">{{
+                        field_name_shedule_visits_date
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="time">{{
+                        field_name_shedule_visits_time
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      {{ field_name_customers_actions }}
+                    </th>
+                  </tr>
+                </thead>
+                  <tbody *ngIf="selectedArr.length > 0">
+                    <tr
+                      *ngFor="
+                        let obj of mf8.data
+                          | orderBy: key:reverse
+                          | paginate
+                            : {
+                                id: 'scheduleVisit',
+                                itemsPerPage: 5,
+                                currentPage: page,
+                                totalItems: this.totalScheduleCount
+                              };
+                        let i = index
+                      "
+                    >
+                      <td>{{ obj.email }}</td>
+                      <td>{{ obj.first_name }}</td>
+                      <td>{{ obj.created_by }}</td>
+                      <td>{{ obj.date }}</td>
+                      <td>{{ obj.time }}</td>
+
+                      <td>
+                        <i
+                          class="fa fa-edit"
+                          (click)="onClickEdit('schedule', obj)"
+                        ></i>
+
+                        <!-- <span
+                          ><i
+                            (click)="onClickDelete('schedule', obj)"
+                            class="fa fa-trash"
+                          ></i
+                        ></span> -->
+                      </td>
+                    </tr>
+                  </tbody>
+
+                  <tbody *ngIf="selectedArr.length == 0">
+                    No Records Found
+                  </tbody>
+
+                  <tfoot *ngIf="selectedArr.length > 0">
+                    <tr>
+                      <td colspan="4">
+                        <pagination-controls
+                          id="scheduleVisit"
+                          (pageChange)="
+                            pageChanged('schedule', (page = $event))
+                          "
+                        >
+                        </pagination-controls>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <!--Add Visits -->
+            <div
+              class="card-body product-table p-t-35"
+              *ngIf="this.form.value.sectionType == 'Add Visits Table'"
+            >
+              <div style="font-size: 20px; font-weight: bold">
+                {{ field_name_visits_table }}
+              </div>
+              <div class="table-responsive">
+                <table
+                  id="contentToConvert"
+                  class="table table-striped"
+                  [mfData]="selectedArr"
+                  #mf9="mfDataTable"
+                >
+                <thead class="thead-light">
+                  <tr>
+                    <th width="20%">
+                      <mfDefaultSorter by="created_by">{{
+                        field_name_customers_email
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%" (click)="sort('first_name')">
+                      <mfDefaultSorter by="first_name">{{
+                        field_name_shedule_visits_customer_name
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="email">{{
+                        field_name_customers_email
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="phone">{{
+                        field_name_customers_phone
+                      }}</mfDefaultSorter>
+                    </th>
+    
+                    <th width="20%">
+                      <mfDefaultSorter by="last_name">{{
+                        field_name_customers_last_name
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      {{ field_name_customers_actions }}
+                    </th>
+                  </tr>
+                </thead>
+                  <tbody *ngIf="selectedArr.length > 0">
+                    <tr
+                      *ngFor="
+                        let obj of mf9.data
+                          | orderBy: key:reverse
+                          | paginate
+                            : {
+                                id: 'addVisit',
+                                itemsPerPage: 5,
+                                currentPage: page,
+                                totalItems: this.totalAddVisitsCount
+                              };
+                        let i = index
+                      "
+                    >
+                      <td>{{ obj.created_by }}</td>
+                      <td>{{ obj.first_name }}</td>
+                      <td>{{ obj.email }}</td>
+                      <td>{{ obj.phone }}</td>
+
+                      <td>{{ obj.last_name }}</td>
+                      <td>
+                        <i
+                          class="fa fa-edit"
+                          (click)="onClickEdit('addVisits', obj)"
+                        ></i>
+
+                        <!-- <span
+                          ><i
+                            (click)="onClickDelete('addVisits', obj)"
+                            class="fa fa-trash"
+                          ></i
+                        ></span> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="selectedArr.length == 0">
+                    No Records Found
+                  </tbody>
+                  <tfoot *ngIf="selectedArr.length > 0">
+                    <tr>
+                      <td colspan="4">
+                        <pagination-controls
+                          id="addVisit"
+                          (pageChange)="
+                            pageChanged('addVisit', (page = $event))
+                          "
+                        >
+                        </pagination-controls>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

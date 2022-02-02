@@ -1,0 +1,55 @@
+
+
+.mb-0 > a {
+    display: block;
+    position: relative;
+  }
+  .mb-0 > a:after {
+    content: "\f078"; /* fa-chevron-down */
+    font-family: 'FontAwesome';
+    position: absolute;
+    right: 0;
+  }
+  .mb-0 > a[aria-expanded="true"]:after {
+    content: "\f077"; /* fa-chevron-up */
+  }
+  .sectiontitle{
+    max-height: 40px;
+    color: rgb(80, 76, 76);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: var(--lwc-fontSize5);
+    color: #9e9e9e !important;
+  }
+
+
+  .close {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+}
+@media  screen and (min-width: 600px) {
+ 
+  .dateSectionMat{
+    display: none !important;;
+  }
+  .dateSection{
+    display: flex;
+  }
+  
+}
+
+@media  screen and (max-width: 599px) {
+
+.dateSectionMat{
+  display: flex;
+}
+.dateSection{
+  display: none !important;
+}
+}
+ 

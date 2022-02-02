@@ -1,0 +1,53 @@
+
+  
+.req {
+    margin: 5px 0px 0px 0px;
+    color: red !important;
+    font-family: sans-serif;
+}
+
+.fa-pencil {
+    cursor: pointer;
+}
+
+.fa-trash-o {
+    cursor: pointer;
+}
+.image-upload>input {
+    display: none;
+}
+
+.image-upload label {
+    min-width: 100px;
+    height: 40px;
+    background: #dddddd;
+    text-align: center;
+    line-height: 40px;
+    color: rgb(61, 61, 61);
+    border-radius: 5px;
+    outline: none !important;
+    font-size: 17px;
+    cursor: pointer;
+    border: 1px solid #cccccc;
+    padding: 0px 10px;
+}
+@media  screen and (min-width: 600px) {
+ 
+    .dateSectionMat{
+      display: none !important;;
+    }
+    .dateSection{
+      display: flex;
+    }
+    
+}
+ 
+@media  screen and (max-width: 599px) {
+
+  .dateSectionMat{
+    display: flex;
+  }
+  .dateSection{
+    display: none !important;
+  }
+}

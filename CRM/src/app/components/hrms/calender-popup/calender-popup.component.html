@@ -1,0 +1,64 @@
+<h2 mat-dialog-title>Notice Details</h2>
+<form
+  class="form-horizontal"
+  name="form"
+  #f="ngForm"
+  (ngSubmit)="f.form.valid && submit()"
+>
+  <mat-dialog-content class="mat-typography">
+    <div class="row" *ngIf="this.noticeDetail">
+      <div class="col-md-6">
+        Notice Type :<br />
+        <input
+          type="text"
+          class="form-control"
+          name="notice_type"
+          readonly
+          [(ngModel)]="noticeDetail.notice_type"
+        />
+        <br />
+        Notice Date :<br />
+        <input
+          type="text"
+          class="form-control"
+          name="notice_date"
+          readonly
+          [(ngModel)]="noticeDetail.notice_date"
+        />
+        <br />
+        Notice By :<br />
+        <input
+          type="text"
+          class="form-control"
+          name="notice_by"
+          readonly
+          [(ngModel)]="noticeDetail.notice_by"
+        />
+        <br />
+      </div>
+      <div class="col-md-6">
+        Notice Description :<br />
+        <input
+          type="text"
+          class="form-control"
+          name="description"
+          readonly
+          [(ngModel)]="noticeDetail.description"
+        />
+        <br />
+        Notice Attatchment :<br />
+        <input
+          type="text"
+          class="form-control"
+          name="attatchment"
+          readonly
+          [(ngModel)]="noticeDetail.attatchment"
+        />
+        <br />
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close class="btn btn-danger">{{'Cancel'|translate}}</button>
+  </mat-dialog-actions>
+</form>

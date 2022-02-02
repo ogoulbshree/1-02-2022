@@ -1,0 +1,125 @@
+<br>
+<br>
+
+<div class="col-md-12 col-lg-12">
+  <div class="row">
+     <div class="col-sm-1">
+        <!--     <label class="label-control">Rows on page</label> -->
+            <select class="custom-select input-sm" [(ngModel)]="rowsOnPage">
+                <option [ngValue]="5">5</option>
+                <option [ngValue]="10">10</option>
+                <option [ngValue]="15">15</option>
+            </select>
+        </div>
+   <div class="col-md-3">
+    <div class="form-group">
+ <input type="text" 
+ class="form-control" name="search"
+ placeholder="Search Here" autocomplete="off" 
+  [(ngModel)]="searchText">
+     </div>
+     
+   </div> 
+     <div class="col-sm-1">
+      <button type="button" (click)="exportToPrint()" class="btn btn-success">
+        <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Print
+        </button>
+     </div> 
+     <div class="col-sm-1">
+        <button type="button" (click)="downloadPdf()" class="btn btn-success">
+          <i class="fa fa-file-pdf-o" aria-hidden="true"></i> pdf
+          </button>
+       </div> 
+     <div class="col-sm-1">
+     <button type="button" (click)="generateCsv()" class="btn btn-success">
+      <i class="fa fa-building-o" aria-hidden="true"></i> CSV
+      </button>
+     </div>
+     <div class="col-md-1">
+      <button type="button" class="btn btn-info" 
+      routerLink=""><i class="fa fa-upload" aria-hidden="true"></i>Import</button>
+    </div>
+    <!--  <div class="col-sm-1">
+      <button type="button" class="btn btn-info" 
+      routerLink="">  <i class="fa fa-arrows-h" aria-hidden="true"></i>Convert to Lead</button>
+    </div> -->
+     <div class="col-sm-2">
+      <button type="button" class="btn btn-info pull-right"
+      routerLink="/ogoul/surveys">  <i class="fa fa-plus" aria-hidden="true"></i>Add Survey</button>
+    </div>
+    </div> 
+</div>
+
+<div class="card-body product-table p-t-35">
+
+    <div class="table-responsive">
+      
+      <table class="table table-striped" [mfData]="filteredTableDataArr" #mf="mfDataTable" 
+      [mfRowsOnPage]="rowsOnPage">
+        <thead class="thead-light">
+          <tr>
+            <!--  <th width="20%">
+              <mfDefaultSorter by="user_id">ID</mfDefaultSorter>
+            </th> -->
+          
+
+           
+            <th width="20%">
+              <mfDefaultSorter by="name">Name</mfDefaultSorter>
+            </th>
+
+            <th width="20%">
+                <mfDefaultSorter by="phone">Phone</mfDefaultSorter>
+              </th>
+              <th width="20%">
+                <mfDefaultSorter by="company">Company</mfDefaultSorter>
+              </th>
+            <th width="20%">
+                <mfDefaultSorter by="email">Email</mfDefaultSorter>
+              </th>
+              <th width="20%">
+                <mfDefaultSorter by="message">Message</mfDefaultSorter>
+
+              </th>
+                
+             <!--  <th width="20%">
+                <mfDefaultSorter by="files">ImageUrl</mfDefaultSorter>
+
+              </th> -->
+
+            <th width="20%" *ngIf="SHOW_EDIT_DELETE">
+                <mfDefaultSorter>Actions</mfDefaultSorter>
+              </th>
+          </tr>
+        </thead>
+    
+        <tbody>
+          <tr *ngFor="let obj of mf.data | filter:searchText let i = index">
+            <!--  <td>{{obj.user_id}}</td> -->
+            <td>{{obj.name}}</td>
+            <td >{{obj.phone}}</td>
+            <td>{{obj.company}}</td>
+            <td>{{obj.email}}</td>
+            <td>{{obj.message}}</td>
+            
+              
+          
+            <td *ngIf="SHOW_EDIT_DELETE">
+             
+              <i class="fa fa-edit" (click)="onClickEdit(obj)"></i> 
+
+                <span *ngIf="ALL_DELETE_ALLOWED"><i (click)="onClickDelete(obj)" class="fa fa-trash"></i></span>
+          </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25,50]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+
+        </tfoot>
+      </table>
+    </div>
+  </div>

@@ -1,0 +1,557 @@
+<!-- 
+
+
+
+   <div class="contact-form">
+   <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <h2 class="h2-heading">Contact Us</h2>
+    </div> 
+    <br>
+      <div class="col-lg-12">
+        <form id="contact-form" method="post" action="" role="form">
+        <div class="controls">
+          <div class="form-row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Your Name" name="">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <input type="email" class="form-control" placeholder="Your Email" name="email">
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <textarea class="form-control form-control-lg" placeholder="Your Message">
+                </textarea>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <input type="submit" class="btn btn-secondary btn-block" value="Submit" name="">
+            </div>
+          </div>
+         
+        </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+  </div>
+
+
+  
+
+
+ -->
+
+<!-- Contact Section Start -->
+<br />
+<br />
+<br />
+<br />
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <nav>
+        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+        <!--   <a
+            class="nav-item nav-link active"
+            id="nav-home-tab"
+            data-toggle="tab"
+            href="#nav-Address1"
+            role="tab"
+            aria-controls="nav-home"
+            aria-selected="true"
+            (click)="f1.resetForm()"
+            >{{ home_contact_india }}</a> -->
+
+          <a
+            class="nav-item nav-link"
+            id="nav-contact-tab"
+            data-toggle="tab"
+            href="#nav-Address3"
+            role="tab"
+            aria-controls="nav-contact"
+            aria-selected="false"
+            >{{ home_contact_qatar }}</a
+          >
+        </div>
+      </nav>
+
+      <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+       <!--  <div
+          class="tab-pane fade show active"
+          id="nav-Address1"
+          role="tabpanel"
+          aria-labelledby="nav-home-tab"
+        >
+          <div id="contact" class="contact-area">
+            <div class="contact-inner area-padding">
+              <div class="contact-overly"></div>
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div
+                      class="section-headline text-center wow fadeInDown"
+                      data-wow-delay="0.3s"
+                    >
+                      <h2>{{ home_contact_us }}</h2>
+                      <div
+                        class="shape wow fadeInDown"
+                        data-wow-delay="0.3s"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+              
+                  <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="contact-icon text-center">
+                      <div class="single-icon">
+                        <i class="fa fa-mobile" style="color: #edab2f"></i>
+                        <p>
+                          {{ home_contact_us_call }}:  QA (+974) 4444-8846<br />
+                          <span>{{ home_contact_us_mon_friday }}:9.30am to 6.30pm</span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                
+                  <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="contact-icon text-center">
+                      <div class="single-icon">
+                        <i class="fa fa-envelope" style="color: #edab2f"></i>
+                        <p>
+                          {{ home_contact_us_email }}:info@ogoul.com <br />
+                          <span>{{ home_contact_us_web }}: info@ogoul.com</span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+             
+                  <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="contact-icon text-center">
+                      <div class="single-icon">
+                        <i class="fa fa-map-marker" style="color: #edab2f"></i>
+                        <p>
+                          <span>{{ home_contact_us_location }}: Building 174, First Floor, Office 3, C Ring Rd, Doha, Qatar </span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+             
+                  <div class="col-md-6 col-sm-6 col-xs-12">
+                 
+                    <iframe
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d22864.11283411948!2d-73.96468908098944!3d40.630720240038435!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew+York%2C+NY%2C+USA!5e0!3m2!1sen!2sbg!4v1540447494452"
+                      width="100%"
+                      height="380"
+                      frameborder="0"
+                      style="border: 0"
+                      allowfullscreen=""
+                    ></iframe>
+                  
+                  </div>
+              
+
+                
+                  <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="form contact-form">
+                      <form
+                        class="form-horizontal form-material"
+                        name="form"
+                        #f1="ngForm"
+                        (ngSubmit)="
+                          f1.form.valid && onSubmit() && f1.resetForm()
+                        "
+                        *ngIf="this.contactusDetail"
+                      >
+                        <div
+                          *ngIf="f1.form.invalid && f1.submitted"
+                          class="alert alert-danger alert-dismissible fade show"
+                          role="alert"
+                        >
+                          <strong>Contact Us Form !</strong>The form has the
+                          following errors that need to be corrected
+                          <button
+                            type="button"
+                            class="close"
+                            data-dismiss="alert"
+                            aria-label="Close"
+                          >
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="form-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Full Name"
+                            [(ngModel)]="contactusDetail.name"
+                            name="name_full"
+                            maxlength="20"
+                            minlength="1"
+                            pattern="[a-zA-Z_]+"
+                            #name_full="ngModel"
+                            [ngClass]="{
+                              'is-invalid': f1.submitted && name_full.invalid,
+                              'is-valid': f1.submitted && name_full.valid
+                            }"
+                            required
+                          />
+                          <div
+                            *ngIf="f1.submitted && name_full.invalid"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="name_full.errors.required">
+                              Please provide Name
+                            </div>
+                            <div *ngIf="name_full.errors.pattern">
+                              Please provide only alphabets
+                            </div>
+                            <div *ngIf="name_full.errors.maxlength">
+                              Please provide maxlength 20 Characters
+                            </div>
+                            <div *ngIf="name_full.errors.minlength">
+                              Please provide maxlength 20 Characters
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <input
+                            type="email"
+                            class="form-control"
+                            placeholder="Email"
+                            [(ngModel)]="contactusDetail.email"
+                            name="email"
+                            pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                            #email="ngModel"
+                            [ngClass]="{
+                              'is-invalid': f1.submitted && email.invalid,
+                              'is-valid': f1.submitted && email.valid
+                            }"
+                            required
+                          />
+                          <div
+                            *ngIf="f1.submitted && email.invalid"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="email.errors.required">
+                              Please provide Email
+                            </div>
+                            <div *ngIf="email.errors.pattern">
+                              Email format should be
+                              <small class="text-success"
+                                ><b>jhon@abc.com</b></small
+                              >
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Subject "
+                            [(ngModel)]="contactusDetail.subject"
+                            name="subject"
+                            maxlength="20"
+                            minlength="5"
+                            #subject="ngModel"
+                            [ngClass]="{
+                              'is-invalid': f1.submitted && subject.invalid,
+                              'is-valid': f1.submitted && subject.valid
+                            }"
+                            required
+                          />
+                          <div
+                            *ngIf="f1.submitted && subject.errors"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="subject.errors.required">
+                              Subject is required
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <textarea
+                            class="form-control"
+                            placeholder="Message "
+                            maxlength="20"
+                            minlength="5"
+                            [(ngModel)]="contactusDetail.message"
+                            name="message"
+                            #message="ngModel"
+                            [ngClass]="{
+                              'is-invalid': f1.submitted && message.invalid,
+                              'is-valid': f1.submitted && message.valid
+                            }"
+                            required
+                          ></textarea>
+                          <div
+                            *ngIf="f1.submitted && message.errors"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="message.errors.required">
+                              message is required
+                            </div>
+                          </div>
+                        </div>
+                      
+                        <div class="text-center">
+                          <button class="btn btn-primary" type="submit">
+                            {{ home_contact_us_sendmsg }}
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+             
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        <div
+          class="tab-pane fade show active"
+          id="nav-Address3"
+          role="tabpanel"
+          aria-labelledby="nav-contact-tab"
+        >
+          <div id="contact" class="contact-area">
+            <div class="contact-inner area-padding">
+              <div class="contact-overly"></div>
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div
+                      class="section-headline text-center wow fadeInDown"
+                      data-wow-delay="0.3s"
+                    >
+                      <h2>{{ home_contact_us }}</h2>
+                      <div
+                        class="shape wow fadeInDown"
+                        data-wow-delay="0.3s"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <!-- Start contact icon column -->
+                  <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="contact-icon text-center">
+                      <div class="single-icon">
+                        <i class="fa fa-mobile" style="color: #edab2f"></i>
+                        <p>
+                          {{ home_contact_us_call }}: +97444783072<br />
+                          <span>{{ home_contact_us_mon_friday }}:8am to 5pm</span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Start contact icon column -->
+                  <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="contact-icon text-center">
+                      <div class="single-icon">
+                        <i class="fa fa-envelope" style="color: #edab2f"></i>
+                        <p>
+                          {{ home_contact_us_email }}:info@ogoul.com <br />
+                          <span>{{ home_contact_us_web }}: ogoul.com</span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Start contact icon column -->
+                  <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="contact-icon text-center">
+                      <div class="single-icon">
+                        <i class="fa fa-map-marker" style="color: #edab2f"></i>
+                        <p>
+                          <span>{{ home_contact_us_location }}: Building 174, Zone 26, Street, 230 C Ring Rd, Doha, Qatar </span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <!-- Start Google Map -->
+                  <div class="col-md-6 col-sm-6 col-xs-12 Flexible-container">
+                    <!-- Start Map -->
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14432.729314175864!2d51.5445814!3d25.2644513!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xaf870bfabb8f7d75!2sOgoul%20Technology%20Co.%20W.L.L.!5e0!3m2!1sen!2sin!4v1641879528511!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    <!-- End Map -->
+                  </div>
+                  <!-- End Google Map -->
+
+                  <!-- Start  contact -->
+                  <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="form contact-form">
+                      <form
+                        class="form-horizontal form-material"
+                        name="form"
+                        #f="ngForm"
+                        (ngSubmit)="f.form.valid && onSubmit() && f.resetForm()"
+                        *ngIf="this.contactusDetail"
+                      >
+                        <div
+                          *ngIf="f.form.invalid && f.submitted"
+                          class="alert alert-danger alert-dismissible fade show"
+                          role="alert"
+                        >
+                          <strong>Contact Us Form !</strong>The form has the
+                          following errors that need to be corrected
+                          <button
+                            type="button"
+                            class="close"
+                            data-dismiss="alert"
+                            aria-label="Close"
+                          >
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="form-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Full Name"
+                            [(ngModel)]="contactusDetail.name"
+                            name="name1"
+                            maxlength="20"
+                            minlength="1"
+                            pattern="[a-zA-Z\s]+"
+                            #name1="ngModel"
+                            [ngClass]="{
+                              'is-invalid': f.submitted && name1.invalid,
+                              'is-valid': f.submitted && name1.valid
+                            }"
+                            required
+                          />
+                          <div
+                            *ngIf="f.submitted && name1.invalid"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="name1.errors.required">
+                              Please provide Full name
+                            </div>
+                            <div *ngIf="name1.errors.pattern">
+                              Please provide only alphabets
+                            </div>
+                            <div *ngIf="name1.errors.maxlength">
+                              Please provide maxlength 20 Characters
+                            </div>
+                            <div *ngIf="name1.errors.minlength">
+                              Please provide maxlength 20 Characters
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <input
+                            type="email"
+                            class="form-control"
+                            placeholder="Email"
+                            [(ngModel)]="contactusDetail.email"
+                            name="email"
+                            pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                            #email="ngModel"
+                            [ngClass]="{
+                              'is-invalid': f.submitted && email.invalid,
+                              'is-valid': f.submitted && email.valid
+                            }"
+                            required
+                          />
+                          <div
+                            *ngIf="f.submitted && email.invalid"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="email.errors.required">
+                              Please provide Email
+                            </div>
+                            <div *ngIf="email.errors.pattern">
+                              Email format should be
+                              <small class="text-success"
+                                ><b>jhon@abc.com</b></small
+                              >
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Subject "
+                            [(ngModel)]="contactusDetail.subject"
+                            name="subject"
+                           
+                            #subject="ngModel"
+                            [ngClass]="{
+                              'is-invalid': f.submitted && subject.invalid,
+                              'is-valid': f.submitted && subject.valid
+                            }"
+                            required
+                          />
+                          <div
+                            *ngIf="f.submitted && subject.errors"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="subject.errors.required">
+                              Please provide subject
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <textarea
+                            class="form-control"
+                            placeholder="Message "
+                          
+                            pattern="[^\w\d]*([A-Za-z]+.*)"
+                            [(ngModel)]="contactusDetail.message"
+                            name="message"
+                            #message="ngModel"
+                            [ngClass]="{
+                              'is-invalid': f.submitted && message.invalid,
+                              'is-valid': f.submitted && message.valid
+                            }"
+                            required
+                          ></textarea>
+                          <div
+                            *ngIf="f.submitted && message.errors"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="message.errors.required">
+                              Please provide message
+                            </div>
+                          </div>
+                        </div>
+                        <!-- <div class="mb-3">
+                          <div class="loading">Loading</div>
+                          <div class="error-message"></div>
+                        </div> -->
+                        <div class="text-center">
+                          <button class="btn btn-primary" type="submit">
+                            {{ home_contact_us_sendmsg }}
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <!-- End Left contact -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

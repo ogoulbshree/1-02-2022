@@ -1,0 +1,105 @@
+<h2 mat-dialog-title>Edit Employee</h2>
+<form
+  class="form-horizontal"
+  name="form"
+  #f="ngForm"
+  (ngSubmit)="f.form.valid && onSubmit()"
+>
+  <mat-dialog-content class="mat-typography">
+    <div class="row">
+      <div class="col-md-12">
+        Name :<br />
+        <input
+          type="text"
+          class="form-control"
+          name="first_name"
+          pattern="[a-zA-Z ]+"
+          [(ngModel)]="employeeDetail.first_name"
+          maxlength="20"
+          minlength="1"
+          #first_name="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && first_name.invalid,
+            'is-valid': f.submitted && first_name.valid
+          }"
+          required
+        />
+
+        <div
+          *ngIf="f.submitted && first_name.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="first_name.errors.required">
+            Please provide holiday name
+          </div>
+        </div>
+        <br />
+        Designation :<br />
+
+        <select
+          type="text"
+          class="custom-select"
+          [(ngModel)]="employeeDetail.designation"
+          name="designation"
+          #designation="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && designation.invalid,
+            'is-valid': f.submitted && designation.valid
+          }"
+          (change)="selectedDesignation($event)"
+          [(ngModel)]="employeeDetail.designation"
+          required
+        >
+          <option
+            *ngFor="let obj of designationDetail"
+            [value]="obj.designation_name"
+          >
+            {{ obj.designation_name }}
+          </option>
+        </select>
+        <div
+          *ngIf="f.submitted && designation.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="designation.errors.required">
+            Please provide designation
+          </div>
+        </div>
+        <br />
+        Assigned To :<br />
+
+        <select
+          type="text"
+          class="custom-select"
+          name="assigned_to"
+          #assigned_to="ngModel"
+          [(ngModel)]="employeeDetail.assigned_to"
+          required
+        >
+        <option value="self">Self</option>
+          <option
+            *ngFor="let obj of employeeArr"
+            [value]="obj.employee_id"
+          >
+            {{ obj.first_name }}
+          </option>
+        </select>
+        <br />
+        <div
+          *ngIf="f.submitted && first_name.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="first_name.errors.required">
+            Please provide Holiday Day
+          </div>
+        </div>
+        <br />
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close class="btn btn-danger">{{'Cancel'|translate}}</button>
+
+    <button type="submit" class="btn btn-success" mat-button>{{'Save'|translate}}</button>
+  </mat-dialog-actions>
+</form>

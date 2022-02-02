@@ -1,0 +1,424 @@
+<section *ngIf="this._uiservice.langDataSource.value == 'ar' && this.caseDetail" dir='rtl' >
+
+<div class="container-fluid">
+    <h3 class="text-center"></h3>
+    <div class="card">
+      <div class="card-body">
+        <form class="form-horizontal" name="form" #f="ngForm" (ngSubmit)="f.form.valid &&  onSubmit()">
+          <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Case Details!</strong>The form has the following errors that need to be corrected
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="card-header">
+            <h2> 
+                <span *ngIf="!isUpdate"></span> 
+                <!-- <span *ngIf="isUpdate">{{field_name_cases_update}}</span> -->
+            </h2>
+            </div>
+            <div class="card-body">
+           
+          
+                      <div class="form-row">
+                     
+                      <div class="form-group col-md-4">
+                        <label class="col-sm-5 col-form-label">
+                          <!-- {{field_name_cases_case_name}} -->
+                          <span
+                          class="text-danger font-weight-bold">
+                          *</span>
+                        </label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" name="case_name" pattern="[a-zA-Z0-9 ]+" 
+                          [(ngModel)]="caseDetail.case_name"
+                          #case_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && case_name.invalid,
+                         'is-valid': f.submitted && case_name.valid}" required />
+                          <div *ngIf="f.submitted && case_name.invalid "class="invalid-feedback">
+                          <div
+                              *ngIf="case_name.errors.required ">Please provide case_name</div>
+                              <div *ngIf="case_name.errors.pattern"> Provide proper case_name 
+                              </div></div>
+                        </div>
+                      </div>
+                      <div class="form-group col-md-4">
+                        <label class="col-sm-5 col-form-label">
+                          <!-- {{field_name_cases_priority}} -->
+                          <span
+                          class="text-danger font-weight-bold">
+                          *</span>
+                        </label>
+                        <div class="col-sm-10">
+                      
+                         <select class="custom-select"  name="priority"  [(ngModel)]="caseDetail.priority" 
+                          #priority="ngModel" [ngClass]="{ 'is-invalid': f.submitted && priority.invalid,
+                         'is-valid': f.submitted && priority.valid}"  >
+                          
+                          <option value="High">High</option>
+                          <option value="Low">Low</option>
+                          <option value="Medium">Medium</option>
+                        </select>  
+                        
+                    
+                        </div>
+                      </div>
+                      <div class="form-group col-md-4"> 
+                        <label class="col-sm-5 col-form-label">
+                          <!-- {{field_name_cases_description}} -->
+                          <span
+                          class="text-danger font-weight-bold">
+                          </span></label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" rows="2" name="description"  [(ngModel)]="caseDetail.description" 
+                            #description="ngModel"  >
+                            </textarea>
+                        </div>
+                      </div>
+                    
+                      </div>
+                      <div class="form-row">
+                     
+                        <div class="form-group col-md-4" *ngIf="!isUpdate">
+                          <label class="col-sm-5 col-form-label"  >
+                            <span class="text-danger font-weight-bold">
+                              *</span>
+                          </label>
+                          <div class="col-sm-10">
+                           
+                            <div class="ng-autocomplete">
+                              <ng-autocomplete [data]="customers" [searchKeyword]="customer_keyword" [itemTemplate]="itemTemplate"
+                                (inputChanged)='onChangeSearch($event)' (selected)='onCustomerSelect($event)'  historyIdentifier="customers"
+                                (inputFocused)='onFocused($event)' [notFoundTemplate]="notFoundTemplate" [(ngModel)]="first_name"
+                                name="autompleteName" required >
+                               
+                              </ng-autocomplete>
+                              
+                              <ng-template #itemTemplate let-item>
+                                <a [innerHTML]="item.first_name"></a>
+                              </ng-template>
+                
+                              <ng-template #notFoundTemplate let-notFound>
+                                <div [innerHTML]="notFound"></div>
+                                
+                            
+                              </ng-template> 
+                             
+                             
+                            </div>
+                          </div>
+                        </div>
+                   
+                        <div class="form-group col-md-4"  *ngIf="isUpdate">
+                          <label class="col-sm-5 col-form-label"> 
+                            <span
+                            class="text-danger font-weight-bold">
+                            *</span>
+                          </label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" name="first_name" pattern="[a-zA-Z0-9 ]+" 
+                             [(ngModel)]="caseDetail.first_name" readonly>
+                       
+                          </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label class="col-sm-5 col-form-label"> <span
+                            class="text-danger font-weight-bold">
+                            *</span></label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" [(ngModel)]="caseDetail.email" name="email"
+                            #email="ngModel"  readonly  />
+                    
+                          </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                        <label class="col-sm-5 col-form-label"><span class="text-danger font-weight-bold">
+                            *</span></label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" [(ngModel)]="caseDetail.phone" name="phone" required
+                            pattern="^[0-9()\-+\s]+$" #phone="ngModel" [ngClass]="{ 'is-invalid': f.submitted && phone.invalid, 
+                            'is-valid': f.submitted && phone.valid }" readonly />
+              
+                        </div>
+                      </div> 
+              
+                      </div>
+                      
+
+                      <div class="form-row">
+                        <div class="form-group col-md-3">
+                          <label class="col-sm-5 col-form-label">
+                           
+                          </label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" name="created_by"
+                            [(ngModel)]="caseDetail.created_by"
+                            #created_by="ngModel" readonly>
+                        </div>
+                      </div>
+                        <div class="form-group col-md-3">
+                          <label class="col-sm-5 col-form-label">
+                            
+                          </label>
+                          <div class="col-sm-10">
+                           
+                        
+                            <input type="text" class="form-control" name="created_time"  
+                             readonly value="{{caseDetail.created_time |  date : dateFormat:'GMT':locale}}">
+                             
+                          
+                          
+                        </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                          <label class="col-sm-5 col-form-label">
+                           
+                          </label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" name="updated_by"
+                              [(ngModel)]="caseDetail.updated_by"
+                              #updated_by="ngModel" readonly>
+                        </div>
+                      </div>
+                        <div class="form-group col-md-3">
+                          <label class="col-sm-5 col-form-label">
+                           
+                          </label>
+                          <div class="col-sm-10">
+                          
+                            <input type="text" class="form-control" name="modified_time"  
+                             readonly value=" {{caseDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+                          
+                        </div>
+                      </div>
+                        </div>
+                        
+
+                      
+                 
+                       
+                         <!-- <button class="btn btn-danger btn-round text-center pull-right" type="button" appCancel>{{'Cancel'|translate}}</button>
+                          <button  class="btn btn-success btn-round text-center pull-right">
+                         <span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+                         <span *ngIf="isUpdate">{{'Update'|translate}}</span></button> -->
+                          
+  
+                             
+    
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  </section>
+
+
+
+
+  <section *ngIf="this._uiservice.langDataSource.value != 'ar' && this.caseDetail" dir='ltr' >
+
+    <div class="container-fluid">
+        <h3 class="text-center"></h3>
+        <div class="card">
+          <div class="card-body">
+            <form class="form-horizontal" name="form" #f="ngForm" (ngSubmit)="f.form.valid &&  onSubmit()">
+              <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Case Details!</strong>The form has the following errors that need to be corrected
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="card-header">
+                <h2> 
+                    <span *ngIf="!isUpdate"></span> 
+                    <span *ngIf="isUpdate"></span>
+                </h2>
+                </div>
+                <div class="card-body">
+               
+              
+                          <div class="form-row">
+                         
+                          <div class="form-group col-md-4">
+                            <label class="col-sm-5 col-form-label">
+                              <span
+                              class="text-danger font-weight-bold">
+                              *</span>
+                            </label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" name="case_name" pattern="[a-zA-Z0-9 ]+" 
+                              [(ngModel)]="caseDetail.case_name"
+                              #case_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && case_name.invalid,
+                             'is-valid': f.submitted && case_name.valid}" required />
+                              <div *ngIf="f.submitted && case_name.invalid "class="invalid-feedback">
+                              <div
+                                  *ngIf="case_name.errors.required ">Please provide case_name</div>
+                                  <div *ngIf="case_name.errors.pattern"> Provide proper case_name 
+                                  </div></div>
+                            </div>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label class="col-sm-5 col-form-label">
+                              <span
+                              class="text-danger font-weight-bold">
+                              *</span>
+                            </label>
+                            <div class="col-sm-10">
+                          
+                             <select class="custom-select"  name="priority"  [(ngModel)]="caseDetail.priority" 
+                              #priority="ngModel" [ngClass]="{ 'is-invalid': f.submitted && priority.invalid,
+                             'is-valid': f.submitted && priority.valid}"  >
+                              
+                              <option value="High">High</option>
+                              <option value="Low">Low</option>
+                              <option value="Medium">Medium</option>
+                            </select>  
+                            
+                        
+                            </div>
+                          </div>
+                          <div class="form-group col-md-4"> 
+                            <label class="col-sm-5 col-form-label"><span
+                              class="text-danger font-weight-bold">
+                              </span></label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" rows="2" name="description"  [(ngModel)]="caseDetail.description" 
+                                #description="ngModel"  >
+                                </textarea>
+                            </div>
+                          </div>
+                        
+                          </div>
+                          <div class="form-row">
+                         
+                            <div class="form-group col-md-4" *ngIf="!isUpdate">
+                              <label class="col-sm-5 col-form-label"  >
+                                <span class="text-danger font-weight-bold">
+                                  *</span>
+                              </label>
+                              <div class="col-sm-10">
+                               
+                                <div class="ng-autocomplete">
+                                  <ng-autocomplete [data]="customers" [searchKeyword]="customer_keyword" [itemTemplate]="itemTemplate"
+                                    (inputChanged)='onChangeSearch($event)' (selected)='onCustomerSelect($event)'  historyIdentifier="customers"
+                                    (inputFocused)='onFocused($event)' [notFoundTemplate]="notFoundTemplate" [(ngModel)]="first_name"
+                                    name="autompleteName" required >
+                                   
+                                  </ng-autocomplete>
+                                  
+                                  <ng-template #itemTemplate let-item>
+                                    <a [innerHTML]="item.first_name"></a>
+                                  </ng-template>
+                    
+                                  <ng-template #notFoundTemplate let-notFound>
+                                    <div [innerHTML]="notFound"></div>
+                                    
+                                
+                                  </ng-template> 
+                                 
+                                 
+                                </div>
+                              </div>
+                            </div>
+                       
+                            <div class="form-group col-md-4"  *ngIf="isUpdate">
+                              <label class="col-sm-5 col-form-label"> 
+                                <span
+                                class="text-danger font-weight-bold">
+                                *</span>
+                              </label>
+                              <div class="col-sm-10">
+                                <input type="text" class="form-control" name="first_name" pattern="[a-zA-Z0-9 ]+" 
+                                 [(ngModel)]="caseDetail.first_name" readonly>
+                           
+                              </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                              <label class="col-sm-5 col-form-label"> <span
+                                class="text-danger font-weight-bold">
+                                *</span></label>
+                              <div class="col-sm-10">
+                                <input type="text" class="form-control" [(ngModel)]="caseDetail.email" name="email"
+                                #email="ngModel"  readonly  />
+                        
+                              </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                            <label class="col-sm-5 col-form-label"><span class="text-danger font-weight-bold">
+                                *</span></label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" [(ngModel)]="caseDetail.phone" name="phone" required
+                                pattern="^[0-9()\-+\s]+$" #phone="ngModel" [ngClass]="{ 'is-invalid': f.submitted && phone.invalid, 
+                                'is-valid': f.submitted && phone.valid }" readonly />
+                  
+                            </div>
+                          </div> 
+                  
+                          </div>
+                          
+    
+                          <div class="form-row">
+                            <div class="form-group col-md-3">
+                              <label class="col-sm-5 col-form-label">
+                               
+                              </label>
+                              <div class="col-sm-10">
+                                <input type="text" class="form-control" name="created_by"
+                                [(ngModel)]="caseDetail.created_by"
+                                #created_by="ngModel" readonly>
+                            </div>
+                          </div>
+                            <div class="form-group col-md-3">
+                              <label class="col-sm-5 col-form-label">
+                                
+                              </label>
+                              <div class="col-sm-10">
+                               
+                            
+                                <input type="text" class="form-control" name="created_time"  
+                                 readonly value="{{caseDetail.created_time |  date : dateFormat:'GMT':locale}}">
+                                 
+                              
+                              
+                            </div>
+                            </div>
+                            <div class="form-group col-md-3">
+                              <label class="col-sm-5 col-form-label">
+                               
+                              </label>
+                              <div class="col-sm-10">
+                                <input type="text" class="form-control" name="updated_by"
+                                  [(ngModel)]="caseDetail.updated_by"
+                                  #updated_by="ngModel" readonly>
+                            </div>
+                          </div>
+                            <div class="form-group col-md-3">
+                              <label class="col-sm-5 col-form-label">
+                               
+                              </label>
+                              <div class="col-sm-10">
+                              
+                                <input type="text" class="form-control" name="modified_time"  
+                                 readonly value=" {{caseDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+                              
+                            </div>
+                          </div>
+                            </div>
+                            
+    
+                          
+                     
+                           
+                             <button class="btn btn-danger btn-round text-center pull-right" type="button" appCancel>{{'Cancel'|translate}}</button>
+                              <button  class="btn btn-success btn-round text-center pull-right">
+                             <span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+                             <span *ngIf="isUpdate">{{'Update'|translate}}</span></button>
+                              
+      
+                                 
+        
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      </section>

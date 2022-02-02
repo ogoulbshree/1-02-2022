@@ -1,0 +1,1282 @@
+<section
+  *ngIf="this._uiservice.langDataSource.value == 'ar' && this.returnDetail"
+  dir="rtl"
+>
+  <div class="container-fluid">
+    <h3 class="text-center">{{ field_name_return_details }}</h3>
+    <div class="card">
+      <div class="card-body">
+        <div *ngIf="print" class="btn-toolbar text-center well1">
+          <button
+            (click)="exportToPrint()"
+            type="button"
+            class="btn btn-success col-xs-5 margin-left"
+          >
+            <i class="fa fa-print" aria-hidden="true"></i
+            >{{ field_name_return_print }}
+          </button>
+        </div>
+
+        <form
+          id="contentToConvert"
+          class="form-horizontal form-material"
+          name="form"
+          #f="ngForm"
+          (ngSubmit)="f.form.valid && onSubmit()"
+        >
+          <div
+            *ngIf="f.form.invalid && f.submitted"
+            class="alert alert-danger alert-dismissible fade show"
+            role="alert"
+          >
+            <strong>returns Details!</strong>The form has the following errors
+            that need to be corrected
+            <button
+              type="button"
+              class="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="card-header">
+            <h2>
+              <span *ngIf="!isUpdate">{{ field_name_return_addreturn }}</span>
+              <span *ngIf="isUpdate">{{ field_name_return_update }}</span>
+            </h2>
+          </div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group col-md-4" *ngIf="!isUpdate">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_return_type }}
+                  <span class="text-danger font-weight-bold"> *</span>
+                </label>
+                <div class="col-sm-7">
+                  <div class="ng-autocomplete">
+                    <!-- <ng-autocomplete [data]="suppliers" [searchKeyword]="supplier_keyword" [itemTemplate]="itemTemplate"
+              (inputChanged)='onChangeSearch($event)' (selected)='onSupplierSelect($event)'  historyIdentifier="suppliers"
+              (inputFocused)='onFocused($event)' [notFoundTemplate]="notFoundTemplate" [(ngModel)]="suppliers.supplier_name"
+              name="supplier_name" required  #supplier_name="ngModel" 
+                        [ngClass]="{ 'is-invalid': f.submitted && supplier_name.invalid, 
+                       'is-valid': f.submitted && supplier_name.valid }">
+             
+            </ng-autocomplete>
+            
+            <ng-template #itemTemplate let-item>
+              <a [innerHTML]="item.supplier_name"></a>
+            </ng-template>
+
+            <ng-template #notFoundTemplate let-notFound>
+              <div [innerHTML]="notFound"></div>
+              
+          
+            </ng-template> 
+            <div *ngIf="f.submitted && supplier_name.invalid" class="invalid-feedback">
+              <div *ngIf="supplier_name.errors.required">Please Provide Supplier Name</div>
+    
+             
+            </div> -->
+                    <select
+                      class="custom-select"
+                      id="contact"
+                      [(ngModel)]="returnDetail.activity_type"
+                      name="activity_type"
+                      (change)="selectObject()"
+                      name="selectedActivityType"
+                      #activity_type="ngModel"
+                      [(ngModel)]="selectedActivityType"
+                      [ngClass]="{
+                        'is-invalid': f.submitted && activity_type.invalid,
+                        'is-valid': f.submitted && activity_type.valid
+                      }"
+                      required
+                    >
+                      <option
+                        *ngFor="let obj of ACTIVITY_OBJECT_TYPE"
+                        [value]="obj"
+                      >
+                        {{ obj }}
+                      </option>
+                    </select>
+
+                    <div
+                      *ngIf="f.submitted && activity_type.invalid"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="activity_type.errors.required">
+                        Please provide Activity Type
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="form-group col-md-4"
+                *ngIf="!isUpdate && this.selectedActivityType == 'customer'"
+              >
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_return_customer_name }}
+                  <span class="text-danger font-weight-bold"> *</span>
+                </label>
+                <div class="col-sm-10">
+                  <div class="ng-autocomplete">
+                    <ng-autocomplete
+                      [data]="customers"
+                      [searchKeyword]="customer_keyword"
+                      [itemTemplate]="itemTemplate"
+                      (inputChanged)="onChangeSearch($event)"
+                      (selected)="onCustomerSelect($event)"
+                      historyIdentifier="customers"
+                      (inputFocused)="onFocused($event)"
+                      [notFoundTemplate]="notFoundTemplate"
+                      [(ngModel)]="customers.first_name"
+                      name="first_name"
+                      required
+                      #first_name="ngModel"
+                      [ngClass]="{
+                        'is-invalid': f.submitted && first_name.invalid,
+                        'is-valid': f.submitted && first_name.valid
+                      }"
+                    >
+                    </ng-autocomplete>
+
+                    <ng-template #itemTemplate let-item>
+                      <a [innerHTML]="item.first_name"></a>
+                    </ng-template>
+
+                    <ng-template #notFoundTemplate let-notFound>
+                      <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                    <div
+                      *ngIf="f.submitted && first_name.invalid"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="first_name.errors.required">
+                        Please Provide First Name
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="form-group col-md-4"
+                *ngIf="!isUpdate && this.selectedActivityType == 'supplier'"
+              >
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_return_supplier_name }}
+                  <span class="text-danger font-weight-bold"> *</span>
+                </label>
+                <div class="col-sm-10">
+                  <div class="ng-autocomplete">
+                    <ng-autocomplete
+                      [data]="suppliers"
+                      [searchKeyword]="supplier_keyword"
+                      [itemTemplate]="itemTemplate"
+                      (inputChanged)="onChangeSearch($event)"
+                      (selected)="onSupplierSelect($event)"
+                      historyIdentifier="suppliers"
+                      (inputFocused)="onFocused($event)"
+                      [notFoundTemplate]="notFoundTemplate"
+                      [(ngModel)]="suppliers.supplier_name"
+                      name="supplier_name"
+                      required
+                      #supplier_name="ngModel"
+                      [ngClass]="{
+                        'is-invalid': f.submitted && supplier_name.invalid,
+                        'is-valid': f.submitted && supplier_name.valid
+                      }"
+                    >
+                    </ng-autocomplete>
+
+                    <ng-template #itemTemplate let-item>
+                      <a [innerHTML]="item.supplier_name"></a>
+                    </ng-template>
+
+                    <ng-template #notFoundTemplate let-notFound>
+                      <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                    <div
+                      *ngIf="f.submitted && supplier_name.invalid"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="supplier_name.errors.required">
+                        Please Provide Supplier Name
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="form-group col-md-4"
+                *ngIf="!isUpdate && this.selectedActivityType == 'customer'"
+              >
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_return_invoice_id }}
+                  <span class="text-danger font-weight-bold"> *</span>
+                </label>
+                <div class="col-sm-10">
+                  <select
+                    class="custom-select"
+                    id="contact"
+                    [(ngModel)]="returnDetail.invoice_id"
+                    name="invoice_id"
+                    (change)="selectedInvoice1($event)"
+                    #invoice_id="ngModel"
+                    [ngClass]="{
+                      'is-invalid': f.submitted && invoice_id.invalid,
+                      'is-valid': f.submitted && invoice_id.valid
+                    }"
+                    required
+                  >
+                    <option
+                      *ngFor="let obj of myInvoices"
+                      [value]="obj.invoice_id"
+                    >
+                      {{ obj.invoice_id }}
+                    </option>
+                  </select>
+
+                  <div
+                    *ngIf="f.submitted && invoice_id.invalid"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="invoice_id.errors.required">
+                      Please provide Activity Type
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="form-group col-md-4"
+                *ngIf="!isUpdate && this.selectedActivityType == 'supplier'"
+              >
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_return_purchase_id }}
+                  <span class="text-danger font-weight-bold"> *</span>
+                </label>
+                <div class="col-sm-10">
+                  <select
+                    class="custom-select"
+                    id="contact"
+                    [(ngModel)]="returnDetail.purchaseID"
+                    name="purchaseID"
+                    (change)="selectedPurchase($event)"
+                    #purchaseID="ngModel"
+                    [ngClass]="{
+                      'is-invalid': f.submitted && purchaseID.invalid,
+                      'is-valid': f.submitted && purchaseID.valid
+                    }"
+                    required
+                  >
+                    <option
+                      *ngFor="let obj of myPurchases"
+                      [value]="obj.purchase_id"
+                    >
+                      {{ obj.purchase_id }}
+                    </option>
+                  </select>
+
+                  <!-- <div *ngIf="f.submitted && invoice_id.invalid "class="invalid-feedback">
+              <div
+                  *ngIf="invoice_id.errors.required ">Please provide Activity Type</div>
+                 
+                </div> -->
+                </div>
+              </div>
+              <div class="form-group col-md-4" *ngIf="isUpdate">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_return_supplier_name
+                  }}<span class="text-danger font-weight-bold"> *</span></label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="returnDetail.supplier_name"
+                    name="supplier_name"
+                    readonly
+                    required
+                    #supplier_name="ngModel"
+                    [ngClass]="{
+                      'is-invalid': f.submitted && supplier_name.invalid,
+                      'is-valid': f.submitted && supplier_name.valid
+                    }"
+                    readonly
+                  />
+                </div>
+                <div
+                  *ngIf="f.submitted && supplier_name.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="supplier_name.errors.required">
+                    Please provide Supplier Name
+                  </div>
+                </div>
+              </div>
+              <div
+                class="form-group col-md-4"
+                *ngIf="this.selectedActivityType == 'customer'"
+              >
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_return_mobile
+                  }}<span class="text-danger font-weight-bold"> *</span></label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="returnDetail.phone"
+                    name="phone"
+                    required
+                    pattern="^[0-9()\-+\s]+$"
+                    #phone="ngModel"
+                    [ngClass]="{
+                      'is-invalid': f.submitted && phone.invalid,
+                      'is-valid': f.submitted && phone.valid
+                    }"
+                    readonly
+                  />
+                  <div
+                    *ngIf="f.submitted && phone.invalid"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="phone.errors.required">
+                      Please select Suppiers name to get phone details
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="form-group col-md-4"
+                *ngIf="this.selectedActivityType != 'customer'"
+              >
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_return_mobile
+                  }}<span class="text-danger font-weight-bold"> *</span></label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="returnDetail.supplier_phone"
+                    name="supplier_phone"
+                    required
+                    pattern="^[0-9()\-+\s]+$"
+                    #supplier_phone="ngModel"
+                    [ngClass]="{
+                      'is-invalid': f.submitted && supplier_phone.invalid,
+                      'is-valid': f.submitted && supplier_phone.valid
+                    }"
+                    readonly
+                  />
+                  <div
+                    *ngIf="f.submitted && supplier_phone.invalid"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="supplier_phone.errors.required">
+                      Please select Suppiers name to get phone details
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group col-md-4">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_return_date }}
+                  <span class="text-danger font-weight-bold"> *</span>
+                </label>
+                <div class="col-sm-10">
+                  <input
+                    type="date"
+                    class="form-control"
+                    [(ngModel)]="returnDetail.returns_date"
+                    name="returns_date"
+                    #returns_date="ngModel"
+                    [ngClass]="{
+                      'is-invalid': f.submitted && returns_date.invalid,
+                      'is-valid': f.submitted && returns_date.valid
+                    }"
+                    required
+                  />
+                  <div
+                    *ngIf="f.submitted && returns_date.invalid"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="returns_date.errors.required">
+                      Please Provide returns Date
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="warehouse_name" class="col-sm-5 col-form-label"
+                  >{{ field_name_return_warehouse
+                  }}<span class="text-danger font-weight-bold"> *</span></label
+                >
+
+                <div class="col-sm-10">
+                  <select
+                    class="custom-select"
+                    name="warehouse_name"
+                    [(ngModel)]="returnDetail.warehouse_name"
+                    #warehouse_name="ngModel"
+                    [ngClass]="{
+                      'is-invalid': f.submitted && warehouse_name.invalid,
+                      'is-valid': f.submitted && warehouse_name.valid
+                    }"
+                    required
+                  >
+                    <option
+                      *ngFor="let obj of warehouseDetail"
+                      [value]="obj.warehouse_name"
+                    >
+                      {{ obj.warehouse_name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="table-responsive" *ngIf="selectedProducts.length">
+              <table
+                class="table"
+                [mfData]="selectedProducts"
+                #mf="mfDataTable"
+                [mfRowsOnPage]="rowsOnPage"
+              >
+                <thead class="thead-light">
+                  <tr>
+                    <th width="20%">
+                      <mfDefaultSorter by="product_name">{{
+                        field_name_return_productname
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="customer_name">{{
+                        field_name_return_product_category
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="mobile">{{
+                        field_name_return_product_rate
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="mobile"
+                        >{{field_name_return_product_returned}}</mfDefaultSorter
+                      >
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="mobile">{{
+                        field_name_return_product_quantity
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="quotation_date">{{
+                        field_name_return_product_discount
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="quotation_date">{{
+                        field_name_return_product_actual_rate
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="product_name"
+                        >{{ field_name_return_product_total }}
+                      </mfDefaultSorter>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let obj of mf.data; let i = index">
+                    <td>{{ obj.product_name }}</td>
+                    <td>{{ obj.category_name }}</td>
+                    <td>{{ obj.cost }}</td>
+                    <td>{{ obj.product_returned_count }}</td>
+                    <td>
+                      <input
+                        type="text"
+                        name="quantity-{{ i }}"
+                        max="1"
+                        [(ngModel)]="obj.quantity"
+                        (keyup)="onChangeProductQnt(i, $event)"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        name="discount-{{ i }}"
+                        [(ngModel)]="obj.discount"
+                        (keyup)="onChangeProductDiscount(i, $event)"
+                      />
+                    </td>
+                    <td>{{ obj.cost * obj.quantity }}</td>
+                    <td>{{ obj.product_Total }}</td>
+                  </tr>
+                  <tr>
+                    <td colspan="6"></td>
+                    <td colspan="3">
+                      {{ field_name_return_product_total }}: {{ total_cost }}
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="">
+                      <mfBootstrapPaginator
+                        [rowsOnPageSet]="[]"
+                      ></mfBootstrapPaginator>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">
+                  {{ field_name_return_created_by }}
+                </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="created_by"
+                    [(ngModel)]="returnDetail.created_by"
+                    #created_by="ngModel"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_return_created_time }}
+                </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="created_time"
+                    readonly
+                    value="{{
+                      returnDetail.created_time | date: dateFormat:'GMT':locale
+                    }}"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_return_updated_by }}
+                </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="updated_by"
+                    [(ngModel)]="returnDetail.updated_by"
+                    #updated_by="ngModel"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">
+                  {{ field_name_return_updated_time }}
+                </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="modified_time"
+                    readonly
+                    value=" {{
+                      returnDetail.modified_time | date: dateFormat:'GMT':locale
+                    }}"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <button
+              class="btn btn-danger btn-round text-center pull-right"
+              type="button"
+              appCancelbutton
+            >
+              {{ "Cancel" | translate }}
+            </button>
+            <button class="btn btn-success btn-round text-center pull-right">
+              <span *ngIf="!isUpdate">{{ "Save" | translate }}</span>
+              <span *ngIf="isUpdate">{{ "Update" | translate }}</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section
+  *ngIf="this._uiservice.langDataSource.value != 'ar' && this.returnDetail"
+  dir="ltr"
+>
+  <div class="container-fluid">
+    <h3 class="text-center">{{ field_name_return_details }}</h3>
+    <div class="card">
+      <div class="card-body">
+        <div *ngIf="print" class="btn-toolbar text-center well1">
+          <button
+            (click)="exportToPrint()"
+            type="button"
+            class="btn btn-success col-xs-5 margin-left"
+          >
+            <i class="fa fa-print" aria-hidden="true"></i
+            >{{ field_name_return_print }}
+          </button>
+        </div>
+
+        <form
+          id="contentToConvert"
+          class="form-horizontal form-material"
+          name="form"
+          #f="ngForm"
+          (ngSubmit)="f.form.valid && onSubmit()"
+        >
+          <div
+            *ngIf="f.form.invalid && f.submitted"
+            class="alert alert-danger alert-dismissible fade show"
+            role="alert"
+          >
+            <strong>returns Details!</strong>The form has the following errors
+            that need to be corrected
+            <button
+              type="button"
+              class="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="card-header">
+            <h2>
+              <span *ngIf="!isUpdate">{{ field_name_return_addreturn }}</span>
+              <span *ngIf="isUpdate">{{ field_name_return_update }}</span>
+            </h2>
+          </div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group col-md-4" *ngIf="!isUpdate">
+                <label class="col-sm-5 col-form-label"
+                  >Type
+                  <span class="text-danger font-weight-bold"> *</span>
+                </label>
+                <div class="col-sm-7">
+                  <div class="ng-autocomplete">
+                    <!-- <ng-autocomplete [data]="suppliers" [searchKeyword]="supplier_keyword" [itemTemplate]="itemTemplate"
+                    (inputChanged)='onChangeSearch($event)' (selected)='onSupplierSelect($event)'  historyIdentifier="suppliers"
+                    (inputFocused)='onFocused($event)' [notFoundTemplate]="notFoundTemplate" [(ngModel)]="suppliers.supplier_name"
+                    name="supplier_name" required  #supplier_name="ngModel" 
+                              [ngClass]="{ 'is-invalid': f.submitted && supplier_name.invalid, 
+                             'is-valid': f.submitted && supplier_name.valid }">
+                   
+                  </ng-autocomplete>
+                  
+                  <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.supplier_name"></a>
+                  </ng-template>
+      
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                    
+                
+                  </ng-template> 
+                  <div *ngIf="f.submitted && supplier_name.invalid" class="invalid-feedback">
+                    <div *ngIf="supplier_name.errors.required">Please Provide Supplier Name</div>
+          
+                   
+                  </div> -->
+                    <select
+                      class="custom-select"
+                      id="contact"
+                      [(ngModel)]="returnDetail.activity_type"
+                      name="activity_type"
+                      (change)="selectObject()"
+                      name="selectedActivityType"
+                      #activity_type="ngModel"
+                      [(ngModel)]="selectedActivityType"
+                      [ngClass]="{
+                        'is-invalid': f.submitted && activity_type.invalid,
+                        'is-valid': f.submitted && activity_type.valid
+                      }"
+                      required
+                    >
+                      <option
+                        *ngFor="let obj of ACTIVITY_OBJECT_TYPE"
+                        [value]="obj"
+                      >
+                        {{ obj }}
+                      </option>
+                    </select>
+
+                    <div
+                      *ngIf="f.submitted && activity_type.invalid"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="activity_type.errors.required">
+                        Please provide Activity Type
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="form-group col-md-4"
+                *ngIf="!isUpdate && this.selectedActivityType == 'customer'"
+              >
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_return_customer_name }}
+                  <span class="text-danger font-weight-bold"> *</span>
+                </label>
+                <div class="col-sm-10">
+                  <div class="ng-autocomplete">
+                    <ng-autocomplete
+                      [data]="customers"
+                      [searchKeyword]="customer_keyword"
+                      [itemTemplate]="itemTemplate"
+                      (inputChanged)="onChangeSearch($event)"
+                      (selected)="onCustomerSelect($event)"
+                      historyIdentifier="customers"
+                      (inputFocused)="onFocused($event)"
+                      [notFoundTemplate]="notFoundTemplate"
+                      [(ngModel)]="customers.first_name"
+                      name="first_name"
+                      required
+                      #first_name="ngModel"
+                      [ngClass]="{
+                        'is-invalid': f.submitted && first_name.invalid,
+                        'is-valid': f.submitted && first_name.valid
+                      }"
+                    >
+                    </ng-autocomplete>
+
+                    <ng-template #itemTemplate let-item>
+                      <a [innerHTML]="item.first_name"></a>
+                    </ng-template>
+
+                    <ng-template #notFoundTemplate let-notFound>
+                      <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                    <div
+                      *ngIf="f.submitted && first_name.invalid"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="first_name.errors.required">
+                        Please Provide First Name
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="form-group col-md-4"
+                *ngIf="!isUpdate && this.selectedActivityType == 'supplier'"
+              >
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_return_supplier_name }}
+                  <span class="text-danger font-weight-bold"> *</span>
+                </label>
+                <div class="col-sm-10">
+                  <div class="ng-autocomplete">
+                    <ng-autocomplete
+                      [data]="suppliers"
+                      [searchKeyword]="supplier_keyword"
+                      [itemTemplate]="itemTemplate"
+                      (inputChanged)="onChangeSearch($event)"
+                      (selected)="onSupplierSelect($event)"
+                      historyIdentifier="suppliers"
+                      (inputFocused)="onFocused($event)"
+                      [notFoundTemplate]="notFoundTemplate"
+                      [(ngModel)]="suppliers.supplier_name"
+                      name="supplier_name"
+                      required
+                      #supplier_name="ngModel"
+                      [ngClass]="{
+                        'is-invalid': f.submitted && supplier_name.invalid,
+                        'is-valid': f.submitted && supplier_name.valid
+                      }"
+                    >
+                    </ng-autocomplete>
+
+                    <ng-template #itemTemplate let-item>
+                      <a [innerHTML]="item.supplier_name"></a>
+                    </ng-template>
+
+                    <ng-template #notFoundTemplate let-notFound>
+                      <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                    <div
+                      *ngIf="f.submitted && supplier_name.invalid"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="supplier_name.errors.required">
+                        Please Provide Supplier Name
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="form-group col-md-4"
+                *ngIf="!isUpdate && this.selectedActivityType == 'customer'"
+              >
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_return_invoice_id }}
+                  <span class="text-danger font-weight-bold"> *</span>
+                </label>
+                <div class="col-sm-10">
+                  <select
+                    class="custom-select"
+                    id="contact"
+                    [(ngModel)]="returnDetail.invoice_id"
+                    name="invoice_id"
+                    (change)="selectedInvoice1($event)"
+                    #invoice_id="ngModel"
+                    [ngClass]="{
+                      'is-invalid': f.submitted && invoice_id.invalid,
+                      'is-valid': f.submitted && invoice_id.valid
+                    }"
+                    required
+                  >
+                    <option
+                      *ngFor="let obj of myInvoices"
+                      [value]="obj.invoice_id"
+                    >
+                      {{ obj.invoice_id }}
+                    </option>
+                  </select>
+
+                  <div
+                    *ngIf="f.submitted && invoice_id.invalid"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="invoice_id.errors.required">
+                      Please provide Activity Type
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="form-group col-md-4"
+                *ngIf="!isUpdate && this.selectedActivityType == 'supplier'"
+              >
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_return_purchase_id }}
+                  <span class="text-danger font-weight-bold"> *</span>
+                </label>
+                <div class="col-sm-10">
+                  <select
+                    class="custom-select"
+                    id="contact"
+                    [(ngModel)]="returnDetail.purchaseID"
+                    name="purchaseID"
+                    (change)="selectedPurchase($event)"
+                    #purchaseID="ngModel"
+                    [ngClass]="{
+                      'is-invalid': f.submitted && purchaseID.invalid,
+                      'is-valid': f.submitted && purchaseID.valid
+                    }"
+                    required
+                  >
+                    <option
+                      *ngFor="let obj of myPurchases"
+                      [value]="obj.purchase_id"
+                    >
+                      {{ obj.purchase_id }}
+                    </option>
+                  </select>
+
+                  <!-- <div *ngIf="f.submitted && invoice_id.invalid "class="invalid-feedback">
+                    <div
+                        *ngIf="invoice_id.errors.required ">Please provide Activity Type</div>
+                       
+                      </div>
+                      -->
+                </div>
+              </div>
+              <div class="form-group col-md-4" *ngIf="isUpdate && this.returnDetail.activity_type == 'supplier'">
+                <label class="col-sm-5 col-form-label"
+                  >Supplier Name<span class="text-danger font-weight-bold"> *</span></label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    [(ngModel)]="this.returnDetail.supplier_name"
+                    class="form-control"
+                    name="supplier_name"
+                    readonly
+                  />
+                </div>
+                
+              </div>
+              <div class="form-group col-md-4" *ngIf="isUpdate &&  this.returnDetail.activity_type == 'supplier'">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_return_mobile
+                  }}<span class="text-danger font-weight-bold"> *</span></label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="returnDetail.supplier_phone"
+                    name="supplier_phone  "
+                    
+                    #phone="ngModel"
+                    
+                    readonly
+                  />
+                 
+                </div>
+                </div>
+              <div class="form-group col-md-4" *ngIf="isUpdate &&  this.returnDetail.activity_type == 'customer'">
+                <label class="col-sm-5 col-form-label"
+                  >Customer Name<span class="text-danger font-weight-bold"> *</span></label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    [(ngModel)]="this.returnDetail.supplier_name"
+                    class="form-control"
+                    name="supplier_name"
+                    readonly
+                  />
+                </div>
+                
+              </div>
+              <div class="form-group col-md-4" *ngIf="isUpdate &&  this.returnDetail.activity_type == 'customer'">
+              <label class="col-sm-5 col-form-label"
+                >{{ field_name_return_mobile
+                }}<span class="text-danger font-weight-bold"> *</span></label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="returnDetail.supplier_phone"
+                  name="supplier_phone  "
+                  
+                  #phone="ngModel"
+                  
+                  readonly
+                />
+               
+              </div>
+              </div>
+              <!-- <div
+                class="form-group col-md-4"
+                *ngIf="this.selectedActivityType == 'customer'"
+              >
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_return_mobile
+                  }}<span class="text-danger font-weight-bold"> *</span></label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="returnDetail.phone"
+                    name="phone"
+                    required
+                    pattern="^[0-9()\-+\s]+$"
+                    #phone="ngModel"
+                    [ngClass]="{
+                      'is-invalid': f.submitted && phone.invalid,
+                      'is-valid': f.submitted && phone.valid
+                    }"
+                    readonly
+                  />
+                  <div
+                    *ngIf="f.submitted && phone.invalid"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="phone.errors.required">
+                      Please select Suppiers name to get phone details
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="form-group col-md-4"
+                *ngIf="this.selectedActivityType != 'customer'"
+              >
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_return_mobile
+                  }}<span class="text-danger font-weight-bold"> *</span></label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="returnDetail.supplier_phone"
+                    name="supplier_phone"
+                    required
+                    pattern="^[0-9()\-+\s]+$"
+                    #supplier_phone="ngModel"
+                    [ngClass]="{
+                      'is-invalid': f.submitted && supplier_phone.invalid,
+                      'is-valid': f.submitted && supplier_phone.valid
+                    }"
+                    readonly
+                  />
+                  <div
+                    *ngIf="f.submitted && supplier_phone.invalid"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="supplier_phone.errors.required">
+                      Please select Suppiers name to get phone details
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+
+              <div class="form-group col-md-4">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_return_date }}
+                  <span class="text-danger font-weight-bold"> *</span>
+                </label>
+                <div class="col-sm-10">
+                  <input
+                    type="date"
+                    class="form-control"
+                    [(ngModel)]="returnDetail.returns_date"
+                    name="returns_date"
+                    #returns_date="ngModel"
+                    [ngClass]="{
+                      'is-invalid': f.submitted && returns_date.invalid,
+                      'is-valid': f.submitted && returns_date.valid
+                    }"
+                    required
+                  />
+                  <div
+                    *ngIf="f.submitted && returns_date.invalid"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="returns_date.errors.required">
+                      Please Provide returns Date
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="warehouse_name" class="col-sm-5 col-form-label"
+                  >{{ field_name_return_warehouse
+                  }}<span class="text-danger font-weight-bold"> *</span></label
+                >
+
+                <div class="col-sm-10">
+                  <select
+                    class="custom-select"
+                    name="warehouse_name"
+                    [(ngModel)]="returnDetail.warehouse_name"
+                    #warehouse_name="ngModel"
+                    [ngClass]="{
+                      'is-invalid': f.submitted && warehouse_name.invalid,
+                      'is-valid': f.submitted && warehouse_name.valid
+                    }"
+                    required
+                  >
+                    <option
+                      *ngFor="let obj of warehouseDetail"
+                      [value]="obj.warehouse_name"
+                    >
+                      {{ obj.warehouse_name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="table-responsive" *ngIf="selectedProducts.length">
+              <table
+                class="table"
+                [mfData]="selectedProducts"
+                #mf="mfDataTable"
+                [mfRowsOnPage]="rowsOnPage"
+              >
+                <thead class="thead-light">
+                  <tr>
+                    <th width="20%">
+                      <mfDefaultSorter by="product_name">{{
+                        field_name_return_productname
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="customer_name">{{
+                        field_name_return_product_category
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="mobile">{{
+                        field_name_return_product_rate
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="mobile"
+                        >{{field_name_return_product_returned}}</mfDefaultSorter
+                      >
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="mobile">{{
+                        field_name_return_product_quantity
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="quotation_date">{{
+                        field_name_return_product_discount
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="quotation_date">{{
+                        field_name_return_product_actual_rate
+                      }}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter by="product_name"
+                        >{{ field_name_return_product_total }}
+                      </mfDefaultSorter>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let obj of mf.data; let i = index">
+                    <td>{{ obj.product_name }}</td>
+                    <td>{{ obj.category_name }}</td>
+                    <td>{{ obj.cost }}</td>
+                    <td>{{ obj.product_returned_count }}</td>
+                    <td>
+                      <input
+                        type="text"
+                        name="quantity-{{ i }}"
+                        max="1"
+                        [(ngModel)]="obj.quantity"
+                        (keyup)="onChangeProductQnt(i, $event)"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        name="discount-{{ i }}"
+                        [(ngModel)]="obj.discount"
+                        (keyup)="onChangeProductDiscount(i, $event)"
+                      />
+                    </td>
+                    <td>{{ obj.cost * obj.quantity }}</td>
+                    <td>{{ obj.product_Total }}</td>
+                  </tr>
+                  <tr>
+                    <td colspan="6"></td>
+                    <td colspan="3">
+                      {{ field_name_return_product_total }}: {{ total_cost }}
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="">
+                      <mfBootstrapPaginator
+                        [rowsOnPageSet]="[]"
+                      ></mfBootstrapPaginator>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">
+                  {{ field_name_return_created_by }}
+                </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="created_by"
+                    [(ngModel)]="returnDetail.created_by"
+                    #created_by="ngModel"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_return_created_time }}
+                </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="created_time"
+                    readonly
+                    value="{{
+                      returnDetail.created_time | date: dateFormat:'GMT':locale
+                    }}"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_return_updated_by }}
+                </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="updated_by"
+                    [(ngModel)]="returnDetail.updated_by"
+                    #updated_by="ngModel"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">
+                  {{ field_name_return_updated_time }}
+                </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="modified_time"
+                    readonly
+                    value=" {{
+                      returnDetail.modified_time | date: dateFormat:'GMT':locale
+                    }}"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <button
+              class="btn btn-danger btn-round text-center pull-right"
+              type="button"
+              appCancelbutton
+            >
+              {{ "Cancel" | translate }}
+            </button>
+            <button class="btn btn-success btn-round text-center pull-right">
+              <span *ngIf="!isUpdate">{{ "Save" | translate }}</span>
+              <span *ngIf="isUpdate">{{ "Update" | translate }}</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

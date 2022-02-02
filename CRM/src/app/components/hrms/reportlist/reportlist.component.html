@@ -1,0 +1,2897 @@
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir="ltr">
+  <div class="container-fluid">
+    <h3 class="text-center">{{ field_name_report_headding }}</h3>
+    <div class="card">
+      <div class="card-body" style="min-height: 450px">
+        <form [formGroup]="form" *ngIf="form">
+          <div class="form-group row col-md-12">
+            <label class="col-md-6 col-form-label">
+              <h4 class="">{{ field_name_report_section }}</h4>
+
+              <h6>{{ field_name_report_select_dropdown }}</h6></label
+            >
+          </div>
+          <div class="displayInSmallScreen form-group row col-md-12">
+            <div class="col-md-2 alignToCenter">
+              <label
+                ><span style="color: red">*</span>
+                {{ field_name_report_select_section }} :
+              </label>
+              &nbsp; &nbsp;
+              <select
+                class="form-control"
+                formControlName="sectionType"
+                id="sectionType"
+              >
+                <option [value]="" disabled [selected]="true">
+                  Choose Section
+                </option>
+                <option *ngFor="let item of sectionArr" [ngValue]="item.name">
+                  {{ item.name }}
+                </option>
+              </select>
+              <br />
+              <div *ngIf="form.value.sectionType == ''" style="color: red">
+                Section Required
+              </div>
+              <br />
+            </div>
+            <div class="col-md-6 alignToCenter">
+              <label
+                ><span style="color: red">*</span>
+                {{ field_name_report_view_as }} :
+              </label>
+              &nbsp; &nbsp;<select
+                class="form-control"
+                formControlName="viewType"
+              >
+                <option [ngValue]="" disabled [selected]="true">
+                  Choose View Type
+                </option>
+                <option>Monthly</option>
+                <option>Yearly</option></select
+              >&nbsp;
+              <select class="form-control" formControlName="yearSelected">
+                <option [ngValue]="" disabled [selected]="true">
+                  Choose Year
+                </option>
+                <option>2021</option>
+                <option>2022</option>
+              </select>
+              <select
+                class="form-control"
+                *ngIf="this.form.value.viewType == 'Monthly'"
+                formControlName="monthSelected"
+              >
+                <option [ngValue]="" disabled [selected]="true">
+                  Choose Month
+                </option>
+                <option *ngFor="let item of monthsArray" [ngValue]="item.value">
+                  {{ item.name }}
+                </option>
+              </select>
+              <br />
+              <div *ngIf="form.value.viewType == ''" style="color: red">
+                View Type Required
+              </div>
+              <!-- <div *ngIf="( form.value.viewType != ''  && form.value.viewType == 'Monthly' &&  form.value.monthSelected == '' && form.value.yearSelected == '')" style="color: red">Month & Year Required</div> -->
+              <div
+                *ngIf="
+                  form.value.viewType != '' &&
+                  form.value.viewType == 'Yearly' &&
+                  form.value.yearSelected == ''
+                "
+                style="color: red"
+              >
+                Year Required
+              </div>
+              <div
+                *ngIf="
+                  form.value.viewType != '' &&
+                  form.value.viewType == 'Monthly' &&
+                  (form.value.monthSelected == '' ||
+                    form.value.yearSelected == '')
+                "
+                style="color: red"
+              >
+                Month & Year Required
+              </div>
+              <br />
+            </div>
+            <div class="col-md-2 alignToCenter">
+              <label>
+                <span style="color: red">*</span>
+                {{ field_name_report_select_chart }} :
+              </label>
+              &nbsp; &nbsp;<select
+                class="form-control"
+                formControlName="chartType"
+              >
+                <option [ngValue]="" disabled [selected]="true">
+                  Choose Chart Type
+                </option>
+                <option>bar</option>
+                <option>pie</option>
+                <option>doughnut</option>
+                <option>table</option>
+              </select>
+              <br />
+              <div *ngIf="form.value.chartType == ''" style="color: red">
+                Chart Required
+              </div>
+            </div>
+            <div class="col-md-2 alignToCenter">
+              <button
+                class="btn btn-primary search-btn"
+                (click)="getChart()"
+                [disabled]="!form.valid"
+              >
+                {{ field_name_report_search }}
+              </button>
+            </div>
+          </div>
+          <div class="displayInLargeScreen form-group row col-md-12">
+            <div class="col-sm-3">
+              <label
+                ><span style="color: red">*</span>
+                {{ field_name_report_select_section }} :
+              </label>
+              &nbsp; &nbsp;
+              <select
+                formControlName="sectionType"
+                id="sectionType"
+                (change)="onChange($event)"
+              >
+                <option [value]="" disabled [selected]="true">
+                  Choose Section
+                </option>
+                <option *ngFor="let item of sectionArr" [ngValue]="item.name">
+                  {{ item.name }}
+                </option>
+              </select>
+              <div *ngIf="form.value.sectionType == ''" style="color: red">
+                Section Required
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <label
+                ><span style="color: red">*</span>
+                {{ field_name_report_view_as }} :
+              </label>
+              &nbsp; &nbsp;<select formControlName="viewType">
+                <option value="" disabled [selected]="true">
+                  Choose View Type
+                </option>
+                <option>Monthly</option>
+                <option *ngIf="this.form.value.sectionType != 'Attendance Table'">Yearly</option></select
+              >&nbsp;
+              <select formControlName="yearSelected">
+                <option value="" disabled [selected]="true">Choose Year</option>
+                <option>2021</option>
+                <option>2022</option>
+              </select>
+              <select
+                *ngIf="this.form.value.viewType == 'Monthly'"
+                formControlName="monthSelected"
+              >
+                <option value="" disabled [selected]="true">
+                  Choose Month
+                </option>
+                <option *ngFor="let item of monthsArray" [ngValue]="item.value">
+                  {{ item.name }}
+                </option>
+              </select>
+              <div
+                *ngIf="form.value.viewType == ''"
+                style="color: red; margin-top: -10px"
+              >
+                View Type Required
+              </div>
+              <!-- <div *ngIf="( form.value.viewType != ''  && form.value.viewType == 'Monthly' &&  form.value.monthSelected == '' && form.value.yearSelected == '')" style="color: red;margin-top:-10px">Month & Year Required</div> -->
+              <div
+                *ngIf="
+                  form.value.viewType != '' &&
+                  form.value.viewType == 'Yearly' &&
+                  form.value.yearSelected == ''
+                "
+                style="color: red; margin-top: -10px"
+              >
+                Year Required
+              </div>
+              <div
+                *ngIf="
+                  form.value.viewType != '' &&
+                  form.value.viewType == 'Monthly' &&
+                  (form.value.monthSelected == '' ||
+                    form.value.yearSelected == '')
+                "
+                style="color: red; margin-top: -10px"
+              >
+                Month & Year Required
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <label>
+                <span style="color: red">*</span>
+                {{ field_name_report_select_chart }} :
+              </label>
+              &nbsp; &nbsp;<select formControlName="chartType">
+                <option value="" disabled [selected]="true">
+                  Choose Chart Type
+                </option>
+                <option>bar</option>
+                <option>pie</option>
+                <option>doughnut</option>
+                <option>table</option>
+              </select>
+
+              &nbsp; &nbsp;
+              <button
+                class="btn btn-primary search-btn"
+                (click)="getChart()"
+                [disabled]="!form.valid"
+              >
+                {{ field_name_report_search }}
+              </button>
+              <div *ngIf="form.value.chartType == ''" style="color: red">
+                Chart Required
+              </div>
+            </div>
+          </div>
+          <div [ngStyle]="{ display: !this.showTableFlag ? 'flex' : 'none' }">
+            <div
+              id="divChart"
+              [ngStyle]="{
+                display: this.chartSearchCompleted ? 'flex' : 'none'
+              }"
+            >
+              <canvas
+                id="myChart"
+                width="400"
+                height="400"
+                style="margin-left: 100%"
+              ></canvas>
+            </div>
+            <div
+              *ngIf="
+                this.chartSearchCompleted &&
+                this.form.value.viewType == 'Yearly' &&
+                this.globalDataArray.length > 0
+              "
+            >
+              <h3>{{ this.form.value.sectionType }}</h3>
+              <br />
+              <span class="row">
+                <table class="percentageTable">
+                  <tr>
+                    <th class="borderBlack">Month</th>
+                    <th class="borderBlack">Percentage</th>
+                  </tr>
+                  <tr *ngFor="let k of globalDataArray">
+                    <td *ngIf="k" class="borderBlack">
+                      {{ this.getIndex(k) }}
+                    </td>
+                    <td *ngIf="k" class="borderBlack">
+                      {{ this.getPercentage(k, globalDataArray) }}
+                    </td>
+                  </tr>
+                </table>
+              </span>
+            </div>
+            <div
+              *ngIf="
+                this.chartSearchCompleted &&
+                this.form.value.viewType == 'Monthly'
+              "
+            >
+              <h3>{{ this.form.value.sectionType }}</h3>
+              <br />
+              <span class="row">
+                <table class="percentageTable">
+                  <tr>
+                    <th class="borderBlack">Day in Month</th>
+                    <th class="borderBlack">Percentage</th>
+                  </tr>
+                  <tr *ngFor="let k of globalDataArray">
+                    <td *ngIf="k" class="borderBlack">
+                      {{ this.getIndexMonthly(k) }}
+                    </td>
+                    <td *ngIf="k" class="borderBlack">
+                      {{ this.getPercentage(k,globalDataArray) }}
+                    </td>
+                  </tr>
+                </table>
+              </span>
+            </div>
+          </div>
+          <div
+            *ngIf="this.showTableFlag && this.form.value.chartType == 'table'"
+          >
+            <div
+              class="card-body product-table p-t-35"
+              *ngIf="this.form.value.sectionType == 'Employees table'"
+            >
+              <div style="font-size: 20px; font-weight: bold">
+               {{field_name_hrms_employee_table}}
+              </div>
+
+              <div class="table-responsive">
+                <table
+                  id="contentToConvert"
+                  class="table table-striped"
+                  [mfData]="selectedArr"
+                  #mf2="mfDataTable"
+                >
+                <thead class="thead-light">
+                  <tr>
+                    <th width="20%" (click)="sortCustomers('first_name')">
+                      <mfDefaultSorter by="first_name"
+                        >{{field_name_hrms_employee_first_name}}</mfDefaultSorter
+                      >
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sortCustomers('last_name')">
+                      <mfDefaultSorter by="last_name">{{field_name_hrms_employee_email_id}} </mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sortCustomers('email')">
+                      <mfDefaultSorter by="email"> {{field_name_hrms_employee_mobile}} </mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sortCustomers('phone')">
+                      <mfDefaultSorter by="phone"> {{field_name_hrms_employee_join_date}} </mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter>{{field_name_hrms_employee_role}}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter>{{field_name_hrms_actons}}</mfDefaultSorter>
+                    </th>
+                  </tr>
+                </thead>
+
+                  <tbody *ngIf="selectedArr.length > 0">
+                    <tr
+                      *ngFor="
+                        let obj of mf2.data
+                          | orderBy: key:reverse
+                          | paginate
+                            : {
+                                id: 'employee',
+                                itemsPerPage: 5,
+                                currentPage: employeePagination,
+                                totalItems: employeeCount
+                              };
+                        let i = index
+                      "
+                    >
+                      <td>{{ obj.first_name }}</td>
+
+                      <td>{{ obj.email }}</td>
+                      <td>{{ obj.phone }}</td>
+                      <td>{{ obj.joining_date }}</td>
+                      <td>{{ obj.designation }}</td>
+                      <td>
+                        <i
+                          class="fa fa-edit"
+                          (click)="onClickEdit('employee', obj)"
+                        ></i>
+
+                        <!-- <span
+                          ><i
+                            (click)="onClickDelete('employee', obj)"
+                            class="fa fa-trash"
+                          ></i
+                        ></span> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="selectedArr.length == 0">
+                    No Records Found
+                  </tbody>
+                  <tfoot *ngIf="selectedArr.length > 0">
+                    <tr>
+                      <td colspan="4">
+                        <pagination-controls
+                          id="employee"
+                          (pageChange)="
+                            pageChanged(
+                              'employee',
+                              (employeePagination = $event)
+                            )
+                          "
+                        >
+                        </pagination-controls>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <div
+              class="card-body product-table p-t-35"
+              *ngIf="this.form.value.sectionType == 'Holidays Table'"
+            >
+              <div style="font-size: 20px; font-weight: bold">
+               {{field_name_hrms_holiday_table}}
+              </div>
+
+              <div class="table-responsive">
+                <table
+                  id="contentToConvert"
+                  class="table table-striped"
+                  [mfData]="selectedArr"
+                  #mf1="mfDataTable"
+                >
+                <thead class="thead-light">
+                  <tr>
+                    <th width="20%" (click)="sortCustomers('first_name')">
+                      <mfDefaultSorter by="first_name"
+                        >{{field_name_hrms_holiday_name}}</mfDefaultSorter
+                      >
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sortCustomers('last_name')">
+                      <mfDefaultSorter by="last_name">
+                        {{field_name_hrms_holiday_date}}
+                      </mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sortCustomers('email')">
+                      <mfDefaultSorter by="email"> {{field_name_hrms_holiday_day}}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+    
+                    <th width="20%">
+                      <mfDefaultSorter>{{field_name_hrms_actons}}</mfDefaultSorter>
+                    </th>
+                  </tr>
+                </thead>
+
+                  <tbody *ngIf="selectedArr.length > 0">
+                    <tr
+                      *ngFor="
+                        let obj of mf1.data
+                          | orderBy: key:reverse
+                          | paginate
+                            : {
+                                id: 'holidays',
+                                itemsPerPage: 5,
+                                currentPage: holidaysPagination,
+                                totalItems: holidayCount
+                              };
+                        let i = index
+                      "
+                    >
+                      <td>{{ obj.holiday_name }}</td>
+
+                      <td>{{ obj.holiday_date }}</td>
+                      <td>{{ obj.holiday_day }}</td>
+                      <td>
+                        <i
+                          class="fa fa-edit"
+                          (click)="onClickEdit('holidays', obj)"
+                        ></i>
+
+                        <!-- <span
+                          ><i
+                            (click)="onClickDelete('holidays', obj)"
+                            class="fa fa-trash"
+                          ></i
+                        ></span> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="selectedArr.length == 0">
+                    No Records Found
+                  </tbody>
+                  <tfoot *ngIf="selectedArr.length > 0">
+                    <tr>
+                      <td colspan="4">
+                        <pagination-controls
+                          id="holidays"
+                          (pageChange)="
+                            pageChanged(
+                              'holidays',
+                              (holidaysPagination = $event)
+                            )
+                          "
+                        >
+                        </pagination-controls>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <div
+              class="card-body product-table p-t-35"
+              *ngIf="this.form.value.sectionType == 'Leaves Table'"
+            >
+              <div style="font-size: 20px; font-weight: bold">{{field_name_hrms_leaves_table}}</div>
+
+              <div class="table-responsive">
+                <table
+                  id="contentToConvert"
+                  class="table table-striped"
+                  [mfData]="selectedArr"
+                  #mf3="mfDataTable"
+                >
+                <thead class="thead-light">
+                  <tr>
+                    <th width="20%" (click)="sortCustomers('first_name')">
+                      <mfDefaultSorter by="first_name">{{field_name_hrms_leaves_type}}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sortCustomers('last_name')">
+                      <mfDefaultSorter by="last_name"> {{field_name_hrms_leaves_from}} </mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sortCustomers('email')">
+                      <mfDefaultSorter by="email"> {{field_name_hrms_leaves_to}}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sort('email')">
+                      <mfDefaultSorter by="email">{{field_name_hrms_leaves_reason}} </mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter>{{field_name_hrms_actons}}</mfDefaultSorter>
+                    </th>
+                  </tr>
+                </thead>
+
+                  <tbody *ngIf="selectedArr.length > 0">
+                    <tr
+                      *ngFor="
+                        let obj of mf3.data
+                          | orderBy: key:reverse
+                          | paginate
+                            : {
+                                id: 'leaves',
+                                itemsPerPage: 5,
+                                currentPage: leavesPagination,
+                                totalItems: leaveCount
+                              };
+                        let i = index
+                      "
+                    >
+                      <td>{{ obj.leave_type }}</td>
+
+                      <td>{{ obj.leave_from }}</td>
+                      <td>{{ obj.leave_to }}</td>
+                      <td>{{ obj.leave_reason }}</td>
+                      <td>
+                        <i
+                          class="fa fa-edit"
+                          (click)="onClickEdit('leaves', obj)"
+                        ></i>
+
+                        <!-- <span
+                          ><i
+                            (click)="onClickDelete('leaves', obj)"
+                            class="fa fa-trash"
+                          ></i
+                        ></span> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="selectedArr.length == 0">
+                    No Records Found
+                  </tbody>
+                  <tfoot *ngIf="selectedArr.length > 0">
+                    <tr>
+                      <td colspan="4">
+                        <pagination-controls
+                          id="leaves"
+                          (pageChange)="
+                            pageChanged('leaves', (leavesPagination = $event))
+                          "
+                        >
+                        </pagination-controls>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <div
+              class="card-body product-table p-t-35"
+              *ngIf="this.form.value.sectionType == 'Training Table'"
+            >
+              <div style="font-size: 20px; font-weight: bold">
+               {{field_name_hrms_training_table}}
+              </div>
+
+              <div class="table-responsive">
+                <table
+                  id="contentToConvert"
+                  class="table table-striped"
+                  [mfData]="selectedArr"
+                  #mf4="mfDataTable"
+                >
+                <thead class="thead-light">
+                  <tr>
+                    <th width="20%" (click)="sortCustomers('first_name')">
+                      <mfDefaultSorter by="first_name">
+                        {{field_name_hrms_training_type}}</mfDefaultSorter
+                      >
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sortCustomers('last_name')">
+                      <mfDefaultSorter by="last_name"> {{field_name_hrms_training_trainer}} </mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sortCustomers('email')">
+                      <mfDefaultSorter by="email"> {{field_name_hrms_training_employee}} </mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sort('email')">
+                      <mfDefaultSorter by="email">{{field_name_hrms_training_cost}} </mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter>{{field_name_hrms_training_description}}</mfDefaultSorter>
+                    </th>
+                    <th width="20%">
+                      <mfDefaultSorter>{{field_name_hrms_actons}}</mfDefaultSorter>
+                    </th>
+                  </tr>
+                </thead>
+    
+
+                  <tbody *ngIf="selectedArr.length > 0">
+                    <tr
+                      *ngFor="
+                        let obj of mf4.data
+                          | orderBy: key:reverse
+                          | paginate
+                            : {
+                                id: 'training',
+                                itemsPerPage: 5,
+                                currentPage: trainingPagination,
+                                totalItems: trainingCount
+                              };
+                        let i = index
+                      "
+                    >
+                      <td>{{ obj.training_type }}</td>
+                      <td>{{ obj.trainer_name }}</td>
+                      <td>{{ obj.trained_employee_name }}</td>
+                      <td>{{ obj.training_cost }}</td>
+                      <td>{{ obj.training_description }}</td>
+                      <td>
+                        <i
+                          class="fa fa-edit"
+                          (click)="onClickEdit('training', obj)"
+                        ></i>
+
+                        <!-- <span
+                          ><i
+                            (click)="onClickDelete('training', obj)"
+                            class="fa fa-trash"
+                          ></i
+                        ></span> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="selectedArr.length == 0">
+                    No Records Found
+                  </tbody>
+                  <tfoot *ngIf="selectedArr.length > 0">
+                    <tr>
+                      <td colspan="4">
+                        <pagination-controls
+                          id="training"
+                          (pageChange)="
+                            pageChanged(
+                              'training',
+                              (trainingPagination = $event)
+                            )
+                          "
+                        >
+                        </pagination-controls>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <div
+              class="card-body product-table p-t-35"
+              *ngIf="this.form.value.sectionType == 'Project Table'"
+            >
+              <div style="font-size: 20px; font-weight: bold">
+             {{field_name_hrms_project_table}}
+              </div>
+
+              <div class="table-responsive">
+                <table
+                  id="contentToConvert"
+                  class="table table-striped"
+                  [mfData]="selectedArr"
+                  #mf5="mfDataTable"
+                >
+                <thead class="thead-light">
+                  <tr>
+                    <th width="20%" (click)="sortCustomers('first_name')">
+                      <mfDefaultSorter by="first_name">
+                        {{field_name_hrms_project_name}}</mfDefaultSorter
+                      >
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sortCustomers('last_name')">
+                      <mfDefaultSorter by="last_name">
+                        {{field_name_hrms_project_description}}
+                      </mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sortCustomers('email')">
+                      <mfDefaultSorter by="email"> {{field_name_hrms_project_team}} </mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+    
+                    <th width="20%">
+                      <mfDefaultSorter>{{field_name_hrms_actons}}</mfDefaultSorter>
+                    </th>
+                  </tr>
+                </thead>
+
+                  <tbody *ngIf="selectedArr.length > 0">
+                    <tr
+                      *ngFor="
+                        let obj of mf5.data
+                          | orderBy: key:reverse
+                          | paginate
+                            : {
+                                id: 'project',
+                                itemsPerPage: 5,
+                                currentPage: projectPagination,
+                                totalItems: projectCount
+                              };
+                        let i = index
+                      "
+                    >
+                      <td>{{ obj.project_name }}</td>
+
+                      <td>{{ obj.project_description }}</td>
+                      <td>{{ getEmployeeName(obj.project_team) }}</td>
+                      <td>
+                        <i
+                          class="fa fa-edit"
+                          (click)="onClickEdit('project', obj)"
+                        ></i>
+
+                        <!-- <span
+                          ><i
+                            (click)="onClickDelete('project', obj)"
+                            class="fa fa-trash"
+                          ></i
+                        ></span> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="selectedArr.length == 0">
+                    No Records Found
+                  </tbody>
+                  <tfoot *ngIf="selectedArr.length > 0">
+                    <tr>
+                      <td colspan="4">
+                        <pagination-controls
+                          id="project"
+                          (pageChange)="
+                            pageChanged('project', (projectPagination = $event))
+                          "
+                        >
+                        </pagination-controls>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <div
+              class="card-body product-table p-t-35"
+              *ngIf="this.form.value.sectionType == 'Notice Table'"
+            >
+              <div style="font-size: 20px; font-weight: bold">{{field_name_hrms_notice_table}}</div>
+
+              <div class="table-responsive">
+                <table
+                  id="contentToConvert"
+                  class="table table-striped"
+                  [mfData]="selectedArr"
+                  #mf6="mfDataTable"
+                >
+                <thead class="thead-light">
+                  <tr>
+                    <th width="20%" (click)="sortCustomers('first_name')">
+                      <mfDefaultSorter by="first_name">
+                        {{field_name_hrms_notice_type}}</mfDefaultSorter
+                      >
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sortCustomers('last_name')">
+                      <mfDefaultSorter by="last_name">
+                        {{field_name_hrms_notice_date}}
+                      </mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sortCustomers('email')">
+                      <mfDefaultSorter by="email"> {{field_name_hrms_notice_by}}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+    
+                    <th width="20%">
+                      <mfDefaultSorter>{{field_name_hrms_actons}}</mfDefaultSorter>
+                    </th>
+                  </tr>
+                </thead>
+
+                  <tbody *ngIf="selectedArr.length > 0">
+                    <tr
+                      *ngFor="
+                        let obj of mf6.data
+                          | orderBy: key:reverse
+                          | paginate
+                            : {
+                                id: 'notice',
+                                itemsPerPage: 5,
+                                currentPage: noticePagination,
+                                totalItems: noticeCount
+                              };
+                        let i = index
+                      "
+                    >
+                      <td>{{ obj.notice_type }}</td>
+
+                      <td>{{ obj.notice_date }}</td>
+                      <td>{{ obj.notice_by }}</td>
+                      <td>
+                        <i
+                          class="fa fa-edit"
+                          (click)="onClickEdit('notice', obj)"
+                        ></i>
+
+                        <!-- <span
+                          ><i
+                            (click)="onClickDelete('notice', obj)"
+                            class="fa fa-trash"
+                          ></i
+                        ></span> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="selectedArr.length == 0">
+                    No Records Found
+                  </tbody>
+                  <tfoot *ngIf="selectedArr.length > 0">
+                    <tr>
+                      <td colspan="4">
+                        <pagination-controls
+                          id="notice"
+                          (pageChange)="
+                            pageChanged('notice', (noticePagination = $event))
+                          "
+                        >
+                        </pagination-controls>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <div
+              class="card-body product-table p-t-35"
+              *ngIf="this.form.value.sectionType == 'Expense Table'"
+            >
+            <div style="font-size: 20px; font-weight: bold">{{field_name_hrms_expenses_table}}</div>
+              <div class="table-responsive">
+                <table
+                  id="contentToConvert"
+                  class="table"
+                  [mfData]="selectedArr"
+                  #mf="mfDataTable"
+                >
+                <thead class="thead-light">
+                  <tr>
+                    <th width="20%" (click)="sort('email')">
+                      <mfDefaultSorter by="email">{{field_name_add_expense_user_email}}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sort('expense_item')">
+                      <mfDefaultSorter by="expense_item"
+                        >{{field_name_add_expense_add_expense_item}}</mfDefaultSorter
+                      >
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sort('amount')">
+                      <mfDefaultSorter by="amount">{{field_name_add_expense_amount}}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sort('date')">
+                      <mfDefaultSorter by="date">{{field_name_add_expense_date}}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%">{{field_name_hrms_actons}}</th>
+                  </tr>
+                </thead>
+                  <tbody *ngIf="mf.data?.length >= 1">
+                    <tr
+                      *ngFor="
+                        let obj of mf.data
+                          | orderBy: key:reverse
+                          | paginate
+                            : {
+                                itemsPerPage: 5,
+                                currentPage: p,
+                                totalItems: expensesDetailsCount
+                              };
+                        let i = index
+                      "
+                    >
+                      <td>{{ obj.email }}</td>
+                      <td>{{ obj.expense_item }}</td>
+                      <td>{{ obj.amount }}</td>
+                      <td>{{ obj.date }}</td>
+                      <td>
+                        <i
+                          class="fa fa-edit"
+                          (click)="onClickEdit('expense', obj)"
+                        ></i>
+
+                        <!-- <span
+                          ><i
+                            (click)="onClickDelete('expense', obj)"
+                            class="fa fa-trash"
+                          ></i
+                        ></span> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="mf.data?.length <= 0">
+                    <tr class="odd" style="opacity: 1">
+                      <td
+                        valign="top"
+                        colspan="8"
+                        style="text-align: center"
+                        class="dataTables_empty"
+                      >
+                        No data available in table
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr *ngIf="mf.data?.length > 0">
+                      <td colspan="4">
+                        <pagination-controls
+                          (pageChange)="pageChanged('expense', (p = $event))"
+                        >
+                        </pagination-controls>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <div
+              class="card-body product-table p-t-35"
+              *ngIf="this.form.value.sectionType == 'Travel Table'"
+            >
+              <div style="font-size: 20px; font-weight: bold">{{field_name_hrms_travel_table}}</div>
+
+              <div class="table-responsive">
+                <table
+                  id="contentToConvert"
+                  class="table table-striped"
+                  [mfData]="selectedArr"
+                  #mf6="mfDataTable"
+                >
+                <thead class="thead-light">
+                  <tr>
+                    <th width="20%" (click) ="sort('SL NO')">
+                        <mfDefaultSorter by="">{{field_name_hrms_travel_employee_name}}</mfDefaultSorter>
+                      </th> 
+               
+                      <th width="20%" (click) ="sort('designation_name')">
+                      <mfDefaultSorter >{{field_name_hrms_travel_info}}</mfDefaultSorter>
+                      
+                    </th>
+        
+                    <th width="20%" (click) ="sort('department_name')">
+                      <mfDefaultSorter >{{field_name_hrms_travel_date}}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click) ="sort('department_name')">
+                      <mfDefaultSorter >{{field_name_hrms_travel_return_date}}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                
+                    <th width="20%" *ngIf="SHOW_EDIT_DELETE" >
+                     {{field_name_hrms_actons}} 
+                    </th>
+                  </tr>
+                </thead>
+                  <tbody *ngIf="selectedArr.length > 0">
+                    <tr
+                      *ngFor="
+                        let obj of mf6.data
+                          | orderBy: key:reverse
+                          | paginate
+                            : {
+                                id: 'travel',
+                                itemsPerPage: 5,
+                                currentPage: travelPagination,
+                                totalItems: travelCount
+                              };
+                        let i = index
+                      "
+                    >
+                      <td>{{ obj.employee_name }}</td>
+                      <td>{{ obj.travel_info }}</td>
+                      <td>{{ obj.travel_date }}</td>
+                      <td>{{ obj.return_date }}</td>
+                      <td>
+                        <i
+                          class="fa fa-edit"
+                          (click)="onClickEdit('travel', obj)"
+                        ></i>
+
+                        <!-- <span
+                          ><i
+                            (click)="onClickDelete('travel', obj)"
+                            class="fa fa-trash"
+                          ></i
+                        ></span> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="selectedArr.length == 0">
+                    No Records Found
+                  </tbody>
+                  <tfoot *ngIf="selectedArr.length > 0">
+                    <tr>
+                      <td colspan="4">
+                        <pagination-controls
+                          id="notice"
+                          (pageChange)="
+                            pageChanged('travel', (noticePagination = $event))
+                          "
+                        >
+                        </pagination-controls>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <div
+              class="card-body product-table p-t-35"
+              *ngIf="this.form.value.sectionType == 'Attendance Table'"
+            >
+              <div style="font-size: 20px; font-weight: bold;display: flex;">
+               {{field_name_hrms_attendance_table}} &nbsp;&nbsp;&nbsp;&nbsp;
+                
+                  <button type="button" (click)="downloadPdf(leaveArr)" class="btn btn-success">
+                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                    {{field_name_hrms_attendence_pdf}}
+                  </button>
+              </div>
+
+              <div class="table-responsive">
+                <table
+                  id="contentToConvert"
+                  class="table table-striped"
+                  [mfData]="leaveArr"
+                  #mf6="mfDataTable"
+                >
+                  <thead class="thead-light">
+                    <tr>
+                      <th width="20%" (click)="sortCustomers('first_name')">
+                        <mfDefaultSorter by="first_name">
+                          Employee Name</mfDefaultSorter
+                        >
+                        <i class="fa fa-sort"></i>
+                      </th>
+                      <th width="20%" (click)="sortCustomers('last_name')">
+                        <mfDefaultSorter by="last_name">
+                          Present Days
+                        </mfDefaultSorter>
+                        <i class="fa fa-sort"></i>
+                      </th>
+                      <th width="20%" (click)="sortCustomers('email')">
+                        <mfDefaultSorter by="email">
+                         Leave Days
+                        </mfDefaultSorter>
+                        <i class="fa fa-sort"></i>
+                      </th>
+                    </tr>
+                  </thead>
+
+                  <tbody *ngIf="leaveArr.length > 0">
+                    <tr
+                      *ngFor="
+                        let obj of mf6.data
+                          | orderBy: key:reverse
+                          | paginate
+                            : {
+                                id: 'attendance',
+                                itemsPerPage: 5,
+                                currentPage: attendancePage,
+                                totalItems: employeeCount
+                              };
+                        let i = index
+                      "
+                    >
+                      <td>{{ (obj.name) }}</td>
+                      <td>{{ obj.attended_days }}</td>
+                      <td>{{ obj.leave_days }}</td>
+                      
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="leaveArr.length == 0">
+                    No Records Found
+                  </tbody>
+                  <tfoot *ngIf="leaveArr.length > 0">
+                    <tr>
+                      <td colspan="4">
+                        <pagination-controls
+                          id="attendance"
+                          (pageChange)="
+                            pageChanged(
+                              'attendance',
+                              (attendancePage = $event)
+                            )
+                          "
+                        >
+                        </pagination-controls>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <div
+              class="card-body product-table p-t-35"
+              *ngIf="this.form.value.sectionType == 'Policy Table'"
+            >
+              <div style="font-size: 20px; font-weight: bold">{{field_name_hrms_policy_table}}</div>
+
+              <div class="table-responsive">
+                <table
+                  id="contentToConvert"
+                  class="table table-striped"
+                  [mfData]="selectedArr"
+                  #mf6="mfDataTable"
+                >
+                <thead class="thead-light">
+                  <tr>
+                    <th width="10%" (click)="sort('SLNO')">
+                      <mfDefaultSorter by="">{{ 'SL NO'| translate}}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+    
+                    <th width="20%" (click)="sort('policy_id')">
+                      <mfDefaultSorter by="policy_name">{{field_name_hrms_policy_id}}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="10%" (click)="sort('policy_name')">
+                      <mfDefaultSorter by="policy_name"
+                        >{{field_name_hrms_policy_name}}</mfDefaultSorter
+                      >
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="10%" (click)="sort('policy_name')">
+                      <mfDefaultSorter by="policy_name">{{field_name_hrms_policy_size}}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sort('file')">
+                      <mfDefaultSorter by="file">{{field_name_hrms_policy_file}}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="10%" (click)="sort('Download')">
+                      <mfDefaultSorter by="">{{field_name_hrms_policy_download}}</mfDefaultSorter>
+                    </th>
+    
+                    <th width="10%">{{field_name_hrms_actons}}</th>
+                  </tr>
+                </thead>
+                  <tbody *ngIf="selectedArr.length > 0">
+                    <tr
+                      *ngFor="
+                        let obj of mf6.data
+                          | orderBy: key:reverse
+                          | paginate
+                            : {
+                                id: 'policy',
+                                itemsPerPage: 5,
+                                currentPage: policyPagination,
+                                totalItems: policyCount
+                              };
+                        let i = index
+                      "
+                    >
+                      <td>{{ i + 1 }}</td>
+                      <td>{{ obj.policy_id }}</td>
+
+                      <td>{{ obj.policy_name }}</td>
+                      <td>{{ obj.size }} Bytes</td>
+                      <td>{{ obj.files || "no files uploaded" }}</td>
+                      <td>
+                        <a [href]="obj.files" download target="_blank">
+                          Download
+                        </a>
+                      </td>
+                      <td>
+                        <i
+                          class="fa fa-edit"
+                          (click)="onClickEdit('policy', obj)"
+                        ></i>
+
+                        <!-- <span
+                          ><i
+                            (click)="onClickDelete('policy', obj)"
+                            class="fa fa-trash"
+                          ></i
+                        ></span> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="selectedArr.length == 0">
+                    No Records Found
+                  </tbody>
+                  <tfoot *ngIf="selectedArr.length > 0">
+                    <tr>
+                      <td colspan="4">
+                        <pagination-controls
+                          id="policy"
+                          (pageChange)="
+                            pageChanged('policy', (policyPagination = $event))
+                          "
+                        >
+                        </pagination-controls>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <div
+              class="card-body product-table p-t-35"
+              *ngIf="this.form.value.sectionType == 'Payroll Table'"
+            >
+              <div style="font-size: 20px; font-weight: bold">
+               {{field_name_hrms_payroll_table}}
+              </div>
+
+              <div class="table-responsive">
+                <table
+                  id="contentToConvert"
+                  class="table table-striped"
+                  [mfData]="selectedArr"
+                  #mf6="mfDataTable"
+                >
+                <thead class="thead-light">
+                  <tr>
+                    <!--  <th width="20%">
+                      <mfDefaultSorter by="user_id">ID</mfDefaultSorter>
+                    </th> -->
+      
+                    <th width="20%" (click)="sort('first_name')">
+                      <mfDefaultSorter by="first_name">{{field_name_hrms_payroll_employee_name}}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sort('last_name')">
+                      <mfDefaultSorter by="last_name">{{field_name_hrms_payroll_net_salary}}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sort('email')">
+                      <mfDefaultSorter by="email">{{field_name_hrms_payroll_basic_salary}}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+      
+                    <th width="20%" *ngIf="SHOW_EDIT_DELETE">
+                      <mfDefaultSorter>{{
+                        field_name_hrms_actons
+                      }}</mfDefaultSorter>
+                    </th>
+                  </tr>
+                </thead>
+
+                  <tbody *ngIf="selectedArr.length > 0">
+                    <tr
+                      *ngFor="
+                        let obj of mf6.data
+                          | orderBy: key:reverse
+                          | paginate
+                            : {
+                                id: 'payroll',
+                                itemsPerPage: 5,
+                                currentPage: payrollPagination,
+                                totalItems: payrollCount
+                              };
+                        let i = index
+                      "
+                    >
+                      <td>{{ displayName(obj.employee_id) }}</td>
+
+                      <td>{{ obj.net_salary }}</td>
+                      <td>{{ obj.basic_salary }}</td>
+                      <td>
+                        <i
+                          class="fa fa-edit"
+                          (click)="onClickEdit('payroll', obj)"
+                        ></i>
+
+                        <!-- <span
+                          ><i
+                            (click)="onClickDelete('payroll', obj)"
+                            class="fa fa-trash"
+                          ></i
+                        ></span> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="selectedArr.length == 0">
+                    No Records Found
+                  </tbody>
+                  <tfoot *ngIf="selectedArr.length > 0">
+                    <tr>
+                      <td colspan="4">
+                        <pagination-controls
+                          id="payroll"
+                          (pageChange)="
+                            pageChanged('payroll', (payrollPagination = $event))
+                          "
+                        >
+                        </pagination-controls>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+            <div
+              class="card-body product-table p-t-35"
+              *ngIf="this.form.value.sectionType == 'Task Management Table'"
+            >
+              <div style="font-size: 20px; font-weight: bold">
+               {{field_name_hrms_task_management_table}}
+              </div>
+
+              <div class="table-responsive">
+                <table
+                  id="contentToConvert"
+                  class="table table-striped"
+                  [mfData]="selectedArr"
+                  #mf6="mfDataTable"
+                >
+                <thead class="thead-light">
+                  <tr>
+                     <th width="20%">
+                      <mfDefaultSorter by="user_id">{{field_name_hrms_task_name}}</mfDefaultSorter>
+                    </th>
+                  
+              
+                    <th width="20%" (click) ="sort('record_type')"> 
+                      <mfDefaultSorter by="record_type">{{field_name_hrms_task_record_type}}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                      
+                    </th>
+                    <th width="20%" (click) ="sort('subject')"> 
+                      <mfDefaultSorter by="subject">{{field_name_hrms_task_subject}}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click) ="sort('due_date')"> 
+                        <mfDefaultSorter by="due_date">{{field_name_hrms_task_due_date}}</mfDefaultSorter>
+                        <i class="fa fa-sort"></i>
+                      </th>
+                   
+                    <th width="20%" *ngIf="SHOW_EDIT_DELETE">
+                        <mfDefaultSorter>{{field_name_hrms_actons}}</mfDefaultSorter>
+                      </th>
+                  </tr>
+                </thead>
+
+                  <tbody *ngIf="selectedArr.length > 0">
+                    <tr
+                      *ngFor="
+                        let obj of mf6.data
+                          | orderBy: key:reverse
+                          | paginate
+                            : {
+                                id: 'tasks',
+                                itemsPerPage: 5,
+                                currentPage: tasksPagination,
+                                totalItems: tasksCount
+                              };
+                        let i = index
+                      "
+                    >
+                      <td>{{ obj.task_name }}</td>
+                      <td>{{ obj.task_record_type }}</td>
+                      <td>{{ obj.task_subject }}</td>
+
+                      <td>{{ obj.task_due_date }}</td>
+                      <td>
+                        <i
+                          class="fa fa-edit"
+                          (click)="onClickEdit('tasks', obj)"
+                        ></i>
+
+                        <!-- <span
+                          ><i
+                            (click)="onClickDelete('tasks', obj)"
+                            class="fa fa-trash"
+                          ></i
+                        ></span> -->
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngIf="selectedArr.length == 0">
+                    No Records Found
+                  </tbody>
+                  <tfoot *ngIf="selectedArr.length > 0">
+                    <tr>
+                      <td colspan="4">
+                        <pagination-controls
+                          id="tasks"
+                          (pageChange)="
+                            pageChanged('tasks', (tasksPagination = $event))
+                          "
+                        >
+                        </pagination-controls>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir="rtl">
+  <div class="container-fluid">
+    <h3 class="text-center">{{ field_name_report_headding }}</h3>
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="form" *ngIf="form">
+          <div class="form-group row col-md-12">
+            <label class="col-md-6 col-form-label">
+              <h4 class="">{{ field_name_report_section }}</h4>
+
+              <h6>{{ field_name_report_select_dropdown }}</h6></label
+            >
+          </div>
+          <div class="displayInSmallScreen form-group row col-md-12">
+            <div class="col-md-2 alignToCenter">
+              <label
+                ><span style="color: red">*</span>
+                {{ field_name_report_select_section }} :
+              </label>
+              &nbsp; &nbsp;
+              <select
+                class="form-control"
+                formControlName="sectionType"
+                id="sectionType"
+              >
+                <option [value]="" disabled [selected]="true">
+                  Choose Section
+                </option>
+                <option *ngFor="let item of sectionArr" [ngValue]="item.name">
+                  {{ item.name }}
+                </option>
+              </select>
+              <br />
+              <div *ngIf="form.value.sectionType == ''" style="color: red">
+                Section Required
+              </div>
+              <br />
+            </div>
+            <div class="col-md-6 alignToCenter">
+              <label
+                ><span style="color: red">*</span>
+                {{ field_name_report_view_as }} :
+              </label>
+              &nbsp; &nbsp;<select
+                class="form-control"
+                formControlName="viewType"
+              >
+                <option [ngValue]="" disabled [selected]="true">
+                  Choose View Type
+                </option>
+                <option>Monthly</option>
+                <option>Yearly</option></select
+              >&nbsp;
+              <select class="form-control" formControlName="yearSelected">
+                <option [ngValue]="" disabled [selected]="true">
+                  Choose Year
+                </option>
+                <option>2021</option>
+                <option>2022</option>
+              </select>
+              <select
+                class="form-control"
+                *ngIf="this.form.value.viewType == 'Monthly'"
+                formControlName="monthSelected"
+              >
+                <option [ngValue]="" disabled [selected]="true">
+                  Choose Month
+                </option>
+                <option *ngFor="let item of monthsArray" [ngValue]="item.value">
+                  {{ item.name }}
+                </option>
+              </select>
+              <br />
+              <div *ngIf="form.value.viewType == ''" style="color: red">
+                View Type Required
+              </div>
+              <!-- <div *ngIf="( form.value.viewType != ''  && form.value.viewType == 'Monthly' &&  form.value.monthSelected == '' && form.value.yearSelected == '')" style="color: red">Month & Year Required</div> -->
+              <div
+                *ngIf="
+                  form.value.viewType != '' &&
+                  form.value.viewType == 'Yearly' &&
+                  form.value.yearSelected == ''
+                "
+                style="color: red"
+              >
+                Year Required
+              </div>
+              <div
+                *ngIf="
+                  form.value.viewType != '' &&
+                  form.value.viewType == 'Monthly' &&
+                  (form.value.monthSelected == '' ||
+                    form.value.yearSelected == '')
+                "
+                style="color: red"
+              >
+                Month & Year Required
+              </div>
+              <br />
+            </div>
+            <div class="col-md-2 alignToCenter">
+              <label>
+                <span style="color: red">*</span>
+                {{ field_name_report_select_chart }} :
+              </label>
+              &nbsp; &nbsp;<select
+                class="form-control"
+                formControlName="chartType"
+              >
+                <option [ngValue]="" disabled [selected]="true">
+                  Choose Chart Type
+                </option>
+                <option>bar</option>
+                <option>pie</option>
+                <option>doughnut</option>
+                <option>table</option>
+              </select>
+              <br />
+              <div *ngIf="form.value.chartType == ''" style="color: red">
+                Chart Required
+              </div>
+            </div>
+            <div class="col-md-2 alignToCenter">
+              <button
+                class="btn btn-primary search-btn"
+                (click)="getChart()"
+                [disabled]="!form.valid"
+              >
+                {{ field_name_report_search }}
+              </button>
+            </div>
+          </div>
+          <div class="displayInLargeScreen form-group row col-md-12">
+            <div class="col-sm-3">
+              <label
+                ><span style="color: red">*</span>
+                {{ field_name_report_select_section }} :
+              </label>
+              &nbsp; &nbsp;
+              <select formControlName="sectionType" id="sectionType">
+                <option [value]="" disabled [selected]="true">
+                  Choose Section
+                </option>
+                <option *ngFor="let item of sectionArr" [ngValue]="item.name">
+                  {{ item.name }}
+                </option>
+              </select>
+              <div *ngIf="form.value.sectionType == ''" style="color: red">
+                Section Required
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <label
+                ><span style="color: red">*</span>
+                {{ field_name_report_view_as }} :
+              </label>
+              &nbsp; &nbsp;<select formControlName="viewType">
+                <option [ngValue]="" disabled [selected]="true">
+                  Choose View Type
+                </option>
+                <option>Monthly</option>
+                <option>Yearly</option></select
+              >&nbsp;
+              <select formControlName="yearSelected">
+                <option [ngValue]="" disabled [selected]="true">
+                  Choose Year
+                </option>
+                <option>2021</option>
+                <option>2022</option>
+              </select>
+              <select
+                *ngIf="this.form.value.viewType == 'Monthly'"
+                formControlName="monthSelected"
+              >
+                <option [ngValue]="" disabled [selected]="true">
+                  Choose Month
+                </option>
+                <option *ngFor="let item of monthsArray" [ngValue]="item.value">
+                  {{ item.name }}
+                </option>
+              </select>
+              <div
+                *ngIf="form.value.viewType == ''"
+                style="color: red; margin-top: -10px"
+              >
+                View Type Required
+              </div>
+              <!-- <div *ngIf="( form.value.viewType != ''  && form.value.viewType == 'Monthly' &&  form.value.monthSelected == '' && form.value.yearSelected == '')" style="color: red;margin-top:-10px">Month & Year Required</div> -->
+              <div
+                *ngIf="
+                  form.value.viewType != '' &&
+                  form.value.viewType == 'Yearly' &&
+                  form.value.yearSelected == ''
+                "
+                style="color: red; margin-top: -10px"
+              >
+                Year Required
+              </div>
+              <div
+                *ngIf="
+                  form.value.viewType != '' &&
+                  form.value.viewType == 'Monthly' &&
+                  (form.value.monthSelected == '' ||
+                    form.value.yearSelected == '')
+                "
+                style="color: red; margin-top: -10px"
+              >
+                Month & Year Required
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <label>
+                <span style="color: red">*</span>
+                {{ field_name_report_select_chart }} :
+              </label>
+              &nbsp; &nbsp;<select formControlName="chartType">
+                <option [ngValue]="" disabled [selected]="true">
+                  Choose Chart Type
+                </option>
+                <option>bar</option>
+                <option>pie</option>
+                <option>doughnut</option>
+                <option>table</option>
+              </select>
+
+              &nbsp; &nbsp;
+              <button
+                class="btn btn-primary search-btn"
+                (click)="getChart()"
+                [disabled]="!form.valid"
+              >
+                {{ field_name_report_search }}
+              </button>
+              <div *ngIf="form.value.chartType == ''" style="color: red">
+                Chart Required
+              </div>
+            </div>
+          </div>
+          <div [ngStyle]="{ display: !this.showTableFlag ? 'flex' : 'none' }">
+            <div id="divChart">
+              <canvas
+                id="myChart"
+                width="400"
+                height="400"
+                style="margin-left: 100%"
+              ></canvas>
+            </div>
+            <div
+              *ngIf="
+                this.chartSearchCompleted &&
+                this.form.value.viewType == 'Yearly'
+              "
+            >
+              <h3>{{ this.form.value.sectionType }}</h3>
+              <br />
+              <span class="row">
+                <table class="percentageTable">
+                  <tr>
+                    <th>Month</th>
+                    <th>Percentage</th>
+                  </tr>
+                  <tr *ngFor="let k of globalDataArray">
+                    <td *ngIf="k">{{ this.getIndex(k) }}</td>
+                    <td *ngIf="k">{{ this.getPercentage(k,globalDataArray) }}</td>
+                  </tr>
+                </table>
+              </span>
+            </div>
+            <div
+              *ngIf="
+                this.chartSearchCompleted &&
+                this.form.value.viewType == 'Monthly'
+              "
+            >
+              <h3>{{ this.form.value.sectionType }}</h3>
+              <br />
+              <span class="row">
+                <table class="percentageTable">
+                  <tr>
+                    <th>Day in Month</th>
+                    <th>Percentage</th>
+                  </tr>
+                  <tr *ngFor="let k of globalDataArray">
+                    <td *ngIf="k">{{ this.getIndexMonthly(k) }}</td>
+                    <td *ngIf="k">{{ this.getPercentage(k,globalDataArray) }}</td>
+                  </tr>
+                </table>
+              </span>
+            </div>
+          </div>
+          <div
+          *ngIf="this.showTableFlag && this.form.value.chartType == 'table'"
+        >
+          <div
+            class="card-body product-table p-t-35"
+            *ngIf="this.form.value.sectionType == 'Employees table'"
+          >
+            <div style="font-size: 20px; font-weight: bold">
+             {{field_name_hrms_employee_table}}
+            </div>
+
+            <div class="table-responsive">
+              <table
+                id="contentToConvert"
+                class="table table-striped"
+                [mfData]="selectedArr"
+                #mf2="mfDataTable"
+              >
+              <thead class="thead-light">
+                <tr>
+                  <th width="20%" (click)="sortCustomers('first_name')">
+                    <mfDefaultSorter by="first_name"
+                      >{{field_name_hrms_employee_first_name}}</mfDefaultSorter
+                    >
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" (click)="sortCustomers('last_name')">
+                    <mfDefaultSorter by="last_name">{{field_name_hrms_employee_email_id}} </mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" (click)="sortCustomers('email')">
+                    <mfDefaultSorter by="email"> {{field_name_hrms_employee_mobile}} </mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" (click)="sortCustomers('phone')">
+                    <mfDefaultSorter by="phone"> {{field_name_hrms_employee_join_date}} </mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%">
+                    <mfDefaultSorter>{{field_name_hrms_employee_role}}</mfDefaultSorter>
+                  </th>
+                  <th width="20%">
+                    <mfDefaultSorter>{{field_name_hrms_actons}}</mfDefaultSorter>
+                  </th>
+                </tr>
+              </thead>
+
+                <tbody *ngIf="selectedArr.length > 0">
+                  <tr
+                    *ngFor="
+                      let obj of mf2.data
+                        | orderBy: key:reverse
+                        | paginate
+                          : {
+                              id: 'employee',
+                              itemsPerPage: 5,
+                              currentPage: employeePagination,
+                              totalItems: employeeCount
+                            };
+                      let i = index
+                    "
+                  >
+                    <td>{{ obj.first_name }}</td>
+
+                    <td>{{ obj.email }}</td>
+                    <td>{{ obj.phone }}</td>
+                    <td>{{ obj.joining_date }}</td>
+                    <td>{{ obj.designation }}</td>
+                    <td>
+                      <i
+                        class="fa fa-edit"
+                        (click)="onClickEdit('employee', obj)"
+                      ></i>
+
+                      <!-- <span
+                        ><i
+                          (click)="onClickDelete('employee', obj)"
+                          class="fa fa-trash"
+                        ></i
+                      ></span> -->
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="selectedArr.length == 0">
+                  No Records Found
+                </tbody>
+                <tfoot *ngIf="selectedArr.length > 0">
+                  <tr>
+                    <td colspan="4">
+                      <pagination-controls
+                        id="employee"
+                        (pageChange)="
+                          pageChanged(
+                            'employee',
+                            (employeePagination = $event)
+                          )
+                        "
+                      >
+                      </pagination-controls>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <div
+            class="card-body product-table p-t-35"
+            *ngIf="this.form.value.sectionType == 'Holidays Table'"
+          >
+            <div style="font-size: 20px; font-weight: bold">
+             {{field_name_hrms_holiday_table}}
+            </div>
+
+            <div class="table-responsive">
+              <table
+                id="contentToConvert"
+                class="table table-striped"
+                [mfData]="selectedArr"
+                #mf1="mfDataTable"
+              >
+              <thead class="thead-light">
+                <tr>
+                  <th width="20%" (click)="sortCustomers('first_name')">
+                    <mfDefaultSorter by="first_name"
+                      >{{field_name_hrms_holiday_name}}</mfDefaultSorter
+                    >
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" (click)="sortCustomers('last_name')">
+                    <mfDefaultSorter by="last_name">
+                      {{field_name_hrms_holiday_date}}
+                    </mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" (click)="sortCustomers('email')">
+                    <mfDefaultSorter by="email"> {{field_name_hrms_holiday_day}}</mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+  
+                  <th width="20%">
+                    <mfDefaultSorter>{{field_name_hrms_actons}}</mfDefaultSorter>
+                  </th>
+                </tr>
+              </thead>
+
+                <tbody *ngIf="selectedArr.length > 0">
+                  <tr
+                    *ngFor="
+                      let obj of mf1.data
+                        | orderBy: key:reverse
+                        | paginate
+                          : {
+                              id: 'holidays',
+                              itemsPerPage: 5,
+                              currentPage: holidaysPagination,
+                              totalItems: holidayCount
+                            };
+                      let i = index
+                    "
+                  >
+                    <td>{{ obj.holiday_name }}</td>
+
+                    <td>{{ obj.holiday_date }}</td>
+                    <td>{{ obj.holiday_day }}</td>
+                    <td>
+                      <i
+                        class="fa fa-edit"
+                        (click)="onClickEdit('holidays', obj)"
+                      ></i>
+
+                      <!-- <span
+                        ><i
+                          (click)="onClickDelete('holidays', obj)"
+                          class="fa fa-trash"
+                        ></i
+                      ></span> -->
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="selectedArr.length == 0">
+                  No Records Found
+                </tbody>
+                <tfoot *ngIf="selectedArr.length > 0">
+                  <tr>
+                    <td colspan="4">
+                      <pagination-controls
+                        id="holidays"
+                        (pageChange)="
+                          pageChanged(
+                            'holidays',
+                            (holidaysPagination = $event)
+                          )
+                        "
+                      >
+                      </pagination-controls>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <div
+            class="card-body product-table p-t-35"
+            *ngIf="this.form.value.sectionType == 'Leaves Table'"
+          >
+            <div style="font-size: 20px; font-weight: bold">{{field_name_hrms_leaves_table}}</div>
+
+            <div class="table-responsive">
+              <table
+                id="contentToConvert"
+                class="table table-striped"
+                [mfData]="selectedArr"
+                #mf3="mfDataTable"
+              >
+              <thead class="thead-light">
+                <tr>
+                  <th width="20%" (click)="sortCustomers('first_name')">
+                    <mfDefaultSorter by="first_name">{{field_name_hrms_leaves_type}}</mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" (click)="sortCustomers('last_name')">
+                    <mfDefaultSorter by="last_name"> {{field_name_hrms_leaves_from}} </mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" (click)="sortCustomers('email')">
+                    <mfDefaultSorter by="email"> {{field_name_hrms_leaves_to}}</mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" (click)="sort('email')">
+                    <mfDefaultSorter by="email">{{field_name_hrms_leaves_reason}} </mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%">
+                    <mfDefaultSorter>{{field_name_hrms_actons}}</mfDefaultSorter>
+                  </th>
+                </tr>
+              </thead>
+
+                <tbody *ngIf="selectedArr.length > 0">
+                  <tr
+                    *ngFor="
+                      let obj of mf3.data
+                        | orderBy: key:reverse
+                        | paginate
+                          : {
+                              id: 'leaves',
+                              itemsPerPage: 5,
+                              currentPage: leavesPagination,
+                              totalItems: leaveCount
+                            };
+                      let i = index
+                    "
+                  >
+                    <td>{{ obj.leave_type }}</td>
+
+                    <td>{{ obj.leave_from }}</td>
+                    <td>{{ obj.leave_to }}</td>
+                    <td>{{ obj.leave_reason }}</td>
+                    <td>
+                      <i
+                        class="fa fa-edit"
+                        (click)="onClickEdit('leaves', obj)"
+                      ></i>
+
+                      <!-- <span
+                        ><i
+                          (click)="onClickDelete('leaves', obj)"
+                          class="fa fa-trash"
+                        ></i
+                      ></span> -->
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="selectedArr.length == 0">
+                  No Records Found
+                </tbody>
+                <tfoot *ngIf="selectedArr.length > 0">
+                  <tr>
+                    <td colspan="4">
+                      <pagination-controls
+                        id="leaves"
+                        (pageChange)="
+                          pageChanged('leaves', (leavesPagination = $event))
+                        "
+                      >
+                      </pagination-controls>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <div
+            class="card-body product-table p-t-35"
+            *ngIf="this.form.value.sectionType == 'Training Table'"
+          >
+            <div style="font-size: 20px; font-weight: bold">
+             {{field_name_hrms_training_table}}
+            </div>
+
+            <div class="table-responsive">
+              <table
+                id="contentToConvert"
+                class="table table-striped"
+                [mfData]="selectedArr"
+                #mf4="mfDataTable"
+              >
+              <thead class="thead-light">
+                <tr>
+                  <th width="20%" (click)="sortCustomers('first_name')">
+                    <mfDefaultSorter by="first_name">
+                      {{field_name_hrms_training_type}}</mfDefaultSorter
+                    >
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" (click)="sortCustomers('last_name')">
+                    <mfDefaultSorter by="last_name"> {{field_name_hrms_training_trainer}} </mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" (click)="sortCustomers('email')">
+                    <mfDefaultSorter by="email"> {{field_name_hrms_training_employee}} </mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" (click)="sort('email')">
+                    <mfDefaultSorter by="email">{{field_name_hrms_training_cost}} </mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%">
+                    <mfDefaultSorter>{{field_name_hrms_training_description}}</mfDefaultSorter>
+                  </th>
+                  <th width="20%">
+                    <mfDefaultSorter>{{field_name_hrms_actons}}</mfDefaultSorter>
+                  </th>
+                </tr>
+              </thead>
+  
+
+                <tbody *ngIf="selectedArr.length > 0">
+                  <tr
+                    *ngFor="
+                      let obj of mf4.data
+                        | orderBy: key:reverse
+                        | paginate
+                          : {
+                              id: 'training',
+                              itemsPerPage: 5,
+                              currentPage: trainingPagination,
+                              totalItems: trainingCount
+                            };
+                      let i = index
+                    "
+                  >
+                    <td>{{ obj.training_type }}</td>
+                    <td>{{ obj.trainer_name }}</td>
+                    <td>{{ obj.trained_employee_name }}</td>
+                    <td>{{ obj.training_cost }}</td>
+                    <td>{{ obj.training_description }}</td>
+                    <td>
+                      <i
+                        class="fa fa-edit"
+                        (click)="onClickEdit('training', obj)"
+                      ></i>
+
+                      <!-- <span
+                        ><i
+                          (click)="onClickDelete('training', obj)"
+                          class="fa fa-trash"
+                        ></i
+                      ></span> -->
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="selectedArr.length == 0">
+                  No Records Found
+                </tbody>
+                <tfoot *ngIf="selectedArr.length > 0">
+                  <tr>
+                    <td colspan="4">
+                      <pagination-controls
+                        id="training"
+                        (pageChange)="
+                          pageChanged(
+                            'training',
+                            (trainingPagination = $event)
+                          )
+                        "
+                      >
+                      </pagination-controls>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <div
+            class="card-body product-table p-t-35"
+            *ngIf="this.form.value.sectionType == 'Project Table'"
+          >
+            <div style="font-size: 20px; font-weight: bold">
+           {{field_name_hrms_project_table}}
+            </div>
+
+            <div class="table-responsive">
+              <table
+                id="contentToConvert"
+                class="table table-striped"
+                [mfData]="selectedArr"
+                #mf5="mfDataTable"
+              >
+              <thead class="thead-light">
+                <tr>
+                  <th width="20%" (click)="sortCustomers('first_name')">
+                    <mfDefaultSorter by="first_name">
+                      {{field_name_hrms_project_name}}</mfDefaultSorter
+                    >
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" (click)="sortCustomers('last_name')">
+                    <mfDefaultSorter by="last_name">
+                      {{field_name_hrms_project_description}}
+                    </mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" (click)="sortCustomers('email')">
+                    <mfDefaultSorter by="email"> {{field_name_hrms_project_team}} </mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+  
+                  <th width="20%">
+                    <mfDefaultSorter>{{field_name_hrms_actons}}</mfDefaultSorter>
+                  </th>
+                </tr>
+              </thead>
+
+                <tbody *ngIf="selectedArr.length > 0">
+                  <tr
+                    *ngFor="
+                      let obj of mf5.data
+                        | orderBy: key:reverse
+                        | paginate
+                          : {
+                              id: 'project',
+                              itemsPerPage: 5,
+                              currentPage: projectPagination,
+                              totalItems: projectCount
+                            };
+                      let i = index
+                    "
+                  >
+                    <td>{{ obj.project_name }}</td>
+
+                    <td>{{ obj.project_description }}</td>
+                    <td>{{ getEmployeeName(obj.project_team) }}</td>
+                    <td>
+                      <i
+                        class="fa fa-edit"
+                        (click)="onClickEdit('project', obj)"
+                      ></i>
+
+                      <!-- <span
+                        ><i
+                          (click)="onClickDelete('project', obj)"
+                          class="fa fa-trash"
+                        ></i
+                      ></span> -->
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="selectedArr.length == 0">
+                  No Records Found
+                </tbody>
+                <tfoot *ngIf="selectedArr.length > 0">
+                  <tr>
+                    <td colspan="4">
+                      <pagination-controls
+                        id="project"
+                        (pageChange)="
+                          pageChanged('project', (projectPagination = $event))
+                        "
+                      >
+                      </pagination-controls>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <div
+            class="card-body product-table p-t-35"
+            *ngIf="this.form.value.sectionType == 'Notice Table'"
+          >
+            <div style="font-size: 20px; font-weight: bold">{{field_name_hrms_notice_table}}</div>
+
+            <div class="table-responsive">
+              <table
+                id="contentToConvert"
+                class="table table-striped"
+                [mfData]="selectedArr"
+                #mf6="mfDataTable"
+              >
+              <thead class="thead-light">
+                <tr>
+                  <th width="20%" (click)="sortCustomers('first_name')">
+                    <mfDefaultSorter by="first_name">
+                      {{field_name_hrms_notice_type}}</mfDefaultSorter
+                    >
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" (click)="sortCustomers('last_name')">
+                    <mfDefaultSorter by="last_name">
+                      {{field_name_hrms_notice_date}}
+                    </mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" (click)="sortCustomers('email')">
+                    <mfDefaultSorter by="email"> {{field_name_hrms_notice_by}}</mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+  
+                  <th width="20%">
+                    <mfDefaultSorter>{{field_name_hrms_actons}}</mfDefaultSorter>
+                  </th>
+                </tr>
+              </thead>
+
+                <tbody *ngIf="selectedArr.length > 0">
+                  <tr
+                    *ngFor="
+                      let obj of mf6.data
+                        | orderBy: key:reverse
+                        | paginate
+                          : {
+                              id: 'notice',
+                              itemsPerPage: 5,
+                              currentPage: noticePagination,
+                              totalItems: noticeCount
+                            };
+                      let i = index
+                    "
+                  >
+                    <td>{{ obj.notice_type }}</td>
+
+                    <td>{{ obj.notice_date }}</td>
+                    <td>{{ obj.notice_by }}</td>
+                    <td>
+                      <i
+                        class="fa fa-edit"
+                        (click)="onClickEdit('notice', obj)"
+                      ></i>
+
+                      <!-- <span
+                        ><i
+                          (click)="onClickDelete('notice', obj)"
+                          class="fa fa-trash"
+                        ></i
+                      ></span> -->
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="selectedArr.length == 0">
+                  No Records Found
+                </tbody>
+                <tfoot *ngIf="selectedArr.length > 0">
+                  <tr>
+                    <td colspan="4">
+                      <pagination-controls
+                        id="notice"
+                        (pageChange)="
+                          pageChanged('notice', (noticePagination = $event))
+                        "
+                      >
+                      </pagination-controls>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <div
+            class="card-body product-table p-t-35"
+            *ngIf="this.form.value.sectionType == 'Expense Table'"
+          >
+          <div style="font-size: 20px; font-weight: bold">{{field_name_hrms_expenses_table}}</div>
+            <div class="table-responsive">
+              <table
+                id="contentToConvert"
+                class="table"
+                [mfData]="selectedArr"
+                #mf="mfDataTable"
+              >
+              <thead class="thead-light">
+                <tr>
+                  <th width="20%" (click)="sort('email')">
+                    <mfDefaultSorter by="email">{{field_name_add_expense_user_email}}</mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" (click)="sort('expense_item')">
+                    <mfDefaultSorter by="expense_item"
+                      >{{field_name_add_expense_add_expense_item}}</mfDefaultSorter
+                    >
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" (click)="sort('amount')">
+                    <mfDefaultSorter by="amount">{{field_name_add_expense_amount}}</mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" (click)="sort('date')">
+                    <mfDefaultSorter by="date">{{field_name_add_expense_date}}</mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%">{{field_name_hrms_actons}}</th>
+                </tr>
+              </thead>
+                <tbody *ngIf="mf.data?.length >= 1">
+                  <tr
+                    *ngFor="
+                      let obj of mf.data
+                        | orderBy: key:reverse
+                        | paginate
+                          : {
+                              itemsPerPage: 5,
+                              currentPage: p,
+                              totalItems: expensesDetailsCount
+                            };
+                      let i = index
+                    "
+                  >
+                    <td>{{ obj.email }}</td>
+                    <td>{{ obj.expense_item }}</td>
+                    <td>{{ obj.amount }}</td>
+                    <td>{{ obj.date }}</td>
+                    <td>
+                      <i
+                        class="fa fa-edit"
+                        (click)="onClickEdit('expense', obj)"
+                      ></i>
+
+                      <!-- <span
+                        ><i
+                          (click)="onClickDelete('expense', obj)"
+                          class="fa fa-trash"
+                        ></i
+                      ></span> -->
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="mf.data?.length <= 0">
+                  <tr class="odd" style="opacity: 1">
+                    <td
+                      valign="top"
+                      colspan="8"
+                      style="text-align: center"
+                      class="dataTables_empty"
+                    >
+                      No data available in table
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr *ngIf="mf.data?.length > 0">
+                    <td colspan="4">
+                      <pagination-controls
+                        (pageChange)="pageChanged('expense', (p = $event))"
+                      >
+                      </pagination-controls>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <div
+            class="card-body product-table p-t-35"
+            *ngIf="this.form.value.sectionType == 'Travel Table'"
+          >
+            <div style="font-size: 20px; font-weight: bold">{{field_name_hrms_travel_table}}</div>
+
+            <div class="table-responsive">
+              <table
+                id="contentToConvert"
+                class="table table-striped"
+                [mfData]="selectedArr"
+                #mf6="mfDataTable"
+              >
+              <thead class="thead-light">
+                <tr>
+                  <th width="20%" (click) ="sort('SL NO')">
+                      <mfDefaultSorter by="">{{field_name_hrms_travel_employee_name}}</mfDefaultSorter>
+                    </th> 
+             
+                    <th width="20%" (click) ="sort('designation_name')">
+                    <mfDefaultSorter >{{field_name_hrms_travel_info}}</mfDefaultSorter>
+                    
+                  </th>
+      
+                  <th width="20%" (click) ="sort('department_name')">
+                    <mfDefaultSorter >{{field_name_hrms_travel_date}}</mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" (click) ="sort('department_name')">
+                    <mfDefaultSorter >{{field_name_hrms_travel_return_date}}</mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+              
+                  <th width="20%" *ngIf="SHOW_EDIT_DELETE" >
+                   {{field_name_hrms_actons}} 
+                  </th>
+                </tr>
+              </thead>
+                <tbody *ngIf="selectedArr.length > 0">
+                  <tr
+                    *ngFor="
+                      let obj of mf6.data
+                        | orderBy: key:reverse
+                        | paginate
+                          : {
+                              id: 'travel',
+                              itemsPerPage: 5,
+                              currentPage: travelPagination,
+                              totalItems: travelCount
+                            };
+                      let i = index
+                    "
+                  >
+                    <td>{{ obj.employee_name }}</td>
+                    <td>{{ obj.travel_info }}</td>
+                    <td>{{ obj.travel_date }}</td>
+                    <td>{{ obj.return_date }}</td>
+                    <td>
+                      <i
+                        class="fa fa-edit"
+                        (click)="onClickEdit('travel', obj)"
+                      ></i>
+
+                      <!-- <span
+                        ><i
+                          (click)="onClickDelete('travel', obj)"
+                          class="fa fa-trash"
+                        ></i
+                      ></span> -->
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="selectedArr.length == 0">
+                  No Records Found
+                </tbody>
+                <tfoot *ngIf="selectedArr.length > 0">
+                  <tr>
+                    <td colspan="4">
+                      <pagination-controls
+                        id="notice"
+                        (pageChange)="
+                          pageChanged('travel', (noticePagination = $event))
+                        "
+                      >
+                      </pagination-controls>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <div
+            class="card-body product-table p-t-35"
+            *ngIf="this.form.value.sectionType == 'Attendance Table'"
+          >
+            <div style="font-size: 20px; font-weight: bold;display: flex;">
+             {{field_name_hrms_attendance_table}} &nbsp;&nbsp;&nbsp;&nbsp;
+              
+                <button type="button" (click)="downloadPdf(leaveArr)" class="btn btn-success">
+                  <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                  {{field_name_hrms_attendence_pdf}}
+                </button>
+            </div>
+
+            <div class="table-responsive">
+              <table
+                id="contentToConvert"
+                class="table table-striped"
+                [mfData]="leaveArr"
+                #mf6="mfDataTable"
+              >
+                <thead class="thead-light">
+                  <tr>
+                    <th width="20%" (click)="sortCustomers('first_name')">
+                      <mfDefaultSorter by="first_name">
+                        Employee Name</mfDefaultSorter
+                      >
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sortCustomers('last_name')">
+                      <mfDefaultSorter by="last_name">
+                        Present Days
+                      </mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                    <th width="20%" (click)="sortCustomers('email')">
+                      <mfDefaultSorter by="email">
+                       Leave Days
+                      </mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody *ngIf="leaveArr.length > 0">
+                  <tr
+                    *ngFor="
+                      let obj of mf6.data
+                        | orderBy: key:reverse
+                        | paginate
+                          : {
+                              id: 'attendance',
+                              itemsPerPage: 5,
+                              currentPage: attendancePage,
+                              totalItems: employeeCount
+                            };
+                      let i = index
+                    "
+                  >
+                    <td>{{ (obj.name) }}</td>
+                    <td>{{ obj.attended_days }}</td>
+                    <td>{{ obj.leave_days }}</td>
+                    
+                  </tr>
+                </tbody>
+                <tbody *ngIf="leaveArr.length == 0">
+                  No Records Found
+                </tbody>
+                <tfoot *ngIf="leaveArr.length > 0">
+                  <tr>
+                    <td colspan="4">
+                      <pagination-controls
+                        id="attendance"
+                        (pageChange)="
+                          pageChanged(
+                            'attendance',
+                            (attendancePage = $event)
+                          )
+                        "
+                      >
+                      </pagination-controls>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <div
+            class="card-body product-table p-t-35"
+            *ngIf="this.form.value.sectionType == 'Policy Table'"
+          >
+            <div style="font-size: 20px; font-weight: bold">{{field_name_hrms_policy_table}}</div>
+
+            <div class="table-responsive">
+              <table
+                id="contentToConvert"
+                class="table table-striped"
+                [mfData]="selectedArr"
+                #mf6="mfDataTable"
+              >
+              <thead class="thead-light">
+                <tr>
+                  <th width="10%" (click)="sort('SLNO')">
+                    <mfDefaultSorter by="">{{ 'SL NO'| translate}}</mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+  
+                  <th width="20%" (click)="sort('policy_id')">
+                    <mfDefaultSorter by="policy_name">{{field_name_hrms_policy_id}}</mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="10%" (click)="sort('policy_name')">
+                    <mfDefaultSorter by="policy_name"
+                      >{{field_name_hrms_policy_name}}</mfDefaultSorter
+                    >
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="10%" (click)="sort('policy_name')">
+                    <mfDefaultSorter by="policy_name">{{field_name_hrms_policy_size}}</mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" (click)="sort('file')">
+                    <mfDefaultSorter by="file">{{field_name_hrms_policy_file}}</mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="10%" (click)="sort('Download')">
+                    <mfDefaultSorter by="">{{field_name_hrms_policy_download}}</mfDefaultSorter>
+                  </th>
+  
+                  <th width="10%">{{field_name_hrms_actons}}</th>
+                </tr>
+              </thead>
+                <tbody *ngIf="selectedArr.length > 0">
+                  <tr
+                    *ngFor="
+                      let obj of mf6.data
+                        | orderBy: key:reverse
+                        | paginate
+                          : {
+                              id: 'policy',
+                              itemsPerPage: 5,
+                              currentPage: policyPagination,
+                              totalItems: policyCount
+                            };
+                      let i = index
+                    "
+                  >
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ obj.policy_id }}</td>
+
+                    <td>{{ obj.policy_name }}</td>
+                    <td>{{ obj.size }} Bytes</td>
+                    <td>{{ obj.files || "no files uploaded" }}</td>
+                    <td>
+                      <a [href]="obj.files" download target="_blank">
+                        Download
+                      </a>
+                    </td>
+                    <td>
+                      <i
+                        class="fa fa-edit"
+                        (click)="onClickEdit('policy', obj)"
+                      ></i>
+
+                      <!-- <span
+                        ><i
+                          (click)="onClickDelete('policy', obj)"
+                          class="fa fa-trash"
+                        ></i
+                      ></span> -->
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="selectedArr.length == 0">
+                  No Records Found
+                </tbody>
+                <tfoot *ngIf="selectedArr.length > 0">
+                  <tr>
+                    <td colspan="4">
+                      <pagination-controls
+                        id="policy"
+                        (pageChange)="
+                          pageChanged('policy', (policyPagination = $event))
+                        "
+                      >
+                      </pagination-controls>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <div
+            class="card-body product-table p-t-35"
+            *ngIf="this.form.value.sectionType == 'Payroll Table'"
+          >
+            <div style="font-size: 20px; font-weight: bold">
+             {{field_name_hrms_payroll_table}}
+            </div>
+
+            <div class="table-responsive">
+              <table
+                id="contentToConvert"
+                class="table table-striped"
+                [mfData]="selectedArr"
+                #mf6="mfDataTable"
+              >
+              <thead class="thead-light">
+                <tr>
+                  <!--  <th width="20%">
+                    <mfDefaultSorter by="user_id">ID</mfDefaultSorter>
+                  </th> -->
+    
+                  <th width="20%" (click)="sort('first_name')">
+                    <mfDefaultSorter by="first_name">{{field_name_hrms_payroll_employee_name}}</mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" (click)="sort('last_name')">
+                    <mfDefaultSorter by="last_name">{{field_name_hrms_payroll_net_salary}}</mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" (click)="sort('email')">
+                    <mfDefaultSorter by="email">{{field_name_hrms_payroll_basic_salary}}</mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+    
+                  <th width="20%" *ngIf="SHOW_EDIT_DELETE">
+                    <mfDefaultSorter>{{
+                      field_name_hrms_actons
+                    }}</mfDefaultSorter>
+                  </th>
+                </tr>
+              </thead>
+
+                <tbody *ngIf="selectedArr.length > 0">
+                  <tr
+                    *ngFor="
+                      let obj of mf6.data
+                        | orderBy: key:reverse
+                        | paginate
+                          : {
+                              id: 'payroll',
+                              itemsPerPage: 5,
+                              currentPage: payrollPagination,
+                              totalItems: payrollCount
+                            };
+                      let i = index
+                    "
+                  >
+                    <td>{{ displayName(obj.employee_id) }}</td>
+
+                    <td>{{ obj.net_salary }}</td>
+                    <td>{{ obj.basic_salary }}</td>
+                    <td>
+                      <i
+                        class="fa fa-edit"
+                        (click)="onClickEdit('payroll', obj)"
+                      ></i>
+
+                      <!-- <span
+                        ><i
+                          (click)="onClickDelete('payroll', obj)"
+                          class="fa fa-trash"
+                        ></i
+                      ></span> -->
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="selectedArr.length == 0">
+                  No Records Found
+                </tbody>
+                <tfoot *ngIf="selectedArr.length > 0">
+                  <tr>
+                    <td colspan="4">
+                      <pagination-controls
+                        id="payroll"
+                        (pageChange)="
+                          pageChanged('payroll', (payrollPagination = $event))
+                        "
+                      >
+                      </pagination-controls>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <div
+            class="card-body product-table p-t-35"
+            *ngIf="this.form.value.sectionType == 'Task Management Table'"
+          >
+            <div style="font-size: 20px; font-weight: bold">
+             {{field_name_hrms_task_management_table}}
+            </div>
+
+            <div class="table-responsive">
+              <table
+                id="contentToConvert"
+                class="table table-striped"
+                [mfData]="selectedArr"
+                #mf6="mfDataTable"
+              >
+              <thead class="thead-light">
+                <tr>
+                   <th width="20%">
+                    <mfDefaultSorter by="user_id">{{field_name_hrms_task_name}}</mfDefaultSorter>
+                  </th>
+                
+            
+                  <th width="20%" (click) ="sort('record_type')"> 
+                    <mfDefaultSorter by="record_type">{{field_name_hrms_task_record_type}}</mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                    
+                  </th>
+                  <th width="20%" (click) ="sort('subject')"> 
+                    <mfDefaultSorter by="subject">{{field_name_hrms_task_subject}}</mfDefaultSorter>
+                    <i class="fa fa-sort"></i>
+                  </th>
+                  <th width="20%" (click) ="sort('due_date')"> 
+                      <mfDefaultSorter by="due_date">{{field_name_hrms_task_due_date}}</mfDefaultSorter>
+                      <i class="fa fa-sort"></i>
+                    </th>
+                 
+                  <th width="20%" *ngIf="SHOW_EDIT_DELETE">
+                      <mfDefaultSorter>{{field_name_hrms_actons}}</mfDefaultSorter>
+                    </th>
+                </tr>
+              </thead>
+
+                <tbody *ngIf="selectedArr.length > 0">
+                  <tr
+                    *ngFor="
+                      let obj of mf6.data
+                        | orderBy: key:reverse
+                        | paginate
+                          : {
+                              id: 'tasks',
+                              itemsPerPage: 5,
+                              currentPage: tasksPagination,
+                              totalItems: tasksCount
+                            };
+                      let i = index
+                    "
+                  >
+                    <td>{{ obj.task_name }}</td>
+                    <td>{{ obj.task_record_type }}</td>
+                    <td>{{ obj.task_subject }}</td>
+
+                    <td>{{ obj.task_due_date }}</td>
+                    <td>
+                      <i
+                        class="fa fa-edit"
+                        (click)="onClickEdit('tasks', obj)"
+                      ></i>
+
+                      <!-- <span
+                        ><i
+                          (click)="onClickDelete('tasks', obj)"
+                          class="fa fa-trash"
+                        ></i
+                      ></span> -->
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="selectedArr.length == 0">
+                  No Records Found
+                </tbody>
+                <tfoot *ngIf="selectedArr.length > 0">
+                  <tr>
+                    <td colspan="4">
+                      <pagination-controls
+                        id="tasks"
+                        (pageChange)="
+                          pageChanged('tasks', (tasksPagination = $event))
+                        "
+                      >
+                      </pagination-controls>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

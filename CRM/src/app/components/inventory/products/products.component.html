@@ -1,0 +1,445 @@
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar' && this.productDetail" dir='rtl' >
+  
+    <div class="container-fluid">
+      <h3 class="text-center">{{field_name_product_details}}</h3>
+      <div class="card">
+        <div class="card-body">
+  
+  <form class="form-horizontal form-material" name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()">
+  <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+  <strong>Products Details!</strong>The form has the following errors that need to be corrected
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+  </button>
+  </div>
+  <div class="card-header">
+  <h2>
+  <span *ngIf="!isUpdate">{{field_name_product_addproduct}}</span>
+  <span *ngIf="isUpdate">{{field_name_product_update}}</span>
+  </h2>
+  </div>
+  <div class="card-body">
+  
+  
+    <div class="form-row">
+      <div class="form-group col-md-4">
+     <label class="col-sm-5 col-form-label">{{field_name_product_name}}<span
+     class="text-danger font-weight-bold" >
+     *</span></label>
+     <div class="col-sm-10">
+     <input type="text" class="form-control" [(ngModel)]="productDetail.product_name" name="product_name"
+     pattern="^(?:[A-Za-z0-9]+)(?:[A-Za-z0-9 _]*)$" #product_name="ngModel"
+     [ngClass]="{ 'is-invalid': f.submitted && product_name.invalid,
+     'is-valid': f.submitted && product_name.valid }"
+     required>
+     <div *ngIf="f.submitted && product_name.invalid" class="invalid-feedback">
+     <div *ngIf="product_name.errors.required">Please provide product name</div>
+     
+    
+     </div>
+     </div>
+     </div>
+  
+   
+     <div class="form-group col-md-4">
+      <label for="currency_name" class="col-sm-5 col-form-label">{{field_name_product_currency}}<span
+      class="text-danger font-weight-bold">
+      *</span></label>
+      
+      <div class="col-sm-10">
+      <select class="custom-select" name="currency_name" [(ngModel)]="productDetail.currency_name"
+      #currency_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && currency_name.invalid,
+      'is-valid': f.submitted && currency_name.valid }"
+      required >
+
+     
+        <option *ngFor="let obj of currencyDetail" [value]="obj.currency_name">{{obj.currency_name}}
+        </option>
+      
+      </select>
+      <div *ngIf="f.submitted && currency_name.invalid" class="invalid-feedback">
+      <div *ngIf="currency_name.errors.required">Required currency</div>
+      </div>
+      </div>
+      </div>
+  
+  
+  
+  
+  
+  
+  
+  <div class="form-group col-md-4">
+  <label class="col-sm-5 col-form-label">{{field_name_cost}}<span
+  class="text-danger font-weight-bold" *ngIf="field_cost_required">
+  *</span></label>
+  <div class="col-sm-10">
+  <input type="text" class="form-control" [(ngModel)]="productDetail.cost" name="cost"
+  pattern="[0-9]*[.]?[0-9]+" #cost="ngModel"
+  [ngClass]="{ 'is-invalid': f.submitted && cost.invalid,
+  'is-valid': f.submitted && cost.valid }"
+  [required]="field_cost_required"/>
+  <div *ngIf="f.submitted && cost.invalid" class="invalid-feedback">
+  <div *ngIf="cost.errors.required">Please provide cost price</div>
+  
+  <div *ngIf="cost.errors.pattern">only number allowed
+  </div>
+  </div>
+  </div>
+  </div>
+  
+  </div>
+  
+  <div class="form-row">
+  
+                 
+    <div class="form-group col-md-4">
+      <label class="col-sm-5 col-form-label">{{field_name_supplier_name}}<span
+        class="text-danger font-weight-bold">
+        </span></label>
+      <div class="col-sm-10">
+        <select type="text" class="custom-select" [(ngModel)]="productDetail.supplier_name" name="supplier_name"
+          #supplier_name="ngModel" 
+       [ngClass]="{ 'is-invalid': f.submitted && supplier_name.invalid, 
+         'is-valid': f.submitted && supplier_name.valid }"
+        required> 
+     
+        <option *ngFor="let obj of suppliernameDetail" [value]="obj.supplier_name">{{obj.supplier_name}}
+        </option>
+      </select>
+      <div *ngIf="f.submitted && supplier_name.invalid" class="invalid-feedback">
+            <div *ngIf="supplier_name.errors.required">Please provide supplier name</div>
+        
+        </div> 
+      </div>
+    </div>
+   
+  
+  <div class="form-group col-md-4">
+  <label for="category_name" class="col-sm-5 col-form-label">{{field_name_category_name}}<span
+  class="text-danger font-weight-bold" *ngIf="field_category_name_required">
+  *</span></label>
+  
+  <div class="col-sm-10">
+  <select class="custom-select" name="category_name" [(ngModel)]="productDetail.category_name"
+  #category_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && category_name.invalid,
+  'is-valid': f.submitted && category_name.valid }"
+  [required]="field_category_name_required" >
+  <option *ngFor="let obj of categoryDetail" [value]="obj.category_name">{{obj.category_name}}
+  </option>
+  </select>
+  <div *ngIf="f.submitted && category_name.invalid" class="invalid-feedback">
+  <div *ngIf="category_name.errors.required">Required Categoryname</div>
+  </div>
+  </div>
+  </div>
+  
+  
+  <div class="form-group col-md-4">
+  <label for="files" class="col-sm-5 col-form-label">{{field_name_files}}<span
+  class="text-danger font-weight-bold" >
+  </span></label>
+  <div class="col-sm-10">
+  <input type="file" class="form-control" name="files" #files="ngModel" 
+  [(ngModel)]="productDetail.files" (change)="selectImage($event)"/>
+  
+  </div>
+  </div>
+  <div class="form-group">
+  <div class="hoverable" *ngIf="preview && preview !== null">
+  <img [src]="preview" >
+  
+  </div>
+  </div>
+  </div>
+  <div class="form-row">
+  <div class="form-group col-md-3">
+  <label class="col-sm-5 col-form-label"> {{field_name_product_created_by}}
+  
+  </label>
+  <div class="col-sm-10">
+  <input type="text" class="form-control" name="created_by"
+  [(ngModel)]="productDetail.created_by"
+  #created_by="ngModel" readonly>
+  </div>
+  </div>
+  <div class="form-group col-md-3">
+  <label class="col-sm-5 col-form-label"> {{field_name_product_created_time}}
+  
+  </label>
+  <div class="col-sm-10">
+  
+  
+  <input type="text" class="form-control" name="created_time"
+  readonly value="{{productDetail.created_time |  date : dateFormat:'GMT':locale}}">
+  
+  
+  
+  </div>
+  </div>
+  <div class="form-group col-md-3">
+  <label class="col-sm-5 col-form-label"> {{field_name_product_updated_by}}
+  
+  </label>
+  <div class="col-sm-10">
+  <input type="text" class="form-control" name="updated_by"
+  [(ngModel)]="productDetail.updated_by"
+  #updated_by="ngModel" readonly>
+  </div>
+  </div>
+  <div class="form-group col-md-3">
+  <label class="col-sm-5 col-form-label">{{field_name_product_updated_time}}
+  
+  </label>
+  <div class="col-sm-10">
+  
+  <input type="text" class="form-control" name="modified_time"
+  readonly value=" {{productDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+  
+  </div>
+  </div>
+  </div>
+  
+  <button class="btn btn-danger btn-round text-center pull-right" style=" margin-top: 73px;" type="button"
+                                                        appCancelbutton>{{'Cancel'|translate}}</button>
+                                                        <button class="btn btn-success btn-round text-center pull-right" style=" margin-top: 73px;">
+                                                          <span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+                                                          <span *ngIf="isUpdate">{{'Update'|translate}}</span></button>
+  
+  </div>
+  
+  </form>
+  </div>
+  
+  
+  
+  </div>
+  </div>
+  </section>
+  
+  
+  
+  
+  
+  
+  
+  <section *ngIf="this._uiservice.langDataSource.value != 'ar'  && this.productDetail" dir='ltr' >
+   
+    <div class="container-fluid">
+      <h3 class="text-center">{{field_name_product_details}}</h3>
+      <div class="card">
+        <div class="card-body">
+  
+  <form class="form-horizontal form-material" name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()">
+  <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+  <strong>Products Details!</strong>The form has the following errors that need to be corrected
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+  <span aria-hidden="true">&times;</span>
+  </button>
+  </div>
+  <div class="card-header">
+  <h2>
+    <span *ngIf="!isUpdate">{{field_name_product_addproduct}}</span>
+    <span *ngIf="isUpdate">{{field_name_product_update}}</span>
+  </h2>
+  </div>
+  <div class="card-body">
+  
+  
+    <div class="form-row">
+      <div class="form-group col-md-4">
+     <label class="col-sm-5 col-form-label">{{field_name_product_name}}<span
+     class="text-danger font-weight-bold" >
+     *</span></label>
+     <div class="col-sm-10">
+     <input type="text" class="form-control" [(ngModel)]="productDetail.product_name" name="product_name"
+     pattern="^(?:[A-Za-z0-9]+)(?:[A-Za-z0-9 _]*)$" #product_name="ngModel"
+     [ngClass]="{ 'is-invalid': f.submitted && product_name.invalid,
+     'is-valid': f.submitted && product_name.valid }"
+     required>
+     <div *ngIf="f.submitted && product_name.invalid" class="invalid-feedback">
+     <div *ngIf="product_name.errors.required">Please provide product name</div>
+     
+    
+     </div>
+     </div>
+     </div>
+  
+  
+     <div class="form-group col-md-4">
+      <label for="currency_name" class="col-sm-5 col-form-label">Currency<span
+      class="text-danger font-weight-bold">
+      *</span></label>
+      
+      <div class="col-sm-10">
+      <select class="custom-select" name="currency_name" [(ngModel)]="productDetail.currency_name"
+      #currency_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && currency_name.invalid,
+      'is-valid': f.submitted && currency_name.valid }"
+      required >
+
+     
+        <option *ngFor="let obj of currencyDetail" [value]="obj.currency_name">{{obj.currency_name}}
+        </option>
+      
+      </select>
+      <div *ngIf="f.submitted && currency_name.invalid" class="invalid-feedback">
+      <div *ngIf="currency_name.errors.required">Required currency</div>
+      </div>
+      </div>
+      </div>
+  
+  
+  
+  
+  
+  
+  
+  <div class="form-group col-md-4">
+  <label class="col-sm-5 col-form-label">{{field_name_cost}}<span
+  class="text-danger font-weight-bold" *ngIf="field_cost_required">
+  *</span></label>
+  <div class="col-sm-10">
+  <input type="text" class="form-control" [(ngModel)]="productDetail.cost" name="cost"
+  pattern="[0-9]*[.]?[0-9]+" #cost="ngModel"
+  [ngClass]="{ 'is-invalid': f.submitted && cost.invalid,
+  'is-valid': f.submitted && cost.valid }"
+  [required]="field_cost_required"/>
+  <div *ngIf="f.submitted && cost.invalid" class="invalid-feedback">
+  <div *ngIf="cost.errors.required">Please provide cost price</div>
+  
+  <div *ngIf="cost.errors.pattern">only number allowed
+  </div>
+  </div>
+  </div>
+  </div>
+  
+  </div>
+  
+  <div class="form-row">
+  
+                 
+    <div class="form-group col-md-4">
+      <label class="col-sm-5 col-form-label">{{field_name_supplier_name}}<span
+        class="text-danger font-weight-bold">
+        </span></label>
+      <div class="col-sm-10">
+        <select type="text" class="custom-select" [(ngModel)]="productDetail.supplier_name" name="supplier_name"
+          #supplier_name="ngModel" 
+       [ngClass]="{ 'is-invalid': f.submitted && supplier_name.invalid, 
+         'is-valid': f.submitted && supplier_name.valid }"
+        required> 
+     
+        <option *ngFor="let obj of suppliernameDetail" [value]="obj.supplier_name">{{obj.supplier_name}}
+        </option>
+      </select>
+      <div *ngIf="f.submitted && supplier_name.invalid" class="invalid-feedback">
+            <div *ngIf="supplier_name.errors.required">Please provide supplier name</div>
+        
+        </div> 
+      </div>
+    </div>
+   
+  
+  <div class="form-group col-md-4">
+  <label for="category_name" class="col-sm-5 col-form-label">{{field_name_category_name}}<span
+  class="text-danger font-weight-bold" *ngIf="field_category_name_required">
+  *</span></label>
+  
+  <div class="col-sm-10">
+  <select class="custom-select" name="category_name" [(ngModel)]="productDetail.category_name"
+  #category_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && category_name.invalid,
+  'is-valid': f.submitted && category_name.valid }"
+  [required]="field_category_name_required" >
+  <option *ngFor="let obj of categoryDetail" [value]="obj.category_name">{{obj.category_name}}
+  </option>
+  </select>
+  <div *ngIf="f.submitted && category_name.invalid" class="invalid-feedback">
+  <div *ngIf="category_name.errors.required">Required Categoryname</div>
+  </div>
+  </div>
+  </div>
+  
+  
+  <div class="form-group col-md-4">
+  <label for="files" class="col-sm-5 col-form-label">{{field_name_files}}<span
+  class="text-danger font-weight-bold" >
+  </span></label>
+  <div class="col-sm-10">
+  <input type="file" class="form-control" name="files" #files="ngModel" 
+  [(ngModel)]="productDetail.files" (change)="selectImage($event)"/>
+  
+  </div>
+  </div>
+  <div class="form-group">
+  <div class="hoverable" *ngIf="preview && preview !== null">
+  <img [src]="preview" >
+  
+  </div>
+  </div>
+  </div>
+  <div class="form-row">
+  <div class="form-group col-md-3">
+  <label class="col-sm-5 col-form-label"> {{field_name_product_created_by}}
+  
+  </label>
+  <div class="col-sm-10">
+  <input type="text" class="form-control" name="created_by"
+  [(ngModel)]="productDetail.created_by"
+  #created_by="ngModel" readonly>
+  </div>
+  </div>
+  <div class="form-group col-md-3">
+  <label class="col-sm-5 col-form-label"> {{field_name_product_created_time}}
+  
+  </label>
+  <div class="col-sm-10">
+  
+  
+  <input type="text" class="form-control" name="created_time"
+  readonly value="{{productDetail.created_time |  date : dateFormat:'GMT':locale}}">
+  
+  
+  
+  </div>
+  </div>
+  <div class="form-group col-md-3">
+  <label class="col-sm-5 col-form-label"> {{field_name_product_updated_by}}
+  
+  </label>
+  <div class="col-sm-10">
+  <input type="text" class="form-control" name="updated_by"
+  [(ngModel)]="productDetail.updated_by"
+  #updated_by="ngModel" readonly>
+  </div>
+  </div>
+  <div class="form-group col-md-3">
+  <label class="col-sm-5 col-form-label">{{field_name_product_updated_time}}
+  
+  </label>
+  <div class="col-sm-10">
+  
+  <input type="text" class="form-control" name="modified_time"
+  readonly value=" {{productDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+  
+  </div>
+  </div>
+  </div>
+  
+  <button class="btn btn-danger btn-round text-center pull-right" style=" margin-top: 73px;" type="button"
+                                                        appCancelbutton>{{'Cancel'|translate}}</button>
+                                                        <button class="btn btn-success btn-round text-center pull-right" style=" margin-top: 73px;">
+                                                          <span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+                                                          <span *ngIf="isUpdate">{{'Update'|translate}}</span></button>
+  
+  </div>
+  
+  </form>
+  </div>
+  
+  
+  
+  </div>
+  </div>
+  </section>
+  

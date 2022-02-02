@@ -1,0 +1,200 @@
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' >
+  <div class="salary-slip"  #content *ngIf="this.selectedUserPay ">
+    <table class="empDetail">
+      <tr height="100px" style="background-color: #c2d69b">
+          <td colspan="4" ></td>
+        <td colspan="4" class="companyName">Ogoul Techonlogy</td>
+      </tr>
+      <tr>
+        <th>{{field_name_hrms_payslip_employee_name}}</th>
+        <td>
+          {{ this.employeeDetail.first_name }}
+        </td>
+        <td></td>
+        <th>{{field_name_hrms_payslip_account_number}}</th>
+        <td>
+          {{ this.employeeDetail.employee_account_number }}
+        </td>
+        <td></td>
+        <th>{{field_name_hrms_payslip_bank_name}}</th>
+        <td>
+          {{ this.employeeDetail.employee_bank }}
+        </td>
+      </tr>
+  
+      <tr>
+        <th>{{field_name_hrms_payslip_designation}}:</th>
+        <td>{{ this.employeeDetail.designation }}</td>
+        <td></td>
+        <th>{{field_name_hrms_payslip_assigned_to}}</th>
+        <td>{{ this.employeeDetail.assigned_to }}</td>
+        <td></td>
+        <th>{{field_name_hrms_payslip_join_date}}:</th>
+        <td>{{ this.employeeDetail.joining_date }}</td>
+      </tr>
+      <tr class="myBackground">
+        <th colspan="2">{{field_name_hrms_payslip_payments}}</th>
+        <th></th>
+        <th class="table-border-right">{{field_name_hrms_payslip_amount}} (Rs.)</th>
+        <th colspan="2">{{field_name_hrms_payslip_deduction}}</th>
+        <th></th>
+        <th>{{field_name_hrms_payslip_amount}} (Rs.)</th>
+      </tr>
+      <tr>
+        <th colspan="2">{{field_name_hrms_payslip_basic_salary}}</th>
+        <td></td>
+        <td class="myAlign">{{ this.selectedUserPay.basic_salary }}</td>
+        <th colspan="2"></th>
+        <td></td>
+  
+        <td class="myAlign"></td>
+      </tr>
+      <tr>
+        <th colspan="2">{{field_name_hrms_payslip_transportaion_allowance}}</th>
+        <td></td>
+        <td class="myAlign">{{ this.selectedUserPay.allowance_food }}</td>
+        <th colspan="2"></th>
+        <td></td>
+  
+        <td class="myAlign"></td>
+      </tr>
+      <tr>
+        <th colspan="2">{{field_name_hrms_payslip_food_allowance}}</th>
+        <td></td>
+        <td class="myAlign">{{ this.selectedUserPay.allowance_food }}</td>
+        <th colspan="2"></th>
+        <td></td>
+  
+        <td class="myAlign"></td>
+      </tr>
+      <tr>
+        <th colspan="2">{{field_name_hrms_payslip_acccomadation_allowance}}</th>
+        <td></td>
+        <td class="myAlign">{{ this.selectedUserPay.allowance_accomadation }}</td>
+        <th colspan="2"></th>
+        <td></td>
+  
+        <td class="myAlign"></td>
+      </tr>
+      <tr class="myBackground">
+        <th colspan="3">{{field_name_hrms_payslip_total_payments}}</th>
+        <td class="myAlign">{{ this.selectedUserPay.net_salary }}</td>
+        <th colspan="3">{{field_name_hrms_payslip_total_deduction}}</th>
+        <td class="myAlign">0</td>
+      </tr>
+    </table>
+  </div>
+  <button class="btn btn-success btn-round">
+      <span (click)="downloadPDF()">{{field_name_hrms_payslip_pdf}}</span>
+     
+    </button>
+    <button class="btn btn-success btn-round" [disabled]="this.buttonDisableFlag">
+      <span (click)="sendPdf(this.employeeDetail.email)" >{{field_name_hrms_payslip_send_email_employee}}</span>
+     
+    </button>
+  
+</section>
+
+
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir='ltr' >
+  <div class="salary-slip"  #content *ngIf="this.selectedUserPay ">
+    <table class="empDetail">
+      <tr height="100px" style="background-color: #c2d69b">
+          <td colspan="4" ></td>
+        <td colspan="4" class="companyName">Ogoul Techonlogy</td>
+      </tr>
+      <tr>
+        <th>{{field_name_hrms_payslip_employee_name}}</th>
+        <td>
+          {{ this.employeeDetail.first_name }}
+        </td>
+        <td></td>
+        <th>{{field_name_hrms_payslip_account_number}}</th>
+        <td>
+          {{ this.employeeDetail.employee_account_number }}
+        </td>
+        <td></td>
+        <th>{{field_name_hrms_payslip_bank_name}}</th>
+        <td>
+          {{ this.employeeDetail.employee_bank }}
+        </td>
+      </tr>
+  
+      <tr>
+        <th>{{field_name_hrms_payslip_designation}}:</th>
+        <td>{{ this.employeeDetail.designation }}</td>
+        <td></td>
+        <th>{{field_name_hrms_payslip_assigned_to}}</th>
+        <td>{{ this.employeeDetail.assigned_to }}</td>
+        <td></td>
+        <th>{{field_name_hrms_payslip_join_date}}:</th>
+        <td>{{ this.employeeDetail.joining_date }}</td>
+      </tr>
+      <tr class="myBackground">
+        <th colspan="2">{{field_name_hrms_payslip_payments}}</th>
+        <th></th>
+        <th class="table-border-right">{{field_name_hrms_payslip_amount}} (Rs.)</th>
+        <th colspan="2">{{field_name_hrms_payslip_deduction}}</th>
+        <th></th>
+        <th>{{field_name_hrms_payslip_amount}} (Rs.)</th>
+      </tr>
+      <tr>
+        <th colspan="2">{{field_name_hrms_payslip_basic_salary}}</th>
+        <td></td>
+        <td class="myAlign">{{ this.selectedUserPay.basic_salary }}</td>
+        <th colspan="2"></th>
+        <td></td>
+  
+        <td class="myAlign"></td>
+      </tr>
+      <tr>
+        <th colspan="2">{{field_name_hrms_payslip_transportaion_allowance}}</th>
+        <td></td>
+        <td class="myAlign">{{ this.selectedUserPay.allowance_food }}</td>
+        <th colspan="2"></th>
+        <td></td>
+  
+        <td class="myAlign"></td>
+      </tr>
+      <tr>
+        <th colspan="2">{{field_name_hrms_payslip_food_allowance}}</th>
+        <td></td>
+        <td class="myAlign">{{ this.selectedUserPay.allowance_food }}</td>
+        <th colspan="2"></th>
+        <td></td>
+  
+        <td class="myAlign"></td>
+      </tr>
+      <tr>
+        <th colspan="2">{{field_name_hrms_payslip_acccomadation_allowance}}</th>
+        <td></td>
+        <td class="myAlign">{{ this.selectedUserPay.allowance_accomadation }}</td>
+        <th colspan="2"></th>
+        <td></td>
+  
+        <td class="myAlign"></td>
+      </tr>
+      <tr class="myBackground">
+        <th colspan="3">{{field_name_hrms_payslip_total_payments}}</th>
+        <td class="myAlign">{{ this.selectedUserPay.net_salary }}</td>
+        <th colspan="3">{{field_name_hrms_payslip_total_deduction}}</th>
+        <td class="myAlign">0</td>
+      </tr>
+    </table>
+  </div>
+  <button class="btn btn-success btn-round">
+      <span (click)="downloadPDF()">{{field_name_hrms_payslip_pdf}}</span>
+     
+    </button>
+    <button class="btn btn-success btn-round" [disabled]="this.buttonDisableFlag">
+      <span (click)="sendPdf(this.employeeDetail.email)" >{{field_name_hrms_payslip_send_email_employee}}</span>
+     
+    </button>
+  
+  </section>

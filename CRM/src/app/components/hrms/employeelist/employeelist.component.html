@@ -1,0 +1,532 @@
+<br />
+<section
+  *ngIf="this._uiservice.langDataSource.value == 'ar'" dir="rtl">
+  <div class="container-fluid">
+    <form class="form-row dateSection" name="form" #f="ngForm">
+      <div class="form-group row col-md-4">
+        <label class="col-sm-3 col-form-label">
+          {{field_name_hrms_employee_from_date}}<span class="text-danger font-weight-bold"> *</span></label
+        >
+        <div class="col-sm-8">
+          <input
+            type="date"
+            class="form-control"
+            max="{{ date | date: 'yyyy-MM-dd' }}"
+            [(ngModel)]="model.fromDate"
+            name="fromDate"
+            #fromDate="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && fromDate.invalid,
+              'is-valid': f.submitted && fromDate.valid
+            }"
+            required
+          />
+
+          <div *ngIf="f.submitted && fromDate.invalid" class="invalid-feedback">
+            <div *ngIf="fromDate.errors.required">Please provide fromDate</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row col-md-4">
+        <label class="col-sm-3 col-form-label">
+          {{field_name_hrms_employee_to_date}}<span class="text-danger font-weight-bold"> *</span></label
+        >
+        <div class="col-sm-8">
+          <input
+            type="date"
+            class="form-control"
+            [(ngModel)]="model.toDate"
+            name="toDate"
+            #toDate="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && toDate.invalid,
+              'is-valid': f.submitted && toDate.valid
+            }"
+            required
+          />
+          <div *ngIf="f.submitted && toDate.invalid" class="invalid-feedback">
+            <div *ngIf="toDate.errors.required">Please provide toDate</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-success search-btn" (click)="filterData()">
+          {{field_name_hrms_employee_search}}
+        </button>
+      </div>
+    </form>
+    <form
+    class="form-row dateSectionMat"
+    name="form"
+    #f="ngForm"
+    (ngSubmit)="f.form.valid && filterData()"
+  >
+    &nbsp;&nbsp;<mat-form-field
+      style="width: 110px; margin-left: 10px; font-weight: bold"
+    >
+      <input
+        matInput
+        [matDatepicker]="picker"
+        [(ngModel)]="model.fromDate"
+        name="fromDate"
+        #fromDate="ngModel"
+        [ngClass]="{
+          'is-invalid': f.submitted && fromDate.invalid,
+          'is-valid': f.submitted && fromDate.valid
+        }"
+        required
+        placeholder={{field_name_hrms_employee_from_date}}
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <div *ngIf="f.submitted && fromDate.invalid" class="invalid-feedback">
+      <div *ngIf="fromDate.errors.required">Please provide fromDate</div>
+    </div>
+
+    <mat-form-field style="width: 93px; margin-left: 10px; font-weight: bold">
+      <input
+        matInput
+        [matDatepicker]="picker1"
+        [(ngModel)]="model.toDate"
+        name="toDate"
+        #toDate="ngModel"
+        [ngClass]="{
+          'is-invalid': f.submitted && toDate.invalid,
+          'is-valid': f.submitted && toDate.valid
+        }"
+        required
+        placeholder={{field_name_hrms_employee_to_date}}
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="picker1"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+    <div *ngIf="f.submitted && toDate.invalid" class="invalid-feedback">
+      <div *ngIf="toDate.errors.required">Please provide toDate</div>
+    </div>
+    &nbsp;&nbsp;
+    <div style="width: 110px">
+      <button class="btn btn-success search-btn font-weight-bold">
+        {{ field_name_hrms_employee_search }}
+      </button>
+    </div>
+  </form>
+    <div class="row">
+      <div class="col-md-3">
+        <div
+          class="form-group has-search dateSection"
+          style="display: flex; align-items: center"
+        >
+          <input
+            type="text"
+            class="form-control"
+            name="first_name"
+            placeholder="Enter Emplyee Name to search"
+            autocomplete="off"
+            [(ngModel)]="first_name"
+            (ngModelChange)="searchData('clear')"
+          />
+          &nbsp;&nbsp;
+          <button class="btn btn-success" (click)="searchData('search')">
+            <i class="fa fa-search"></i> {{field_name_hrms_employee_search}}
+          </button>
+        </div>
+        <div
+        class="form-group has-search dateSectionMat"
+        style="display: flex; align-items: center"
+      >
+       <mat-form-field
+          class="example-full-width"
+          style="width: 200px; font-weight: bold"
+        >
+          <input
+            matInput
+            [(ngModel)]="first_name"
+            name="first_name"
+            (ngModelChange)="searchData('clear')"
+            placeholder="Enter First Name to search"
+          />
+        </mat-form-field>
+        <button
+          class="btn btn-success search-btn font-weight-bold"
+          style="margin-right: 80px"
+          (click)="searchData('search')"
+        >
+          {{ field_name_hrms_employee_search }}
+        </button>
+       </div>
+      </div>
+
+      <div class="dateSection">
+        <div class="col-sm-6">
+          <button
+            type="button"
+            (click)="downloadPdf()"
+            class="btn btn-success font-weight-bold"
+          >
+            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+            {{ field_name_hrms_employee_csv }}
+          </button>
+        </div>
+        <div class="col-sm-6">
+          <button
+            type="button"
+            (click)="generateCsv()"
+            class="btn btn-success font-weight-bold"
+          >
+            <i class="fa fa-building-o" aria-hidden="true"></i
+            >{{ field_name_customers_csv }}
+          </button>
+        </div>
+      </div>
+
+      <div class="d-flex dateSectionMat">
+        <div class="col-md-6">
+          <button
+            type="button"
+            (click)="downloadPdf()"
+            class="btn btn-success font-weight-bold"
+          >
+            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+            {{ field_name_hrms_employee_pdf }}
+          </button>
+        </div>
+        <div class="col-md-6">
+          <button
+            type="button"
+            class="btn btn-info font-weight-bold"
+            (click)="openAddEmployees()"
+          >
+            <i class="fa fa-plus" aria-hidden="true"></i
+            >{{ field_name_hrms_employee_Add_employee }}
+          </button>
+        </div>
+      </div>
+      <div class="dateSection">
+        <div class="col-md-6">
+          <button
+            type="button"
+            class="btn btn-info font-weight-bold"
+            (click)="openAddEmployees()"
+          >
+            <i class="fa fa-plus" aria-hidden="true"></i
+            >{{ field_name_hrms_employee_Add_employee }}
+          </button>
+        </div>
+      </div>
+
+      <div class="d-flex dateSectionMat">
+        <div class="col-md-6">
+          <button
+            type="button"
+            (click)="generateCsv()"
+            class="btn btn-success font-weight-bold"
+          >
+            <i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;&nbsp;{{
+              field_name_hrms_employee_csv
+            }}
+          </button>
+        </div>
+      </div>
+      <div class="col-md-3"></div>
+      <div class="col-md-3" *ngFor="let k of filteredTableDataArr; let i = index">
+        <mat-card style="text-align: center; background: #f1e2b4">
+          <br />
+          <div class="dropdown ellipsisRight">
+            <button (click)="myFunction(i)" class="btn btn-dropbtn">
+              <span><i class="fa fa-ellipsis-v"></i></span>
+            </button>
+            <div id="{{ 'myDropdown' + i }}" class="dropdown-content">
+              <a (click)="editSeletedEmployee(k, i)"><i class="fa fa-edit"></i></a>   
+              <a (click)="deleteSeletedEmployee(k)"><i class="fa fa-trash"></i></a>
+            </div>
+          </div>
+
+          <img
+            [src]="k.profile_picture"
+            style="border-radius: 50px"
+            width="100"
+            height="100"
+          />
+
+          <br />
+          <span style="font-weight: bold">{{ k.first_name }}</span
+          ><br />
+          <span style="font-size: 13px">{{ k.designation }}</span>
+        </mat-card>
+        <br />
+      </div>
+      <!-- </div> -->
+    </div>
+  </div>
+</section>
+
+<br />
+<div></div>
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir="ltr">
+  <div class="container-fluid">
+    <form class="form-row dateSection" name="form" #f="ngForm">
+      <div class="form-group row col-md-4">
+        <label class="col-sm-3 col-form-label">
+          {{field_name_hrms_employee_from_date}}<span class="text-danger font-weight-bold"> *</span></label
+        >
+        <div class="col-sm-8">
+          <input
+            type="date"
+            class="form-control"
+            max="{{ date | date: 'yyyy-MM-dd' }}"
+            [(ngModel)]="model.fromDate"
+            name="fromDate"
+            #fromDate="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && fromDate.invalid,
+              'is-valid': f.submitted && fromDate.valid
+            }"
+            required
+          />
+
+          <div *ngIf="f.submitted && fromDate.invalid" class="invalid-feedback">
+            <div *ngIf="fromDate.errors.required">Please provide fromDate</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row col-md-4">
+        <label class="col-sm-3 col-form-label">
+          {{field_name_hrms_employee_to_date}}<span class="text-danger font-weight-bold"> *</span></label
+        >
+        <div class="col-sm-8">
+          <input
+            type="date"
+            class="form-control"
+            [(ngModel)]="model.toDate"
+            name="toDate"
+            #toDate="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && toDate.invalid,
+              'is-valid': f.submitted && toDate.valid
+            }"
+            required
+          />
+          <div *ngIf="f.submitted && toDate.invalid" class="invalid-feedback">
+            <div *ngIf="toDate.errors.required">Please provide toDate</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-success search-btn" (click)="filterData()">
+          {{field_name_hrms_employee_search}}
+        </button>
+      </div>
+    </form>
+    <form
+    class="form-row dateSectionMat"
+    name="form"
+    #f="ngForm"
+    (ngSubmit)="f.form.valid && filterData()"
+  >
+    <mat-form-field
+      style="width: 110px; margin-left: 5px; font-weight: bold"
+    >
+      <input
+        matInput
+        [matDatepicker]="picker"
+        [(ngModel)]="model.fromDate"
+        name="fromDate"
+        #fromDate="ngModel"
+        [ngClass]="{
+          'is-invalid': f.submitted && fromDate.invalid,
+          'is-valid': f.submitted && fromDate.valid
+        }"
+        required
+        placeholder={{field_name_hrms_employee_from_date}}
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <div *ngIf="f.submitted && fromDate.invalid" class="invalid-feedback">
+      <div *ngIf="fromDate.errors.required">Please provide fromDate</div>
+    </div>
+
+    <mat-form-field style="width: 93px; margin-left: 10px; font-weight: bold">
+      <input
+        matInput
+        [matDatepicker]="picker1"
+        [(ngModel)]="model.toDate"
+        name="toDate"
+        #toDate="ngModel"
+        [ngClass]="{
+          'is-invalid': f.submitted && toDate.invalid,
+          'is-valid': f.submitted && toDate.valid
+        }"
+        required
+        placeholder={{field_name_hrms_employee_to_date}}
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="picker1"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+    <div *ngIf="f.submitted && toDate.invalid" class="invalid-feedback">
+      <div *ngIf="toDate.errors.required">Please provide toDate</div>
+    </div>
+    &nbsp;&nbsp;
+    <div style="width: 110px">
+      <button class="btn btn-success search-btn font-weight-bold">
+        {{ field_name_hrms_employee_search }}
+      </button>
+    </div>
+  </form>
+    <div class="row">
+      <div class="col-md-3">
+        <div
+          class="form-group has-search dateSection"
+          style="display: flex; align-items: center"
+        >
+          <input
+            type="text"
+            class="form-control"
+            name="first_name"
+            placeholder="Enter Emplyee Name to search"
+            autocomplete="off"
+            [(ngModel)]="first_name"
+            (ngModelChange)="searchData('clear')"
+          />
+          &nbsp;&nbsp;
+          <button class="btn btn-success" (click)="searchData('search')">
+            <i class="fa fa-search"></i> {{field_name_hrms_employee_search}}
+          </button>
+        </div>
+        <div
+        class="form-group has-search dateSectionMat"
+        style="display: flex; align-items: center"
+      >
+       <mat-form-field
+          class="example-full-width"
+          style="width: 200px; font-weight: bold"
+        >
+          <input
+            matInput
+            [(ngModel)]="first_name"
+            name="first_name"
+            (ngModelChange)="searchData('clear')"
+            placeholder="Enter First Name to search"
+          />
+        </mat-form-field>
+        <button
+          class="btn btn-success search-btn font-weight-bold"
+          style="margin-left: 23px"
+          (click)="searchData('search')"
+        >
+          {{ field_name_hrms_employee_search }}
+        </button>
+       </div>
+      </div>
+      <div class="dateSection">
+        <div class="col-sm-6">
+          <button
+            type="button"
+            (click)="downloadPdf()"
+            class="btn btn-success font-weight-bold"
+          >
+            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+            {{ field_name_hrms_employee_pdf }}
+          </button>
+        </div>
+        <div class="col-sm-6">
+          <button
+            type="button"
+            (click)="generateCsv()"
+            class="btn btn-success font-weight-bold"
+          >
+            <i class="fa fa-building-o" aria-hidden="true"></i
+            >{{ field_name_hrms_employee_csv }}
+          </button>
+        </div>
+      </div>
+
+      <div class="d-flex dateSectionMat">
+        <div class="col-md-6">
+          <button
+            type="button"
+            (click)="downloadPdf()"
+            class="btn btn-success font-weight-bold"
+          >
+            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+            {{ field_name_hrms_employee_pdf }}
+          </button>
+        </div>
+        <div class="col-md-6">
+          <button
+            type="button"
+            class="btn btn-info font-weight-bold"
+            (click)="openAddEmployees()"
+          >
+            <i class="fa fa-plus" aria-hidden="true"></i
+            >{{ field_name_hrms_employee_Add_employee }}
+          </button>
+        </div>
+      </div>
+      <div class="dateSection">
+        <div class="col-md-6">
+          <button
+            type="button"
+            class="btn btn-info font-weight-bold"
+            (click)="openAddEmployees()"
+          >
+            <i class="fa fa-plus" aria-hidden="true"></i
+            >{{ field_name_hrms_employee_Add_employee }}
+          </button>
+        </div>
+      </div>
+
+      <div class="d-flex dateSectionMat">
+        <div class="col-md-6">
+          <button
+            type="button"
+            (click)="generateCsv()"
+            class="btn btn-success font-weight-bold"
+          >
+            <i class="fa fa-building-o" aria-hidden="true"></i>&nbsp;&nbsp;{{
+              field_name_hrms_employee_csv
+            }}
+          </button>
+        </div>
+      </div>
+       
+      <div class="col-md-3"></div>
+
+      <div class="col-md-3" *ngFor="let k of filteredTableDataArr; let i = index">
+        <mat-card style="text-align: center; background: #f1e2b4">
+          <br />
+          <div class="dropdown ellipsisRight">
+            <button (click)="myFunction(i)" class="btn btn-dropbtn">
+              <span><i class="fa fa-ellipsis-v"></i></span>
+            </button>
+            <div id="{{ 'myDropdown' + i }}" class="dropdown-content">
+              <a (click)="editSeletedEmployee(k, i)"><i class="fa fa-edit"></i></a>   
+              <a (click)="deleteSeletedEmployee(k)"><i class="fa fa-trash"></i></a>
+            </div>
+          </div>
+
+          <img
+            [src]="k.profile_picture"
+            style="border-radius: 50px"
+            width="100"
+            height="100"
+          />
+
+          <br />
+          <span style="font-weight: bold">{{ k.first_name }}</span
+          ><br />
+          <span style="font-size: 13px">{{ k.designation }}</span>
+        </mat-card>
+        <br />
+      </div>
+      <!-- </div> -->
+    </div>
+  </div>
+</section>

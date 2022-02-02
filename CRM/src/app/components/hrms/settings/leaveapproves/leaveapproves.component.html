@@ -1,0 +1,512 @@
+
+
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' >
+  <div class="button-page">
+    <div class="row">
+      <div class="col-sm-12">
+        <form
+          class="form-horizontal form-material"
+          name="form"
+          #f="ngForm"
+          (ngSubmit)="f.form.valid && onSubmit()"
+        >
+          <div
+            *ngIf="f.form.invalid && f.submitted"
+            class="alert alert-danger alert-dismissible fade show"
+            role="alert"
+          >
+            <strong>Leave Details!</strong>The form has the following errors that
+            need to be corrected
+            <button
+              type="button"
+              class="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="card-header">
+            <h2>
+              <span *ngIf="!isUpdate">{{field_name_hrms_leave_approve_add_leave_approve}}</span>
+              <span *ngIf="isUpdate">{{field_name_hrms_leave_approve_update}}</span>
+            </h2>
+          </div>
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_leave_approve_type}}<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              <div class="col-sm-10">
+                <select
+                  disabled
+                  class="form-control"
+                  [(ngModel)]="leaveDetail.leave_type"
+                  name="leave_type"
+                  #leave_type="ngModel"
+                >
+                  <option value="undefined" disabled [selected]="true">
+                    Choose Leave
+                  </option>
+                  <option value="casual leave">Casual Leave</option>
+                  <option value="medical leave">Medical Leave</option>
+                  <option value="loss pay">Loss of Pay</option>
+                </select>
+                <div
+                  *ngIf="f.submitted && leave_type.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="leave_type.errors.required">
+                    Please provide Travel Info
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_leave_approve_from}}<span class="text-danger font-weight-bold"> *</span></label
+              >
+  
+              <div class="col-sm-10">
+                <input
+                  type="date"
+                  class="form-control"
+                  name="leave_from"
+                  #leave_from="ngModel"
+                  [(ngModel)]="leaveDetail.leave_from"
+                  readonly
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_leave_approve_to}}<span class="text-danger font-weight-bold"> *</span></label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="date"
+                  class="form-control"
+                  name="leave_to"
+                  #leave_to="ngModel"
+                  [(ngModel)]="leaveDetail.leave_to"
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_leave_approve_reason}}<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              <div class="col-sm-10">
+                <textarea
+                  readonly
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="leaveDetail.leave_reason"
+                  name="leave_reason"
+                  #leave_reason="ngModel"
+                >
+                </textarea>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_leave_approve_status}}<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              <div class="col-sm-4">
+                <select
+                  class="form-control"
+                  [(ngModel)]="leaveDetail.leave_status"
+                  name="leave_status"
+                  #leave_status="ngModel"
+                >
+                  <option value="undefined" disabled [selected]="true">
+                    Choose Leave
+                  </option>
+                  <option value="approved">Approved</option>
+                  <option value="pending">Pending</option>
+                  <option value="rejected">Rejected</option>
+                </select>
+  
+                <!-- <div
+                  *ngIf="f.submitted && ticket_info.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="ticket_info.errors.required">
+                    Please provide TIcket Info
+                  </div>
+                </div> -->
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_leave_approve_alert}} <span class="text-danger font-weight-bold"> *</span></label
+              >
+              <div class="col-sm-4">
+                <div
+                  *ngFor="
+                    let k of this.assignedObj;
+                    let index = index;
+                    first as isFirst
+                  "
+                >
+                  <label
+                    *ngIf="
+                      k.name == this.leaveDetail.leave_assigned_to && k.count > 1
+                    "
+                  >
+                    <textarea
+                      style="width: 31vw; color: red"
+                      type="text"
+                      class="form-control"
+                      readonly
+                    >Multiple persons of same team applied for leave.Please check and approve
+                   </textarea>
+                  </label>
+                  <label *ngIf="k.count == 1 && isFirst">
+                    
+                    <textarea
+                      style="width: 31vw; color: red"
+                      type="text"
+                      class="form-control"
+                      readonly
+                    ></textarea>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_hrms_leave_approve_created_by}} </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="created_by"
+                    [(ngModel)]="leaveDetail.created_by"
+                    #created_by="ngModel"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_hrms_leave_approve_created_time}} </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="created_time"
+                    readonly
+                    value="{{ leaveDetail.created_time |  date : dateFormat:'GMT':locale }}"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_hrms_leave_approve_updated_by}} </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="updated_by"
+                    [(ngModel)]="leaveDetail.updated_by"
+                    #updated_by="ngModel"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_hrms_leave_approve_updated_time}} </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="modified_time"
+                    readonly
+                    value=" {{ leaveDetail.modified_time |  date : dateFormat:'GMT':locale }}"
+                  />
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-success btn-round">
+              <span *ngIf="!isUpdate">{{ "Save" | translate }}</span>
+              <span *ngIf="isUpdate">{{ "Update" | translate }}</span>
+            </button>
+  
+            <button
+              class="btn btn-danger btn-round"
+              type="button"
+              appCancelbutton
+            >
+              {{ "Cancel" | translate }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+</section>
+
+
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir='ltr' >
+  <div class="button-page">
+    <div class="row">
+      <div class="col-sm-12">
+        <form
+          class="form-horizontal form-material"
+          name="form"
+          #f="ngForm"
+          (ngSubmit)="f.form.valid && onSubmit()"
+        >
+          <div
+            *ngIf="f.form.invalid && f.submitted"
+            class="alert alert-danger alert-dismissible fade show"
+            role="alert"
+          >
+            <strong>Leave Details!</strong>The form has the following errors that
+            need to be corrected
+            <button
+              type="button"
+              class="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="card-header">
+            <h2>
+              <span *ngIf="!isUpdate">{{field_name_hrms_leave_approve_add_leave_approve}}</span>
+              <span *ngIf="isUpdate">{{field_name_hrms_leave_approve_update}}</span>
+            </h2>
+          </div>
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_leave_approve_type}}<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              <div class="col-sm-10">
+                <select
+                  disabled
+                  class="form-control"
+                  [(ngModel)]="leaveDetail.leave_type"
+                  name="leave_type"
+                  #leave_type="ngModel"
+                >
+                  <option value="undefined" disabled [selected]="true">
+                    Choose Leave
+                  </option>
+                  <option value="casual leave">Casual Leave</option>
+                  <option value="medical leave">Medical Leave</option>
+                  <option value="loss pay">Loss of Pay</option>
+                </select>
+                <div
+                  *ngIf="f.submitted && leave_type.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="leave_type.errors.required">
+                    Please provide Travel Info
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_leave_approve_from}}<span class="text-danger font-weight-bold"> *</span></label
+              >
+  
+              <div class="col-sm-10">
+                <input
+                  type="date"
+                  class="form-control"
+                  name="leave_from"
+                  #leave_from="ngModel"
+                  [(ngModel)]="leaveDetail.leave_from"
+                  readonly
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_leave_approve_to}}<span class="text-danger font-weight-bold"> *</span></label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="date"
+                  class="form-control"
+                  name="leave_to"
+                  #leave_to="ngModel"
+                  [(ngModel)]="leaveDetail.leave_to"
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_leave_approve_reason}}<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              <div class="col-sm-10">
+                <textarea
+                  readonly
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="leaveDetail.leave_reason"
+                  name="leave_reason"
+                  #leave_reason="ngModel"
+                >
+                </textarea>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_leave_approve_status}}<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              <div class="col-sm-4">
+                <select
+                  class="form-control"
+                  [(ngModel)]="leaveDetail.leave_status"
+                  name="leave_status"
+                  #leave_status="ngModel"
+                >
+                  <option value="undefined" disabled [selected]="true">
+                    Choose Leave
+                  </option>
+                  <option value="approved">Approved</option>
+                  <option value="pending">Pending</option>
+                  <option value="rejected">Rejected</option>
+                </select>
+  
+                <!-- <div
+                  *ngIf="f.submitted && ticket_info.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="ticket_info.errors.required">
+                    Please provide TIcket Info
+                  </div>
+                </div> -->
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_leave_approve_alert}} <span class="text-danger font-weight-bold"> *</span></label
+              >
+              <div class="col-sm-4">
+                <div
+                  *ngFor="
+                    let k of this.assignedObj;
+                    let index = index;
+                    first as isFirst
+                  "
+                >
+                  <label
+                    *ngIf="
+                      k.name == this.leaveDetail.leave_assigned_to && k.count > 1
+                    "
+                  >
+                    <textarea
+                      style="width: 31vw; color: red"
+                      type="text"
+                      class="form-control"
+                      readonly
+                    >Multiple persons of same team applied for leave.Please check and approve
+                   </textarea>
+                  </label>
+                  <label *ngIf="k.count == 1 && isFirst">
+                    
+                    <textarea
+                      style="width: 31vw; color: red"
+                      type="text"
+                      class="form-control"
+                      readonly
+                    ></textarea>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_hrms_leave_approve_created_by}} </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="created_by"
+                    [(ngModel)]="leaveDetail.created_by"
+                    #created_by="ngModel"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_hrms_leave_approve_created_time}} </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="created_time"
+                    readonly
+                    value="{{ leaveDetail.created_time |  date : dateFormat:'GMT':locale }}"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_hrms_leave_approve_updated_by}} </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="updated_by"
+                    [(ngModel)]="leaveDetail.updated_by"
+                    #updated_by="ngModel"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_hrms_leave_approve_updated_time}} </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="modified_time"
+                    readonly
+                    value=" {{ leaveDetail.modified_time |  date : dateFormat:'GMT':locale }}"
+                  />
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-success btn-round">
+              <span *ngIf="!isUpdate">{{ "Save" | translate }}</span>
+              <span *ngIf="isUpdate">{{ "Update" | translate }}</span>
+            </button>
+  
+            <button
+              class="btn btn-danger btn-round"
+              type="button"
+              appCancelbutton
+            >
+              {{ "Cancel" | translate }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  </section>

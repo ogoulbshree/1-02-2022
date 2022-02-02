@@ -1,0 +1,609 @@
+
+
+<section id="top" *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl'>
+<div class="text-center text-lg-start mb-5">
+  <a
+    (click)="this.openDialog()"
+    style="margin-right: 80px; margin-bottom: 16px"
+    class="
+      btn-get-started
+      scrollto
+      d-inline-flex
+      align-items-center
+      justify-content-center
+      align-self-center">
+    <span>{{ freeTrialDays }} {{top_home_30days_trial}}</span>
+    <i class="bi bi-arrow-right"></i>
+  </a>
+
+  <a
+    data-toggle="modal"
+    (click)="requestdemo()"
+    data-target="#form"
+    class="
+      btn-get-started
+      scrollto
+      d-inline-flex
+      align-items-center
+      justify-content-center
+      align-self-center
+      mb-2">
+    <span>{{top_home_request_demo}}</span>
+    <i class="bi bi-arrow-right"></i>
+  </a>
+</div>
+<ng-template #callAPIDialog>
+  <mat-dialog-content class="mat-typography">
+    <h3 style="font-size: 24px">{{organisation_enroll_form}}</h3>
+    <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit(f)">
+      <!-- <div
+        *ngIf="f.submitted && f.form.invalid"
+        class="alert alert-danger alert-dismissible fade show"
+        role="alert"
+      >
+        <strong>Organisation Form !</strong>The form has the following errors
+        that need to be corrected
+        <button
+          type="button"
+          class="close"
+          data-dismiss="alert"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div> -->
+      <div class="row">
+        <div class="col-md-6">
+          <label>{{organisation_name}} <span
+            class="text-danger font-weight-bold">
+            *</span></label>
+          <input
+            tabindex="1"
+            maxlength="20"
+            minlength="1"
+            type="text"
+            name="org_detail_name"
+            #org_detail_name="ngModel"
+            [(ngModel)]="organisationDetail.org_detail_name"
+            pattern="^(?=.*[a-zA-Z]).{3,}$"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': f.submitted && org_detail_name.invalid,
+              'is-valid': f.submitted && org_detail_name.valid
+            }"
+            required
+          />
+          <div
+            *ngIf="f.submitted && org_detail_name.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="org_detail_name.errors.required">
+              Organisation Name is required
+            </div>
+            <div *ngIf="org_detail_name.errors.pattern">
+              Company Name contain atleast one string
+            </div>
+            <div *ngIf="org_detail_name.errors.maxlength"> Please provide maxlength 20 Characters
+            </div>
+            <div *ngIf="org_detail_name.errors.minlength"> Please provide maxlength 20 Characters
+            </div>
+          </div>
+          <br />
+          <label>{{organisation_first_name}} <span
+            class="text-danger font-weight-bold">
+            *</span></label>
+          <input
+            tabindex="2"
+            type="text"
+            name="org_detail_fname"
+            #org_detail_fname="ngModel"
+            [(ngModel)]="organisationDetail.org_detail_fname"
+            maxlength="20"
+            minlength="1"
+            pattern="[a-zA-Z_]+"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': f.submitted && org_detail_fname.invalid,
+              'is-valid': f.submitted && org_detail_fname.valid
+            }"
+            required
+          />
+          <div
+            *ngIf="f.submitted && org_detail_fname.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="org_detail_fname.errors.required">
+                First Name is required
+            </div>
+            <div *ngIf="org_detail_fname.errors.maxlength"> Please provide maxlength 20 Characters
+            </div>
+            <div *ngIf="org_detail_fname.errors.minlength"> Please provide maxlength 20 Characters
+            </div>
+            
+          </div>
+          <br />
+          <label>{{organisation_password}} <span
+            class="text-danger font-weight-bold">
+            *</span></label>
+          <input
+            tabindex="3"
+            type="password"
+            name="org_detail_password"
+            #org_detail_password="ngModel"
+            [(ngModel)]="organisationDetail.org_detail_password"
+            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': f.submitted && org_detail_password.invalid,
+              'is-valid': f.submitted && org_detail_password.valid
+            }"
+            required
+          />
+
+          <div
+            *ngIf="f.submitted && org_detail_password.invalid"
+            class="invalid-feedback"
+          >
+            <div *ngIf="org_detail_password.errors.required">
+              Please provide password
+            </div>
+            <div *ngIf="org_detail_password.errors.pattern">
+              Password must contain minimum eight characters, at least one
+              uppercase letter, one lowercase letter, one number and one special
+              character
+            </div>
+          </div>
+          <br />
+          <label>{{organisation_currency}} <span
+            class="text-danger font-weight-bold">
+            *</span></label>
+
+          <select
+            tabindex="4"
+            class="form-control"
+            name="org_detail_currency"
+            #org_detail_currency="ngModel"
+            [(ngModel)]="organisationDetail.org_detail_currency"
+            required
+            [ngClass]="{
+              'is-invalid': f.submitted && org_detail_currency.invalid,
+              'is-valid': f.submitted && org_detail_currency.valid
+            }"
+          >
+            <option value="undefined" disabled [selected]="true">
+              Choose Currency
+            </option>
+            <option *ngFor="let elem of currencyArray" [value]="elem.code">
+              {{ elem.name }}
+            </option>
+          </select>
+          <div
+            *ngIf="f.submitted && org_detail_currency.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="org_detail_currency.errors.required">
+              currency is required
+            </div>
+          </div>
+          <br />
+        </div>
+        <div class="col-md-6">
+          <label>{{organisation_email}} <span
+            class="text-danger font-weight-bold">
+            *</span></label>
+          <input
+            tabindex="1"
+            type="text"
+            pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+            name="org_detail_email"
+            #org_detail_email="ngModel"
+            [(ngModel)]="organisationDetail.org_detail_email"
+            class="form-control"
+            required
+            [ngClass]="{
+              'is-invalid': f.submitted && org_detail_email.invalid,
+              'is-valid': f.submitted && org_detail_email.valid
+            }"
+            
+          />
+          <div
+            *ngIf="f.submitted && org_detail_email.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="org_detail_email.errors.required">
+              Please provide Email
+            </div>
+            <div *ngIf="org_detail_email.errors.pattern">
+              Email format should be
+              <small class="text-success"><b>jhon@abc.com</b></small>
+            </div>
+          </div>
+          <br />
+          <label>{{organisation_last_name}} <span
+            class="text-danger font-weight-bold">
+            *</span></label>
+          <input
+            tabindex="2"
+            type="text"
+            name="org_detail_lname"
+            #org_detail_lname="ngModel"
+            [(ngModel)]="organisationDetail.org_detail_lname"
+            maxlength="20"
+            minlength="1"
+            pattern="[a-zA-Z_]+"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': f.submitted && org_detail_lname.invalid,
+              'is-valid': f.submitted && org_detail_lname.valid
+            }"
+            required
+          />
+          <div
+            *ngIf="f.submitted && org_detail_lname.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="org_detail_lname.errors.required">
+              Last Name is required
+            </div>
+            <div *ngIf="org_detail_lname.errors.maxlength"> Please provide maxlength 20 Characters
+            </div>
+            <div *ngIf="org_detail_lname.errors.minlength"> Please provide maxlength 20 Characters
+            </div>
+          </div>
+          <br />
+          <label>{{organisation_phone}} <span
+            class="text-danger font-weight-bold">
+            *</span></label>
+          <input
+            tabindex="3"
+            type="number"
+            name="org_detail_phone"
+            #org_detail_phone="ngModel"
+            [(ngModel)]="organisationDetail.org_detail_phone"
+            class="form-control" maxlength="15" minlength="6"
+            pattern=".{6,15}"
+            [ngClass]="{
+              'is-invalid': f.submitted && org_detail_phone.invalid,
+              'is-valid': f.submitted && org_detail_phone.valid
+            }"
+            required
+          />
+          <div
+            *ngIf="f.submitted && org_detail_phone.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="org_detail_phone.errors.required">
+              phone number is required
+            </div>
+         
+            <div *ngIf="org_detail_phone.errors.pattern">Please  enter maxlenght 15 only</div>
+            <div *ngIf="org_detail_phone.errors.maxlength">Please enter maxlenght 15 only</div>
+          </div>
+          <br />
+        </div>
+      </div>
+
+      <div style="text-align: end">
+        <button
+          class="btn btn-success text-center pull-right"
+          style="margin-top: 10px"
+          type="submit"
+        >{{'Save'|translate}}
+        </button>
+        <button
+          class="btn btn-danger text-center pull-right"
+          style="margin-top: 10px"
+          type="cancel"
+          (click)="f.form.reset()"
+          mat-dialog-close>{{'Cancel'|translate}}</button>
+       
+      </div>
+    </form>
+  </mat-dialog-content>
+</ng-template>
+
+
+</section>
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir='ltr'> 
+<div class="text-center text-lg-start mb-5">
+  <a
+    (click)="this.openDialog()"
+    style="margin-right: 80px; margin-bottom: 16px"
+    class="
+      btn-get-started
+      scrollto
+      d-inline-flex
+      align-items-center
+      justify-content-center
+      align-self-center">
+    <span>{{ freeTrialDays }} {{top_home_30days_trial}}</span>
+    <i class="bi bi-arrow-right"></i>
+  </a>
+
+  <a
+    data-toggle="modal"
+    (click)="requestdemo()"
+    data-target="#form"
+    class="
+      btn-get-started
+      scrollto
+      d-inline-flex
+      align-items-center
+      justify-content-center
+      align-self-center
+      mb-2">
+    <span>{{top_home_request_demo}}</span>
+    <i class="bi bi-arrow-right"></i>
+  </a>
+</div>
+<ng-template #callAPIDialog>
+  <mat-dialog-content class="mat-typography">
+    <h3 style="font-size: 24px">{{organisation_enroll_form}}</h3>
+    <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit(f)">
+      <!-- <div
+        *ngIf="f.submitted && f.form.invalid"
+        class="alert alert-danger alert-dismissible fade show"
+        role="alert"
+      >
+        <strong>Organisation Form !</strong>The form has the following errors
+        that need to be corrected
+        <button
+          type="button"
+          class="close"
+          data-dismiss="alert"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div> -->
+      <div class="row">
+        <div class="col-md-6">
+          <label>{{organisation_name}} <span
+            class="text-danger font-weight-bold">
+            *</span></label>
+          <input
+            tabindex="1"
+            maxlength="20"
+            minlength="1"
+            type="text"
+            name="org_detail_name"
+            #org_detail_name="ngModel"
+            [(ngModel)]="organisationDetail.org_detail_name"
+            pattern="^(?=.*[a-zA-Z]).{3,}$"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': f.submitted && org_detail_name.invalid,
+              'is-valid': f.submitted && org_detail_name.valid
+            }"
+            required
+          />
+          <div
+            *ngIf="f.submitted && org_detail_name.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="org_detail_name.errors.required">
+              Organisation Name is required
+            </div>
+            <div *ngIf="org_detail_name.errors.pattern">
+              Company Name contain atleast one string
+            </div>
+            <div *ngIf="org_detail_name.errors.maxlength"> Please provide maxlength 20 Characters
+            </div>
+            <div *ngIf="org_detail_name.errors.minlength"> Please provide maxlength 20 Characters
+            </div>
+          </div>
+          <br />
+          <label>{{organisation_first_name}} <span
+            class="text-danger font-weight-bold">
+            *</span></label>
+          <input
+            tabindex="2"
+            type="text"
+            name="org_detail_fname"
+            #org_detail_fname="ngModel"
+            [(ngModel)]="organisationDetail.org_detail_fname"
+            maxlength="20"
+            minlength="1"
+            pattern="[a-zA-Z_]+"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': f.submitted && org_detail_fname.invalid,
+              'is-valid': f.submitted && org_detail_fname.valid
+            }"
+            required
+          />
+          <div
+            *ngIf="f.submitted && org_detail_fname.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="org_detail_fname.errors.required">
+                First Name is required
+            </div>
+            <div *ngIf="org_detail_fname.errors.maxlength"> Please provide maxlength 20 Characters
+            </div>
+            <div *ngIf="org_detail_fname.errors.minlength"> Please provide maxlength 20 Characters
+            </div>
+            
+          </div>
+          <br />
+          <label>{{organisation_password}} <span
+            class="text-danger font-weight-bold">
+            *</span></label>
+          <input
+            tabindex="3"
+            type="password"
+            name="org_detail_password"
+            #org_detail_password="ngModel"
+            [(ngModel)]="organisationDetail.org_detail_password"
+            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': f.submitted && org_detail_password.invalid,
+              'is-valid': f.submitted && org_detail_password.valid
+            }"
+            required
+          />
+
+          <div
+            *ngIf="f.submitted && org_detail_password.invalid"
+            class="invalid-feedback"
+          >
+            <div *ngIf="org_detail_password.errors.required">
+              Please provide password
+            </div>
+            <div *ngIf="org_detail_password.errors.pattern">
+              Password must contain minimum eight characters, at least one
+              uppercase letter, one lowercase letter, one number and one special
+              character
+            </div>
+          </div>
+          <br />
+          <label>{{organisation_currency}} <span
+            class="text-danger font-weight-bold">
+            *</span></label>
+
+          <select
+            tabindex="4"
+            class="form-control"
+            name="org_detail_currency"
+            #org_detail_currency="ngModel"
+            [(ngModel)]="organisationDetail.org_detail_currency"
+            required
+            [ngClass]="{
+              'is-invalid': f.submitted && org_detail_currency.invalid,
+              'is-valid': f.submitted && org_detail_currency.valid
+            }"
+          >
+            <option value="undefined" disabled [selected]="true">
+              Choose Currency
+            </option>
+            <option *ngFor="let elem of currencyArray" [value]="elem.code">
+              {{ elem.name }}
+            </option>
+          </select>
+          <div
+            *ngIf="f.submitted && org_detail_currency.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="org_detail_currency.errors.required">
+              currency is required
+            </div>
+          </div>
+          <br />
+        </div>
+        <div class="col-md-6">
+          <label>{{organisation_email}} <span
+            class="text-danger font-weight-bold">
+            *</span></label>
+          <input
+            tabindex="1"
+            type="text"
+            pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+            name="org_detail_email"
+            #org_detail_email="ngModel"
+            [(ngModel)]="organisationDetail.org_detail_email"
+            class="form-control"
+            required
+            [ngClass]="{
+              'is-invalid': f.submitted && org_detail_email.invalid,
+              'is-valid': f.submitted && org_detail_email.valid
+            }"
+            
+          />
+          <div
+            *ngIf="f.submitted && org_detail_email.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="org_detail_email.errors.required">
+              Please provide Email
+            </div>
+            <div *ngIf="org_detail_email.errors.pattern">
+              Email format should be
+              <small class="text-success"><b>jhon@abc.com</b></small>
+            </div>
+          </div>
+          <br />
+          <label>{{organisation_last_name}} <span
+            class="text-danger font-weight-bold">
+            *</span></label>
+          <input
+            tabindex="2"
+            type="text"
+            name="org_detail_lname"
+            #org_detail_lname="ngModel"
+            [(ngModel)]="organisationDetail.org_detail_lname"
+            maxlength="20"
+            minlength="1"
+            pattern="[a-zA-Z_]+"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': f.submitted && org_detail_lname.invalid,
+              'is-valid': f.submitted && org_detail_lname.valid
+            }"
+            required
+          />
+          <div
+            *ngIf="f.submitted && org_detail_lname.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="org_detail_lname.errors.required">
+              Last Name is required
+            </div>
+            <div *ngIf="org_detail_lname.errors.maxlength"> Please provide maxlength 20 Characters
+            </div>
+            <div *ngIf="org_detail_lname.errors.minlength"> Please provide maxlength 20 Characters
+            </div>
+          </div>
+          <br />
+          <label>{{organisation_phone}} <span
+            class="text-danger font-weight-bold">
+            *</span></label>
+          <input
+            tabindex="3"
+            type="number"
+            name="org_detail_phone"
+            #org_detail_phone="ngModel"
+            [(ngModel)]="organisationDetail.org_detail_phone"
+            class="form-control" maxlength="15" minlength="6"
+            pattern=".{6,15}"
+            [ngClass]="{
+              'is-invalid': f.submitted && org_detail_phone.invalid,
+              'is-valid': f.submitted && org_detail_phone.valid
+            }"
+            required
+          />
+          <div
+            *ngIf="f.submitted && org_detail_phone.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="org_detail_phone.errors.required">
+              phone number is required
+            </div>
+         
+            <div *ngIf="org_detail_phone.errors.pattern">Please  enter maxlenght 15 only</div>
+            <div *ngIf="org_detail_phone.errors.maxlength">Please enter maxlenght 15 only</div>
+          </div>
+          <br />
+        </div>
+      </div>
+
+      <div style="text-align: end">
+        <button
+          class="btn btn-success text-center pull-right"
+          style="margin-top: 10px"
+          type="submit"
+        >{{'Save'|translate}}
+        </button>
+        <button
+          class="btn btn-danger text-center pull-right"
+          style="margin-top: 10px"
+          type="cancel"
+          (click)="f.form.reset()"
+          mat-dialog-close>{{'Cancel'|translate}}</button>
+       
+      </div>
+    </form>
+  </mat-dialog-content>
+</ng-template>
+
+</section>

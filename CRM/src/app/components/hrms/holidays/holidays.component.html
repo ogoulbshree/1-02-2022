@@ -1,0 +1,202 @@
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' >
+<h2 mat-dialog-title>{{field_name_hrms_holiday_add_holiday}}</h2>
+<form
+  class="form-horizontal"
+  name="form"
+  #f="ngForm"
+  (ngSubmit)="f.form.valid && submit()"
+>
+  <mat-dialog-content class="mat-typography">
+    <div class="row">
+      <div class="col-md-12">
+        {{field_name_hrms_holiday_name}} :<br />
+        <input
+          type="text"
+          class="form-control"
+          name="holiday_name"
+          pattern="[a-zA-Z ]+"
+          [(ngModel)]="holidayDetail.holiday_name"
+          maxlength="20"
+          minlength="1"
+          #holiday_name="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && holiday_name.invalid,
+            'is-valid': f.submitted && holiday_name.valid
+          }"
+          required
+        />
+
+        <div
+          *ngIf="f.submitted && holiday_name.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="holiday_name.errors.required">
+            Please provide holiday name
+          </div>
+        </div>
+        <br />
+
+        {{field_name_hrms_holiday_date}} :<br />
+        <input
+          type="date"
+          class="form-control"
+          name="holiday_date"
+          #holiday_date="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && holiday_date.invalid,
+            'is-valid': f.submitted && holiday_date.valid
+          }"
+          [(ngModel)]="holidayDetail.holiday_date"
+          required
+        />
+        <div
+          *ngIf="f.submitted && holiday_date.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="holiday_date.errors.required">
+            Please provide Holiday Date
+          </div>
+        </div>
+        <br />
+        {{field_name_hrms_holiday_day}}:<br />
+        <input
+          type="text"
+          class="form-control"
+          name="holiday_day"
+          #holiday_day="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && holiday_day.invalid,
+            'is-valid': f.submitted && holiday_day.valid
+          }"
+          [(ngModel)]="holidayDetail.holiday_day"
+          required
+        />
+        <div
+          *ngIf="f.submitted && holiday_day.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="holiday_day.errors.required">
+            Please provide Holiday Day
+          </div>
+        </div>
+        <br />
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+   <button mat-button mat-dialog-close class="btn btn-danger">{{'Cancel' | translate}}</button> 
+   
+    <button
+      type="submit" class="btn btn-success"
+      mat-button
+    
+    >
+    {{'Save'|translate}}
+    </button>
+  </mat-dialog-actions>
+</form>
+</section>
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir='ltr' >
+  <h2 mat-dialog-title>{{field_name_hrms_holiday_add_holiday}}</h2>
+  <form
+    class="form-horizontal"
+    name="form"
+    #f="ngForm"
+    (ngSubmit)="f.form.valid && submit()"
+  >
+    <mat-dialog-content class="mat-typography">
+      <div class="row">
+        <div class="col-md-12">
+          {{field_name_hrms_holiday_name}} :<br />
+          <input
+            type="text"
+            class="form-control"
+            name="holiday_name"
+            pattern="[a-zA-Z ]+"
+            [(ngModel)]="holidayDetail.holiday_name"
+            maxlength="20"
+            minlength="1"
+            #holiday_name="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && holiday_name.invalid,
+              'is-valid': f.submitted && holiday_name.valid
+            }"
+            required
+          />
+  
+          <div
+            *ngIf="f.submitted && holiday_name.invalid"
+            class="invalid-feedback"
+          >
+            <div *ngIf="holiday_name.errors.required">
+              Please provide holiday name
+            </div>
+          </div>
+          <br />
+  
+          {{field_name_hrms_holiday_date}} :<br />
+          <input
+            type="date"
+            class="form-control"
+            name="holiday_date"
+            #holiday_date="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && holiday_date.invalid,
+              'is-valid': f.submitted && holiday_date.valid
+            }"
+            [(ngModel)]="holidayDetail.holiday_date"
+            required
+          />
+          <div
+            *ngIf="f.submitted && holiday_date.invalid"
+            class="invalid-feedback"
+          >
+            <div *ngIf="holiday_date.errors.required">
+              Please provide Holiday Date
+            </div>
+          </div>
+          <br />
+          {{field_name_hrms_holiday_day}}:<br />
+          <input
+            type="text"
+            class="form-control"
+            name="holiday_day"
+            #holiday_day="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && holiday_day.invalid,
+              'is-valid': f.submitted && holiday_day.valid
+            }"
+            [(ngModel)]="holidayDetail.holiday_day"
+            required
+          />
+          <div
+            *ngIf="f.submitted && holiday_day.invalid"
+            class="invalid-feedback"
+          >
+            <div *ngIf="holiday_day.errors.required">
+              Please provide Holiday Day
+            </div>
+          </div>
+          <br />
+        </div>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+     <button mat-button mat-dialog-close class="btn btn-danger">{{'Cancel' | translate}}</button> 
+     
+      <button
+        type="submit" class="btn btn-success"
+        mat-button
+      
+      >
+      {{'Save'|translate}}
+      </button>
+    </mat-dialog-actions>
+  </form>
+  </section>

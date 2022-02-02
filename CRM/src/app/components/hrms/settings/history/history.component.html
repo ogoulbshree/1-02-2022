@@ -1,0 +1,338 @@
+
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' >
+  <br>
+
+<div class="container-fluid">
+
+  <form class="form-row dateSection" name="form" #f="ngForm" (ngSubmit)="f.form.valid &&  onSubmit()">
+     
+          
+        <div class="form-group row col-md-4">
+            <label class="col-sm-3 col-form-label"> {{field_name_marketing_history_fromdate}}<span
+              class="text-danger font-weight-bold">
+              *</span></label>
+              <div class="col-sm-8">
+                <input type="date" class="form-control"   max="{{date | date:'yyyy-MM-dd'}}" [(ngModel)]="model.fromDate"  name="fromDate" #fromDate="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && fromDate.invalid, 
+                'is-valid': f.submitted && fromDate.valid }"
+              
+                 required>
+              
+                 <div *ngIf="f.submitted && fromDate.invalid" class="invalid-feedback">
+                     <div *ngIf="fromDate.errors.required">Please provide fromDate</div>
+                  
+                
+                 </div> 
+            </div>
+          </div>
+          <div class="form-group row col-md-4">
+            <label class="col-sm-3 col-form-label"> {{field_name_marketing_history_todate}}<span
+              class="text-danger font-weight-bold">
+              *</span></label>
+              <div class="col-sm-8">
+                <input type="date" class="form-control" [(ngModel)]="model.toDate"  name="toDate" #toDate="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && toDate.invalid, 
+                'is-valid': f.submitted && toDate.valid }"
+              
+                 required>
+              
+                 <div *ngIf="f.submitted && toDate.invalid" class="invalid-feedback">
+                     <div *ngIf="toDate.errors.required">Please provide toDate</div>
+                  
+                
+                 </div> 
+                 
+            </div>
+          </div>
+          <div class="col-md-2">
+                <button class="btn btn-success search-btn" (click)="filterloginActions()" >{{field_name_marketing_history_search}}</button>
+                <button type="button" (click)="downloadFile()" class="btn btn-success">
+                    <i class="fa fa-building-o" aria-hidden="true"></i>{{field_name_marketing_history_csv}}
+                    </button>
+            </div>
+         
+     </form>
+     <form
+     class="form-row dateSectionMat"
+     name="form"
+     #f="ngForm"
+     (ngSubmit)="f.form.valid && onSubmit()"
+   >
+     &nbsp;&nbsp;<mat-form-field
+       style="width: 110px; margin-left: 10px; font-weight: bold"
+     >
+       <input
+         matInput
+         [matDatepicker]="picker"
+         [(ngModel)]="model.fromDate"
+         name="fromDate"
+         #fromDate="ngModel"
+         [ngClass]="{
+           'is-invalid': f.submitted && fromDate.invalid,
+           'is-valid': f.submitted && fromDate.valid
+         }"
+         required
+         placeholder={{field_name_marketing_history_fromdate}}
+       />
+       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+       <mat-datepicker #picker></mat-datepicker>
+     </mat-form-field>
+     <div *ngIf="f.submitted && fromDate.invalid" class="invalid-feedback">
+       <div *ngIf="fromDate.errors.required">Please provide fromDate</div>
+     </div>
+
+     <mat-form-field style="width: 93px; margin-left: 10px; font-weight: bold">
+       <input
+         matInput
+         [matDatepicker]="picker1"
+         [(ngModel)]="model.toDate"
+         name="toDate"
+         #toDate="ngModel"
+         [ngClass]="{
+           'is-invalid': f.submitted && toDate.invalid,
+           'is-valid': f.submitted && toDate.valid
+         }"
+         required
+         placeholder={{field_name_marketing_history_todate}}
+       />
+       <mat-datepicker-toggle
+         matSuffix
+         [for]="picker1"
+       ></mat-datepicker-toggle>
+       <mat-datepicker #picker1></mat-datepicker>
+     </mat-form-field>
+     <div *ngIf="f.submitted && toDate.invalid" class="invalid-feedback">
+       <div *ngIf="toDate.errors.required">Please provide toDate</div>
+     </div>
+     &nbsp;&nbsp;
+     <div style="width: 110px">
+       <button class="btn btn-success search-btn font-weight-bold">
+         {{ field_name_marketing_history_search }}
+       </button>
+     </div>
+   </form> 
+   <div class="d-flex dateSectionMat">
+    <div class="col-md-12">
+      <button type="button" (click)="downloadFile()" class="btn btn-success ">
+        <i class="fa fa-building-o" aria-hidden="true"></i>{{field_name_marketing_history_csv}}
+        </button>
+    </div>
+  </div>         
+        <div class="table-responsive">
+          <table class="table" [mfData]="userlogin" #mf="mfDataTable">
+              <thead  class="thead-light">
+                  <tr>
+                      <th width="20%">
+                          <mfDefaultSorter by="email">{{field_name_marketing_history_email}}</mfDefaultSorter>
+                      </th>
+                      <th width="20%">
+                          <mfDefaultSorter by="date">{{field_name_marketing_history_date}}</mfDefaultSorter>
+                      </th>
+                     
+                      <th width="20%">
+                          <mfDefaultSorter by="phone">{{field_name_marketing_history_action}}</mfDefaultSorter>
+                      </th>
+                  </tr>
+              </thead>
+              <tbody *ngIf="mf.data?.length >= 1">
+                <tr *ngFor="let obj of mf.data | orderBy: key: reverse | paginate: {itemsPerPage:10,currentPage:p};" >
+                      <td>{{obj.email}}</td>
+                      <td>{{obj.login_id | date: 'short'}}</td>
+                      <td>{{obj.action}}</td>
+                  </tr>
+              </tbody>
+              <tbody *ngIf="mf.data?.length <= 0">
+                <tr class="odd" style="opacity: 1;">
+                  <td valign="top" colspan="8" style="text-align: center;" class="dataTables_empty">No data
+                    available
+                    in table</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                  <tr>
+                    <td colspan="4">
+                        <pagination-controls (pageChange)= "p =$event">
+            
+                        </pagination-controls>
+                      </td>
+                  </tr>
+              </tfoot>
+          </table>
+      </div>
+ 
+
+  
+ </div>
+</section>
+
+
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir='ltr' >
+  <br>
+
+<div class="container-fluid ">
+
+  <form class="form-row dateSection" name="form" #f="ngForm" (ngSubmit)="f.form.valid &&  onSubmit()">
+     
+          
+        <div class="form-group row col-md-4">
+            <label class="col-sm-3 col-form-label"> {{field_name_marketing_history_fromdate}}<span
+              class="text-danger font-weight-bold">
+              *</span></label>
+              <div class="col-sm-8">
+                <input type="date" class="form-control"   max="{{date | date:'yyyy-MM-dd'}}" [(ngModel)]="model.fromDate"  name="fromDate" #fromDate="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && fromDate.invalid, 
+                'is-valid': f.submitted && fromDate.valid }"
+              
+                 required>
+              
+                 <div *ngIf="f.submitted && fromDate.invalid" class="invalid-feedback">
+                     <div *ngIf="fromDate.errors.required">Please provide fromDate</div>
+                  
+                
+                 </div> 
+            </div>
+          </div>
+          <div class="form-group row col-md-4">
+            <label class="col-sm-3 col-form-label"> {{field_name_marketing_history_todate}}<span
+              class="text-danger font-weight-bold">
+              *</span></label>
+              <div class="col-sm-8">
+                <input type="date" class="form-control" [(ngModel)]="model.toDate"  name="toDate" #toDate="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && toDate.invalid, 
+                'is-valid': f.submitted && toDate.valid }"
+              
+                 required>
+              
+              
+                 <div *ngIf="f.submitted && toDate.invalid" class="invalid-feedback">
+                     <div *ngIf="toDate.errors.required">Please provide toDate</div>
+                  
+                
+                 </div> 
+                 
+            </div>
+          </div>
+          <div class="col-md-2">
+                <button class="btn btn-success search-btn" (click)="filterloginActions()" >{{field_name_marketing_history_search}}</button>
+                <button type="button" (click)="downloadFile()" class="btn btn-success">
+                    <i class="fa fa-building-o" aria-hidden="true"></i>{{field_name_marketing_history_csv}}
+                    </button>
+            </div>
+         
+     </form>
+     <form
+     class="form-row dateSectionMat"
+     name="form"
+     #f="ngForm"
+     (ngSubmit)="f.form.valid && filterloginActions()"
+   >
+     &nbsp;&nbsp;<mat-form-field
+       style="width: 110px; margin-left: 10px; font-weight: bold"
+     >
+       <input
+         matInput
+         [matDatepicker]="picker"
+         [(ngModel)]="model.fromDate"
+         name="fromDate"
+         #fromDate="ngModel"
+         [ngClass]="{
+           'is-invalid': f.submitted && fromDate.invalid,
+           'is-valid': f.submitted && fromDate.valid
+         }"
+         required
+         placeholder={{field_name_marketing_history_fromdate}}
+       />
+       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+       <mat-datepicker #picker></mat-datepicker>
+     </mat-form-field>
+     <div *ngIf="f.submitted && fromDate.invalid" class="invalid-feedback">
+       <div *ngIf="fromDate.errors.required">Please provide fromDate</div>
+     </div>
+
+     <mat-form-field style="width: 93px; margin-left: 10px; font-weight: bold">
+       <input
+         matInput
+         [matDatepicker]="picker1"
+         [(ngModel)]="model.toDate"
+         name="toDate"
+         #toDate="ngModel"
+         [ngClass]="{
+           'is-invalid': f.submitted && toDate.invalid,
+           'is-valid': f.submitted && toDate.valid
+         }"
+         required
+         placeholder={{field_name_marketing_history_todate}}
+       />
+       <mat-datepicker-toggle
+         matSuffix
+         [for]="picker1"
+       ></mat-datepicker-toggle>
+       <mat-datepicker #picker1></mat-datepicker>
+     </mat-form-field>
+     <div *ngIf="f.submitted && toDate.invalid" class="invalid-feedback">
+       <div *ngIf="toDate.errors.required">Please provide toDate</div>
+     </div>
+     &nbsp;&nbsp;
+     <div style="width: 110px">
+       <button class="btn btn-success search-btn font-weight-bold">
+         {{ field_name_marketing_history_search }}
+       </button>
+     </div>
+   </form>    
+   <div class="d-flex dateSectionMat">
+    <div class="col-md-12">
+      <button type="button" (click)="downloadFile()" class="btn btn-success ">
+        <i class="fa fa-building-o" aria-hidden="true"></i>{{field_name_marketing_history_csv}}
+        </button>
+    </div>
+  </div> 
+        <div class="table-responsive">
+          <table class="table" [mfData]="userlogin" #mf="mfDataTable">
+              <thead  class="thead-light">
+                  <tr>
+                      <th width="20%">
+                          <mfDefaultSorter by="email">{{field_name_marketing_history_email}}</mfDefaultSorter>
+                      </th>
+                      <th width="20%">
+                          <mfDefaultSorter by="date">{{field_name_marketing_history_date}}</mfDefaultSorter>
+                      </th>
+                     
+                      <th width="20%">
+                          <mfDefaultSorter by="phone">{{field_name_marketing_history_action}}</mfDefaultSorter>
+                      </th>
+                  </tr>
+              </thead>
+              <tbody *ngIf="mf.data?.length >= 1">
+                <tr *ngFor="let obj of mf.data | orderBy: key: reverse | paginate: {itemsPerPage:10,currentPage:p};" >
+                      <td>{{obj.email}}</td>
+                      <td>{{obj.login_id | date: 'short'}}</td>
+                      <td>{{obj.action}}</td>
+                  </tr>
+              </tbody>
+              <tbody *ngIf="mf.data?.length <= 0">
+                <tr class="odd" style="opacity: 1;">
+                  <td valign="top" colspan="8" style="text-align: center;" class="dataTables_empty">No data
+                    available
+                    in table</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                  <tr>
+                    <td colspan="4">
+                        <pagination-controls (pageChange)= "p =$event">
+            
+                        </pagination-controls>
+                      </td>
+                  </tr>
+              </tfoot>
+          </table>
+      </div>
+ 
+
+  
+ </div>
+  </section>

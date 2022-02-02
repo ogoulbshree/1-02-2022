@@ -1,0 +1,109 @@
+
+
+
+
+
+
+
+          <div class="modal-header">
+            <h4 class="modal-title">Create Survey</h4>
+            <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+          </div>
+          <div class="modal-body">
+            <div class="container-fluid">
+              <h3 class="text-center headerc">OGOUL CRM SURVEY</h3>
+              <div class="card">
+                <div class="card-body">
+            
+            </div>
+            </div>
+            </div>
+            <form  class="form-horizontal form-material" name="form" #f="ngForm" 
+            (ngSubmit)="f.form.valid &&  surveySubmit()">                       
+            
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Name" 
+                      [(ngModel)]="surveyDetail.name" name="name"
+                      pattern="[a-zA-Z_]+" #name="ngModel"
+                      [ngClass]="{ 'is-invalid': f.submitted && name.invalid, 
+                        'is-valid': f.submitted && name.valid }"
+                      required /> 
+                      <div *ngIf="f.submitted && name.invalid "
+                      class="invalid-feedback">
+                      <div
+                          *ngIf="name.errors.required">
+                          Please provide name </div>
+                          <div *ngIf=" name.errors.pattern">
+                            Provide alphabets only
+                          </div>
+                  </div>
+                  </div>
+             
+
+                      <div class="form-group">
+                        <input type="text" class="form-control" placeholder="company" 
+                              [(ngModel)]="surveyDetail.company" name="company"
+                              pattern="[a-zA-Z_]+" #company="ngModel"
+                              [ngClass]="{ 'is-invalid': f.submitted && company.invalid, 
+                                'is-valid': f.submitted && company.valid }"
+                              required /> 
+                              <div *ngIf="f.submitted && company.invalid "
+                              class="invalid-feedback">
+                              <div
+                                  *ngIf="company.errors.required">
+                                  Please provide company </div>
+                                  <div *ngIf=" company.errors.pattern">
+                                    Provide alphabets only
+                                  </div>
+                          </div>
+                          </div>
+                
+                  
+
+                      <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Email" [(ngModel)]="surveyDetail.email" name="email"
+                            pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" #email="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && email.invalid, 
+                            'is-valid': f.submitted && email.valid }"
+                        required />
+                        
+                        <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+                          <div *ngIf="email.errors.required"> Please provide Email</div>
+                      <div *ngIf="email.errors.pattern">Email format should be <small  class="text-success"><b>jhon@abc.com</b></small>
+                      </div>
+                      </div>
+                        </div>
+            
+                    <div class="form-group">
+                        <input type="phone" class="form-control" name="phone" id="phone" placeholder="Your phone" 
+                         [(ngModel)]="surveyDetail.phone" >
+                      </div>
+                      <div class="form-row">
+                        <div class="col-md-12">
+                      <div class="form-group ">
+                        <textarea class="form-control" name="message" rows="5" data-rule="required" 
+                        [(ngModel)]="surveyDetail.message"  id="message" placeholder="Message">
+                    </textarea>
+                  </div>
+                  </div>
+                      </div>
+
+
+
+                      <div class="form-group row">
+
+                     
+                </div>
+        <button  class="btn btn-success btn-round">
+          <span *ngIf="!isUpdate">Submit Survey</span>
+          <span *ngIf="isUpdate">Update</span>
+      </button>
+               <button class="btn btn-danger btn-round" type="button" appCancelbutton >Cancel</button>
+
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+          </div>

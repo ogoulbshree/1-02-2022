@@ -1,0 +1,933 @@
+
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar' && this.dealDetail" dir='rtl' >
+
+  <div class="container-fluid">
+    <h3 class="text-center">{{field_name_deals_details}}</h3>
+    <div class="card">
+      <div class="card-body">
+        <form class="form-horizontal" name="form" #f="ngForm" (ngSubmit)="f.form.valid &&  onSubmit()">
+          <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Deals Details!</strong>Please fill all the required fields.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="card-header">
+            <h2> 
+                <span *ngIf="!isUpdate">{{field_name_deals_adddeals}}</span> 
+                <span *ngIf="isUpdate">{{field_name_deals_update}}</span>
+            </h2>
+            </div>
+            <div class="card-body">
+                <nav>
+                    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-customer-info-tab" 
+                        data-toggle="tab" href="#nav-customer-info" role="tab" aria-controls="nav-customer-info" aria-selected="true">{{field_name_deals_customer_info}}</a>
+                        <a class="nav-item nav-link" id="nav-deals-info-tab" data-toggle="tab" href="#nav-deals-info" role="tab" aria-controls="nav-deals-info" aria-selected="false">{{field_name_deals_dealsinfo}}</a>
+                        
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-customer-info" role="tabpanel" aria-labelledby="nav-customer-info-tab">
+                      <div class="panel-body">
+  
+                        <div class="form-row">
+  
+                          <div class="form-group col-md-4" *ngIf="!isUpdate">
+                            <label class="col-sm-5 col-form-label">{{field_name_deals_customer_name}}
+                              <span class="text-danger font-weight-bold">
+                                *</span>
+                            </label>
+                            <div class="col-sm-10">
+                             
+                              <div class="ng-autocomplete">
+                                <ng-autocomplete [data]="customers" [searchKeyword]="customer_keyword" [itemTemplate]="itemTemplate"
+                                  (inputChanged)='onChangeSearch($event)' (selected)='onCustomerSelect($event)'  historyIdentifier="customers"
+                                  (inputFocused)='onFocused($event)' [notFoundTemplate]="notFoundTemplate" [(ngModel)]="customers.first_name"
+                                   name="first_name" required  #first_name="ngModel" 
+                                  [ngClass]="{ 'is-invalid': f.submitted && first_name.invalid, 
+                                 'is-valid': f.submitted && first_name.valid }">
+                                 
+                                </ng-autocomplete>
+                                
+                                <ng-template #itemTemplate let-item>
+                                  <a [innerHTML]="item.first_name"></a>
+                                </ng-template>
+                    
+                                <ng-template #notFoundTemplate let-notFound>
+                                  <div [innerHTML]="notFound"></div>
+                                  
+                              
+                                </ng-template> 
+                               
+                                <div *ngIf="f.submitted && first_name.invalid" class="invalid-feedback">
+                                  <div *ngIf="first_name.errors.required">Please Provide First Name</div>
+                        
+                                 
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+  
+                          <div  class="form-group col-md-4" *ngIf="isUpdate">
+                            <label class="col-sm-5 col-form-label">{{field_name_deals_customer_name}}
+                              <span class="text-danger font-weight-bold">
+                                *</span></label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" [(ngModel)]="dealDetail.first_name" name="first_name"
+                                readonly >
+                            </div>
+                           
+                          </div>
+  
+                          <div class="form-group col-md-4">
+                            <label class="col-sm-5 col-form-label">{{field_name_deals_phone}}<span class="text-danger font-weight-bold">
+                                *</span></label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" [(ngModel)]="dealDetail.phone" name="phone" required
+                                pattern="^[0-9()\-+\s]+$" #phone="ngModel" [ngClass]="{ 'is-invalid': f.submitted && phone.invalid, 
+                                'is-valid': f.submitted && phone.valid }" readonly >
+                    
+                                <div *ngIf="f.submitted && phone.invalid "class="invalid-feedback">
+                                  <div
+                                      *ngIf="phone.errors.required ">Please select customer to get phone details </div>
+                                     
+                                    </div>
+                            </div>
+                          </div> 
+  
+                          <div  class="form-group col-md-4">
+                            <label class="col-sm-5 col-form-label">{{field_name_deals_product_name}}
+                            <span class="text-danger font-weight-bold">
+                              *</span>
+                          </label>
+                          <div class="col-sm-10" >
+                            <mat-form-field class="example-full-width" appearance="none" floatLabel="never" >
+                              <input type="text" matInput [matAutocomplete]="auto" [formControl]="userControl"
+                                [(ngModel)]="dealDetail.product_name" name="product_name" required>
+                                <mat-error *ngIf="userControl.hasError('required')">Please choose any products</mat-error>
+                            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                              <mat-option *ngFor="let product of filteredProducts | async">
+                                <div (click)="optionClicked($event, product)"required > 
+                                  <mat-checkbox [checked]="product.selected" (change)="toggleSelection(product)"
+                                    (click)="$event.stopPropagation()">
+                                    {{ product.product_name }}
+                                  </mat-checkbox>
+                                </div>
+                              </mat-option>
+                            </mat-autocomplete>
+                           
+                           
+                          </mat-form-field>
+
+
+                   
+                          </div>
+                        </div>
+                    
+                      </div>
+                      <div class="form-row">
+                        <div  class="form-group col-md-4">
+                          <label class="col-sm-5 col-form-label">{{field_name_deals_close_date}}
+                            <span class="text-danger font-weight-bold">
+                              *</span>
+                          </label>
+                          <div class="col-sm-10">
+                            <input type="date" class="form-control" [(ngModel)]="dealDetail.deal_close_date" name="deal_close_date"
+                              #deal_close_date="ngModel" [ngClass]="{ 'is-invalid': f.submitted && deal_close_date.invalid, 
+                              'is-valid': f.submitted && deal_close_date.valid }" required >
+                              <div *ngIf="f.submitted && deal_close_date.invalid "class="invalid-feedback">
+                                <div
+                                    *ngIf="deal_close_date.errors.required ">Please provide Deal close date</div>
+                                    
+                                  </div>
+                          </div>
+                        </div>
+                    
+  
+     <div class="table-responsive" *ngIf="selectedProducts.length">
+      <table class="table" [mfData]="selectedProducts" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" >
+        <thead class="thead-light">
+          <tr>
+            <th width="20%">
+              <mfDefaultSorter by="product_name">{{field_name_deals_product_name}}</mfDefaultSorter>
+            </th>
+            <th width="20%">
+              <mfDefaultSorter by="customer_name">{{field_name_deals_product_category}}</mfDefaultSorter>
+            </th>
+            <th width="20%">
+              <mfDefaultSorter by="mobile">{{field_name_deals_product_rate}}</mfDefaultSorter>
+            </th>
+            <th width="20%">
+              <mfDefaultSorter by="mobile">{{field_name_deals_product_quantity}}</mfDefaultSorter>
+            </th>
+            <th width="20%">
+              <mfDefaultSorter by="quotation_date">{{field_name_deals_product_discount}}</mfDefaultSorter>
+            </th>
+            <th width="20%">
+              <mfDefaultSorter by="quotation_date">{{field_name_deals_product_actual_rate}}</mfDefaultSorter>
+            </th>
+            <th width="20%">
+              <mfDefaultSorter by="product_name">{{field_name_deals_product_total}} </mfDefaultSorter>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let obj of mf.data;let i=index">
+            <td>{{obj.product_name}}</td>
+            <td>{{obj.category_name}}</td>
+            <td>{{obj.cost}}</td>
+            <td>
+              <input type="text" name="quantity-{{i}}" [(ngModel)]="obj.quantity" (keyup)="onChangeProductQnt(i, $event)">
+            </td>
+            <td>
+              <input type="text" name="discount-{{i}}" [(ngModel)]="obj.discount"
+                (keyup)="onChangeProductDiscount(i, $event)">
+            </td>
+            <td>{{obj.cost*obj.quantity}}</td>
+            <td>{{obj.product_Total}}</td>
+          </tr>
+          <tr>
+            <td colspan="6"></td>
+            <td colspan="2">{{field_name_deals_product_total}}: {{total_cost}}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="">
+              <mfBootstrapPaginator [rowsOnPageSet]="[]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div> 
+                
+         </div>
+  
+            
+            </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-deals-info" role="tabpanel" aria-labelledby="nav-deals-info-tab">
+                      <div class="panel-body">
+                        <div class="form-row">
+                          <div class="form-group col-md-4">
+                              <label class="col-sm-5 col-form-label">{{field_name_deals_deal_name}}
+                                <span
+                                class="text-danger font-weight-bold">
+                                *</span>
+                              </label>
+                              <div class="col-sm-10">
+                                <input type="text" class="form-control" name="deal_name" pattern="[a-zA-Z0-9 ]+" 
+                                [(ngModel)]="dealDetail.deal_name"
+                                #deal_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && deal_name.invalid,
+                               'is-valid': f.submitted && deal_name.valid}" required >
+                                <div *ngIf="f.submitted && deal_name.invalid "class="invalid-feedback">
+                                <div
+                                    *ngIf="deal_name.errors.required ">Please provide deal name</div>
+                                    <div *ngIf="deal_name.errors.pattern"> Provide proper deal name 
+                                    </div></div>
+                              </div>
+                            </div>
+                        <div class="form-group col-md-4">
+                          <label class="col-sm-5 col-form-label">{{field_name_deals_amount}}
+                            <span
+                            class="text-danger font-weight-bold">
+                            *</span>
+                          </label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" name="amount" 
+                            [(ngModel)]="dealDetail.amount"
+                            #amount="ngModel" [ngClass]="{ 'is-invalid': f.submitted && amount.invalid,
+                           'is-valid': f.submitted && amount.valid}" required >
+                           <div *ngIf="f.submitted && amount.invalid "class="invalid-feedback">
+                            <div
+                                *ngIf="amount.errors.required ">Please provide amount</div>
+                              </div>
+                         
+                          </div>
+                        </div>
+                        
+                        <div class="form-group col-md-4">
+                          <label class="col-sm-5 col-form-label"> {{field_name_deals_expected_date}}
+                            <span
+                            class="text-danger font-weight-bold">*
+                            </span>
+                          </label>
+                          <div class="col-sm-10">
+                            <input type="date" class="form-control" [(ngModel)]="dealDetail.expected_close_date" name="expected_close_date"
+                              #expected_close_date="ngModel" [ngClass]="{ 'is-invalid': f.submitted && expected_close_date.invalid, 
+                              'is-valid': f.submitted && expected_close_date.valid }" required >
+                              <div *ngIf="f.submitted && expected_close_date.invalid "class="invalid-feedback">
+                                <div
+                                    *ngIf="expected_close_date.errors.required ">Please provide Expected Close Date</div>
+                                  </div>
+                          </div>
+                        </div>
+  
+                        </div>
+    
+    
+                        <div class="form-row">
+                          <div class="form-group col-md-4">
+                            <label class="col-sm-5 col-form-label">{{field_name_deals_pipeline}}<span
+                              class="text-danger font-weight-bold">*
+                              </span></label>
+                            <div class="col-sm-10">
+                              <select class="custom-select" name="pipeline_name" [(ngModel)]="dealDetail.pipeline_name"
+                                #pipeline_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && pipeline_name.invalid, 
+                                'is-valid': f.submitted && pipeline_name.valid }"
+                               required >
+                                <option *ngFor="let obj of pipelineDetail" [value]="obj.pipeline_name">{{obj.pipeline_name}}
+                                </option>
+                             </select>
+                             <div *ngIf="f.submitted && pipeline_name.invalid" class="invalid-feedback">
+                              <div *ngIf="pipeline_name.errors.required">Required Pipeline name</div>
+                          </div>
+                            </div>
+                          </div>
+  
+                      
+                        <div class="form-group col-md-4">
+                          <label class="col-sm-5 col-form-label">{{field_name_deals_sales_stage}}<span
+                            class="text-danger font-weight-bold">*
+                            </span></label>
+                          <div class="col-sm-10">
+                            <select class="custom-select" name="salesstage_name" [(ngModel)]="dealDetail.salesstage_name"
+                              #salesstage_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && salesstage_name.invalid, 
+                              'is-valid': f.submitted && salesstage_name.valid }"
+                             required >
+                              <option *ngFor="let obj of salesstageDetail" [value]="obj.salesstage_name">{{obj.salesstage_name}}
+                              </option>
+                           </select>
+                           <div *ngIf="f.submitted && salesstage_name.invalid" class="invalid-feedback">
+                            <div *ngIf="salesstage_name.errors.required">Required Sales Stage name</div>
+                        </div>
+                          </div>
+                        </div>
+                          <div class="form-group col-md-4">
+                            <label class="col-sm-5 col-form-label">{{field_name_deals_assigned_to}}<span
+                              class="text-danger font-weight-bold">*
+                              </span></label>
+                            <div class="col-sm-10">
+                             
+                                <select class="custom-select" name="assigned_to" [(ngModel)]="dealDetail.assigned_to" #assigned_to="ngModel"
+                                name="assigned_to" [ngClass]="{ 'is-invalid': f.submitted && assigned_to.invalid, 
+                              'is-valid': f.submitted && assigned_to.valid }"
+                             required > 
+                              
+                             <option *ngFor="let obj of userDetail" [value]="obj.email">{{obj.email}}
+                            </option>
+                                
+                                </select>
+                                <div *ngIf="f.submitted && assigned_to.invalid" class="invalid-feedback">
+                                  <div *ngIf="assigned_to.errors.required">Required Assigned To</div>
+                              </div>
+                               
+                            
+                            </div>
+                          </div>
+                        
+                        </div>
+    
+    
+                        <div class="form-row">
+                         
+                          <div class="form-group col-md-4">
+                            <label class="col-sm-5 col-form-label">{{field_name_deals_lead_source}}
+                              <span
+                              class="text-danger font-weight-bold">*
+                              </span>
+                            </label>
+                            <div class="col-sm-10">
+                              <select class="custom-select" name="lead_source_name" [(ngModel)]="dealDetail.lead_source_name"
+                                #lead_source_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && lead_source_name.invalid, 
+                                'is-valid': f.submitted && lead_source_name.valid }"
+                               required >
+                                <option *ngFor="let obj of leadsourceDetail" [value]="obj.lead_source_name">{{obj.lead_source_name}}
+                                </option>
+                             </select>
+                             <div *ngIf="f.submitted && lead_source_name.invalid" class="invalid-feedback">
+                              <div *ngIf="lead_source_name.errors.required">Required Lead source name</div>
+                          </div>
+                            </div>
+                          </div>
+  
+                          <div class="form-group col-md-4">
+                            <label class="col-sm-5 col-form-label">{{field_name_deals_probability}}<span
+                              class="text-danger font-weight-bold">
+                              </span></label>
+                            <div class="col-sm-10">
+                              <select class="custom-select" [(ngModel)]="dealDetail.probobility" name="probobility"
+                              #probobility="ngModel" >
+                    
+                              <option value="10">10</option>
+                              <option value="20">20</option>
+                              <option value="30">30</option>
+                              <option value="40">40</option>
+                              <option value="50">50</option>
+                              <option value="60">60</option>
+                               <option value="70">70</option>
+                               <option value="80">80</option>
+                               <option value="90">90</option>
+                               <option value="100">100</option>
+                          </select> 
+                            
+                            </div>
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label class="col-sm-5 col-form-label">{{field_name_deals_status}}<span
+                              class="text-danger font-weight-bold">*
+                              </span></label>
+                            <div class="col-sm-10">
+                              <select class="custom-select" name="status" [(ngModel)]="dealDetail.status"
+                              #status="ngModel" [ngClass]="{'is-invalid': f.submitted && status.invalid, 
+                              'is-valid': f.submitted && status.valid}"
+                             required >
+                             <!--  <option *ngFor="let obj of statusDetail" [value]="obj.status">{{obj.status}}
+                              </option> -->
+                              <option value="Created">{{field_name_deals_Created}}</option>
+                              <option value="On Hold">{{field_name_deals_On_Hold}}</option>
+                              <option value="In Progress">{{field_name_deals_In_Progress}}</option>
+                              <option value="Closed">{{field_name_deals_Closed}}</option>
+                           </select>
+                            
+                            <div *ngIf="f.submitted && status.invalid" class="invalid-feedback">
+                                <div *ngIf="status.errors.required">Requred Status</div>
+                            </div>
+                            </div>
+                        </div>
+                      </div>
+    
+                      <div class="form-row">
+                        <div class="form-group col-md-3">
+                          <label class="col-sm-5 col-form-label">{{field_name_deals_created_by}}
+                           
+                          </label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" name="created_by"
+                            [(ngModel)]="dealDetail.created_by"
+                            #created_by="ngModel" readonly>
+                        </div>
+                      </div>
+                        <div class="form-group col-md-3">
+                          <label class="col-sm-5 col-form-label">{{field_name_deals_created_time}}
+                            
+                          </label>
+                          <div class="col-sm-10">
+                           
+                        
+                            <input type="text" class="form-control" name="created_time"  
+                             readonly value="{{dealDetail.created_time |  date : dateFormat:'GMT':locale}}">
+                             
+                          
+                          
+                        </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                          <label class="col-sm-5 col-form-label">{{field_name_deals_updated_by}}
+                           
+                          </label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" name="updated_by"
+                              [(ngModel)]="dealDetail.updated_by"
+                              #updated_by="ngModel" readonly>
+                        </div>
+                      </div>
+                        <div class="form-group col-md-3">
+                          <label class="col-sm-5 col-form-label">{{field_name_deals_updated_time}}
+                           
+                          </label>
+                          <div class="col-sm-10">
+                          
+                            <input type="text" class="form-control" name="modified_time"  
+                             readonly value=" {{dealDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+                          
+                        </div>
+                      </div>
+                        </div>
+                      
+                        </div>
+                    </div>
+                
+                
+                     
+                </div>
+                 <button class="btn btn-danger btn-round text-center pull-right" type="button" appCancelbutton>{{'Cancel'|translate}}</button>
+                                  <button  class="btn btn-success btn-round text-center pull-right">
+                                  <span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+                                    <span *ngIf="isUpdate">{{'Update'|translate}}</span></button>
+              
+      
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  
+    </section>
+   
+  <section *ngIf="this._uiservice.langDataSource.value != 'ar' && this.dealDetail" dir='ltr' >
+    <div class="container-fluid">
+      <h3 class="text-center">{{field_name_deals_details}}</h3>
+      <div class="card">
+        <div class="card-body">
+          <form class="form-horizontal" name="form" #f="ngForm" (ngSubmit)="f.form.valid &&  onSubmit()">
+            <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+              <strong>Deals Details!</strong>Please fill all the required fields.
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="card-header">
+              <h2> 
+                  <span *ngIf="!isUpdate">{{field_name_deals_adddeals}}</span> 
+                  <span *ngIf="isUpdate">{{field_name_deals_update}}</span>
+              </h2>
+              </div>
+              <div class="card-body">
+                  <nav>
+                      <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                          <a class="nav-item nav-link active" id="nav-customer-info-tab" data-toggle="tab" href="#nav-customer-info" role="tab" aria-controls="nav-customer-info" aria-selected="true"> {{field_name_deals_customer_info}}</a>
+                          <a class="nav-item nav-link" id="nav-deals-info-tab" data-toggle="tab" href="#nav-deals-info" role="tab" aria-controls="nav-deals-info" aria-selected="false">{{field_name_deals_dealsinfo}}</a>
+                          
+                      </div>
+                  </nav>
+                  <div class="tab-content" id="nav-tabContent">
+                      <div class="tab-pane fade show active" id="nav-customer-info" role="tabpanel" aria-labelledby="nav-customer-info-tab">
+                        <div class="panel-body">
+    
+                          <div class="form-row">
+    
+                            <div class="form-group col-md-4" *ngIf="!isUpdate">
+                              <label class="col-sm-5 col-form-label">{{field_name_deals_customer_name}}
+                                <span class="text-danger font-weight-bold">
+                                  *</span>
+                              </label>
+                              <div class="col-sm-10">
+                               
+                                <div class="ng-autocomplete">
+                                  <ng-autocomplete [data]="customers" [searchKeyword]="customer_keyword" [itemTemplate]="itemTemplate"
+                                    (inputChanged)='onChangeSearch($event)' (selected)='onCustomerSelect($event)'  historyIdentifier="customers"
+                                    (inputFocused)='onFocused($event)' [notFoundTemplate]="notFoundTemplate" [(ngModel)]="customers.first_name"
+                                     name="first_name" required  #first_name="ngModel" 
+                                    [ngClass]="{ 'is-invalid': f.submitted && first_name.invalid, 
+                                   'is-valid': f.submitted && first_name.valid }">
+                                   
+                                  </ng-autocomplete>
+                                  
+                                  <ng-template #itemTemplate let-item>
+                                    <a [innerHTML]="item.first_name"></a>
+                                  </ng-template>
+                      
+                                  <ng-template #notFoundTemplate let-notFound>
+                                    <div [innerHTML]="notFound"></div>
+                                    
+                                
+                                  </ng-template> 
+                                 
+                                  <div *ngIf="f.submitted && first_name.invalid" class="invalid-feedback">
+                                    <div *ngIf="first_name.errors.required">Please Provide First Name</div>
+                          
+                                   
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+    
+                            <div  class="form-group col-md-4" *ngIf="isUpdate">
+                              <label class="col-sm-5 col-form-label">{{field_name_deals_customer_name}}
+                                <span class="text-danger font-weight-bold">
+                                  *</span></label>
+                              <div class="col-sm-10">
+                                <input type="text" class="form-control" [(ngModel)]="dealDetail.first_name" name="first_name"
+                                  readonly >
+                              </div>
+                             
+                            </div>
+    
+                            <div class="form-group col-md-4">
+                              <label class="col-sm-5 col-form-label">{{field_name_deals_phone}}<span class="text-danger font-weight-bold">
+                                  *</span></label>
+                              <div class="col-sm-10">
+                                <input type="text" class="form-control" [(ngModel)]="dealDetail.phone" name="phone" required
+                                  pattern="^[0-9()\-+\s]+$" #phone="ngModel" [ngClass]="{ 'is-invalid': f.submitted && phone.invalid, 
+                                  'is-valid': f.submitted && phone.valid }" readonly >
+                                  <div *ngIf="f.submitted && phone.invalid "class="invalid-feedback">
+                                    <div
+                                        *ngIf="phone.errors.required ">Please select customer to get phone details </div>
+                                       
+                                      </div>
+                      
+                              </div>
+                              
+                            </div> 
+    
+                            <div  class="form-group col-md-4">
+                              <label class="col-sm-5 col-form-label">{{field_name_deals_product_name}}
+                              <span class="text-danger font-weight-bold">
+                                *</span>
+                            </label>
+                            <div class="col-sm-10" >
+                              <mat-form-field class="example-full-width" appearance="none" floatLabel="never" >
+                                <input type="text" matInput [matAutocomplete]="auto" [formControl]="userControl"
+                                  [(ngModel)]="dealDetail.product_name" name="product_name" required>
+                                  <mat-error *ngIf="userControl.hasError('required')">Please choose any products</mat-error>
+                              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                                <mat-option *ngFor="let product of filteredProducts | async" [value]="selectedProducts">
+                                  <div (click)="optionClicked($event, product)"required >
+                                    <mat-checkbox [checked]="product.selected" (change)="toggleSelection(product)"
+                                      (click)="$event.stopPropagation()">
+                                      {{ product.product_name }}
+                                    </mat-checkbox>
+                                  </div>
+                                </mat-option>
+                              </mat-autocomplete>
+                             
+                             
+                            </mat-form-field>
+                            </div>
+                          </div>
+                          
+                         
+    
+                        </div>
+                        <div class="form-row">
+                          <div  class="form-group col-md-4">
+                            <label class="col-sm-5 col-form-label">{{field_name_deals_close_date}}
+                              <span class="text-danger font-weight-bold">
+                                *</span>
+                            </label>
+                            <div class="col-sm-10">
+                              <input type="date" class="form-control" [(ngModel)]="dealDetail.deal_close_date" name="deal_close_date"
+                                #deal_close_date="ngModel" [ngClass]="{ 'is-invalid': f.submitted && deal_close_date.invalid, 
+                                'is-valid': f.submitted && deal_close_date.valid }" required >
+                                <div *ngIf="f.submitted && deal_close_date.invalid "class="invalid-feedback">
+                                  <div
+                                      *ngIf="deal_close_date.errors.required ">Please provide Deal close date</div>
+                                      
+                                    </div>
+                            </div>
+                          </div>
+                      
+    
+       <div class="table-responsive" *ngIf="selectedProducts.length">
+        <table class="table" [mfData]="selectedProducts" #mf="mfDataTable"  [mfRowsOnPage]="rowsOnPage">
+          <thead class="thead-light">
+            <tr>
+              <th width="20%">
+                <mfDefaultSorter by="product_name">{{field_name_deals_product_name}}</mfDefaultSorter>
+              </th>
+              <th width="20%">
+                <mfDefaultSorter by="customer_name">{{field_name_deals_product_category}}</mfDefaultSorter>
+              </th>
+              <th width="20%">
+                <mfDefaultSorter by="mobile">{{field_name_deals_product_rate}}</mfDefaultSorter>
+              </th>
+              <th width="20%">
+                <mfDefaultSorter by="mobile">{{field_name_deals_product_quantity}}</mfDefaultSorter>
+              </th>
+              <th width="20%">
+                <mfDefaultSorter by="quotation_date">{{field_name_deals_product_discount}}</mfDefaultSorter>
+              </th>
+              <th width="20%">
+                <mfDefaultSorter by="quotation_date">{{field_name_deals_product_actual_rate}}</mfDefaultSorter>
+              </th>
+              <th width="20%">
+                <mfDefaultSorter by="product_name">{{field_name_deals_product_total}} </mfDefaultSorter>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+         
+            <tr *ngFor="let obj of mf.data;let i=index">
+              <td>{{obj.product_name}}</td>
+              <td>{{obj.category_name}}</td>
+              <td>{{obj.cost}}</td>
+              <td>
+                <input type="text" name="quantity-{{i}}" [(ngModel)]="obj.quantity" (keyup)="onChangeProductQnt(i, $event)">
+              </td>
+              <td>
+                <input type="text" name="discount-{{i}}" [(ngModel)]="obj.discount"
+                  (keyup)="onChangeProductDiscount(i, $event)">
+              </td>
+              <td>{{obj.cost*obj.quantity}}</td>
+              <td>{{obj.product_Total}}</td>
+            </tr>
+            <tr>
+              <td colspan="6"></td>
+              <td colspan="2">{{field_name_deals_product_total}}: {{total_cost}}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="">
+                <mfBootstrapPaginator [rowsOnPageSet]="[]"></mfBootstrapPaginator>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div> 
+                  
+           </div>
+    
+              
+              </div>
+                      </div>
+                      <div class="tab-pane fade" id="nav-deals-info" role="tabpanel" aria-labelledby="nav-deals-info-tab">
+                        <div class="panel-body">
+                          <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label class="col-sm-5 col-form-label">{{field_name_deals_deal_name}}
+                                  <span
+                                  class="text-danger font-weight-bold">
+                                  *</span>
+                                </label>
+                                <div class="col-sm-10">
+                                  <input type="text" class="form-control" name="deal_name" pattern="[a-zA-Z0-9 ]+" 
+                                  [(ngModel)]="dealDetail.deal_name"
+                                  #deal_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && deal_name.invalid,
+                                 'is-valid': f.submitted && deal_name.valid}" required >
+                                  <div *ngIf="f.submitted && deal_name.invalid "class="invalid-feedback">
+                                  <div
+                                      *ngIf="deal_name.errors.required ">Please provide deal name</div>
+                                      <div *ngIf="deal_name.errors.pattern"> Provide proper deal name 
+                                      </div></div>
+                                </div>
+                              </div>
+                          <div class="form-group col-md-4">
+                            <label class="col-sm-5 col-form-label">{{field_name_deals_amount}}
+                              <span
+                              class="text-danger font-weight-bold">
+                              *</span>
+                            </label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" name="amount" 
+                              [(ngModel)]="dealDetail.amount"
+                              #amount="ngModel" [ngClass]="{ 'is-invalid': f.submitted && amount.invalid,
+                             'is-valid': f.submitted && amount.valid}" required >
+                             <div *ngIf="f.submitted && amount.invalid "class="invalid-feedback">
+                              <div
+                                  *ngIf="amount.errors.required ">Please provide amount</div>
+                                </div>
+                           
+                            </div>
+                          </div>
+                          
+                          <div class="form-group col-md-4">
+                            <label class="col-sm-5 col-form-label"> {{field_name_deals_expected_date}}
+                              <span
+                              class="text-danger font-weight-bold">*
+                              </span>
+                            </label>
+                            <div class="col-sm-10">
+                              <input type="date" class="form-control" [(ngModel)]="dealDetail.expected_close_date" name="expected_close_date"
+                                #expected_close_date="ngModel" [ngClass]="{ 'is-invalid': f.submitted && expected_close_date.invalid, 
+                                'is-valid': f.submitted && expected_close_date.valid }" required >
+                                <div *ngIf="f.submitted && expected_close_date.invalid "class="invalid-feedback">
+                                  <div
+                                      *ngIf="expected_close_date.errors.required ">Please provide Expected Close Date</div>
+                                    </div>
+                            </div>
+                          </div>
+    
+                          </div>
+      
+      
+                          <div class="form-row">
+                            <div class="form-group col-md-4">
+                              <label class="col-sm-5 col-form-label">{{field_name_deals_pipeline}}<span
+                                class="text-danger font-weight-bold">*
+                                </span></label>
+                              <div class="col-sm-10">
+                                <select class="custom-select" name="pipeline_name" [(ngModel)]="dealDetail.pipeline_name"
+                                  #pipeline_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && pipeline_name.invalid, 
+                                  'is-valid': f.submitted && pipeline_name.valid }"
+                                 required >
+                                  <option *ngFor="let obj of pipelineDetail" [value]="obj.pipeline_name">{{obj.pipeline_name}}
+                                  </option>
+                               </select>
+                               <div *ngIf="f.submitted && pipeline_name.invalid" class="invalid-feedback">
+                                <div *ngIf="pipeline_name.errors.required">Required Pipeline name</div>
+                            </div>
+                              </div>
+                            </div>
+    
+                        
+                          <div class="form-group col-md-4">
+                            <label class="col-sm-5 col-form-label">{{field_name_deals_sales_stage}}<span
+                              class="text-danger font-weight-bold">*
+                              </span></label>
+                            <div class="col-sm-10">
+                              <select class="custom-select" name="salesstage_name" [(ngModel)]="dealDetail.salesstage_name"
+                                #salesstage_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && salesstage_name.invalid, 
+                                'is-valid': f.submitted && salesstage_name.valid }"
+                               required >
+                                <option *ngFor="let obj of salesstageDetail" [value]="obj.salesstage_name">{{obj.salesstage_name}}
+                                </option>
+                             </select>
+                             <div *ngIf="f.submitted && salesstage_name.invalid" class="invalid-feedback">
+                              <div *ngIf="salesstage_name.errors.required">Required Sales Stage name</div>
+                          </div>
+                            </div>
+                          </div>
+                            <div class="form-group col-md-4">
+                              <label class="col-sm-5 col-form-label">{{field_name_deals_assigned_to}}<span
+                                class="text-danger font-weight-bold">*
+                                </span></label>
+                              <div class="col-sm-10">
+                               
+                                  <select class="custom-select" name="assigned_to" [(ngModel)]="dealDetail.assigned_to" #assigned_to="ngModel"
+                                  name="assigned_to" [ngClass]="{ 'is-invalid': f.submitted && assigned_to.invalid, 
+                                'is-valid': f.submitted && assigned_to.valid }"
+                               required > 
+                                
+                               <option *ngFor="let obj of userDetail" [value]="obj.email">{{obj.email}}
+                              </option>
+                                  
+                                  </select>
+                                  <div *ngIf="f.submitted && assigned_to.invalid" class="invalid-feedback">
+                                    <div *ngIf="assigned_to.errors.required">Required Assigned To</div>
+                                </div>
+                                 
+                              
+                              </div>
+                            </div>
+                          
+                          </div>
+      
+      
+                          <div class="form-row">
+                           
+                            <div class="form-group col-md-4">
+                              <label class="col-sm-5 col-form-label">{{field_name_deals_lead_source}}
+                                <span
+                                class="text-danger font-weight-bold">*
+                                </span>
+                              </label>
+                              <div class="col-sm-10">
+                                <select class="custom-select" name="lead_source_name" [(ngModel)]="dealDetail.lead_source_name"
+                                  #lead_source_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && lead_source_name.invalid, 
+                                  'is-valid': f.submitted && lead_source_name.valid }"
+                                 required >
+                                  <option *ngFor="let obj of leadsourceDetail" [value]="obj.lead_source_name">{{obj.lead_source_name}}
+                                  </option>
+                               </select>
+                               <div *ngIf="f.submitted && lead_source_name.invalid" class="invalid-feedback">
+                                <div *ngIf="lead_source_name.errors.required">Required Lead source name</div>
+                            </div>
+                              </div>
+                            </div>
+    
+                            <div class="form-group col-md-4">
+                              <label class="col-sm-5 col-form-label">{{field_name_deals_probability}}<span
+                                class="text-danger font-weight-bold">
+                                </span></label>
+                              <div class="col-sm-10">
+                                <select class="custom-select" [(ngModel)]="dealDetail.probobility" name="probobility"
+                                #probobility="ngModel" >
+                      
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                                <option value="40">40</option>
+                                <option value="50">50</option>
+                                <option value="60">60</option>
+                                 <option value="70">70</option>
+                                 <option value="80">80</option>
+                                 <option value="90">90</option>
+                                 <option value="100">100</option>
+                            </select> 
+                              
+                              </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                              <label class="col-sm-5 col-form-label">{{field_name_deals_status}}<span
+                                class="text-danger font-weight-bold">*
+                                </span></label>
+                              <div class="col-sm-10">
+                                <select class="custom-select" name="status" [(ngModel)]="dealDetail.status"
+                                #status="ngModel" [ngClass]="{'is-invalid': f.submitted && status.invalid, 
+                                'is-valid': f.submitted && status.valid}"
+                               required >
+                               <!--  <option *ngFor="let obj of statusDetail" [value]="obj.status">{{obj.status}}
+                                </option> -->
+                                <option value="Created">{{field_name_deals_Created}}</option>
+                                <option value="On Hold">{{field_name_deals_On_Hold}}</option>
+                                <option value="In Progress">{{field_name_deals_In_Progress}}</option>
+                                <option value="Closed">{{field_name_deals_Closed}}</option>
+                             </select>
+                              
+                              <div *ngIf="f.submitted && status.invalid" class="invalid-feedback">
+                                  <div *ngIf="status.errors.required">Requred Status</div>
+                              </div>
+                              </div>
+                          </div>
+                        </div>
+      
+                        <div class="form-row">
+                          <div class="form-group col-md-3">
+                            <label class="col-sm-5 col-form-label">{{field_name_deals_created_by}}
+                             
+                            </label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" name="created_by"
+                              [(ngModel)]="dealDetail.created_by"
+                              #created_by="ngModel" readonly>
+                          </div>
+                        </div>
+                          <div class="form-group col-md-3">
+                            <label class="col-sm-5 col-form-label">{{field_name_deals_created_time}}
+                              
+                            </label>
+                            <div class="col-sm-10">
+                             
+                          
+                              <input type="text" class="form-control" name="created_time"  
+                               readonly value="{{dealDetail.created_time |  date : dateFormat:'GMT':locale}}">
+                               
+                            
+                            
+                          </div>
+                          </div>
+                          <div class="form-group col-md-3">
+                            <label class="col-sm-5 col-form-label">{{field_name_deals_updated_by}}
+                             
+                            </label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" name="updated_by"
+                                [(ngModel)]="dealDetail.updated_by"
+                                #updated_by="ngModel" readonly>
+                          </div>
+                        </div>
+                          <div class="form-group col-md-3">
+                            <label class="col-sm-5 col-form-label">{{field_name_deals_updated_time}}
+                             
+                            </label>
+                            <div class="col-sm-10">
+                            
+                              <input type="text" class="form-control" name="modified_time"  
+                               readonly value=" {{dealDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+                            
+                          </div>
+                        </div>
+                          </div>
+                        
+                          </div>
+                      </div>
+                  
+                       
+                  </div>
+                   <button class="btn btn-danger btn-round text-center pull-right" type="button" appCancelbutton>{{'Cancel'| translate}}</button>
+                                    <button  class="btn btn-success btn-round text-center pull-right">
+                                    <span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+                                      <span *ngIf="isUpdate">{{'Update'|translate}}</span></button>
+                
+        
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    
+      </section>

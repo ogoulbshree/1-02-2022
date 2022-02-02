@@ -1,0 +1,29 @@
+.example-month-picker .mat-calendar-period-button {
+    pointer-events: none;
+  }
+  
+  .example-month-picker .mat-calendar-arrow {
+    display: none;
+  }
+  @media  screen and (min-width: 600px) {
+ 
+    .dateSectionMat{
+      display: none !important;
+      margin-bottom: 15px;
+    }
+    .dateSection{
+      display: flex;
+    }
+    
+}
+ 
+@media  screen and (max-width: 599px) {
+
+  .dateSectionMat{
+    display: flex;
+    margin-bottom: 15px;
+  }
+  .dateSection{
+    display: none !important;
+  }
+}

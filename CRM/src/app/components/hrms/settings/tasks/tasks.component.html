@@ -1,0 +1,780 @@
+<section
+  *ngIf="this._uiservice.langDataSource.value != 'ar' && this.taskDetail"
+  dir="ltr"
+>
+  <div class="container-fluid">
+    <h3 class="text-center">{{field_name_hrms_task_details}}</h3>
+    <div class="card">
+      <div class="card-body">
+        <form
+          class="form-horizontal"
+          action="javascript:;"
+          name="form"
+          #f="ngForm"
+          (ngSubmit)="f.form.valid && onSubmit()"
+        >
+          <div
+            *ngIf="f.form.invalid && f.submitted"
+            class="alert alert-danger alert-dismissible fade show"
+            role="alert"
+          >
+            <strong>Task Details!</strong>The form has the following errors that
+            need to be corrected
+            <button
+              type="button"
+              class="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="card-header">
+            <h2>
+              <span *ngIf="!isUpdate">{{ field_name_hrms_task_add_task }}</span>
+              <span *ngIf="isUpdate">{{ field_name_hrms_task_update }}</span>
+            </h2>
+          </div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label class="col-sm-5 col-form-label"
+                  >{{field_name_hrms_task_employee_name}}<span class="text-danger font-weight-bold">
+                    *</span
+                  ></label
+                >
+                <div class="col-sm-10">
+                  <div class="ng-autocomplete">
+                    <ng-autocomplete
+                      [data]="employeeArray"
+                      [searchKeyword]="keyword"
+                      [initialValue]="keyword"
+                      (selected)="selectEvent($event)"
+                      (inputChanged)="onChangeSearch($event)"
+                      (inputFocused)="onFocused($event)"
+                      [itemTemplate]="itemTemplate"
+                      [notFoundTemplate]="notFoundTemplate"
+                      [(ngModel)]="selectedEmployee.first_name"
+                      name="first_name"
+                      #first_name="ngModel"
+                      required
+                      [ngClass]="{
+                        'is-invalid': f.submitted && first_name.invalid,
+                        'is-valid': f.submitted && first_name.valid
+                      }"
+                    >
+                    </ng-autocomplete>
+
+                    <ng-template #itemTemplate let-item>
+                      <a [innerHTML]="item.first_name"></a>
+                    </ng-template>
+
+                    <ng-template #notFoundTemplate let-notFound>
+                      <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                    <div
+                      *ngIf="f.submitted && first_name.invalid"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="first_name.errors.required">
+                        Please Provide First Name
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label class="col-sm-5 col-form-label"
+                  >{{field_name_hrms_task_phone}}<span class="text-danger font-weight-bold">
+                    *</span
+                  ></label
+                >
+                <div class="col-sm-10">
+                  <input
+                  readonly
+                  type="text"
+                  class="form-control"
+                  name="phone"
+                  #phone="ngModel"
+                  [(ngModel)]="this.selectedEmployee.phone"
+                />
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label class="col-sm-5 col-form-label"
+                  >{{field_name_hrms_task_follow_update}}<span class="text-danger font-weight-bold">
+                    *</span
+                  ></label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="date"
+                    class="form-control"
+                    [(ngModel)]="taskDetail.task_follow_up"
+                    name="task_follow_up"
+                    #task_follow_up="ngModel"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+            
+              <div class="form-group col-md-4">
+                <label class="col-sm-5 col-form-label"
+                  >{{field_name_hrms_task_record_type}}
+                  <span class="text-danger font-weight-bold"> </span>
+                </label>
+                <div class="col-sm-10">
+                  <select
+                    class="custom-select"
+                    [(ngModel)]="taskDetail.task_record_type"
+                    name="task_record_type"
+                    #record_type="ngModel"
+                    [ngClass]="{
+                      'is-invalid': f.submitted && task_record_type.invalid,
+                      'is-valid': f.submitted && task_record_type.valid
+                    }"
+                    required
+                  >
+                    <option value="Task">Task</option>
+                    <option value="Log a call">Log a call</option>
+                    <option value="Event">Event</option>
+                  </select>
+                  <div
+                    *ngIf="f.submitted && task_record_type.invalid"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="task_record_type.errors.required">
+                      Please provide Record type
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label class="col-sm-5 col-form-label"
+                  >{{field_name_hrms_task_add_task}}<span class="text-danger font-weight-bold"> </span
+                ></label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="taskDetail.task_name"
+                    name="task_name"
+                    #task_name="ngModel"
+                    [ngClass]="{
+                      'is-invalid': f.submitted && task_name.invalid,
+                      'is-valid': f.submitted && task_name.valid
+                    }"
+                    required
+                  />
+                  <div
+                    *ngIf="f.submitted && task_name.invalid"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="task_name.errors.required">
+                      Please provide task name
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-4">
+                <label class="col-sm-5 col-form-label"
+                  >{{field_name_hrms_task_status}}
+                  <span class="text-danger font-weight-bold"> </span>
+                </label>
+                <div class="col-sm-10">
+                  <select
+                    class="custom-select"
+                    name="task_status"
+                    [(ngModel)]="taskDetail.task_status"
+                    #task_status="ngModel"
+                    [ngClass]="{
+                      'is-invalid': f.submitted && task_status.invalid,
+                      'is-valid': f.submitted && task_status.valid
+                    }"
+                    required
+                  >
+                    <option value="notstarted">Not started</option>
+                    <option value="inprogress">In-progress</option>
+                    <option value="completed">Completed</option>
+                    <option value="Deferred">Deferred</option>
+                  </select>
+                  <div
+                    *ngIf="f.submitted && task_status.invalid"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="task_status.errors.required">
+                      Please provide Status
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group col-md-4">
+                <label class="col-sm-5 col-form-label"
+                  >{{field_name_hrms_task_subject}}
+                  <span class="text-danger font-weight-bold"> </span>
+                </label>
+                <div class="col-sm-10">
+                  <select
+                    class="custom-select"
+                    name="task_subject"
+                    [(ngModel)]="taskDetail.task_subject"
+                    #task_subject="ngModel"
+                    [ngClass]="{
+                      'is-invalid': f.submitted && task_subject.invalid,
+                      'is-valid': f.submitted && task_subject.valid
+                    }"
+                    required
+                  >
+                    <option value="call">Call</option>
+                    <option value="email">Email</option>
+                    <option value="sendquote">Send quote</option>
+                    <option value="other">Other</option>
+                  </select>
+                  <div
+                    *ngIf="f.submitted && task_subject.invalid"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="task_subject.errors.required">
+                      Please provide Subject
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group col-md-4">
+                <label class="col-sm-5 col-form-label"
+                  >{{ field_name_hrms_task_due_date
+                  }}<span class="text-danger font-weight-bold"> </span
+                ></label>
+                <div class="col-sm-10">
+                  <div class="input-group">
+                    <input
+                      type="date"
+                      class="form-control"
+                      [(ngModel)]="taskDetail.task_due_date"
+                      name="task_due_date"
+                      #task_due_date="ngModel"
+                      [ngClass]="{
+                        'is-invalid': f.submitted && task_due_date.invalid,
+                        'is-valid': f.submitted && task_due_date.valid
+                      }"
+                      required
+                    />
+                    <div
+                      *ngIf="f.submitted && task_due_date.invalid"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="task_due_date.errors.required">
+                        Please provide Due date
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label class="col-sm-5 col-form-label"
+                >{{field_name_hrms_task_comments}}<span class="text-danger font-weight-bold"> </span
+              ></label>
+              <div class="col-sm-10">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="taskDetail.task_comments"
+                    name="task_comments"
+                    #task_comments="ngModel"
+                    [ngClass]="{
+                      'is-invalid': f.submitted && task_comments.invalid,
+                      'is-valid': f.submitted && task_comments.valid
+                    }"
+                    required
+                  />
+                  <div
+                    *ngIf="f.submitted && task_comments.invalid"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="task_comments.errors.required">
+                      Please provide Comments
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-3">
+              <label class="col-sm-5 col-form-label"
+                >{{ field_name_hrms_task_created_by }}
+              </label>
+              <div class="col-sm-10">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="created_by"
+                  [(ngModel)]="taskDetail.created_by"
+                  #created_by="ngModel"
+                  readonly
+                />
+              </div>
+            </div>
+            <div class="form-group col-md-3">
+              <label class="col-sm-5 col-form-label"
+                >{{ field_name_hrms_task_created_time }}
+              </label>
+              <div class="col-sm-10">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="created_time"
+                  readonly
+                  value="{{
+                    taskDetail.created_time | date: dateFormat:'GMT':locale
+                  }}"
+                />
+              </div>
+            </div>
+            <div class="form-group col-md-3">
+              <label class="col-sm-5 col-form-label"
+                >{{ field_name_hrms_task_updated_by }}
+              </label>
+              <div class="col-sm-10">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="updated_by"
+                  [(ngModel)]="taskDetail.updated_by"
+                  #updated_by="ngModel"
+                  readonly
+                />
+              </div>
+            </div>
+            <div class="form-group col-md-3">
+              <label class="col-sm-5 col-form-label"
+                >{{ field_name_hrms_task_updated_time }}
+              </label>
+              <div class="col-sm-10">
+                <input
+                  type="text"
+                  class="form-control"
+                  name="modified_time"
+                  readonly
+                  value=" {{
+                    taskDetail.modified_time | date: dateFormat:'GMT':locale
+                  }}"
+                />
+              </div>
+            </div>
+          </div>
+
+          <button
+            class="btn btn-danger btn-round text-center pull-right"
+            type="button"
+            appCancelbutton
+          >
+            {{ "Cancel" | translate }}
+          </button>
+          <button class="btn btn-success btn-round text-center pull-right">
+            <span *ngIf="!isUpdate">{{ "Save" | translate }}</span>
+            <span *ngIf="isUpdate">{{ "Update" | translate }}</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' >
+<div class="container-fluid">
+  <h3 class="text-center">{{field_name_hrms_task_details}}</h3>
+  <div class="card">
+    <div class="card-body">
+      <form
+        class="form-horizontal"
+        action="javascript:;"
+        name="form"
+        #f="ngForm"
+        (ngSubmit)="f.form.valid && onSubmit()"
+      >
+        <div
+          *ngIf="f.form.invalid && f.submitted"
+          class="alert alert-danger alert-dismissible fade show"
+          role="alert"
+        >
+          <strong>Task Details!</strong>The form has the following errors that
+          need to be corrected
+          <button
+            type="button"
+            class="close"
+            data-dismiss="alert"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="card-header">
+          <h2>
+            <span *ngIf="!isUpdate">{{ field_name_hrms_task_add_task }}</span>
+            <span *ngIf="isUpdate">{{ field_name_hrms_task_update }}</span>
+          </h2>
+        </div>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label class="col-sm-5 col-form-label"
+                >{{field_name_hrms_task_employee_name}}<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              <div class="col-sm-10">
+                <div class="ng-autocomplete">
+                  <ng-autocomplete
+                    [data]="employeeArray"
+                    [searchKeyword]="keyword"
+                    [initialValue]="keyword"
+                    (selected)="selectEvent($event)"
+                    (inputChanged)="onChangeSearch($event)"
+                    (inputFocused)="onFocused($event)"
+                    [itemTemplate]="itemTemplate"
+                    [notFoundTemplate]="notFoundTemplate"
+                    [(ngModel)]="selectedEmployee.first_name"
+                    name="first_name"
+                    #first_name="ngModel"
+                    required
+                    [ngClass]="{
+                      'is-invalid': f.submitted && first_name.invalid,
+                      'is-valid': f.submitted && first_name.valid
+                    }"
+                  >
+                  </ng-autocomplete>
+
+                  <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.first_name"></a>
+                  </ng-template>
+
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                  </ng-template>
+                  <div
+                    *ngIf="f.submitted && first_name.invalid"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="first_name.errors.required">
+                      Please Provide First Name
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label class="col-sm-5 col-form-label"
+                >{{field_name_hrms_task_phone}}<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              <div class="col-sm-10">
+                <input
+                readonly
+                type="text"
+                class="form-control"
+                name="phone"
+                #phone="ngModel"
+                [(ngModel)]="this.selectedEmployee.phone"
+              />
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label class="col-sm-5 col-form-label"
+                >{{field_name_hrms_task_follow_update}}<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="date"
+                  class="form-control"
+                  [(ngModel)]="taskDetail.task_follow_up"
+                  name="task_follow_up"
+                  #task_follow_up="ngModel"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+          
+            <div class="form-group col-md-4">
+              <label class="col-sm-5 col-form-label"
+                >{{field_name_hrms_task_record_type}}
+                <span class="text-danger font-weight-bold"> </span>
+              </label>
+              <div class="col-sm-10">
+                <select
+                  class="custom-select"
+                  [(ngModel)]="taskDetail.task_record_type"
+                  name="task_record_type"
+                  #record_type="ngModel"
+                  [ngClass]="{
+                    'is-invalid': f.submitted && task_record_type.invalid,
+                    'is-valid': f.submitted && task_record_type.valid
+                  }"
+                  required
+                >
+                  <option value="Task">Task</option>
+                  <option value="Log a call">Log a call</option>
+                  <option value="Event">Event</option>
+                </select>
+                <div
+                  *ngIf="f.submitted && task_record_type.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="task_record_type.errors.required">
+                    Please provide Record type
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label class="col-sm-5 col-form-label"
+                >{{field_name_hrms_task_add_task}}<span class="text-danger font-weight-bold"> </span
+              ></label>
+              <div class="col-sm-10">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="taskDetail.task_name"
+                  name="task_name"
+                  #task_name="ngModel"
+                  [ngClass]="{
+                    'is-invalid': f.submitted && task_name.invalid,
+                    'is-valid': f.submitted && task_name.valid
+                  }"
+                  required
+                />
+                <div
+                  *ngIf="f.submitted && task_name.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="task_name.errors.required">
+                    Please provide task name
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+              <label class="col-sm-5 col-form-label"
+                >{{field_name_hrms_task_status}}
+                <span class="text-danger font-weight-bold"> </span>
+              </label>
+              <div class="col-sm-10">
+                <select
+                  class="custom-select"
+                  name="task_status"
+                  [(ngModel)]="taskDetail.task_status"
+                  #task_status="ngModel"
+                  [ngClass]="{
+                    'is-invalid': f.submitted && task_status.invalid,
+                    'is-valid': f.submitted && task_status.valid
+                  }"
+                  required
+                >
+                  <option value="notstarted">Not started</option>
+                  <option value="inprogress">In-progress</option>
+                  <option value="completed">Completed</option>
+                  <option value="Deferred">Deferred</option>
+                </select>
+                <div
+                  *ngIf="f.submitted && task_status.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="task_status.errors.required">
+                    Please provide Status
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group col-md-4">
+              <label class="col-sm-5 col-form-label"
+                >{{field_name_hrms_task_subject}}
+                <span class="text-danger font-weight-bold"> </span>
+              </label>
+              <div class="col-sm-10">
+                <select
+                  class="custom-select"
+                  name="task_subject"
+                  [(ngModel)]="taskDetail.task_subject"
+                  #task_subject="ngModel"
+                  [ngClass]="{
+                    'is-invalid': f.submitted && task_subject.invalid,
+                    'is-valid': f.submitted && task_subject.valid
+                  }"
+                  required
+                >
+                  <option value="call">Call</option>
+                  <option value="email">Email</option>
+                  <option value="sendquote">Send quote</option>
+                  <option value="other">Other</option>
+                </select>
+                <div
+                  *ngIf="f.submitted && task_subject.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="task_subject.errors.required">
+                    Please provide Subject
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group col-md-4">
+              <label class="col-sm-5 col-form-label"
+                >{{ field_name_hrms_task_due_date
+                }}<span class="text-danger font-weight-bold"> </span
+              ></label>
+              <div class="col-sm-10">
+                <div class="input-group">
+                  <input
+                    type="date"
+                    class="form-control"
+                    [(ngModel)]="taskDetail.task_due_date"
+                    name="task_due_date"
+                    #task_due_date="ngModel"
+                    [ngClass]="{
+                      'is-invalid': f.submitted && task_due_date.invalid,
+                      'is-valid': f.submitted && task_due_date.valid
+                    }"
+                    required
+                  />
+                  <div
+                    *ngIf="f.submitted && task_due_date.invalid"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="task_due_date.errors.required">
+                      Please provide Due date
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label class="col-sm-5 col-form-label"
+              >{{field_name_hrms_task_comments}}<span class="text-danger font-weight-bold"> </span
+            ></label>
+            <div class="col-sm-10">
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="taskDetail.task_comments"
+                  name="task_comments"
+                  #task_comments="ngModel"
+                  [ngClass]="{
+                    'is-invalid': f.submitted && task_comments.invalid,
+                    'is-valid': f.submitted && task_comments.valid
+                  }"
+                  required
+                />
+                <div
+                  *ngIf="f.submitted && task_comments.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="task_comments.errors.required">
+                    Please provide Comments
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-3">
+            <label class="col-sm-5 col-form-label"
+              >{{ field_name_hrms_task_created_by }}
+            </label>
+            <div class="col-sm-10">
+              <input
+                type="text"
+                class="form-control"
+                name="created_by"
+                [(ngModel)]="taskDetail.created_by"
+                #created_by="ngModel"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="form-group col-md-3">
+            <label class="col-sm-5 col-form-label"
+              >{{ field_name_hrms_task_created_time }}
+            </label>
+            <div class="col-sm-10">
+              <input
+                type="text"
+                class="form-control"
+                name="created_time"
+                readonly
+                value="{{
+                  taskDetail.created_time | date: dateFormat:'GMT':locale
+                }}"
+              />
+            </div>
+          </div>
+          <div class="form-group col-md-3">
+            <label class="col-sm-5 col-form-label"
+              >{{ field_name_hrms_task_updated_by }}
+            </label>
+            <div class="col-sm-10">
+              <input
+                type="text"
+                class="form-control"
+                name="updated_by"
+                [(ngModel)]="taskDetail.updated_by"
+                #updated_by="ngModel"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="form-group col-md-3">
+            <label class="col-sm-5 col-form-label"
+              >{{ field_name_hrms_task_updated_time }}
+            </label>
+            <div class="col-sm-10">
+              <input
+                type="text"
+                class="form-control"
+                name="modified_time"
+                readonly
+                value=" {{
+                  taskDetail.modified_time | date: dateFormat:'GMT':locale
+                }}"
+              />
+            </div>
+          </div>
+        </div>
+
+        <button
+          class="btn btn-danger btn-round text-center pull-right"
+          type="button"
+          appCancelbutton
+        >
+          {{ "Cancel" | translate }}
+        </button>
+        <button class="btn btn-success btn-round text-center pull-right">
+          <span *ngIf="!isUpdate">{{ "Save" | translate }}</span>
+          <span *ngIf="isUpdate">{{ "Update" | translate }}</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+</section>

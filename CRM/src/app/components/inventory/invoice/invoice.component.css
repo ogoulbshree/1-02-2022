@@ -1,0 +1,50 @@
+
+  .example-full-width {
+    width: 100%;
+  }
+  /* ::ng-deep .mat-form-field-placeholder{
+
+    color:gray !important;
+  }
+  
+  ::ng-deep .mat-focused .mat-form-field-placeholder{
+  
+    color:gray !important;
+  }
+  
+  ::ng-deep .mat-form-field-infix{
+      border:0;
+      padding:0;
+  } */
+  ::ng-deep .mat-form-field-infix{
+    border: 1px solid #c7c7c7;
+    padding: 10px;
+  }
+  ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-ripple .mat-ripple-element {
+    opacity: 0.03 !important;
+    background-color: #57aeb6!important;
+  }
+
+::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background,.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background-color: #57aeb6 ;
+  }
+  ::ng-deep .mat-input-underline {
+    display: none;
+}
+
+.btn-success{
+  background-color: #57aeb6;  
+}
+.thead{
+  background-color: #87ceeb54;
+  color: black;background-color: #57aeb6;
+  color: #fff;
+  font-family: sans-serif;
+}
+
+
+.btn-light{
+  color: #f2f5f8;
+    background-color: #757b80;
+    border-color: #d3d9df;
+}

@@ -1,0 +1,430 @@
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' >
+<h2 mat-dialog-title>{{field_name_hrms_training_add_training}}</h2>
+<form
+  class="form-horizontal"
+  name="form"
+  #f="ngForm"
+  (ngSubmit)="f.form.valid && submit()"
+>
+  <mat-dialog-content class="mat-typography">
+    <div class="row">
+      <div class="col-md-6">
+       {{field_name_hrms_training_type}} :<br />
+        <select
+          class="form-control"
+          [(ngModel)]="trainingDetail.training_type"
+          name="training_type"
+          #training_type="ngModel"
+        >
+          <option value="undefined" disabled [selected]="true">
+            Choose type
+          </option>
+          <option value="node training">Node Training</option>
+          <option value="js training">JS Training</option>
+        </select>
+        <div
+          *ngIf="f.submitted && training_type.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="training_type.errors.required">
+            Please provide From Date
+          </div>
+        </div>
+        <br />
+        {{field_name_hrms_training_startdate}} :<br />
+        <input
+          type="date"
+          class="form-control"
+          name="training_from"
+          #training_from="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && training_from.invalid,
+            'is-valid': f.submitted && training_from.valid
+          }"
+          (change)="dateSelected()"
+          [(ngModel)]="trainingDetail.training_from"
+          required
+        />
+        <div
+          *ngIf="f.submitted && training_from.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="training_from.errors.required">
+            Please provide From Date
+          </div>
+        </div>
+        <br />
+        {{field_name_hrms_training_employee}} :<br />
+
+        <select
+          type="text"
+          class="form-control"
+          name="trained_employee_name"
+          #trained_employee_name="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && trained_employee_name.invalid,
+            'is-valid': f.submitted && trained_employee_name.valid
+          }"
+          [(ngModel)]="trainingDetail.trained_employee_name"
+          required
+        >
+          <option *ngFor="let obj of employeeArray" [value]="obj.first_name">
+            {{ obj.first_name }}
+          </option>
+        </select>
+        <div
+          *ngIf="f.submitted && trained_employee_name.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="trained_employee_name.errors.required">
+            Please provide Employee
+          </div>
+        </div>
+        <br />
+      {{field_name_hrms_training_cost}} :<br />
+        <input
+          type="text"
+          class="form-control"
+          name="training_cost"
+          #training_cost="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && training_cost.invalid,
+            'is-valid': f.submitted && training_cost.valid
+          }"
+          [(ngModel)]="trainingDetail.training_cost"
+          required
+        />
+        <div
+          *ngIf="f.submitted && training_cost.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="training_cost.errors.required">Please provide Cost</div>
+        </div>
+        <br />
+      </div>
+      <div class="col-md-6">
+        {{field_name_hrms_training_trainer}} :<br />
+        <select
+          class="form-control"
+          [(ngModel)]="trainingDetail.trainer_name"
+          name="trainer_name"
+          #trainer_name="ngModel"
+        >
+          <option value="undefined" disabled [selected]="true">
+            Choose Leave
+          </option>
+          <option value="sam">Sam</option>
+          <option value="mathew">John</option>
+        </select>
+        <div
+          *ngIf="f.submitted && trainer_name.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="trainer_name.errors.required">
+            Please provide From Date
+          </div>
+        </div>
+        <br />
+      {{field_name_hrms_training_enddate}}:<br />
+        <input
+          type="date"
+          class="form-control"
+          name="training_to"
+          #training_to="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && training_to.invalid,
+            'is-valid': f.submitted && training_to.valid
+          }"
+          (change)="dateSelected()"
+          [(ngModel)]="trainingDetail.training_to"
+          required
+        />
+        <div
+          *ngIf="f.submitted && training_to.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="training_to.errors.required">Please provide To Date</div>
+        </div>
+        <div *ngIf="this.dateErrorFlag" style="color: red">
+          To date Should be greater than from date
+        </div>
+
+        <br />
+       {{field_name_hrms_training_status}}:<br />
+        <select
+          class="form-control"
+          [(ngModel)]="trainingDetail.training_status"
+          name="training_status"
+          #training_status="ngModel"
+        >
+          <option value="undefined" disabled [selected]="true">
+            Choose status
+          </option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+        <div
+          *ngIf="f.submitted && training_status.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="training_status.errors.required">
+            Please provide To Date
+          </div>
+        </div>
+
+        <br />
+        {{field_name_hrms_training_description}}:<br />
+        <textarea
+          type="text"
+          class="form-control"
+          name="training_description"
+          #training_description="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && training_description.invalid,
+            'is-valid': f.submitted && training_description.valid
+          }"
+          [(ngModel)]="trainingDetail.training_description"
+          required
+        >
+        </textarea>
+        <div
+          *ngIf="f.submitted && training_description.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="training_description.errors.required">
+            Please provide description
+          </div>
+          <br />
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close class="btn btn-danger">{{'Cancel'|translate}}</button>
+    <button
+      type="submit"
+      mat-button
+      class="btn btn-success"
+    >
+    {{'Save'|translate}}
+    </button>
+  </mat-dialog-actions>
+</form>
+</section>
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir='ltr' >
+  <h2 mat-dialog-title>{{field_name_hrms_training_add_training}}</h2>
+<form
+  class="form-horizontal"
+  name="form"
+  #f="ngForm"
+  (ngSubmit)="f.form.valid && submit()"
+>
+  <mat-dialog-content class="mat-typography">
+    <div class="row">
+      <div class="col-md-6">
+       {{field_name_hrms_training_type}} :<br />
+        <select
+          class="form-control"
+          [(ngModel)]="trainingDetail.training_type"
+          name="training_type"
+          #training_type="ngModel"
+        >
+          <option value="undefined" disabled [selected]="true">
+            Choose type
+          </option>
+          <option value="node training">Node Training</option>
+          <option value="js training">JS Training</option>
+        </select>
+        <div
+          *ngIf="f.submitted && training_type.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="training_type.errors.required">
+            Please provide From Date
+          </div>
+        </div>
+        <br />
+        {{field_name_hrms_training_startdate}} :<br />
+        <input
+          type="date"
+          class="form-control"
+          name="training_from"
+          #training_from="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && training_from.invalid,
+            'is-valid': f.submitted && training_from.valid
+          }"
+          (change)="dateSelected()"
+          [(ngModel)]="trainingDetail.training_from"
+          required
+        />
+        <div
+          *ngIf="f.submitted && training_from.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="training_from.errors.required">
+            Please provide From Date
+          </div>
+        </div>
+        <br />
+        {{field_name_hrms_training_employee}} :<br />
+
+        <select
+          type="text"
+          class="form-control"
+          name="trained_employee_name"
+          #trained_employee_name="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && trained_employee_name.invalid,
+            'is-valid': f.submitted && trained_employee_name.valid
+          }"
+          [(ngModel)]="trainingDetail.trained_employee_name"
+          required
+        >
+          <option *ngFor="let obj of employeeArray" [value]="obj.first_name">
+            {{ obj.first_name }}
+          </option>
+        </select>
+        <div
+          *ngIf="f.submitted && trained_employee_name.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="trained_employee_name.errors.required">
+            Please provide Employee
+          </div>
+        </div>
+        <br />
+      {{field_name_hrms_training_cost}} :<br />
+        <input
+          type="text"
+          class="form-control"
+          name="training_cost"
+          #training_cost="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && training_cost.invalid,
+            'is-valid': f.submitted && training_cost.valid
+          }"
+          [(ngModel)]="trainingDetail.training_cost"
+          required
+        />
+        <div
+          *ngIf="f.submitted && training_cost.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="training_cost.errors.required">Please provide Cost</div>
+        </div>
+        <br />
+      </div>
+      <div class="col-md-6">
+        {{field_name_hrms_training_trainer}} :<br />
+        <select
+          class="form-control"
+          [(ngModel)]="trainingDetail.trainer_name"
+          name="trainer_name"
+          #trainer_name="ngModel"
+        >
+          <option value="undefined" disabled [selected]="true">
+            Choose Leave
+          </option>
+          <option value="sam">Sam</option>
+          <option value="mathew">John</option>
+        </select>
+        <div
+          *ngIf="f.submitted && trainer_name.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="trainer_name.errors.required">
+            Please provide From Date
+          </div>
+        </div>
+        <br />
+      {{field_name_hrms_training_enddate}}:<br />
+        <input
+          type="date"
+          class="form-control"
+          name="training_to"
+          #training_to="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && training_to.invalid,
+            'is-valid': f.submitted && training_to.valid
+          }"
+          (change)="dateSelected()"
+          [(ngModel)]="trainingDetail.training_to"
+          required
+        />
+        <div
+          *ngIf="f.submitted && training_to.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="training_to.errors.required">Please provide To Date</div>
+        </div>
+        <div *ngIf="this.dateErrorFlag" style="color: red">
+          To date Should be greater than from date
+        </div>
+
+        <br />
+       {{field_name_hrms_training_status}}:<br />
+        <select
+          class="form-control"
+          [(ngModel)]="trainingDetail.training_status"
+          name="training_status"
+          #training_status="ngModel"
+        >
+          <option value="undefined" disabled [selected]="true">
+            Choose status
+          </option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+        <div
+          *ngIf="f.submitted && training_status.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="training_status.errors.required">
+            Please provide To Date
+          </div>
+        </div>
+
+        <br />
+        {{field_name_hrms_training_description}}:<br />
+        <textarea
+          type="text"
+          class="form-control"
+          name="training_description"
+          #training_description="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && training_description.invalid,
+            'is-valid': f.submitted && training_description.valid
+          }"
+          [(ngModel)]="trainingDetail.training_description"
+          required
+        >
+        </textarea>
+        <div
+          *ngIf="f.submitted && training_description.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="training_description.errors.required">
+            Please provide description
+          </div>
+          <br />
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close class="btn btn-danger">{{'Cancel'|translate}}</button>
+    <button
+      type="submit"
+      mat-button
+      class="btn btn-success"
+    >
+    {{'Save'|translate}}
+    </button>
+  </mat-dialog-actions>
+</form>
+  </section>

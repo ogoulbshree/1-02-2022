@@ -1,0 +1,991 @@
+  
+<section *ngIf="this._uiservice.langDataSource.value == 'ar' && this.activityDetail" dir='rtl' >
+
+
+<div class="container-fluid">
+  <h3 class="text-center">{{field_name_activities_activities_details}}</h3>
+  <div class="card">
+    <div class="card-body">
+  <form class="form-horizontal"  action="javascript:;" name="form" #f="ngForm" (ngSubmit)="f.form.valid &&  onSubmit()">
+    <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+      <strong>Activity Details!</strong>The form has the following errors that need to be corrected
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="card-header">
+      <h2> 
+          <span *ngIf="!isUpdate">{{field_name_activities_add}}</span> 
+          <span *ngIf="isUpdate">{{field_name_activities_update}}</span>
+      </h2>
+      </div>
+      <div class="card-body">
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label class="col-sm-5 col-form-label"> {{field_name_activities_activity_type}}
+              <span
+              class="text-danger font-weight-bold">*
+              </span>
+            </label>
+            <div class="col-sm-10">
+        
+              <select class="custom-select" id="contact" [(ngModel)]="activityDetail.activity_type"   name="activity_type"
+              (change)="selectObject()" name="selectedActivityType"  #activity_type="ngModel"
+              [(ngModel)]="selectedActivityType"  [ngClass]="{ 'is-invalid': f.submitted && activity_type.invalid,
+              'is-valid': f.submitted && activity_type.valid}" required>
+           
+              <option *ngFor="let obj of ACTIVITY_OBJECT_TYPE" [value]="obj">{{obj}}
+              </option>
+                
+              </select>   
+              <div *ngIf="f.submitted && activity_type.invalid "class="invalid-feedback">
+                <div
+                    *ngIf="activity_type.errors.required ">Please provide Activity Type</div>
+                   
+                  </div>
+              </div>
+            </div>
+        
+
+
+      
+        <!--   <div class="form-group col-md-4" *ngIf="!isUpdate && isContactSelected">
+            <label class="col-sm-5 col-form-label"  >{{'Contacts Name'|translate}}
+              <span class="text-danger font-weight-bold">
+                *</span>
+            </label>
+            <div class="col-sm-10">
+             
+              <div class="ng-autocomplete">
+                <ng-autocomplete [data]="contacts" [searchKeyword]="keyword" [itemTemplate]="itemTemplate"
+                  (inputChanged)='onChangeSearch($event)' (selected)='onContactSelect($event)'  historyIdentifier="contacts"
+                  (inputFocused)='onFocused($event)' [notFoundTemplate]="notFoundTemplate" [(ngModel)]="first_name"
+                  name="autompleteName" required  >
+                 
+                </ng-autocomplete>
+                
+                <ng-template #itemTemplate let-item>
+                  <a [innerHTML]="item.first_name"></a>
+                </ng-template>
+  
+                <ng-template #notFoundTemplate let-notFound>
+                  <div [innerHTML]="notFound"></div>
+                  
+              
+                </ng-template> 
+               
+               
+              </div>
+            </div>
+          </div> -->
+         <!--  <div class="form-group col-md-4" *ngIf="!isUpdate && isCampaignSelected">
+            <label class="col-sm-5 col-form-label"  >{{'Campaign Name'|translate}}
+              <span class="text-danger font-weight-bold">
+                *</span>
+            </label>
+            <div class="col-sm-10">
+             
+              <div class="ng-autocomplete">
+                <ng-autocomplete [data]="campaigns" [searchKeyword]="searchkeyword" [itemTemplate]="itemTemplate"
+                  (inputChanged)='onChangeSearch($event)' (selected)='oncampaignsSelect($event)'  historyIdentifier="campaigns"
+                  (inputFocused)='onFocused($event)' [notFoundTemplate]="notFoundTemplate" [(ngModel)]="campaign_name"
+                  name="autompleteName" required  >
+                 
+                </ng-autocomplete>
+                
+                <ng-template #itemTemplate let-item>
+                  <a [innerHTML]="item.campaign_name"></a>
+                </ng-template>
+  
+                <ng-template #notFoundTemplate let-notFound>
+                  <div [innerHTML]="notFound"></div>
+                  
+              
+                </ng-template> 
+               
+               
+              </div>
+            </div>
+          </div> -->
+          <div class="form-group col-md-4"  *ngIf="!isUpdate && isLeadSelected" >
+            <label class="col-sm-5 col-form-label"  >{{field_name_leads_first_name}}
+              <span class="text-danger font-weight-bold">
+                *</span>
+            </label>
+            <div class="col-sm-10">
+              
+              <div class="ng-autocomplete">
+                <ng-autocomplete [data]="lead" [searchKeyword]="keyword" [itemTemplate]="itemTemplate"
+                  (inputChanged)='onChangeSearch($event)' (selected)='onleadSelect($event)'  historyIdentifier="lead"
+                  (inputFocused)='onFocused($event)' [notFoundTemplate]="notFoundTemplate" [(ngModel)]="first_name"
+                  name="autompleteName" required  >
+                 
+                </ng-autocomplete>
+                
+                <ng-template #itemTemplate let-item>
+                  <a [innerHTML]="item.first_name"></a>
+                </ng-template>
+  
+                <ng-template #notFoundTemplate let-notFound>
+                  <div [innerHTML]="notFound"></div>
+
+                </ng-template> 
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group col-md-4"  *ngIf="!isUpdate && isCustomerSelected" >
+            <label class="col-sm-5 col-form-label"  >{{field_name_customers_first_name}}
+              <span class="text-danger font-weight-bold">
+                *</span>
+            </label>
+            <div class="col-sm-10">
+              
+              <div class="ng-autocomplete">
+                <ng-autocomplete [data]="customer" [searchKeyword]="keyword" [itemTemplate]="itemTemplate"
+                  (inputChanged)='onChangeSearch($event)' (selected)='oncustomerSelect($event)'  historyIdentifier="customer"
+                  (inputFocused)='onFocused($event)' [notFoundTemplate]="notFoundTemplate" [(ngModel)]="first_name"
+                  name="autompleteName" required  >
+                 
+                </ng-autocomplete>
+                
+                <ng-template #itemTemplate let-item>
+                  <a [innerHTML]="item.first_name"></a>
+                </ng-template>
+  
+                <ng-template #notFoundTemplate let-notFound>
+                  <div [innerHTML]="notFound"></div>
+
+                </ng-template> 
+              </div>
+            </div>
+          </div>
+        <!--   <div class="form-group col-md-4" *ngIf="isUpdate && isContactSelected">
+            <label class="col-sm-5 col-form-label">{{'Contact Name'|translate}}
+              <span class="text-danger font-weight-bold"> *</span>
+            </label>
+            <div class="col-sm-10">
+            <input type="text" class="form-control" [(ngModel)]="activityDetail.first_name" name="first_name" readonly>
+        </div>
+          </div> -->
+
+        
+          <div class="form-group col-md-4"  *ngIf="isUpdate && isLeadSelected">
+            <label class="col-sm-5 col-form-label"> {{field_name_leads_first_name}} 
+              <span
+              class="text-danger font-weight-bold">
+              *</span>
+            </label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="first_name" pattern="[a-zA-Z0-9 ]+" 
+               [(ngModel)]="activityDetail.first_name" readonly>
+         
+            </div>
+          </div>
+
+          <div class="form-group col-md-4"  *ngIf="isUpdate && isCustomerSelected">
+            <label class="col-sm-5 col-form-label">{{field_name_customers_first_name}} 
+              <span
+              class="text-danger font-weight-bold">
+              *</span>
+            </label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="first_name" pattern="[a-zA-Z0-9 ]+" 
+               [(ngModel)]="activityDetail.first_name" readonly>
+         
+            </div>
+          </div>
+
+         <!--  <div class="form-group col-md-4" *ngIf="isContactSelected" >
+            <label class="col-sm-5 col-form-label"> {{'Contact Email'|translate}} <span
+              class="text-danger font-weight-bold">
+              *</span></label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" [(ngModel)]="activityDetail.email" name="email"
+             #email="ngModel" readonly
+             
+           />
+           </div>
+          </div> -->
+         
+      
+          <div class="form-group col-md-4" *ngIf="isLeadSelected" >
+            <label class="col-sm-5 col-form-label"> {{field_name_leads_email}} <span
+              class="text-danger font-weight-bold">
+              *</span></label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" [(ngModel)]="activityDetail.email" name="email"
+              #email="ngModel"  readonly  />
+      
+            </div>
+          </div>
+          <div class="form-group col-md-4" *ngIf="isCustomerSelected" >
+            <label class="col-sm-5 col-form-label"> {{field_name_customers_email}} <span
+              class="text-danger font-weight-bold">
+              *</span></label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" [(ngModel)]="activityDetail.email" name="email"
+              #email="ngModel"  readonly  />
+      
+            </div>
+          </div>
+        <!--   <div class="form-group col-md-4" *ngIf="isContactSelected">
+            <label class="col-sm-5 col-form-label">{{'Contact Phone'|translate}}<span
+              class="text-danger font-weight-bold">
+              *</span></label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" [(ngModel)]="activityDetail.phone" name="phone"
+              #phone="ngModel" readonly />
+           
+         
+            </div>
+          </div> -->
+          
+          <div class="form-group col-md-4" *ngIf="isLeadSelected">
+            <label class="col-sm-5 col-form-label"> {{field_name_leads_phone}}<span
+              class="text-danger font-weight-bold">
+              *</span></label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" [(ngModel)]="activityDetail.phone" name="phone"
+               #phone="ngModel" readonly>
+          
+            </div>
+          </div>
+
+          <div class="form-group col-md-4" *ngIf="isCustomerSelected">
+            <label class="col-sm-5 col-form-label"> {{field_name_customers_phone}}<span
+              class="text-danger font-weight-bold">
+              *</span></label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" [(ngModel)]="activityDetail.phone" name="phone"
+               #phone="ngModel" readonly>
+          
+            </div>
+          </div>
+         <!--  <div class="form-group col-md-4"  *ngIf="isUpdate && isCampaignSelected">
+            <label class="col-sm-5 col-form-label"> {{'Campaign Name'|translate}} 
+              <span
+              class="text-danger font-weight-bold">
+              *</span>
+            </label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="campaign_name"pattern="[a-zA-Z0-9 ]+" 
+               [(ngModel)]="activityDetail.campaign_name" readonly>
+         
+            </div>
+          </div> -->
+         <!--  <div class="form-group col-md-4" *ngIf="isCampaignSelected">
+            <label class="col-sm-5 col-form-label"> {{'Campaign Owner'|translate}}<span
+              class="text-danger font-weight-bold">
+              *</span></label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" [(ngModel)]="activityDetail.campaign_owner" name="campaign_owner"
+               #campaign_owner="ngModel" readonly>
+          
+            </div>
+          </div> -->
+          <!-- <div class="form-group col-md-4" >
+            <label class="col-sm-5 col-form-label">{{field_name_activities_end_date}}<span
+              class="text-danger font-weight-bold">
+              *</span></label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" [(ngModel)]="activityDetail.end_date" name="end_date"
+               #end_date="ngModel" readonly>
+          
+            </div>
+          </div> -->
+        
+  
+      
+        
+
+          <div class="form-group col-md-4">
+            <label class="col-sm-5 col-form-label">{{field_name_activities_record_type}}
+              <span
+              class="text-danger font-weight-bold">
+              </span>
+            </label>
+            <div class="col-sm-10">
+
+            <select class="custom-select" [(ngModel)]="activityDetail.record_type" name="record_type"
+            #record_type="ngModel" [ngClass]="{ 'is-invalid': f.submitted && record_type.invalid,
+               'is-valid': f.submitted && record_type.valid}" required>
+              
+              <option value="Task">Task</option>
+              <option value="Log a call">Log a call</option>
+              <option value="Event">Event</option>
+            </select>   
+            <div *ngIf="f.submitted && record_type.invalid "class="invalid-feedback">
+              <div
+                  *ngIf="record_type.errors.required ">Please provide Record type</div>
+                 
+                </div>
+          
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+  
+            <label class="col-sm-5 col-form-label">{{field_name_activities_task_name}}<span
+              class="text-danger font-weight-bold">
+              </span></label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" [(ngModel)]="activityDetail.task_name" name="task_name"
+               #task_name="ngModel"  [ngClass]="{ 'is-invalid': f.submitted && task_name.invalid,
+               'is-valid': f.submitted && task_name.valid}" required>
+               <div *ngIf="f.submitted && task_name.invalid "class="invalid-feedback">
+                <div
+                    *ngIf="task_name.errors.required ">Please provide task name</div>
+                   
+                  </div> 
+             
+            </div>
+          </div>
+          </div>
+              
+          <div class="form-row">
+          <div class="form-group col-md-4">
+            <label class="col-sm-5 col-form-label">{{field_name_activities_status}}
+              <span
+              class="text-danger font-weight-bold">
+              </span>
+            </label>
+            <div class="col-sm-10">
+          
+             <select class="custom-select"  name="status"  [(ngModel)]="activityDetail.status" 
+              #status="ngModel" [ngClass]="{ 'is-invalid': f.submitted && status.invalid,
+               'is-valid': f.submitted && status.valid}" required>
+              
+            
+              <option value="notstarted">Not started</option>
+              <option value="inprogress">In-progress</option>
+               <option value="completed">Completed</option>
+               <option value="Deferred">Deferred</option>
+            </select>  
+            <div *ngIf="f.submitted && status.invalid "class="invalid-feedback">
+              <div
+                  *ngIf="status.errors.required ">Please provide Status</div>
+                  
+                </div>
+           
+            </div>
+          </div>
+         
+     
+  
+          <div class="form-group col-md-4">
+            <label class="col-sm-5 col-form-label">{{field_name_activities_subject}}
+              <span
+              class="text-danger font-weight-bold">
+              </span>
+            </label>
+            <div class="col-sm-10">
+          
+             <select class="custom-select" name="subject"  [(ngModel)]="activityDetail.subject" 
+              #subject="ngModel"  [ngClass]="{ 'is-invalid': f.submitted && subject.invalid,
+              'is-valid': f.submitted && subject.valid}" required>
+        
+              <option value="call">Call</option>
+              <option value="email">Email</option>
+               <option value="sendquote">Send quote</option>
+               <option value="other">Other</option>
+            </select>  
+            <div *ngIf="f.submitted && subject.invalid "class="invalid-feedback">
+              <div
+                  *ngIf="subject.errors.required ">Please provide Subject</div>
+                  
+                </div>
+           
+            </div>
+          </div>
+
+
+          <div class="form-group col-md-4">
+            <label class="col-sm-5 col-form-label">{{field_name_activities_due_date}}<span
+              class="text-danger font-weight-bold">
+              </span></label>
+              <div class="col-sm-10">
+              <div class="input-group">
+                <input type="date" class="form-control"  [(ngModel)]="activityDetail.due_date" name="due_date" #due_date="ngModel"
+                
+                [ngClass]="{ 'is-invalid': f.submitted && due_date.invalid,
+              'is-valid': f.submitted && due_date.valid}" required>
+              <div *ngIf="f.submitted && due_date.invalid "class="invalid-feedback">
+                <div
+                    *ngIf="due_date.errors.required ">Please provide Due date</div>
+                    
+                  </div>
+                </div>
+              </div>
+               
+          </div>
+          </div>
+          <div class="form-group col-md-4"> 
+            <label class="col-sm-5 col-form-label">{{field_name_activities_comments}}<span
+              class="text-danger font-weight-bold">
+              </span></label>
+            <div class="col-sm-10">
+                <textarea class="form-control" rows="2" name="comments"  [(ngModel)]="activityDetail.comments" #comments="ngModel"  >
+                </textarea>
+            </div>
+          </div>
+
+       </div>
+
+              
+       <div class="form-row">
+        <div class="form-group col-md-3">
+          <label class="col-sm-5 col-form-label">{{field_name_activities_created_by}}
+           
+          </label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="created_by"
+            [(ngModel)]="activityDetail.created_by"
+            #created_by="ngModel" readonly>
+        </div>
+      </div>
+        <div class="form-group col-md-3">
+          <label class="col-sm-5 col-form-label">{{field_name_activities_created_time}}
+            
+          </label>
+          <div class="col-sm-10">
+           
+        
+            <input type="text" class="form-control" name="created_time"  
+             readonly value="{{activityDetail.created_time |  date : dateFormat:'GMT':locale}}">
+             
+          
+          
+        </div>
+        </div>
+        <div class="form-group col-md-3">
+          <label class="col-sm-5 col-form-label">{{field_name_activities_updated_by}}
+           
+          </label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="updated_by"
+              [(ngModel)]="activityDetail.updated_by"
+              #updated_by="ngModel" readonly>
+        </div>
+      </div>
+        <div class="form-group col-md-3">
+          <label class="col-sm-5 col-form-label">{{field_name_activities_updated_time}}
+           
+          </label>
+          <div class="col-sm-10">
+          
+            <input type="text" class="form-control" name="modified_time"  
+             readonly value=" {{activityDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+          
+        </div>
+      </div>
+        </div>
+     
+        
+        <button class="btn btn-danger btn-round text-center pull-right" type="button" appCancelbutton>{{'Cancel'|translate}}</button>
+        <button  class="btn btn-success btn-round text-center pull-right">
+        <span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+          <span *ngIf="isUpdate" >{{'Update'|translate}}</span></button>
+
+  </form>
+
+
+</div>
+</div>
+</div>
+</section>
+
+
+<section *ngIf="this._uiservice.langDataSource.value != 'ar' && this.activityDetail" dir='ltr' >
+
+
+  <div class="container-fluid">
+    <h3 class="text-center">{{field_name_activities_activities_details}}</h3>
+    <div class="card">
+      <div class="card-body">
+    <form class="form-horizontal"  action="javascript:;" name="form" #f="ngForm" (ngSubmit)="f.form.valid &&  onSubmit()">
+      <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Activity Details!</strong>The form has the following errors that need to be corrected
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="card-header">
+        <h2> 
+            <span *ngIf="!isUpdate">{{field_name_activities_add}}</span> 
+            <span *ngIf="isUpdate">{{field_name_activities_update}}</span>
+        </h2>
+        </div>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label class="col-sm-5 col-form-label"> {{field_name_activities_activity_type}}
+                <span
+                class="text-danger font-weight-bold">*
+                </span>
+              </label>
+              <div class="col-sm-10">
+          
+                <select class="custom-select" id="contact" [(ngModel)]="activityDetail.activity_type"   name="activity_type"
+                (change)="selectObject()" name="selectedActivityType"  #activity_type="ngModel"
+                [(ngModel)]="selectedActivityType"  [ngClass]="{ 'is-invalid': f.submitted && activity_type.invalid,
+                'is-valid': f.submitted && activity_type.valid}" required>
+             
+                <option *ngFor="let obj of ACTIVITY_OBJECT_TYPE" [value]="obj">{{obj}}
+                </option>
+                  
+                </select>   
+                <div *ngIf="f.submitted && activity_type.invalid "class="invalid-feedback">
+                  <div
+                      *ngIf="activity_type.errors.required ">Please provide Activity Type</div>
+                     
+                    </div>
+                </div>
+              </div>
+          
+  
+  
+        
+          <!--   <div class="form-group col-md-4" *ngIf="!isUpdate && isContactSelected">
+              <label class="col-sm-5 col-form-label"  >{{'Contacts Name'|translate}}
+                <span class="text-danger font-weight-bold">
+                  *</span>
+              </label>
+              <div class="col-sm-10">
+               
+                <div class="ng-autocomplete">
+                  <ng-autocomplete [data]="contacts" [searchKeyword]="keyword" [itemTemplate]="itemTemplate"
+                    (inputChanged)='onChangeSearch($event)' (selected)='onContactSelect($event)'  historyIdentifier="contacts"
+                    (inputFocused)='onFocused($event)' [notFoundTemplate]="notFoundTemplate" [(ngModel)]="first_name"
+                    name="autompleteName" required  >
+                   
+                  </ng-autocomplete>
+                  
+                  <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.first_name"></a>
+                  </ng-template>
+    
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                    
+                
+                  </ng-template> 
+                 
+                 
+                </div>
+              </div>
+            </div> -->
+           <!--  <div class="form-group col-md-4" *ngIf="!isUpdate && isCampaignSelected">
+              <label class="col-sm-5 col-form-label"  >{{'Campaign Name'|translate}}
+                <span class="text-danger font-weight-bold">
+                  *</span>
+              </label>
+              <div class="col-sm-10">
+               
+                <div class="ng-autocomplete">
+                  <ng-autocomplete [data]="campaigns" [searchKeyword]="searchkeyword" [itemTemplate]="itemTemplate"
+                    (inputChanged)='onChangeSearch($event)' (selected)='oncampaignsSelect($event)'  historyIdentifier="campaigns"
+                    (inputFocused)='onFocused($event)' [notFoundTemplate]="notFoundTemplate" [(ngModel)]="campaign_name"
+                    name="autompleteName" required  >
+                   
+                  </ng-autocomplete>
+                  
+                  <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.campaign_name"></a>
+                  </ng-template>
+    
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                    
+                
+                  </ng-template> 
+                 
+                 
+                </div>
+              </div>
+            </div> -->
+            <div class="form-group col-md-4"  *ngIf="!isUpdate && isLeadSelected" >
+              <label class="col-sm-5 col-form-label"  >{{field_name_leads_first_name}}
+                <span class="text-danger font-weight-bold">
+                  *</span>
+              </label>
+              <div class="col-sm-10">
+                
+                <div class="ng-autocomplete">
+                  <ng-autocomplete [data]="lead" [searchKeyword]="keyword" [itemTemplate]="itemTemplate"
+                    (inputChanged)='onChangeSearch($event)' (selected)='onleadSelect($event)'  historyIdentifier="lead"
+                    (inputFocused)='onFocused($event)' [notFoundTemplate]="notFoundTemplate" [(ngModel)]="first_name"
+                    name="autompleteName" required  >
+                   
+                  </ng-autocomplete>
+                  
+                  <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.first_name"></a>
+                  </ng-template>
+    
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+  
+                  </ng-template> 
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group col-md-4"  *ngIf="!isUpdate && isCustomerSelected" >
+              <label class="col-sm-5 col-form-label"  >{{field_name_customers_first_name}}
+                <span class="text-danger font-weight-bold">
+                  *</span>
+              </label>
+              <div class="col-sm-10">
+                
+                <div class="ng-autocomplete">
+                  <ng-autocomplete [data]="customer" [searchKeyword]="keyword" [itemTemplate]="itemTemplate"
+                    (inputChanged)='onChangeSearch($event)' (selected)='oncustomerSelect($event)'  historyIdentifier="customer"
+                    (inputFocused)='onFocused($event)' [notFoundTemplate]="notFoundTemplate" [(ngModel)]="first_name"
+                    name="autompleteName" required  >
+                   
+                  </ng-autocomplete>
+                  
+                  <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.first_name"></a>
+                  </ng-template>
+    
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+  
+                  </ng-template> 
+                </div>
+              </div>
+            </div>
+          <!--   <div class="form-group col-md-4" *ngIf="isUpdate && isContactSelected">
+              <label class="col-sm-5 col-form-label">{{'Contact Name'|translate}}
+                <span class="text-danger font-weight-bold"> *</span>
+              </label>
+              <div class="col-sm-10">
+              <input type="text" class="form-control" [(ngModel)]="activityDetail.first_name" name="first_name" readonly>
+          </div>
+            </div> -->
+  
+          
+            <div class="form-group col-md-4"  *ngIf="isUpdate && isLeadSelected">
+              <label class="col-sm-5 col-form-label"> {{field_name_leads_first_name}} 
+                <span
+                class="text-danger font-weight-bold">
+                *</span>
+              </label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" name="first_name" pattern="[a-zA-Z0-9 ]+" 
+                 [(ngModel)]="activityDetail.first_name" readonly>
+           
+              </div>
+            </div>
+  
+            <div class="form-group col-md-4"  *ngIf="isUpdate && isCustomerSelected">
+              <label class="col-sm-5 col-form-label">{{field_name_customers_first_name}} 
+                <span
+                class="text-danger font-weight-bold">
+                *</span>
+              </label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" name="first_name" pattern="[a-zA-Z0-9 ]+" 
+                 [(ngModel)]="activityDetail.first_name" readonly>
+           
+              </div>
+            </div>
+  
+           <!--  <div class="form-group col-md-4" *ngIf="isContactSelected" >
+              <label class="col-sm-5 col-form-label"> {{'Contact Email'|translate}} <span
+                class="text-danger font-weight-bold">
+                *</span></label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" [(ngModel)]="activityDetail.email" name="email"
+               #email="ngModel" readonly
+               
+             />
+             </div>
+            </div> -->
+           
+        
+            <div class="form-group col-md-4" *ngIf="isLeadSelected" >
+              <label class="col-sm-5 col-form-label"> {{field_name_leads_email}} <span
+                class="text-danger font-weight-bold">
+                *</span></label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" [(ngModel)]="activityDetail.email" name="email"
+                #email="ngModel"  readonly  />
+        
+              </div>
+            </div>
+            <div class="form-group col-md-4" *ngIf="isCustomerSelected" >
+              <label class="col-sm-5 col-form-label"> {{field_name_customers_email}} <span
+                class="text-danger font-weight-bold">
+                *</span></label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" [(ngModel)]="activityDetail.email" name="email"
+                #email="ngModel"  readonly  />
+        
+              </div>
+            </div>
+          <!--   <div class="form-group col-md-4" *ngIf="isContactSelected">
+              <label class="col-sm-5 col-form-label">{{'Contact Phone'|translate}}<span
+                class="text-danger font-weight-bold">
+                *</span></label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" [(ngModel)]="activityDetail.phone" name="phone"
+                #phone="ngModel" readonly />
+             
+           
+              </div>
+            </div> -->
+            
+            <div class="form-group col-md-4" *ngIf="isLeadSelected">
+              <label class="col-sm-5 col-form-label"> {{field_name_leads_phone}}<span
+                class="text-danger font-weight-bold">
+                *</span></label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" [(ngModel)]="activityDetail.phone" name="phone"
+                 #phone="ngModel" readonly>
+            
+              </div>
+            </div>
+  
+            <div class="form-group col-md-4" *ngIf="isCustomerSelected">
+              <label class="col-sm-5 col-form-label"> {{field_name_customers_phone}}<span
+                class="text-danger font-weight-bold">
+                *</span></label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" [(ngModel)]="activityDetail.phone" name="phone"
+                 #phone="ngModel" readonly>
+            
+              </div>
+            </div>
+           <!--  <div class="form-group col-md-4"  *ngIf="isUpdate && isCampaignSelected">
+              <label class="col-sm-5 col-form-label"> {{'Campaign Name'|translate}} 
+                <span
+                class="text-danger font-weight-bold">
+                *</span>
+              </label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" name="campaign_name"pattern="[a-zA-Z0-9 ]+" 
+                 [(ngModel)]="activityDetail.campaign_name" readonly>
+           
+              </div>
+            </div> -->
+           <!--  <div class="form-group col-md-4" *ngIf="isCampaignSelected">
+              <label class="col-sm-5 col-form-label"> {{'Campaign Owner'|translate}}<span
+                class="text-danger font-weight-bold">
+                *</span></label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" [(ngModel)]="activityDetail.campaign_owner" name="campaign_owner"
+                 #campaign_owner="ngModel" readonly>
+            
+              </div>
+            </div> -->
+           <!--  <div class="form-group col-md-4" >
+              <label class="col-sm-5 col-form-label">{{field_name_activities_end_date}}<span
+                class="text-danger font-weight-bold">
+                *</span></label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" [(ngModel)]="activityDetail.end_date" name="end_date"
+                 #end_date="ngModel" readonly>
+            
+              </div>
+            </div> -->
+          
+    
+        
+          
+  
+            <div class="form-group col-md-4">
+              <label class="col-sm-5 col-form-label">{{field_name_activities_record_type}}
+                <span
+                class="text-danger font-weight-bold">
+                </span>
+              </label>
+              <div class="col-sm-10">
+  
+              <select class="custom-select" [(ngModel)]="activityDetail.record_type" name="record_type"
+              #record_type="ngModel" [ngClass]="{ 'is-invalid': f.submitted && record_type.invalid,
+                 'is-valid': f.submitted && record_type.valid}" required>
+                
+                <option value="Task">Task</option>
+                <option value="Log a call">Log a call</option>
+                <option value="Event">Event</option>
+              </select>   
+              <div *ngIf="f.submitted && record_type.invalid "class="invalid-feedback">
+                <div
+                    *ngIf="record_type.errors.required ">Please provide Record type</div>
+                   
+                  </div>
+            
+              </div>
+            </div>
+            <div class="form-group col-md-4">
+    
+              <label class="col-sm-5 col-form-label">{{field_name_activities_task_name}}<span
+                class="text-danger font-weight-bold">
+                </span></label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" [(ngModel)]="activityDetail.task_name" name="task_name"
+                 #task_name="ngModel"  [ngClass]="{ 'is-invalid': f.submitted && task_name.invalid,
+                 'is-valid': f.submitted && task_name.valid}" required>
+                 <div *ngIf="f.submitted && task_name.invalid "class="invalid-feedback">
+                  <div
+                      *ngIf="task_name.errors.required ">Please provide task name</div>
+                     
+                    </div> 
+               
+              </div>
+            </div>
+            </div>
+                
+            <div class="form-row">
+            <div class="form-group col-md-4">
+              <label class="col-sm-5 col-form-label">{{field_name_activities_status}}
+                <span
+                class="text-danger font-weight-bold">
+                </span>
+              </label>
+              <div class="col-sm-10">
+            
+               <select class="custom-select"  name="status"  [(ngModel)]="activityDetail.status" 
+                #status="ngModel" [ngClass]="{ 'is-invalid': f.submitted && status.invalid,
+                 'is-valid': f.submitted && status.valid}" required>
+                
+              
+                <option value="notstarted">Not started</option>
+                <option value="inprogress">In-progress</option>
+                 <option value="completed">Completed</option>
+                 <option value="Deferred">Deferred</option>
+              </select>  
+              <div *ngIf="f.submitted && status.invalid "class="invalid-feedback">
+                <div
+                    *ngIf="status.errors.required ">Please provide Status</div>
+                    
+                  </div>
+             
+              </div>
+            </div>
+           
+       
+    
+            <div class="form-group col-md-4">
+              <label class="col-sm-5 col-form-label">{{field_name_activities_subject}}
+                <span
+                class="text-danger font-weight-bold">
+                </span>
+              </label>
+              <div class="col-sm-10">
+            
+               <select class="custom-select" name="subject"  [(ngModel)]="activityDetail.subject" 
+                #subject="ngModel"  [ngClass]="{ 'is-invalid': f.submitted && subject.invalid,
+                'is-valid': f.submitted && subject.valid}" required>
+          
+                <option value="call">Call</option>
+                <option value="email">Email</option>
+                 <option value="sendquote">Send quote</option>
+                 <option value="other">Other</option>
+              </select>  
+              <div *ngIf="f.submitted && subject.invalid "class="invalid-feedback">
+                <div
+                    *ngIf="subject.errors.required ">Please provide Subject</div>
+                    
+                  </div>
+             
+              </div>
+            </div>
+  
+  
+            <div class="form-group col-md-4">
+              <label class="col-sm-5 col-form-label">{{field_name_activities_due_date}}<span
+                class="text-danger font-weight-bold">
+                </span></label>
+                <div class="col-sm-10">
+                <div class="input-group">
+                  <input type="date" class="form-control"  [(ngModel)]="activityDetail.due_date" name="due_date" #due_date="ngModel"
+                  
+                  [ngClass]="{ 'is-invalid': f.submitted && due_date.invalid,
+                'is-valid': f.submitted && due_date.valid}" required>
+                <div *ngIf="f.submitted && due_date.invalid "class="invalid-feedback">
+                  <div
+                      *ngIf="due_date.errors.required ">Please provide Due date</div>
+                      
+                    </div>
+                  </div>
+                </div>
+                 
+            </div>
+            </div>
+            <div class="form-group col-md-4"> 
+              <label class="col-sm-5 col-form-label">{{field_name_activities_comments}}<span
+                class="text-danger font-weight-bold">
+                </span></label>
+              <div class="col-sm-10">
+                  <textarea class="form-control" rows="2" name="comments"  [(ngModel)]="activityDetail.comments" #comments="ngModel"  >
+                  </textarea>
+              </div>
+            </div>
+  
+         </div>
+  
+                
+         <div class="form-row">
+          <div class="form-group col-md-3">
+            <label class="col-sm-5 col-form-label">{{field_name_activities_created_by}}
+             
+            </label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="created_by"
+              [(ngModel)]="activityDetail.created_by"
+              #created_by="ngModel" readonly>
+          </div>
+        </div>
+          <div class="form-group col-md-3">
+            <label class="col-sm-5 col-form-label">{{field_name_activities_created_time}}
+              
+            </label>
+            <div class="col-sm-10">
+             
+          
+              <input type="text" class="form-control" name="created_time"  
+               readonly value="{{activityDetail.created_time |  date : dateFormat:'GMT':locale}}">
+               
+            
+            
+          </div>
+          </div>
+          <div class="form-group col-md-3">
+            <label class="col-sm-5 col-form-label">{{field_name_activities_updated_by}}
+             
+            </label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="updated_by"
+                [(ngModel)]="activityDetail.updated_by"
+                #updated_by="ngModel" readonly>
+          </div>
+        </div>
+          <div class="form-group col-md-3">
+            <label class="col-sm-5 col-form-label">{{field_name_activities_updated_time}}
+             
+            </label>
+            <div class="col-sm-10">
+            
+              <input type="text" class="form-control" name="modified_time"  
+               readonly value=" {{activityDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+            
+          </div>
+        </div>
+          </div>
+       
+          
+          <button class="btn btn-danger btn-round text-center pull-right" type="button" appCancelbutton>{{'Cancel'|translate}}</button>
+          <button  class="btn btn-success btn-round text-center pull-right">
+          <span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+            <span *ngIf="isUpdate" >{{'Update'|translate}}</span></button>
+  
+    </form>
+  
+  
+  </div>
+  </div>
+  </div>
+  </section> 

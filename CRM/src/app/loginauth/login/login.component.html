@@ -1,0 +1,578 @@
+
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' class="login">
+<div class="container-fluid">
+  <div class="row no-gutter">
+    <div class="col-md-6 ">
+      <div class="login d-flex align-items-center py-5">
+
+          <!-- Demo content-->
+          <div class="container">
+              <div class="row">
+                  <div class="col-lg-10 col-xl-7 mx-auto">
+                    <div class="col-md-3" class="imageLeft">
+                  
+                      <img src="../../../assets/website/318x318.png"/>
+                    
+                    </div>
+
+                     <!--  <p class="text-muted mb-4">Create a login split page using Bootstrap 4.</p> -->
+                     <div class="card-body">
+                      <form class="auth__form" autocomplete="on" name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+                      
+                        <div class="d-flex justify-content-end social_icon">
+                        
+                    
+
+                          <div class="col-md-2">
+                            <div class="lang-image"></div>
+                          </div>
+                          
+                            
+                        <!--     <select placeholder="preferred_language" class="form-control" name="preferred_language"
+                            [(ngModel)]="preferred_language" (change)="onLanguageSelect($event)">
+                            <option *ngFor="let obj of PICKLIST_PREFERRED_LANGUAGE_ARRAY" [value]="obj.id">
+                              {{obj.name}}</option>
+                          </select> -->
+                          
+
+
+                          <div class="col-auto">
+                            <select class="custom-select"  (change)="onLanguageSelect($event)" name="myLanguage" [(ngModel)]="myLanguage" style="height: 30px;">
+                            
+                              <option value="en">EN</option>
+                                <option value="ar">AR</option>
+                                <option value="es">ES</option>
+                                <option value="zh">ZH</option>
+                                <option value="fr">FR</option>
+                                <option value="ru">RU</option>
+                                <option value="ko">KO</option>
+                                <option value="ja">JA</option>
+                                <option value="tr">TR</option>
+                              
+                               
+                              </select> 
+                          </div>
+                      
+                            </div>
+                            <br>
+                        <div class="input-group form-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-user" style="color: white;"></i></span>
+                          </div>
+                          <input type="email" class="form-control" [(ngModel)]="userModel.email" name="email"  
+                          #email="ngModel"[placeholder]="'Your Email Address'" 
+                          pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required />
+                          <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+                            <div *ngIf="email.errors.required"> Please provide Email</div>
+                        <div *ngIf="email.errors.pattern">Email format should be <small  class="text-success"><b>jhon@abc.com</b></small>
+                        </div>
+                        </div>
+                          
+                        </div>
+                        <div class="input-group form-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-key" style="color: white;"></i></span>
+                          </div>
+                          <input [type]="fieldTextType ? 'text' : 'password'" class="form-control" [(ngModel)]="userModel.password" 
+                          name="password" #password="ngModel" [placeholder]="'Password'"  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                          [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" required />
+                         
+                        <span class="md-line"></span>
+                        <div class="input-group-append">
+                        <span class="input-group-text">
+                        <i
+                        class="fa"
+                        [ngClass]="{
+                        'fa-eye-slash': !fieldTextType,
+                        'fa-eye': fieldTextType
+                        }"
+                        (click)="toggleFieldTextType()"
+                        ></i>
+                        </span></div>
+                        <div *ngIf="f.submitted && password.invalid" class="invalid-feedback">
+                          <div  *ngIf="password.errors.required">Please provide password</div>
+                           <div *ngIf="password.errors.pattern">Password must contain minimum eight characters, at least one uppercase letter, one lowercase letter, 
+                             one number and one special character</div>
+                          
+                  
+                        </div>
+                      
+                      </div>
+                      
+
+                      
+                      <!--   <div class="row align-items-center remember">
+                          <input type="checkbox">Remember Me
+                        </div> -->
+                        <button type="submit" value="Login" [disabled]="this.clicked" class="btn login_btn btn-block">
+                          SIGN IN</button>
+                       
+                      
+                       
+                       
+                      </form>
+                      </div>
+                  </div>
+              </div>
+          </div><!-- End -->
+ 
+      </div>
+  </div><!-- End -->
+      <!-- The image half -->
+      <div class="col-md-6 d-none d-md-flex bg-image"></div>
+
+
+
+     
+
+  </div>
+</div>
+</section>
+
+
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir='ltr' class="login">
+  <div class="container-fluid">
+    <div class="row no-gutter">
+      <div class="col-md-6 ">
+        <div class="login d-flex align-items-center py-5">
+  
+            <!-- Demo content-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-10 col-xl-7 mx-auto">
+                    
+                     <div class="col-md-3" class="imageLeft">
+                  
+                      <img src="../../../assets/website/318x318.png"/>
+                    
+                    </div>
+  
+                       <!--  <p class="text-muted mb-4">Create a login split page using Bootstrap 4.</p> -->
+                       <div class="card-body">
+                        <form class="auth__form" autocomplete="on" name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+                        
+                          <div class="d-flex justify-content-end social_icon">
+                          
+                      
+                         
+                              
+                          <!--     <select placeholder="preferred_language" class="form-control" name="preferred_language"
+                              [(ngModel)]="preferred_language" (change)="onLanguageSelect($event)">
+                              <option *ngFor="let obj of PICKLIST_PREFERRED_LANGUAGE_ARRAY" [value]="obj.id">
+                                {{obj.name}}</option>
+                            </select> -->
+                            
+
+                            
+                            <div class="col-auto">
+                              <select class="custom-select"  (change)="onLanguageSelect($event)" name="myLanguage" [(ngModel)]="myLanguage" style="height: 30px;">
+                              
+                                <option value="en">EN</option>
+                                  <option value="ar">AR</option>
+                                  <option value="es">ES</option>
+                                  <option value="zh">ZH</option>
+                                  <option value="fr">FR</option>
+                                  <option value="ru">RU</option>
+                                  <option value="ko">KO</option>
+                                  <option value="ja">JA</option>
+                                  <option value="tr">TR</option>
+                                
+                                 
+                                </select> 
+                            </div>
+                        
+                              </div>
+                              <br>
+                          <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-user" style="color: white;"></i></span>
+                            </div>
+                            <input type="email" class="form-control" [(ngModel)]="userModel.email" name="email"  
+                            #email="ngModel"[placeholder]="'Your Email Address'" 
+                            pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required />
+                            <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+                              <div *ngIf="email.errors.required"> Please provide Email</div>
+                          <div *ngIf="email.errors.pattern">Email format should be <small  class="text-success"><b>jhon@abc.com</b></small>
+                          </div>
+                          </div>
+                            
+                          </div>
+                          <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-key" style="color: white;"></i></span>
+                            </div>
+                            <input [type]="fieldTextType ? 'text' : 'password'" class="form-control" [(ngModel)]="userModel.password" 
+                            name="password" #password="ngModel"  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                            [placeholder]="'Password'" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" required />
+                           
+                          <span class="md-line"></span>
+                          <div class="input-group-append">
+                          <span class="input-group-text">
+                          <i
+                          class="fa"
+                          [ngClass]="{
+                          'fa-eye-slash': !fieldTextType,
+                          'fa-eye': fieldTextType
+                          }"
+                          (click)="toggleFieldTextType()"
+                          ></i>
+                          </span></div>
+                         
+                        <div *ngIf="f.submitted && password.invalid" class="invalid-feedback">
+                          <div  *ngIf="password.errors.required">Please provide password</div>
+                           <div *ngIf="password.errors.pattern">Password must contain minimum eight characters, at least one uppercase letter, one lowercase letter, 
+                             one number and one special character</div>
+                          
+                  
+                        </div>
+                        </div>
+                        
+                        <!--   <div class="row align-items-center remember">
+                            <input type="checkbox">Remember Me
+                          </div> -->
+                        
+                          <button type="submit" value="Login"  [disabled]="this.clicked" class="btn login_btn btn-block">
+                             SIGN IN</button>
+                         
+                         
+                         
+                         
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End -->
+   
+        </div>
+    </div><!-- End -->
+        <!-- The image half -->
+        <div class="col-md-6 d-none d-md-flex bg-image"></div>
+  
+  
+  
+       
+  
+    </div>
+  </div>
+  </section>
+<!-- 
+ <div class="row">
+ 
+  <div class="col-3">
+<img  src="../../../assets/logo.png" alt="">
+<img   class ="lang" src="../../../assets/lang.png" alt="">
+<div class="card-body">
+<form class="auth__form" autocomplete="on" name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+  <div class="d-flex justify-content-end social_icon">
+  
+ 
+      <select placeholder="preferred_language" class="form-control" name="preferred_language"
+      [(ngModel)]="preferred_language" (change)="onLanguageSelect($event)">
+      <option *ngFor="let obj of PICKLIST_PREFERRED_LANGUAGE_ARRAY" [value]="obj.id">
+        {{obj.name}}</option>
+    </select>
+
+      </div>
+  <div class="input-group form-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text"><i class="fa fa-user" style="color: white;"></i></span>
+    </div>
+    <input type="email" class="form-control" [(ngModel)]="userModel.email" name="email"  
+    #email="ngModel"[placeholder]="'Your Email Address'" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required />
+    <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+      <div *ngIf="email.errors.required">Username or Email is required</div>
+    </div>
+    
+  </div>
+  <div class="input-group form-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text"><i class="fa fa-key" style="color: white;"></i></span>
+    </div>
+    <input [type]="fieldTextType ? 'text' : 'password'" class="form-control" [(ngModel)]="userModel.password" 
+    name="password" #password="ngModel" [placeholder]="'Password'" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" required />
+   
+  <span class="md-line"></span>
+  <div class="input-group-append">
+  <span class="input-group-text">
+  <i
+  class="fa"
+  [ngClass]="{
+  'fa-eye-slash': !fieldTextType,
+  'fa-eye': fieldTextType
+  }"
+  (click)="toggleFieldTextType()"
+  ></i>
+  </span></div>
+  <div *ngIf="f.submitted && password.invalid" class="invalid-feedback">
+    <div *ngIf="password.errors.required">Password is required</div>
+</div>
+
+</div>
+
+  <div class="row align-items-center remember">
+    <input type="checkbox">Remember Me
+  </div>
+  <div class="form-group">
+    <input type="submit" value="Login" class="btn float-right login_btn">
+  </div>
+</form>
+</div>
+
+</div>
+<div class="col-3">
+  <img   src="../../../assets/loginimg.png" alt="">
+    </div>
+</div>
+ -->
+
+<!-- 
+
+<div _ngcontent-fwv-c2="" class="selectbox">
+  
+  <select _ngcontent-fwv-c2="" class="langform-control ng-untouched ng-pristine ng-valid " 
+  name="preferred_language" placeholder="preferred_language" ng-reflect-name="preferred_language" ng-reflect-model="en">
+ <option _ngcontent-fwv-c2="" value="en" ng-reflect-value="en"> English</option>
+<option _ngcontent-fwv-c2="" value="ar" ng-reflect-value="ar"> عربى</option></select></div> -->
+
+<!-- 
+<div class="emailinput">
+<div class="inputWithIcon">
+  <input type="text" placeholder="Email">
+  <i class="fa fa-envelope fa-lg fa-fw" aria-hidden="true"></i>
+</div>
+</div>
+
+<div class="passwordinput">
+  <div class="inputWithIcon">
+    <input type="text" placeholder="Password">
+    <i class="fa fa-lock" style="font-size:30px" aria-hidden="true"></i>
+  </div>
+  </div>
+
+
+  <label class="rememberme">
+    <input type="checkbox" value="remember-me">
+    Remember me
+  </label>
+
+  
+  <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+   -->
+
+<!--
+
+
+<div _ngcontent-ngv-c2="" class="enteremail">
+  
+  <div _ngcontent-ngv-c2="" class="input-group-prepend">
+    
+    <span _ngcontent-ngv-c2="" class="input-group-text emailspan">
+      <i _ngcontent-ngv-c2="" class="fa fa-envelope-o" style="color: white;">
+      </i>
+    </span>
+  
+  </div>
+  
+  <input _ngcontent-ngv-c2="" class="form-control emailinput ng-dirty ng-valid ng-touched" name="email" required="" type="email" ng-reflect-klass="form-control" ng-reflect-ng-class="[object Object]" ng-reflect-required="" ng-reflect-name="email" ng-reflect-model="supera@gmail.com" placeholder="Your Email Address"><!--bindings={
+  "ng-reflect-ng-if": "false"
+}</div>
+-->
+
+<!-- 
+<br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' class="login">
+  <div class="auth">
+    <div class="auth__header">
+    
+    <div class="auth__logo">
+    <img height="90"src="../../../assets/single_user.png" alt="">
+    </div>
+    </div>
+    <div class="auth__body">
+
+	<div class="d-flex justify-content-center h-100">
+		<div class="card">
+			<div class="card-header">
+				<h3>Sign In</h3>
+				
+			</div>
+      <br>
+      <br>
+			<div class="card-body">
+       
+        <form class="auth__form" autocomplete="on" name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+          <div class="d-flex justify-content-end social_icon">
+          
+      
+              <select placeholder="preferred_language" class="form-control" name="preferred_language"
+              [(ngModel)]="preferred_language" (change)="onLanguageSelect($event)">
+              <option *ngFor="let obj of PICKLIST_PREFERRED_LANGUAGE_ARRAY" [value]="obj.id">
+                {{obj.name}}</option>
+            </select>
+
+              </div>
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fa fa-user" style="color: white;"></i></span>
+						</div>
+            <input type="email" class="form-control" [(ngModel)]="userModel.email" name="email"  
+            #email="ngModel"[placeholder]="'Your Email Address'" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required />
+            <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+              <div *ngIf="email.errors.required">Username or Email is required</div>
+            </div>
+						
+					</div>
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fa fa-key" style="color: white;"></i></span>
+						</div>
+            <input [type]="fieldTextType ? 'text' : 'password'" class="form-control" [(ngModel)]="userModel.password" 
+            name="password" #password="ngModel" [placeholder]="'Password'" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" required />
+           
+          <span class="md-line"></span>
+          <div class="input-group-append">
+          <span class="input-group-text">
+          <i
+          class="fa"
+          [ngClass]="{
+          'fa-eye-slash': !fieldTextType,
+          'fa-eye': fieldTextType
+          }"
+          (click)="toggleFieldTextType()"
+          ></i>
+          </span></div>
+          <div *ngIf="f.submitted && password.invalid" class="invalid-feedback">
+            <div *ngIf="password.errors.required">Password is required</div>
+        </div>
+        
+        </div>
+				
+					<div class="row align-items-center remember">
+						<input type="checkbox">Remember Me
+					</div>
+					<div class="form-group">
+						<input type="submit" value="Login" class="btn float-right login_btn">
+					</div>
+				</form>
+			</div>
+			<div class="card-footer">
+				<div class="d-flex justify-content-center links">
+					Don't have an account?<a href="#">Sign Up</a>
+				</div>
+				<div class="d-flex justify-content-center">
+					<a href="#">Forgot your password?</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</section> -->
+<!-- 
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir='ltr' class="login">
+  <div class="auth">
+    <div class="auth__header">
+    
+    <div class="auth__logo">
+    <img height="90"src="../../../assets/single_user.png" alt="">
+    </div>
+    </div>
+    <div class="auth__body">
+
+	<div class="d-flex justify-content-center h-100">
+		<div class="card">
+			<div class="card-header">
+				<h3>Sign In</h3>
+				
+			</div>
+      <br>
+      <br>
+			<div class="card-body">
+       
+        <form class="auth__form" autocomplete="on" name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+          <div class="d-flex justify-content-end social_icon">
+          
+       
+              
+              <select placeholder="preferred_language" class="form-control" name="preferred_language"
+              [(ngModel)]="preferred_language" (change)="onLanguageSelect($event)">
+              <option *ngFor="let obj of PICKLIST_PREFERRED_LANGUAGE_ARRAY" [value]="obj.id">
+                {{obj.name}}</option>
+            </select>
+              </div>
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fa fa-user" style="color: white;"></i></span>
+						</div>
+            <input type="email" class="form-control" [(ngModel)]="userModel.email" name="email"  
+            #email="ngModel"[placeholder]="'Your Email Address'" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required />
+            <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+              <div *ngIf="email.errors.required">Username or Email is required</div>
+            </div>
+						
+					</div>
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fa fa-key" style="color: white;"></i></span>
+						</div>
+            <input [type]="fieldTextType ? 'text' : 'password'" class="form-control" [(ngModel)]="userModel.password" 
+            name="password" #password="ngModel" [placeholder]="'Password'" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" required />
+           
+          <span class="md-line"></span>
+          <div class="input-group-append">
+          <span class="input-group-text">
+          <i
+          class="fa"
+          [ngClass]="{
+          'fa-eye-slash': !fieldTextType,
+          'fa-eye': fieldTextType
+          }"
+          (click)="toggleFieldTextType()"
+          ></i>
+          </span></div>
+          <div *ngIf="f.submitted && password.invalid" class="invalid-feedback">
+            <div *ngIf="password.errors.required">Password is required</div>
+        </div>
+        
+        </div>
+				
+					<div class="row align-items-center remember">
+						<input type="checkbox">Remember Me
+					</div>
+					<div class="form-group">
+						<input type="submit" value="Login" class="btn float-right login_btn">
+					</div>
+				</form>
+			</div>
+			<div class="card-footer">
+				<div class="d-flex justify-content-center links">
+					Don't have an account?<a href="#">Sign Up</a>
+				</div>
+				<div class="d-flex justify-content-center">
+					<a href="#">Forgot your password?</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</section> -->
+

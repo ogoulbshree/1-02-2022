@@ -1,0 +1,3134 @@
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir="ltr"  class="mainView">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand logo">
+      <img src="./../../../assets/website/159x159.png"
+    /></a>
+
+    <!-- <button
+      class="navbar-toggler"
+      type="button"
+     (click)="isMenuCollapse = !isMenuCollapse"
+     
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      (click)="toggleNavbar()"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button> -->
+
+    <div
+    >
+      <div class="container">
+        <div class="col-md-2">
+          <select
+          style="font-weight: bold;"
+          class="custom-select custom-select-lg mr-sm-2"
+            id="modules"
+            (change)="onChangeDashboradType($event)"
+            [(ngModel)]="currentDashboard"
+          >
+            <option value="sales" *ngIf="flagShowsales" selected>Sales</option>
+            <option value="service" *ngIf="flagShowservice">Service</option>
+            <option value="marketing" *ngIf="flagShowmarketing">
+              Marketing
+            </option>
+            <option value="inventory" *ngIf="flagShowInventory">
+              Inventory
+            </option>
+         
+            <option value="hrms" *ngIf="flagShowhrms" selected>HRMS</option>
+            <option value="helpdesk" *ngIf="flagShowhelpdesk">Help Desk</option>
+            <option value="ogoul" *ngIf="flagShowogoul" selected>Ogoul</option>
+            <option value="website-page" *ngIf="flagShowWebsite">
+                Website
+              </option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <div class="az-header-center">
+            <div
+              class="ng-autocomplete"
+              *ngIf="this.currentDashboard == 'sales'"
+              style="direction:ltr"
+            >
+              <ng-autocomplete
+                #filterName
+                [data]="searchResultsSales"
+                [searchKeyword]="keyword"
+                (selected)="selectEvent('sales', $event)"
+                (inputChanged)="onChangeSearch($event)"
+                (inputFocused)="onFocused($event)"
+                historyIdentifier="searchResultsSales"
+                [itemTemplate]="itemTemplate"
+              >
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate let-item>
+                <a [innerHTML]="item.global_search"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+              <button class="btn" (click)="onSearchByWord(filterName, 'sales')">
+                <i class="fa fa-search"></i>
+              </button>
+              <span *ngIf="noDataErrorFlag" style="color:red">Please Enter the data</span>
+              <span *ngIf="noEntryFoundErrorFlag" style="color:red">No data found</span>
+            </div>
+            <div
+              class="ng-autocomplete"
+              *ngIf="this.currentDashboard == 'marketing'"
+            >
+              <ng-autocomplete
+                #filterNameMarketing
+                [data]="searchResultsMarketing"
+                [searchKeyword]="keyword"
+                (selected)="selectEvent('marketing', $event)"
+                (inputChanged)="onChangeSearch($event)"
+                (inputFocused)="onFocused($event)"
+                [itemTemplate]="itemTemplate"
+                historyIdentifier="searchResultsMarketing"
+              >
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate let-item>
+                <a [innerHTML]="item.global_search"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+              <button
+                class="btn"
+                (click)="onSearchByWord(filterNameMarketing, 'marketing')"
+              >
+                <i class="fa fa-search"></i>
+              </button>
+              <span *ngIf="noDataErrorFlag" style="color:red">Please Enter the data</span>
+              <span *ngIf="noEntryFoundErrorFlag" style="color:red">No data found</span>
+            </div>
+            <div
+              class="ng-autocomplete"
+              *ngIf="this.currentDashboard == 'service'"
+            >
+              <ng-autocomplete
+                #filterNameService
+                [data]="searchResultsService"
+                [searchKeyword]="keyword"
+                (selected)="selectEvent('service', $event)"
+                (inputChanged)="onChangeSearch($event)"
+                (inputFocused)="onFocused($event)"
+                historyIdentifier="searchResultsService"
+                [itemTemplate]="itemTemplate"
+              >
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate let-item>
+                <a [innerHTML]="item.global_search"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+              <button
+                class="btn"
+                (click)="onSearchByWord(filterNameService, 'service')"
+              >
+                <i class="fa fa-search"></i>
+              </button>
+              <span *ngIf="noDataErrorFlag" style="color:red">Please Enter the data</span>
+              <span *ngIf="noEntryFoundErrorFlag" style="color:red">No data found</span>
+            </div>
+            <div
+              class="ng-autocomplete"
+              *ngIf="this.currentDashboard == 'inventory'"
+            >
+              <ng-autocomplete
+                #filterNameInventory
+                [data]="searchResultsInventory"
+                [searchKeyword]="keyword"
+                (selected)="selectEvent('inventory', $event)"
+                (inputChanged)="onChangeSearch($event)"
+                (inputFocused)="onFocused($event)"
+                historyIdentifier="searchResultsService"
+                [itemTemplate]="itemTemplate"
+              >
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate let-item>
+                <a [innerHTML]="item.global_search"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+              <button
+                class="btn"
+                (click)="onSearchByWord(filterNameInventory, 'inventory')"
+              >
+                <i class="fa fa-search"></i>
+              </button>
+              <span *ngIf="noDataErrorFlag" style="color:red">Please Enter the data</span>
+              <span *ngIf="noEntryFoundErrorFlag" style="color:red">No data found</span>
+            </div>
+            <div
+              class="ng-autocomplete"
+              *ngIf="this.currentDashboard == 'hrms'"
+            >
+              <ng-autocomplete
+                #filterNameHrms1
+                [data]="searchResultsHrms"
+                [searchKeyword]="keyword"
+                (selected)="selectEvent('hrms', $event)"
+                (inputChanged)="onChangeSearch($event)"
+                (inputFocused)="onFocused($event)"
+                historyIdentifier="searchResultsHrms"
+                [itemTemplate]="itemTemplate"
+              >
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate let-item>
+                <a [innerHTML]="item.global_search"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+              <button
+                class="btn"
+                (click)="onSearchByWord(filterNameHrms1, 'hrms')"
+              >
+                <i class="fa fa-search"></i>
+              </button>
+              <span *ngIf="noDataErrorFlag" style="color:red">Please Enter the data</span>
+              <span *ngIf="noEntryFoundErrorFlag" style="color:red">No data found</span>
+            </div>
+
+
+            <div
+            class="ng-autocomplete"
+            *ngIf="this.currentDashboard == 'helpdesk'"
+          
+          >
+            <ng-autocomplete
+              #filterName
+              [data]="searchResultsSales"
+              [searchKeyword]="keyword"
+              (selected)="selectEvent('sales', $event)"
+              (inputChanged)="onChangeSearch($event)"
+              (inputFocused)="onFocused($event)"
+              historyIdentifier="searchResultsSales"
+              [itemTemplate]="itemTemplate"
+            >
+            </ng-autocomplete>
+
+            <ng-template #itemTemplate let-item>
+              <a [innerHTML]="item.global_search"></a>
+            </ng-template>
+
+            <ng-template #notFoundTemplate let-notFound>
+              <div [innerHTML]="notFound"></div>
+            </ng-template>
+            <button class="btn" (click)="onSearchByWord(filterName, 'helpdesk')">
+              <i class="fa fa-search"></i>
+            </button>
+            <span *ngIf="noDataErrorFlag" style="color:red">Please Enter the data</span>
+            <span *ngIf="noEntryFoundErrorFlag" style="color:red">No data found</span>
+          </div>
+          </div>
+        </div>
+
+        <div class="col-md-2 lang">
+          <select
+          class="custom-select custom-select-lg mr-sm-2"
+            (change)="onLanguageSelect($event)"
+            [(ngModel)]="myLanguage"
+          >
+            <option value="en">English</option>
+            <option value="ar">Arabic</option>
+            <option value="es">Spanish</option>
+            <option value="zh">Chinese</option>
+            <option value="fr">French</option>
+            <option value="ru">Russian</option>
+            <option value="ko">Korean</option>
+            <option value="ja">Japanese</option>
+            <option value="tr">Turkish</option>
+          </select>
+        </div>
+
+        <div class="col-md-3">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdownMenuLink"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <img
+                  src="../../../assets/user_icon.png"
+                  width="40"
+                  height="40"
+                  class="rounded-circle"
+                />
+                <span>{{ email }}</span>
+              </a>
+              <div
+                class="dropdown-menu"
+                aria-labelledby="navbarDropdownMenuLink"
+              >
+                <a
+                  class="dropdown-item"
+                  [routerLink]="['/loginauth/login']"
+                  style="cursor: pointer"
+                  (click)="logout()"
+                >
+                  <i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a
+                >
+              </div>
+            </li>
+          </ul>
+        </div>
+        <ul
+        class="navbar-nav mr-auto"
+        id="website-page"
+        *ngIf="currentDashboard == 'website-page'"
+      >
+        <li class="nav-item" routerLinkActive="active">
+          <a
+            routerLink="/website/website-page/editformfields"
+            class="nav-link" >
+            <i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "editformfields" | translate }}</a
+          >
+        </li>
+        </ul>
+
+        <ul
+          class="navbar-nav mr-auto"
+          id="sales"
+          *ngIf="currentDashboard == 'sales'"
+        >
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/sales/dashboard" class="nav-link"
+              ><i class="fa fa-tachometer" aria-hidden="true"></i>
+              {{ "Dashboard" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/sales/reports" class="nav-link"
+              ><i class="fa fa-tachometer" aria-hidden="true"></i>
+              {{ "Reports" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/sales/customerlist" class="nav-link"
+              ><i class="fa fa-users" aria-hidden="true"></i
+              >{{ "Customers" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/sales/leadslist" class="nav-link"
+              ><i class="fa fa-filter" aria-hidden="true"></i
+              >{{ "Leads" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/sales/addvisitslist" class="nav-link"
+              ><i class="fa fa-users" aria-hidden="true"></i
+              >{{ "Add Visits" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/sales/shedulevisitslist" class="nav-link"
+              ><i class="fa fa-users" aria-hidden="true"></i
+              >{{ "Schedulevisitsmenu" | translate }}</a
+            >
+          </li>
+
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/sales/deallist" class="nav-link"
+              ><i class="fa fa-handshake-o" aria-hidden="true"></i
+              >{{ "Deals" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/sales/products/productslist" class="nav-link"
+              ><i class="fa fa-shopping-basket" aria-hidden="true"></i
+              >{{ "Product" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/sales/quotationlist" class="nav-link">
+              <i class="fa fa-money" aria-hidden="true"></i
+              >{{ "Quotation" | translate }}</a
+            >
+          </li>
+
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+            *ngIf="flagShowSettings"
+          >
+            <a routerLink="/sales/settings/setting" class="nav-link"
+              ><i class="fa fa-cogs" aria-hidden="true"></i
+              >{{ "Settings" | translate }}</a
+            >
+          </li>
+        </ul>
+
+        <ul
+          class="navbar-nav mr-auto"
+          id="service"
+          *ngIf="currentDashboard == 'service'"
+        >
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/service/dashboard" class="nav-link"
+              ><i class="fa fa-tachometer" aria-hidden="true"></i
+              >{{ "Dashboard" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/service/reports" class="nav-link"
+              ><i class="fa fa-tachometer" aria-hidden="true"></i
+              >{{ "Reports" | translate }}</a
+            >
+          </li>
+
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/service/customerlist" class="nav-link"
+              ><i class="fa fa-file-text" aria-hidden="true"></i
+              >{{ "Customers" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/service/servicefaqlist" class="nav-link"
+              ><i class="fa fa-question" aria-hidden="true"></i
+              >{{ "FAQ" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/service/ticketdetails" class="nav-link"
+              ><i class="fa fa-cogs" aria-hidden="true"></i
+              >{{ "Ticketing" | translate }}</a
+            >
+          </li>
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+            *ngIf="flagShowSettings"
+          >
+            <a routerLink="/service/settings/setting" class="nav-link"
+              ><i class="fa fa-cogs" aria-hidden="true"></i
+              >{{ "Settings" | translate }}</a
+            >
+          </li>
+        </ul>
+
+        <ul
+          class="navbar-nav mr-auto"
+          id="marketing"
+          *ngIf="currentDashboard == 'marketing'"
+        >
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/marketing/marketingdashboard" class="nav-link"
+              ><i class="fa fa-tachometer" aria-hidden="true"></i
+              >{{ "Dashboard" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/marketing/reports" class="nav-link"
+              ><i class="fa fa-tachometer" aria-hidden="true"></i
+              >{{ "Reports" | translate }}</a
+            >
+          </li>
+
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/marketing/contactlist" class="nav-link"
+              ><i class="fa fa-mobile" aria-hidden="true"></i
+              >{{ "Contacts" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/marketing/leadslist" class="nav-link"
+              ><i class="fa fa-filter" aria-hidden="true"></i
+              >{{ "Leads" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/marketing/customerlist" class="nav-link"
+              ><i class="fa fa-users" aria-hidden="true"></i
+              >{{ "Customers" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/marketing/campaignlist" class="nav-link"
+              ><i class="fa fa-bullhorn" aria-hidden="true"></i
+              >{{ "Campaigns" | translate }}</a
+            >
+          </li>
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+            *ngIf="flagShowActivityManagement"
+          >
+            <a
+              routerLink="/marketing/activitymanagement/activitylist"
+              class="nav-link"
+              ><i class="fa fa-tasks" aria-hidden="true"></i
+              >{{ "Activity Management" | translate }}</a
+            >
+          </li>
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+            *ngIf="flagShowSettings"
+          >
+            <a routerLink="/marketing/settings/setting" class="nav-link"
+              ><i class="fa fa-cogs" aria-hidden="true"></i
+              >{{ "Settings" | translate }}</a
+            >
+          </li>
+        </ul>
+
+        <ul
+          class="navbar-nav mr-auto"
+          id="inventory"
+          *ngIf="currentDashboard == 'inventory'"
+        >
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/inventory/dashboard" class="nav-link"
+              ><i class="fa fa-tachometer" aria-hidden="true"></i
+              >{{ "Dashboard" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/inventory/reports" class="nav-link"
+              ><i class="fa fa-tachometer" aria-hidden="true"></i
+              >{{ "Reports" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/inventory/customerslist" class="nav-link"
+              ><i class="fa fa-users" aria-hidden="true"></i
+              >{{ "Customers" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/inventory/supplierslist" class="nav-link"
+              ><i class="fa fa-cogs" aria-hidden="true"></i
+              >{{ "Suppliers" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/inventory/purchaseslist" class="nav-link"
+              ><i class="fa fa-shopping-cart"></i
+              >{{ "Purchases" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/inventory/returnlist" class="nav-link"
+              ><i class="fa fa-shopping-cart"></i>{{ "Returns" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/inventory/expenselist" class="nav-link"
+              ><i class="fa fa-money" aria-hidden="true"></i
+              >{{ "Expenses" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/inventory/invoicelist" class="nav-link"
+              ><i class="fa fa-money" aria-hidden="true"></i
+              >{{ "Invoice" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/inventory/stocklist" class="nav-link"
+              ><i class="fa fa-money" aria-hidden="true"></i
+              >{{ "Products Stock" | translate }}</a
+            >
+          </li>
+
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+            *ngIf="flagShowSettings"
+          >
+            <a routerLink="/inventory/settings/setting" class="nav-link"
+              ><i class="fa fa-cogs" aria-hidden="true"></i
+              >{{ "Settings" | translate }}</a
+            >
+          </li>
+        </ul>
+
+        <ul
+        class="navbar-nav mr-auto"
+        id="hrms"
+        *ngIf="currentDashboard == 'hrms'" >
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="/hrms/dashboard" class="nav-link"
+            ><i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Dashboard" | translate }}</a
+          >
+        </li>
+
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="/hrms/reportlist" class="nav-link"
+            ><i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Reports" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          *ngIf="flagShowEmyloyee"
+        >
+          <a routerLink="/hrms/employeelist" class="nav-link"
+            ><i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Employees" | translate }}</a
+          >
+        </li>
+
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="/hrms/holidaylist" class="nav-link"
+            ><i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Holidays" | translate }}</a
+          >
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="/hrms/leavelist" class="nav-link"
+            ><i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Leaves" | translate }}</a
+          >
+        </li>
+
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="/hrms/noticetablist" class="nav-link"
+            ><i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Notice Board" | translate }}</a
+          >
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="/hrms/traininglist" class="nav-link"
+            ><i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Trainings" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          *ngIf="flagShowProject"
+        >
+          <a routerLink="/hrms/projectlist" class="nav-link"
+            ><i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Projects" | translate }}</a
+          >
+        </li>
+
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="/hrms/calendar" class="nav-link">
+            <i class="fa fa-money" aria-hidden="true"></i
+            >{{ "Calendar" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          *ngIf="flagShowSettingsHrms"
+        >
+          <a routerLink="/hrms/settings/setting" class="nav-link"
+            ><i class="fa fa-cogs" aria-hidden="true"></i
+            >{{ "Settings" | translate }}</a
+          >
+        </li>
+      </ul>
+
+        <ul
+          class="navbar-nav mr-auto"
+          id="ogoul"
+          *ngIf="currentDashboard == 'ogoul'"
+        >
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/ogoul/dashboard" class="nav-link">
+              <i class="fa fa-tachometer" aria-hidden="true"></i
+              >{{ "Dashboard" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/ogoul/contactedusers" class="nav-link">
+              <i class="fa fa-tachometer" aria-hidden="true"></i
+              >{{ "Contacted Users" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/ogoul/requesteddemo" class="nav-link">
+              <i class="fa fa-tachometer" aria-hidden="true"></i
+              >{{ "Requested Demo" | translate }}</a
+            >
+          </li>
+
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/ogoul/ticketdetails" class="nav-link">
+              <i class="fa fa-ticket" aria-hidden="true"></i
+              >{{ "Ticketing" | translate }}</a
+            >
+          </li>
+
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/ogoul/surveyslist" class="nav-link"
+              ><i class="fa fa-cogs" aria-hidden="true"></i>Surveys</a
+            >
+          </li>
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+            *ngIf="flagShowSettings"
+          >
+            <a routerLink="/ogoul/settings/setting" class="nav-link"
+              ><i class="fa fa-cogs" aria-hidden="true"></i
+              >{{ "Settings" | translate }}</a
+            >
+          </li>
+        </ul>
+
+
+        <ul
+        class="navbar-nav mr-auto"
+        id="helpdesk"
+        *ngIf="currentDashboard == 'helpdesk'"
+      >
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="/helpdesk/dashboard" class="nav-link">
+            <i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Dashboard" | translate }}</a
+          >
+        </li>
+
+        <li class="nav-item" routerLinkActive="active"  >
+          <a routerLink="/helpdesk/customerlist" class="nav-link" >
+            <i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Customers" | translate }}</a
+          >
+        </li>
+        <li class="nav-item" routerLinkActive="active" >
+          <a routerLink="/helpdesk/leadslist" class="nav-link" >
+            <i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Leads" | translate }}</a
+          >
+        </li>
+  
+        <li class="nav-item" routerLinkActive="active" >
+          <a routerLink="/helpdesk/ticketslist" class="nav-link" >
+            <i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "tickets" | translate }}</a
+          >
+        </li>
+
+       
+      
+      </ul>
+
+
+
+       
+      </div>
+    </div>
+  </nav>
+</section>
+<section
+  *ngIf="this._uiservice.langDataSource.value != 'ar'"
+  dir="ltr"
+  class="mobileView"
+>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand">
+      <img src="./../../../assets/website/crmlogonew.png" style="height: 40px"
+    /></a>
+    <select
+      style="width: 100px;font-weight: bold;"
+      class="custom-select mr-sm-2"
+      id="modules"
+      (change)="onChangeDashboradType($event)"
+      [(ngModel)]="currentDashboard"
+    >
+      <option value="sales" *ngIf="flagShowsales">Sales</option>
+      <option value="service" *ngIf="flagShowservice">Service</option>
+      <option value="marketing" *ngIf="flagShowmarketing">Marketing</option>
+      <option value="inventory" *ngIf="flagShowInventory">Inventory</option>
+      <option value="hrms" *ngIf="flagShowhrms">HRMS</option>
+      <option value="helpdesk" *ngIf="flagShowhelpdesk">Help Desk</option>
+      <option value="ogoul" *ngIf="flagShowogoul">Ogoul</option>
+      
+      <option value="website-page" *ngIf="flagShowWebsite">Website</option>
+    </select>
+    <button
+      class="navbar-toggler"
+      type="button"
+      (click)="isMenuCollapse = !isMenuCollapse"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div
+      class="collapse navbar-collapse"
+      id="navbarSupportedContent"
+      [ngClass]="{'collapse': isMenuCollapse}"
+    >
+      <ul class="navbar-nav mr-auto">
+        <ul
+          class="navbar-nav mr-auto"
+          id="sales"
+          *ngIf="currentDashboard == 'sales'"
+        >
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+            (click)="isMenuCollapse = !isMenuCollapse"
+          >
+            <a routerLink="/sales/dashboard" class="nav-link"
+              ><i class="fa fa-tachometer" aria-hidden="true"></i>
+              {{ "Dashboard" | translate }}</a
+            >
+          </li>
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+            (click)="isMenuCollapse = !isMenuCollapse"
+          >
+            <a routerLink="/sales/reports" class="nav-link"
+              ><i class="fa fa-tachometer" aria-hidden="true"></i>
+              {{ "Reports" | translate }}</a
+            >
+          </li>
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+            (click)="isMenuCollapse = !isMenuCollapse"
+          >
+            <a routerLink="/sales/customerlist" class="nav-link"
+              ><i class="fa fa-users" aria-hidden="true"></i
+              >{{ "Customers" | translate }}</a
+            >
+          </li>
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+            (click)="isMenuCollapse = !isMenuCollapse"
+          >
+            <a routerLink="/sales/leadslist" class="nav-link"
+              ><i class="fa fa-filter" aria-hidden="true"></i
+              >{{ "Leads" | translate }}</a
+            >
+          </li>
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+            (click)="isMenuCollapse = !isMenuCollapse"
+          >
+            <a routerLink="/sales/addvisitslist" class="nav-link"
+              ><i class="fa fa-users" aria-hidden="true"></i
+              >{{ "Add Visits" | translate }}</a
+            >
+          </li>
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+            (click)="isMenuCollapse = !isMenuCollapse"
+          >
+            <a routerLink="/sales/shedulevisitslist" class="nav-link"
+              ><i class="fa fa-users" aria-hidden="true"></i
+              >{{ "Schedulevisitsmenu" | translate }}</a
+            >
+          </li>
+
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+            (click)="isMenuCollapse = !isMenuCollapse"
+          >
+            <a routerLink="/sales/deallist" class="nav-link"
+              ><i class="fa fa-handshake-o" aria-hidden="true"></i
+              >{{ "Deals" | translate }}</a
+            >
+          </li>
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+            (click)="isMenuCollapse = !isMenuCollapse"
+          >
+            <a routerLink="/sales/products/productslist" class="nav-link"
+              ><i class="fa fa-shopping-basket" aria-hidden="true"></i
+              >{{ "Product" | translate }}</a
+            >
+          </li>
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+            (click)="isMenuCollapse = !isMenuCollapse"
+          >
+            <a routerLink="/sales/quotationlist" class="nav-link">
+              <i class="fa fa-money" aria-hidden="true"></i
+              >{{ "Quotation" | translate }}</a
+            >
+          </li>
+
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+            (click)="isMenuCollapse = !isMenuCollapse"
+            *ngIf="flagShowSettings"
+          >
+            <a routerLink="/sales/settings/setting" class="nav-link"
+              ><i class="fa fa-cogs" aria-hidden="true"></i
+              >{{ "Settings" | translate }}</a
+            >
+          </li>
+        </ul>
+      </ul>
+      <ul
+        class="navbar-nav mr-auto"
+        id="service"
+        *ngIf="currentDashboard == 'service'"
+      >
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          (click)="isMenuCollapse = !isMenuCollapse"
+        >
+          <a routerLink="/service/dashboard" class="nav-link"
+            ><i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Dashboard" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          (click)="isMenuCollapse = !isMenuCollapse"
+        >
+          <a routerLink="/service/reports" class="nav-link"
+            ><i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Reports" | translate }}</a
+          >
+        </li>
+
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          (click)="isMenuCollapse = !isMenuCollapse"
+        >
+          <a routerLink="/service/customerlist" class="nav-link"
+            ><i class="fa fa-file-text" aria-hidden="true"></i
+            >{{ "Customers" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          (click)="isMenuCollapse = !isMenuCollapse"
+        >
+          <a routerLink="/service/servicefaqlist" class="nav-link"
+            ><i class="fa fa-question" aria-hidden="true"></i
+            >{{ "FAQ" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          (click)="isMenuCollapse = !isMenuCollapse"
+        >
+          <a routerLink="/service/ticketdetails" class="nav-link"
+            ><i class="fa fa-cogs" aria-hidden="true"></i
+            >{{ "Ticketing" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          (click)="isMenuCollapse = !isMenuCollapse"
+          *ngIf="flagShowSettings"
+        >
+          <a routerLink="/service/settings/setting" class="nav-link"
+            ><i class="fa fa-cogs" aria-hidden="true"></i
+            >{{ "Settings" | translate }}</a
+          >
+        </li>
+      </ul>
+
+      <ul
+        class="navbar-nav mr-auto"
+        id="marketing"
+        *ngIf="currentDashboard == 'marketing'"
+      >
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          (click)="isMenuCollapse = !isMenuCollapse"
+        >
+          <a routerLink="/marketing/marketingdashboard" class="nav-link"
+            ><i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Dashboard" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          (click)="isMenuCollapse = !isMenuCollapse"
+        >
+          <a routerLink="/marketing/reports" class="nav-link"
+            ><i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Reports" | translate }}</a
+          >
+        </li>
+
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          (click)="isMenuCollapse = !isMenuCollapse"
+        >
+          <a routerLink="/marketing/contactlist" class="nav-link"
+            ><i class="fa fa-mobile" aria-hidden="true"></i
+            >{{ "Contacts" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/marketing/leadslist" class="nav-link"
+            ><i class="fa fa-filter" aria-hidden="true"></i
+            >{{ "Leads" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/marketing/customerlist" class="nav-link"
+            ><i class="fa fa-users" aria-hidden="true"></i
+            >{{ "Customers" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/marketing/campaignlist" class="nav-link"
+            ><i class="fa fa-bullhorn" aria-hidden="true"></i
+            >{{ "Campaigns" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+          *ngIf="flagShowActivityManagement"
+        >
+          <a
+            routerLink="/marketing/activitymanagement/activitylist"
+            class="nav-link"
+            ><i class="fa fa-tasks" aria-hidden="true"></i
+            >{{ "Activity Management" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+          *ngIf="flagShowSettings"
+        >
+          <a routerLink="/marketing/settings/setting" class="nav-link"
+            ><i class="fa fa-cogs" aria-hidden="true"></i
+            >{{ "Settings" | translate }}</a
+          >
+        </li>
+      </ul>
+
+      <ul
+        class="navbar-nav mr-auto"
+        id="inventory"
+        *ngIf="currentDashboard == 'inventory'"
+      >
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/inventory/dashboard" class="nav-link"
+            ><i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Dashboard" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/inventory/reports" class="nav-link"
+            ><i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Reports" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/inventory/customerslist" class="nav-link"
+            ><i class="fa fa-users" aria-hidden="true"></i
+            >{{ "Customers" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/inventory/supplierslist" class="nav-link"
+            ><i class="fa fa-cogs" aria-hidden="true"></i
+            >{{ "Suppliers" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/inventory/purchaseslist" class="nav-link"
+            ><i class="fa fa-shopping-cart"></i>{{ "Purchases" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/inventory/returnlist" class="nav-link"
+            ><i class="fa fa-shopping-cart"></i>{{ "Returns" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/inventory/expenselist" class="nav-link"
+            ><i class="fa fa-money" aria-hidden="true"></i
+            >{{ "Expenses" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/inventory/invoicelist" class="nav-link"
+            ><i class="fa fa-money" aria-hidden="true"></i
+            >{{ "Invoice" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/inventory/stocklist" class="nav-link"
+            ><i class="fa fa-money" aria-hidden="true"></i
+            >{{ "Products Stock" | translate }}</a
+          >
+        </li>
+
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+          *ngIf="flagShowSettings"
+        >
+          <a routerLink="/inventory/settings/setting" class="nav-link"
+            ><i class="fa fa-cogs" aria-hidden="true"></i
+            >{{ "Settings" | translate }}</a
+          >
+        </li>
+      </ul>
+      <ul
+      class="navbar-nav mr-auto"
+      id="hrms"
+      *ngIf="currentDashboard == 'hrms'"
+    >
+      <li class="nav-item" routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse">
+        <a routerLink="/hrms/dashboard" class="nav-link"
+          ><i class="fa fa-tachometer" aria-hidden="true"></i
+          >{{ "Dashboard" | translate }}</a
+        >
+      </li>
+
+      <li class="nav-item" routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse">
+        <a routerLink="/hrms/reportlist" class="nav-link"
+          ><i class="fa fa-tachometer" aria-hidden="true"></i
+          >{{ "Reports" | translate }}</a
+        >
+      </li>
+      <li
+        class="nav-item"
+        routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" 
+        *ngIf="flagShowEmyloyee"
+      >
+        <a routerLink="/hrms/employeelist" class="nav-link"
+          ><i class="fa fa-tachometer" aria-hidden="true"></i
+          >{{ "Employees" | translate }}</a
+        >
+      </li>
+
+      <li class="nav-item" routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" >
+        <a routerLink="/hrms/holidaylist" class="nav-link"
+          ><i class="fa fa-tachometer" aria-hidden="true"></i
+          >{{ "Holidays" | translate }}</a
+        >
+      </li>
+      <li class="nav-item" routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" >
+        <a routerLink="/hrms/leavelist" class="nav-link"
+          ><i class="fa fa-tachometer" aria-hidden="true"></i
+          >{{ "Leaves" | translate }}</a
+        >
+      </li>
+
+      <li class="nav-item" routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" >
+        <a routerLink="/hrms/noticetablist" class="nav-link"
+          ><i class="fa fa-tachometer" aria-hidden="true"></i
+          >{{ "Notice Board" | translate }}</a
+        >
+      </li>
+      <li class="nav-item" routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" >
+        <a routerLink="/hrms/traininglist" class="nav-link"
+          ><i class="fa fa-tachometer" aria-hidden="true"></i
+          >{{ "Trainings" | translate }}</a
+        >
+      </li>
+      <li
+        class="nav-item"
+        routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" 
+        *ngIf="flagShowProject"
+      >
+        <a routerLink="/hrms/projectlist" class="nav-link"
+          ><i class="fa fa-tachometer" aria-hidden="true"></i
+          >{{ "Projects" | translate }}</a
+        >
+      </li>
+
+      <li class="nav-item" routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" >
+        <a routerLink="/hrms/calendar" class="nav-link">
+          <i class="fa fa-money" aria-hidden="true"></i
+          >{{ "Calendar" | translate }}</a
+        >
+      </li>
+      <li
+        class="nav-item"
+        routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" 
+        *ngIf="flagShowSettingsHrms"
+      >
+        <a routerLink="/hrms/settings/setting" class="nav-link"
+          ><i class="fa fa-cogs" aria-hidden="true"></i
+          >{{ "Settings" | translate }}</a
+        >
+      </li>
+    </ul>
+
+      <ul
+        class="navbar-nav mr-auto"
+        id="ogoul"
+        *ngIf="currentDashboard == 'ogoul'"
+      >
+        <li
+          class="nav-item"
+          routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" 
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/ogoul/dashboard" class="nav-link">
+            <i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Dashboard" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" 
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/ogoul/contactedusers" class="nav-link">
+            <i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Contacted Users" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" 
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/ogoul/requesteddemo" class="nav-link">
+            <i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Requested Demo" | translate }}</a
+          >
+        </li>
+
+        <li
+          class="nav-item"
+          routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" 
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/ogoul/ticketdetails" class="nav-link">
+            <i class="fa fa-ticket" aria-hidden="true"></i
+            >{{ "Ticketing" | translate }}</a
+          >
+        </li>
+
+        <li
+          class="nav-item"
+          routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" 
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/ogoul/surveyslist" class="nav-link"
+            ><i class="fa fa-cogs" aria-hidden="true"></i>Surveys</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" 
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+          *ngIf="flagShowSettings"
+        >
+          <a routerLink="/ogoul/settings/setting" class="nav-link"
+            ><i class="fa fa-cogs" aria-hidden="true"></i
+            >{{ "Settings" | translate }}</a
+          >
+        </li>
+      </ul>
+
+      <ul
+        class="navbar-nav mr-auto"
+        id="website-page"
+        *ngIf="currentDashboard == 'website-page'"
+      >
+        <li class="nav-item" routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" >
+          <a
+            routerLink="/website/website-page/editformfields"
+            class="nav-link"
+           (click)="isMenuCollapse = !isMenuCollapse"
+           
+          >
+            <i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "editformfields" | translate }}</a
+          >
+        </li>
+      </ul>
+
+
+      <ul
+      class="navbar-nav mr-auto"
+      id="helpdesk"
+      *ngIf="currentDashboard == 'helpdesk'"
+    >
+      <li class="nav-item" routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" >
+        <a routerLink="/helpdesk/dashboard" class="nav-link" (click)="isMenuCollapse = !isMenuCollapse">
+          <i class="fa fa-tachometer" aria-hidden="true"></i
+          >{{ "Dashboard" | translate }}</a
+        >
+      </li>
+      <li class="nav-item" routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" >
+        <a routerLink="/helpdesk/customerlist" class="nav-link" (click)="isMenuCollapse = !isMenuCollapse">
+          <i class="fa fa-tachometer" aria-hidden="true"></i
+          >{{ "Customers" | translate }}</a
+        >
+      </li>
+      <li class="nav-item" routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" >
+        <a routerLink="/helpdesk/leadslist" class="nav-link" (click)="isMenuCollapse = !isMenuCollapse">
+          <i class="fa fa-tachometer" aria-hidden="true"></i
+          >{{ "Leads" | translate }}</a
+        >
+      </li>
+
+      <li class="nav-item" routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" >
+        <a routerLink="/helpdesk/ticketslist" class="nav-link" (click)="isMenuCollapse = !isMenuCollapse">
+          <i class="fa fa-tachometer" aria-hidden="true"></i
+          >{{ "tickets" | translate }}</a
+        >
+      </li>
+     
+    
+    </ul>
+      <div style="display: flex; align-items: flex-end">
+        <select
+          style="width: 100px; margin-bottom: 8px"
+          class="custom-select mr-sm-2"
+          (change)="onLanguageSelect($event)"
+          [(ngModel)]="myLanguage"
+        >
+          <option value="en">English</option>
+          <option value="ar" (click)="isMenuCollapse = !isMenuCollapse">Arabic</option>
+          <option value="es">Spanish</option>
+          <option value="zh">Chinese</option>
+          <option value="fr">French</option>
+          <option value="ru">Russian</option>
+          <option value="ko">Korean</option>
+          <option value="ja">Japanese</option>
+          <option value="tr">Turkish</option></select
+        >&nbsp;&nbsp;&nbsp;&nbsp;
+
+        <div
+          style="display: flex; width: 140px"
+          *ngIf="this.currentDashboard == 'sales'"
+        >
+          <ng-autocomplete
+            #filterName1
+            [data]="searchResultsSales"
+            [searchKeyword]="keyword"
+            (selected)="selectEvent('sales', $event)"
+            (inputChanged)="onChangeSearch($event)"
+            (inputFocused)="onFocused($event)"
+            historyIdentifier="searchResultsSales"
+            [itemTemplate]="itemTemplate"
+          >
+          </ng-autocomplete>
+
+          <ng-template
+            #itemTemplate
+            let-item
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+          >
+            <a [innerHTML]="item.global_search"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+          <button class="btn" (click)="onSearchByWord(filterName1, 'sales')">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+        <div
+          style="display: flex; width: 140px"
+          *ngIf="this.currentDashboard == 'marketing'"
+        >
+          <ng-autocomplete
+            #filterNameMarketing1
+            [data]="searchResultsMarketing"
+            [searchKeyword]="keyword"
+            (selected)="selectEvent('marketing', $event)"
+            (inputChanged)="onChangeSearch($event)"
+            (inputFocused)="onFocused($event)"
+            [itemTemplate]="itemTemplate"
+            historyIdentifier="searchResultsMarketing"
+          >
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.global_search"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+          <button
+            class="btn"
+            (click)="onSearchByWord(filterNameMarketing1, 'marketing')"
+          >
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+        <div
+          style="display: flex; width: 140px"
+          *ngIf="this.currentDashboard == 'service'"
+        >
+          <ng-autocomplete
+            #filterNameService1
+            [data]="searchResultsService"
+            [searchKeyword]="keyword"
+            (selected)="selectEvent('service', $event)"
+            (inputChanged)="onChangeSearch($event)"
+            (inputFocused)="onFocused($event)"
+            historyIdentifier="searchResultsService"
+            [itemTemplate]="itemTemplate"
+          >
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.global_search"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+          <button
+            class="btn"
+            (click)="onSearchByWord(filterNameService1, 'service')"
+          >
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+        <div
+          style="display: flex; width: 140px"
+          *ngIf="this.currentDashboard == 'inventory'"
+        >
+          <ng-autocomplete
+            #filterNameInventory1
+            [data]="searchResultsInventory"
+            [searchKeyword]="keyword"
+            (selected)="selectEvent('inventory', $event)"
+            (inputChanged)="onChangeSearch($event)"
+            (inputFocused)="onFocused($event)"
+            historyIdentifier="searchResultsService"
+            [itemTemplate]="itemTemplate"
+          >
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.global_search"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+          <button
+            class="btn"
+            (click)="onSearchByWord(filterNameInventory1, 'inventory')"
+          >
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+      </div>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdownMenuLink"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <img
+              src="../../../assets/user_icon.png"
+              width="40"
+              height="40"
+              class="rounded-circle"
+            />
+            <span>{{ email }}</span>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a
+              class="dropdown-item"
+              [routerLink]="['/loginauth/login']"
+              style="cursor: pointer"
+              (click)="logout()"
+            >
+              <i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a
+            >
+          </div>
+        </li>
+      </ul>
+      <!-- </form> -->
+    </div>
+  </nav>
+</section>
+<section
+  *ngIf="this._uiservice.langDataSource.value == 'ar'"
+  dir="rtl"
+  class="mobileView"
+>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand">
+      <img src="./../../../assets/website/crmlogonew.png" style="height: 40px"
+    /></a>
+    <select
+      style="width: 100px;font-weight: bold;"
+      class="custom-select mr-sm-2"
+      id="modules"
+      (change)="onChangeDashboradType($event)"
+      [(ngModel)]="currentDashboard"
+    >
+      <option value="sales" *ngIf="flagShowsales">Sales</option>
+      <option value="service" *ngIf="flagShowservice">Service</option>
+      <option value="marketing" *ngIf="flagShowmarketing">Marketing</option>
+      <option value="inventory" *ngIf="flagShowInventory">Inventory</option>
+      <option value="hrms" *ngIf="flagShowhrms">HRMS</option>
+      <option value="helpdesk" *ngIf="flagShowhelpdesk">Help Desk</option>
+      <option value="ogoul" *ngIf="flagShowogoul">Ogoul</option>
+     
+      <option value="website-page" *ngIf="flagShowWebsite">Website</option>
+    </select>
+    <button
+      class="navbar-toggler"
+      type="button"
+      (click)="isMenuCollapse = !isMenuCollapse"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngClass]="{'collapse': isMenuCollapse}" >
+      <ul class="navbar-nav mr-auto" style="text-align: initial">
+        <!-- <li class="nav-item">
+              <a class="nav-link" >Link</a>
+            </li> -->
+        <ul
+          class="navbar-nav mr-auto"
+          id="sales"
+          *ngIf="currentDashboard == 'sales'"
+        >
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+            (click)="isMenuCollapse = !isMenuCollapse"
+          >
+            <a routerLink="/sales/dashboard" class="nav-link"
+              ><i class="fa fa-tachometer" aria-hidden="true"></i>
+              {{ "Dashboard" | translate }}</a
+            >
+          </li>
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+           (click)="isMenuCollapse = !isMenuCollapse"
+           
+          >
+            <a routerLink="/sales/reports" class="nav-link"
+              ><i class="fa fa-tachometer" aria-hidden="true"></i>
+              {{ "Reports" | translate }}</a
+            >
+          </li>
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+           (click)="isMenuCollapse = !isMenuCollapse"
+           
+          >
+            <a routerLink="/sales/customerlist" class="nav-link"
+              ><i class="fa fa-users" aria-hidden="true"></i
+              >{{ "Customers" | translate }}</a
+            >
+          </li>
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+           (click)="isMenuCollapse = !isMenuCollapse"
+           
+          >
+            <a routerLink="/sales/leadslist" class="nav-link"
+              ><i class="fa fa-filter" aria-hidden="true"></i
+              >{{ "Leads" | translate }}</a
+            >
+          </li>
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+           (click)="isMenuCollapse = !isMenuCollapse"
+           
+          >
+            <a routerLink="/sales/addvisitslist" class="nav-link"
+              ><i class="fa fa-users" aria-hidden="true"></i
+              >{{ "Add Visits" | translate }}</a
+            >
+          </li>
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+           (click)="isMenuCollapse = !isMenuCollapse"
+           
+          >
+            <a routerLink="/sales/shedulevisitslist" class="nav-link"
+              ><i class="fa fa-users" aria-hidden="true"></i
+              >{{ "Schedulevisitsmenu" | translate }}</a
+            >
+          </li>
+
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+           (click)="isMenuCollapse = !isMenuCollapse"
+           
+          >
+            <a routerLink="/sales/deallist" class="nav-link"
+              ><i class="fa fa-handshake-o" aria-hidden="true"></i
+              >{{ "Deals" | translate }}</a
+            >
+          </li>
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+           (click)="isMenuCollapse = !isMenuCollapse"
+           
+          >
+            <a routerLink="/sales/products/productslist" class="nav-link"
+              ><i class="fa fa-shopping-basket" aria-hidden="true"></i
+              >{{ "Product" | translate }}</a
+            >
+          </li>
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+           (click)="isMenuCollapse = !isMenuCollapse"
+           
+          >
+            <a routerLink="/sales/quotationlist" class="nav-link">
+              <i class="fa fa-money" aria-hidden="true"></i
+              >{{ "Quotation" | translate }}</a
+            >
+          </li>
+
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+           (click)="isMenuCollapse = !isMenuCollapse"
+           
+            *ngIf="flagShowSettings"
+          >
+            <a routerLink="/sales/settings/setting" class="nav-link"
+              ><i class="fa fa-cogs" aria-hidden="true"></i
+              >{{ "Settings" | translate }}</a
+            >
+          </li>
+        </ul>
+      </ul>
+      <ul
+        class="navbar-nav mr-auto"
+        id="service"
+        *ngIf="currentDashboard == 'service'"
+      >
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/service/dashboard" class="nav-link"
+            ><i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Dashboard" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/service/reports" class="nav-link"
+            ><i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Reports" | translate }}</a
+          >
+        </li>
+
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/service/customerlist" class="nav-link"
+            ><i class="fa fa-file-text" aria-hidden="true"></i
+            >{{ "Customers" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/service/servicefaqlist" class="nav-link"
+            ><i class="fa fa-question" aria-hidden="true"></i
+            >{{ "FAQ" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/service/ticketdetails" class="nav-link"
+            ><i class="fa fa-cogs" aria-hidden="true"></i
+            >{{ "Ticketing" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+          *ngIf="flagShowSettings"
+        >
+          <a routerLink="/service/settings/setting" class="nav-link"
+            ><i class="fa fa-cogs" aria-hidden="true"></i
+            >{{ "Settings" | translate }}</a
+          >
+        </li>
+      </ul>
+
+      <ul
+        class="navbar-nav mr-auto"
+        id="marketing"
+        *ngIf="currentDashboard == 'marketing'"
+      >
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/marketing/marketingdashboard" class="nav-link"
+            ><i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Dashboard" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/marketing/reports" class="nav-link"
+            ><i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Reports" | translate }}</a
+          >
+        </li>
+
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/marketing/contactlist" class="nav-link"
+            ><i class="fa fa-mobile" aria-hidden="true"></i
+            >{{ "Contacts" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/marketing/leadslist" class="nav-link"
+            ><i class="fa fa-filter" aria-hidden="true"></i
+            >{{ "Leads" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/marketing/customerlist" class="nav-link"
+            ><i class="fa fa-users" aria-hidden="true"></i
+            >{{ "Customers" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/marketing/campaignlist" class="nav-link"
+            ><i class="fa fa-bullhorn" aria-hidden="true"></i
+            >{{ "Campaigns" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+          *ngIf="flagShowActivityManagement"
+        >
+          <a
+            routerLink="/marketing/activitymanagement/activitylist"
+            class="nav-link"
+            ><i class="fa fa-tasks" aria-hidden="true"></i
+            >{{ "Activity Management" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+          *ngIf="flagShowSettings"
+        >
+          <a routerLink="/marketing/settings/setting" class="nav-link"
+            ><i class="fa fa-cogs" aria-hidden="true"></i
+            >{{ "Settings" | translate }}</a
+          >
+        </li>
+      </ul>
+
+      <ul
+        class="navbar-nav mr-auto"
+        id="inventory"
+        *ngIf="currentDashboard == 'inventory'"
+      >
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/inventory/dashboard" class="nav-link"
+            ><i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Dashboard" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/inventory/reports" class="nav-link"
+            ><i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Reports" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/inventory/customerslist" class="nav-link"
+            ><i class="fa fa-users" aria-hidden="true"></i
+            >{{ "Customers" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/inventory/supplierslist" class="nav-link"
+            ><i class="fa fa-cogs" aria-hidden="true"></i
+            >{{ "Suppliers" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/inventory/purchaseslist" class="nav-link"
+            ><i class="fa fa-shopping-cart"></i>{{ "Purchases" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/inventory/returnlist" class="nav-link"
+            ><i class="fa fa-shopping-cart"></i>{{ "Returns" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/inventory/expenselist" class="nav-link"
+            ><i class="fa fa-money" aria-hidden="true"></i
+            >{{ "Expenses" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/inventory/invoicelist" class="nav-link"
+            ><i class="fa fa-money" aria-hidden="true"></i
+            >{{ "Invoice" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/inventory/stocklist" class="nav-link"
+            ><i class="fa fa-money" aria-hidden="true"></i
+            >{{ "Products Stock" | translate }}</a
+          >
+        </li>
+
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+          *ngIf="flagShowSettings"
+        >
+          <a routerLink="/inventory/settings/setting" class="nav-link"
+            ><i class="fa fa-cogs" aria-hidden="true"></i
+            >{{ "Settings" | translate }}</a
+          >
+        </li>
+      </ul>
+      <ul
+      class="navbar-nav mr-auto"
+      id="hrms"
+      style="text-align: initial"
+      *ngIf="currentDashboard == 'hrms'"
+    >
+      <li class="nav-item" routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" >
+        <a routerLink="/hrms/dashboard" class="nav-link"
+          ><i class="fa fa-tachometer" aria-hidden="true"></i
+          >{{ "Dashboard" | translate }}</a
+        >
+      </li>
+
+      <li class="nav-item" routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" >
+        <a routerLink="/hrms/reportlist" class="nav-link"
+          ><i class="fa fa-tachometer" aria-hidden="true"></i
+          >{{ "Reports" | translate }}</a
+        >
+      </li>
+      <li
+        class="nav-item"
+        routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" 
+        *ngIf="flagShowEmyloyee"
+      >
+        <a routerLink="/hrms/employeelist" class="nav-link"
+          ><i class="fa fa-tachometer" aria-hidden="true"></i
+          >{{ "Employees" | translate }}</a
+        >
+      </li>
+
+      <li class="nav-item" routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" >
+        <a routerLink="/hrms/holidaylist" class="nav-link"
+          ><i class="fa fa-tachometer" aria-hidden="true"></i
+          >{{ "Holidays" | translate }}</a
+        >
+      </li>
+      <li class="nav-item" routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" >
+        <a routerLink="/hrms/leavelist" class="nav-link"
+          ><i class="fa fa-tachometer" aria-hidden="true"></i
+          >{{ "Leaves" | translate }}</a
+        >
+      </li>
+
+      <li class="nav-item" routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" >
+        <a routerLink="/hrms/noticetablist" class="nav-link"
+          ><i class="fa fa-tachometer" aria-hidden="true"></i
+          >{{ "Notice Board" | translate }}</a
+        >
+      </li>
+      <li class="nav-item" routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" >
+        <a routerLink="/hrms/traininglist" class="nav-link"
+          ><i class="fa fa-tachometer" aria-hidden="true"></i
+          >{{ "Trainings" | translate }}</a
+        >
+      </li>
+      <li
+        class="nav-item"
+        routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" 
+        *ngIf="flagShowProject"
+      >
+        <a routerLink="/hrms/projectlist" class="nav-link"
+          ><i class="fa fa-tachometer" aria-hidden="true"></i
+          >{{ "Projects" | translate }}</a
+        >
+      </li>
+
+      <li class="nav-item" routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" >
+        <a routerLink="/hrms/calendar" class="nav-link">
+          <i class="fa fa-money" aria-hidden="true"></i
+          >{{ "Calendar" | translate }}</a
+        >
+      </li>
+      <li
+        class="nav-item"
+        routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" 
+        *ngIf="flagShowSettingsHrms"
+      >
+        <a routerLink="/hrms/settings/setting" class="nav-link"
+          ><i class="fa fa-cogs" aria-hidden="true"></i
+          >{{ "Settings" | translate }}</a
+        >
+      </li>
+    </ul>
+
+      <ul
+        class="navbar-nav mr-auto"
+        id="ogoul"
+        *ngIf="currentDashboard == 'ogoul'"
+      >
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/ogoul/dashboard" class="nav-link">
+            <i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Dashboard" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/ogoul/contactedusers" class="nav-link">
+            <i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Contacted Users" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/ogoul/requesteddemo" class="nav-link">
+            <i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Requested Demo" | translate }}</a
+          >
+        </li>
+
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/ogoul/ticketdetails" class="nav-link">
+            <i class="fa fa-ticket" aria-hidden="true"></i
+            >{{ "Ticketing" | translate }}</a
+          >
+        </li>
+
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+        >
+          <a routerLink="/ogoul/surveyslist" class="nav-link"
+            ><i class="fa fa-cogs" aria-hidden="true"></i>Surveys</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+         (click)="isMenuCollapse = !isMenuCollapse"
+         
+          *ngIf="flagShowSettings"
+        >
+          <a routerLink="/ogoul/settings/setting" class="nav-link"
+            ><i class="fa fa-cogs" aria-hidden="true"></i
+            >{{ "Settings" | translate }}</a
+          >
+        </li>
+      </ul>
+
+      <ul
+        class="navbar-nav mr-auto"
+        id="website-page"
+        *ngIf="currentDashboard == 'website-page'"
+      >
+        <li class="nav-item" routerLinkActive="active">
+          <a
+            routerLink="/website/website-page/editformfields"
+            class="nav-link"
+           (click)="isMenuCollapse = !isMenuCollapse"
+           
+          >
+            <i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "editformfields" | translate }}</a
+          >
+        </li>
+      </ul>
+      <ul
+      class="navbar-nav mr-auto"
+      id="helpdesk"
+      *ngIf="currentDashboard == 'helpdesk'"
+    >
+      <li class="nav-item" routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" >
+        <a routerLink="/helpdesk/dashboard" class="nav-link" (click)="isMenuCollapse = !isMenuCollapse">
+          <i class="fa fa-tachometer" aria-hidden="true"></i
+          >{{ "Dashboard" | translate }}</a
+        >
+      </li>
+
+      <li class="nav-item" routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" >
+        <a routerLink="/helpdesk/customerlist" class="nav-link" (click)="isMenuCollapse = !isMenuCollapse">
+          <i class="fa fa-tachometer" aria-hidden="true"></i
+          >{{ "Customers" | translate }}</a
+        >
+      </li>
+      <li class="nav-item" routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" >
+        <a routerLink="/helpdesk/leadslist" class="nav-link" (click)="isMenuCollapse = !isMenuCollapse">
+          <i class="fa fa-tachometer" aria-hidden="true"></i
+          >{{ "Leads" | translate }}</a
+        >
+      </li>
+
+      <li class="nav-item" routerLinkActive="active" (click)="isMenuCollapse = !isMenuCollapse" >
+        <a routerLink="/helpdesk/ticketslist" class="nav-link" (click)="isMenuCollapse = !isMenuCollapse">
+          <i class="fa fa-tachometer" aria-hidden="true"></i
+          >{{ "tickets" | translate }}</a
+        >
+      </li>
+     
+    
+    </ul>
+      <div style="display: flex; align-items: flex-end; direction: ltr">
+        <select
+          style="width: 100px; margin-bottom: 8px"
+          class="custom-select mr-sm-2"
+          (change)="onLanguageSelect($event)"
+          [(ngModel)]="myLanguage"
+        >
+          <option value="en">English</option>
+          <option value="ar">Arabic</option>
+          <option value="es">Spanish</option>
+          <option value="zh">Chinese</option>
+          <option value="fr">French</option>
+          <option value="ru">Russian</option>
+          <option value="ko">Korean</option>
+          <option value="ja">Japanese</option>
+          <option value="tr">Turkish</option></select
+        >&nbsp;&nbsp;&nbsp;&nbsp;
+
+        <!-- <div
+          style="display: flex; width: 140px"
+          *ngIf="this.currentDashboard == 'sales'"
+          style="direction:ltr"
+        >
+          <ng-autocomplete
+            #filterName
+            [data]="searchResultsSales"
+            [searchKeyword]="keyword"
+            (selected)="selectEvent('sales', $event)"
+            (inputChanged)="onChangeSearch($event)"
+            (inputFocused)="onFocused($event)"
+            historyIdentifier="searchResultsSales"
+            [itemTemplate]="itemTemplate"
+          >
+          </ng-autocomplete>
+
+          <ng-template
+            #itemTemplate
+            let-item
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+          >
+            <a [innerHTML]="item.global_search"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+          <button class="btn" (click)="onSearchByWord(filterName, 'sales')">
+            <i class="fa fa-search"></i>
+          </button>
+          <span *ngIf="noDataErrorFlag" style="color:red">Please Enter the data</span>
+          <span *ngIf="noEntryFoundErrorFlag" style="color:red">No data found</span>
+        </div> -->
+        <div
+          style="display: flex; width: 140px"
+          *ngIf="this.currentDashboard == 'marketing'"
+        >
+          <ng-autocomplete
+            #filterNameMarketing
+            [data]="searchResultsMarketing"
+            [searchKeyword]="keyword"
+            (selected)="selectEvent('marketing', $event)"
+            (inputChanged)="onChangeSearch($event)"
+            (inputFocused)="onFocused($event)"
+            [itemTemplate]="itemTemplate"
+            historyIdentifier="searchResultsMarketing"
+          >
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.global_search"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+          <button
+            class="btn"
+            (click)="onSearchByWord(filterNameMarketing, 'marketing')"
+          >
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+        <div
+          style="display: flex; width: 140px"
+          *ngIf="this.currentDashboard == 'service'"
+        >
+          <ng-autocomplete
+            #filterNameService
+            [data]="searchResultsService"
+            [searchKeyword]="keyword"
+            (selected)="selectEvent('service', $event)"
+            (inputChanged)="onChangeSearch($event)"
+            (inputFocused)="onFocused($event)"
+            historyIdentifier="searchResultsService"
+            [itemTemplate]="itemTemplate"
+          >
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.global_search"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+          <button
+            class="btn"
+            (click)="onSearchByWord(filterNameService, 'service')"
+          >
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+        <div
+          style="display: flex; width: 140px"
+          *ngIf="this.currentDashboard == 'inventory'"
+        >
+          <ng-autocomplete
+            #filterNameInventory
+            [data]="searchResultsInventory"
+            [searchKeyword]="keyword"
+            (selected)="selectEvent('inventory', $event)"
+            (inputChanged)="onChangeSearch($event)"
+            (inputFocused)="onFocused($event)"
+            historyIdentifier="searchResultsService"
+            [itemTemplate]="itemTemplate"
+          >
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.global_search"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+          <button
+            class="btn"
+            (click)="onSearchByWord(filterNameInventory, 'inventory')"
+          >
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+      </div>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdownMenuLink"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <img
+              src="../../../assets/user_icon.png"
+              width="40"
+              height="40"
+              class="rounded-circle"
+            />
+            <span>{{ email }}</span>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a
+              class="dropdown-item"
+              [routerLink]="['/loginauth/login']"
+              style="cursor: pointer"
+              (click)="logout()"
+            >
+              <i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a
+            >
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</section>
+<section
+  *ngIf="this._uiservice.langDataSource.value == 'ar'"
+  dir="rtl"
+  class="mainView"
+>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand logo">
+      <img src="./../../../assets/website/159x159.png"
+    /></a>
+
+    <!-- <button
+      class="navbar-toggler"
+      type="button"
+     (click)="isMenuCollapse = !isMenuCollapse"
+     
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      (click)="toggleNavbar()"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button> -->
+
+    <div
+    >
+      <div class="container">
+        <div class="col-md-2">
+          <select
+            class="custom-select custom-select-lg mr-sm-2"
+            id="modules"
+            (change)="onChangeDashboradType($event)"
+            [(ngModel)]="currentDashboard"
+          >
+            <option value="sales" *ngIf="flagShowsales">Sales</option>
+            <option value="service" *ngIf="flagShowservice">Service</option>
+            <option value="marketing" *ngIf="flagShowmarketing">
+              Marketing
+            </option>
+            <option value="inventory" *ngIf="flagShowInventory">
+              Inventory
+            </option>
+            <option value="hrms" *ngIf="flagShowhrms">HRMS</option>
+             
+            <option value="helpdesk" *ngIf="flagShowhelpdesk">Help Desk</option>
+            <option value="ogoul" *ngIf="flagShowogoul">Ogoul</option>
+           
+            <option value="website-page" *ngIf="flagShowWebsite">
+              Website
+            </option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <div class="az-header-center">
+            <div
+              class="ng-autocomplete"
+              *ngIf="this.currentDashboard == 'sales'"
+              style="direction:ltr"
+            >
+              <ng-autocomplete
+                #filterName
+                [data]="searchResultsSales"
+                [searchKeyword]="keyword"
+                (selected)="selectEvent('sales', $event)"
+                (inputChanged)="onChangeSearch($event)"
+                (inputFocused)="onFocused($event)"
+                historyIdentifier="searchResultsSales"
+                [itemTemplate]="itemTemplate"
+              >
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate let-item>
+                <a [innerHTML]="item.global_search"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+              <button class="btn" (click)="onSearchByWord(filterName, 'sales')">
+                <i class="fa fa-search"></i>
+              </button>
+              <span *ngIf="noDataErrorFlag" style="color:red">Please Enter the data</span>
+              <span *ngIf="noEntryFoundErrorFlag" style="color:red">No data found</span>
+            </div>
+            <div
+              class="ng-autocomplete"
+              *ngIf="this.currentDashboard == 'marketing'"
+            >
+              <ng-autocomplete
+                #filterNameMarketing
+                [data]="searchResultsMarketing"
+                [searchKeyword]="keyword"
+                (selected)="selectEvent('marketing', $event)"
+                (inputChanged)="onChangeSearch($event)"
+                (inputFocused)="onFocused($event)"
+                [itemTemplate]="itemTemplate"
+                historyIdentifier="searchResultsMarketing"
+              >
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate let-item>
+                <a [innerHTML]="item.global_search"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+              <button
+                class="btn"
+                (click)="onSearchByWord(filterNameMarketing, 'marketing')"
+              >
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+            <div
+              class="ng-autocomplete"
+              *ngIf="this.currentDashboard == 'service'"
+            >
+              <ng-autocomplete
+                #filterNameService
+                [data]="searchResultsService"
+                [searchKeyword]="keyword"
+                (selected)="selectEvent('service', $event)"
+                (inputChanged)="onChangeSearch($event)"
+                (inputFocused)="onFocused($event)"
+                historyIdentifier="searchResultsService"
+                [itemTemplate]="itemTemplate"
+              >
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate let-item>
+                <a [innerHTML]="item.global_search"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+              <button
+                class="btn"
+                (click)="onSearchByWord(filterNameService, 'service')"
+              >
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+            <div
+              class="ng-autocomplete"
+              *ngIf="this.currentDashboard == 'inventory'"
+            >
+              <ng-autocomplete
+                #filterNameInventory
+                [data]="searchResultsInventory"
+                [searchKeyword]="keyword"
+                (selected)="selectEvent('inventory', $event)"
+                (inputChanged)="onChangeSearch($event)"
+                (inputFocused)="onFocused($event)"
+                historyIdentifier="searchResultsInventory"
+                [itemTemplate]="itemTemplate"
+              >
+              </ng-autocomplete>
+
+              <ng-template #itemTemplate let-item>
+                <a [innerHTML]="item.global_search"></a>
+              </ng-template>
+
+              <ng-template #notFoundTemplate let-notFound>
+                <div [innerHTML]="notFound"></div>
+              </ng-template>
+              <button
+                class="btn"
+                (click)="onSearchByWord(filterNameInventory, 'inventory')"
+              >
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+            <div
+            class="ng-autocomplete"
+            *ngIf="this.currentDashboard == 'hrms'"
+          >
+            <ng-autocomplete
+              #filterNameHrms1
+              [data]="searchResultsHrms"
+              [searchKeyword]="keyword"
+              (selected)="selectEvent('hrms', $event)"
+              (inputChanged)="onChangeSearch($event)"
+              (inputFocused)="onFocused($event)"
+              historyIdentifier="searchResultsHrms"
+              [itemTemplate]="itemTemplate"
+            >
+            </ng-autocomplete>
+
+            <ng-template #itemTemplate let-item>
+              <a [innerHTML]="item.global_search"></a>
+            </ng-template>
+
+            <ng-template #notFoundTemplate let-notFound>
+              <div [innerHTML]="notFound"></div>
+            </ng-template>
+            <button
+              class="btn"
+              (click)="onSearchByWord(filterNameHrms1, 'hrms')"
+            >
+              <i class="fa fa-search"></i>
+            </button>
+            <span *ngIf="noDataErrorFlag" style="color:red">Please Enter the data</span>
+            <span *ngIf="noEntryFoundErrorFlag" style="color:red">No data found</span>
+          </div>
+          <div
+          class="ng-autocomplete"
+          *ngIf="this.currentDashboard == 'helpdesk'"
+        
+        >
+          <ng-autocomplete
+            #filterName
+            [data]="searchResultsSales"
+            [searchKeyword]="keyword"
+            (selected)="selectEvent('sales', $event)"
+            (inputChanged)="onChangeSearch($event)"
+            (inputFocused)="onFocused($event)"
+            historyIdentifier="searchResultsSales"
+            [itemTemplate]="itemTemplate"
+          >
+          </ng-autocomplete>
+
+          <ng-template #itemTemplate let-item>
+            <a [innerHTML]="item.global_search"></a>
+          </ng-template>
+
+          <ng-template #notFoundTemplate let-notFound>
+            <div [innerHTML]="notFound"></div>
+          </ng-template>
+          <button class="btn" (click)="onSearchByWord(filterName, 'helpdesk')">
+            <i class="fa fa-search"></i>
+          </button>
+          <span *ngIf="noDataErrorFlag" style="color:red">Please Enter the data</span>
+          <span *ngIf="noEntryFoundErrorFlag" style="color:red">No data found</span>
+        </div>
+
+          </div>
+        </div>
+
+        <div class="col-md-2 lang">
+          <select
+            class="custom-select custom-select-lg mr-sm-2"
+            (change)="onLanguageSelect($event)"
+            [(ngModel)]="myLanguage"
+          >
+            <option value="en">English</option>
+            <option value="ar">Arabic</option>
+            <option value="es">Spanish</option>
+            <option value="zh">Chinese</option>
+            <option value="fr">French</option>
+            <option value="ru">Russian</option>
+            <option value="ko">Korean</option>
+            <option value="ja">Japanese</option>
+            <option value="tr">Turkish</option>
+          </select>
+        </div>
+
+        <div class="col-md-3">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                id="navbarDropdownMenuLink"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <img
+                  src="../../../assets/user_icon.png"
+                  width="40"
+                  height="40"
+                  class="rounded-circle"
+                />
+                <span>{{ email }}</span>
+              </a>
+              <div
+                class="dropdown-menu"
+                aria-labelledby="navbarDropdownMenuLink"
+              >
+                <a
+                  class="dropdown-item"
+                  [routerLink]="['/loginauth/login']"
+                  style="cursor: pointer"
+                  (click)="logout()"
+                >
+                  <i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a
+                >
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <ul
+          class="navbar-nav mr-auto"
+          id="sales"
+          *ngIf="currentDashboard == 'sales'"
+        >
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/sales/dashboard" class="nav-link"
+              ><i class="fa fa-tachometer" aria-hidden="true"></i>
+              {{ "Dashboard" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/sales/reports" class="nav-link"
+              ><i class="fa fa-tachometer" aria-hidden="true"></i>
+              {{ "Reports" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/sales/customerlist" class="nav-link"
+              ><i class="fa fa-users" aria-hidden="true"></i
+              >{{ "Customers" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/sales/leadslist" class="nav-link"
+              ><i class="fa fa-filter" aria-hidden="true"></i
+              >{{ "Leads" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/sales/addvisitslist" class="nav-link"
+              ><i class="fa fa-users" aria-hidden="true"></i
+              >{{ "Add Visits" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/sales/shedulevisitslist" class="nav-link"
+              ><i class="fa fa-users" aria-hidden="true"></i
+              >{{ "Schedulevisitsmenu" | translate }}</a
+            >
+          </li>
+
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/sales/deallist" class="nav-link"
+              ><i class="fa fa-handshake-o" aria-hidden="true"></i
+              >{{ "Deals" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/sales/products/productslist" class="nav-link"
+              ><i class="fa fa-shopping-basket" aria-hidden="true"></i
+              >{{ "Product" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/sales/quotationlist" class="nav-link">
+              <i class="fa fa-money" aria-hidden="true"></i
+              >{{ "Quotation" | translate }}</a
+            >
+          </li>
+
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+            *ngIf="flagShowSettings"
+          >
+            <a routerLink="/sales/settings/setting" class="nav-link"
+              ><i class="fa fa-cogs" aria-hidden="true"></i
+              >{{ "Settings" | translate }}</a
+            >
+          </li>
+        </ul>
+
+        <ul
+          class="navbar-nav mr-auto"
+          id="service"
+          *ngIf="currentDashboard == 'service'"
+        >
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/service/dashboard" class="nav-link"
+              ><i class="fa fa-tachometer" aria-hidden="true"></i
+              >{{ "Dashboard" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/service/reports" class="nav-link"
+              ><i class="fa fa-tachometer" aria-hidden="true"></i
+              >{{ "Reports" | translate }}</a
+            >
+          </li>
+
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/service/customerlist" class="nav-link"
+              ><i class="fa fa-file-text" aria-hidden="true"></i
+              >{{ "Customers" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/service/servicefaqlist" class="nav-link"
+              ><i class="fa fa-question" aria-hidden="true"></i
+              >{{ "FAQ" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/service/ticketdetails" class="nav-link"
+              ><i class="fa fa-cogs" aria-hidden="true"></i
+              >{{ "Ticketing" | translate }}</a
+            >
+          </li>
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+            *ngIf="flagShowSettings"
+          >
+            <a routerLink="/service/settings/setting" class="nav-link"
+              ><i class="fa fa-cogs" aria-hidden="true"></i
+              >{{ "Settings" | translate }}</a
+            >
+          </li>
+        </ul>
+
+        <ul
+          class="navbar-nav mr-auto"
+          id="marketing"
+          *ngIf="currentDashboard == 'marketing'"
+        >
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/marketing/marketingdashboard" class="nav-link"
+              ><i class="fa fa-tachometer" aria-hidden="true"></i
+              >{{ "Dashboard" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/marketing/reports" class="nav-link"
+              ><i class="fa fa-tachometer" aria-hidden="true"></i
+              >{{ "Reports" | translate }}</a
+            >
+          </li>
+
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/marketing/contactlist" class="nav-link"
+              ><i class="fa fa-mobile" aria-hidden="true"></i
+              >{{ "Contacts" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/marketing/leadslist" class="nav-link"
+              ><i class="fa fa-filter" aria-hidden="true"></i
+              >{{ "Leads" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/marketing/customerlist" class="nav-link"
+              ><i class="fa fa-users" aria-hidden="true"></i
+              >{{ "Customers" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/marketing/campaignlist" class="nav-link"
+              ><i class="fa fa-bullhorn" aria-hidden="true"></i
+              >{{ "Campaigns" | translate }}</a
+            >
+          </li>
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+            *ngIf="flagShowActivityManagement"
+          >
+            <a
+              routerLink="/marketing/activitymanagement/activitylist"
+              class="nav-link"
+              ><i class="fa fa-tasks" aria-hidden="true"></i
+              >{{ "Activity Management" | translate }}</a
+            >
+          </li>
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+            *ngIf="flagShowSettings"
+          >
+            <a routerLink="/marketing/settings/setting" class="nav-link"
+              ><i class="fa fa-cogs" aria-hidden="true"></i
+              >{{ "Settings" | translate }}</a
+            >
+          </li>
+        </ul>
+
+        <ul
+          class="navbar-nav mr-auto"
+          id="inventory"
+          *ngIf="currentDashboard == 'inventory'"
+        >
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/inventory/dashboard" class="nav-link"
+              ><i class="fa fa-tachometer" aria-hidden="true"></i
+              >{{ "Dashboard" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/inventory/reports" class="nav-link"
+              ><i class="fa fa-tachometer" aria-hidden="true"></i
+              >{{ "Reports" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/inventory/customerslist" class="nav-link"
+              ><i class="fa fa-users" aria-hidden="true"></i
+              >{{ "Customers" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/inventory/supplierslist" class="nav-link"
+              ><i class="fa fa-cogs" aria-hidden="true"></i
+              >{{ "Suppliers" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/inventory/purchaseslist" class="nav-link"
+              ><i class="fa fa-shopping-cart"></i
+              >{{ "Purchases" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/inventory/returnlist" class="nav-link"
+              ><i class="fa fa-shopping-cart"></i>{{ "Returns" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/inventory/expenselist" class="nav-link"
+              ><i class="fa fa-money" aria-hidden="true"></i
+              >{{ "Expenses" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/inventory/invoicelist" class="nav-link"
+              ><i class="fa fa-money" aria-hidden="true"></i
+              >{{ "Invoice" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/inventory/stocklist" class="nav-link"
+              ><i class="fa fa-money" aria-hidden="true"></i
+              >{{ "Products Stock" | translate }}</a
+            >
+          </li>
+
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+            *ngIf="flagShowSettings"
+          >
+            <a routerLink="/inventory/settings/setting" class="nav-link"
+              ><i class="fa fa-cogs" aria-hidden="true"></i
+              >{{ "Settings" | translate }}</a
+            >
+          </li>
+        </ul>
+
+        <ul
+        class="navbar-nav mr-auto"
+        id="hrms"
+        *ngIf="currentDashboard == 'hrms'"
+      >
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="/hrms/dashboard" class="nav-link"
+            ><i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Dashboard" | translate }}</a
+          >
+        </li>
+
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="/hrms/reportlist" class="nav-link"
+            ><i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Reports" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          *ngIf="flagShowEmyloyee"
+        >
+          <a routerLink="/hrms/employeelist" class="nav-link"
+            ><i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Employees" | translate }}</a
+          >
+        </li>
+
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="/hrms/holidaylist" class="nav-link"
+            ><i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Holidays" | translate }}</a
+          >
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="/hrms/leavelist" class="nav-link"
+            ><i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Leaves" | translate }}</a
+          >
+        </li>
+
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="/hrms/noticetablist" class="nav-link"
+            ><i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Notice Board" | translate }}</a
+          >
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="/hrms/traininglist" class="nav-link"
+            ><i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Trainings" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          *ngIf="flagShowProject"
+        >
+          <a routerLink="/hrms/projectlist" class="nav-link"
+            ><i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Projects" | translate }}</a
+          >
+        </li>
+
+        <li class="nav-item" routerLinkActive="active">
+          <a routerLink="/hrms/calendar" class="nav-link">
+            <i class="fa fa-money" aria-hidden="true"></i
+            >{{ "Calendar" | translate }}</a
+          >
+        </li>
+        <li
+          class="nav-item"
+          routerLinkActive="active"
+          *ngIf="flagShowSettingsHrms"
+        >
+          <a routerLink="/hrms/settings/setting" class="nav-link"
+            ><i class="fa fa-cogs" aria-hidden="true"></i
+            >{{ "Settings" | translate }}</a
+          >
+        </li>
+      </ul>
+
+        <ul
+          class="navbar-nav mr-auto"
+          id="ogoul"
+          *ngIf="currentDashboard == 'ogoul'"
+        >
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/ogoul/dashboard" class="nav-link">
+              <i class="fa fa-tachometer" aria-hidden="true"></i
+              >{{ "Dashboard" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/ogoul/contactedusers" class="nav-link">
+              <i class="fa fa-tachometer" aria-hidden="true"></i
+              >{{ "Contacted Users" | translate }}</a
+            >
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/ogoul/requesteddemo" class="nav-link">
+              <i class="fa fa-tachometer" aria-hidden="true"></i
+              >{{ "Requested Demo" | translate }}</a
+            >
+          </li>
+
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/ogoul/ticketdetails" class="nav-link">
+              <i class="fa fa-ticket" aria-hidden="true"></i
+              >{{ "Ticketing" | translate }}</a
+            >
+          </li>
+
+          <li class="nav-item" routerLinkActive="active">
+            <a routerLink="/ogoul/surveyslist" class="nav-link"
+              ><i class="fa fa-cogs" aria-hidden="true"></i>Surveys</a
+            >
+          </li>
+          <li
+            class="nav-item"
+            routerLinkActive="active"
+            *ngIf="flagShowSettings"
+          >
+            <a routerLink="/ogoul/settings/setting" class="nav-link"
+              ><i class="fa fa-cogs" aria-hidden="true"></i
+              >{{ "Settings" | translate }}</a
+            >
+          </li>
+        </ul>
+
+        <ul
+          class="navbar-nav mr-auto"
+          id="website-page"
+          *ngIf="currentDashboard == 'website-page'"
+        >
+          <li class="nav-item" routerLinkActive="active">
+            <a
+              routerLink="/website/website-page/editformfields"
+              class="nav-link"
+            >
+              <i class="fa fa-tachometer" aria-hidden="true"></i
+              >{{ "editformfields" | translate }}</a
+            >
+          </li>
+        </ul>
+        <ul
+        class="navbar-nav mr-auto"
+        id="helpdesk"
+        *ngIf="currentDashboard == 'helpdesk'"
+      >
+        <li class="nav-item" routerLinkActive="active"  >
+          <a routerLink="/helpdesk/dashboard" class="nav-link">
+            <i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Dashboard" | translate }}</a
+          >
+        </li>
+        <li class="nav-item" routerLinkActive="active"  >
+          <a routerLink="/helpdesk/customerlist" class="nav-link" >
+            <i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Customers" | translate }}</a
+          >
+        </li>
+        <li class="nav-item" routerLinkActive="active" >
+          <a routerLink="/helpdesk/leadslist" class="nav-link" >
+            <i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "Leads" | translate }}</a
+          >
+        </li>
+  
+        <li class="nav-item" routerLinkActive="active" >
+          <a routerLink="/helpdesk/ticketslist" class="nav-link" >
+            <i class="fa fa-tachometer" aria-hidden="true"></i
+            >{{ "tickets" | translate }}</a
+          >
+        </li>
+       
+      
+      </ul>
+      </div>
+    </div>
+  </nav>
+</section>
+
+<router-outlet></router-outlet>

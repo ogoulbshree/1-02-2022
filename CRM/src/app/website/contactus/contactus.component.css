@@ -1,0 +1,164 @@
+.contact-form{
+    margin: 6em 0;
+    position: relative;  
+    background: #F1F7FF !important;
+   
+   }
+   
+.h2-heading{
+
+  text-align: center;
+
+}
+   .contact-form h1{
+    padding:2em 1px;
+    color: #F97300; 
+   }
+   .contact-form .right{
+    max-width: 600px;
+   }
+   .contact-form .right .btn-secondary{
+    background:  #F97300;
+    color: #fff;
+    border:0;
+   }
+   .contact-form .right .form-control::placeholder{
+    color: #888;
+    font-size: 16px;
+   }
+   .btn-secondary{
+    background: #0058D2 !important;
+
+
+   }
+
+   /* Min-width 992px */
+@media (min-width: 992px) {
+	
+	/* General Styles */
+	.h2-heading {
+		font-family: Rubik;
+font-style: normal;
+font-weight: normal;
+font-size: 29px;
+line-height: 34px;
+text-align: center;
+text-transform: capitalize;
+
+color: #333333;
+	}
+}
+.form-control {
+    border-radius: 9px;
+    border-color: #0058D2 !important;
+}
+
+.form .contact-form{
+    border: 1px solid #CCD6E6;
+    color: #3F587E;
+    background: #F1F7FF !important;
+
+}
+
+
+
+
+
+.footer-area{
+    position:none !important;
+    padding: none !important;
+    background: none !important;
+}
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: #EDAB2F;
+    background-color: #fff;
+    border-color: #dee2e6 #dee2e6 #fff;
+}
+
+.nav-tabs {
+    border-bottom: 1px solid #EDAB2F;
+}
+.contact-area {
+    height: auto;
+    width: 100%;
+    background: #F1F7FF;
+  }
+  
+  
+  .contact-content {
+    padding: 100px;
+    background: #000 none repeat scroll 0 0;
+  }
+  
+  .contact-content-right {
+    padding: 100px;
+  }
+  
+  .single-icon i {
+    font-size: 24px;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #EDAB2F;
+    line-height: 46px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+  }
+  
+  .single-icon p {
+    font-size: 16px;
+    line-height: 30px;
+  }
+  
+  .contact-icon {
+    margin-bottom: 40px;
+  }
+  
+  #google-map {
+    height: 370px;
+    margin-bottom: 20px;
+  }
+  
+ 
+  
+  @-webkit-keyframes animate-loading {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes animate-loading {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  /* Flexible iFrame */
+
+.Flexible-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  padding-top: 30px;
+  height: 0;
+  overflow: hidden;
+}
+
+.Flexible-container iframe,   
+.Flexible-container object,  
+.Flexible-container embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@media screen and (min-width: 480px) {
+  .Flexible-container {
+    padding-bottom: 26.25%;
+  }
+}

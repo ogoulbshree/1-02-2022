@@ -1,0 +1,325 @@
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar' && this.faqDetail " dir='rtl' >
+
+<div class="container-fluid">
+    <h3 class="text-center">{{field_name_faq_details}}</h3>
+    <div class="card">
+      <div class="card-body">
+        <form class="form-horizontal" name="form" #f="ngForm" (ngSubmit)="f.form.valid &&  onSubmit()">
+          <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Faq Details!</strong>The form has the following errors that need to be corrected
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="card-header">
+            <h2> 
+                <span *ngIf="!isUpdate">{{field_name_faq_addfaq}}</span> 
+               <!--  <span *ngIf="isUpdate">{{'Update Faq'|translate}}</span> -->
+            </h2>
+            </div>
+            <div class="card-body">
+          
+              <div class="form-row">
+                      <div class="form-group col-md-4">
+                        <label class="col-sm-5 col-form-label">{{field_name_faq_questions}}
+                          <span
+                          class="text-danger font-weight-bold">
+                          *</span>
+                        </label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" name="questions" pattern="[a-zA-Z ]+" 
+                          [(ngModel)]="faqDetail.questions"
+                          #questions="ngModel" [ngClass]="{ 'is-invalid': f.submitted && questions.invalid,
+                         'is-valid': f.submitted && questions.valid}" required >
+                          <div *ngIf="f.submitted && questions.invalid "class="invalid-feedback">
+                          <div
+                              *ngIf="questions.errors.required ">Please provide questions</div>
+                              <div *ngIf="questions.errors.pattern"> Provide proper questions 
+                              </div></div>
+                        </div>
+                      </div>
+                     
+                      <div class="form-group col-md-4"> 
+                        <label class="col-sm-5 col-form-label">{{field_name_faq_answers}}<span
+                          class="text-danger font-weight-bold">
+                          *</span></label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" rows="2" name="answers"  [(ngModel)]="faqDetail.answers" 
+                            pattern="[a-zA-Z ]+"  #answers="ngModel" [ngClass]="{ 'is-invalid': f.submitted && answers.invalid,
+                            'is-valid': f.submitted && answers.valid}" required >
+                            </textarea>
+                             <div *ngIf="f.submitted && answers.invalid "class="invalid-feedback">
+                             <div
+                                 *ngIf="answers.errors.required ">Please provide Answers</div>
+                                 <div *ngIf="answers.errors.pattern"> Provide proper Answers 
+                                 </div>
+                               </div>
+                            
+                        </div>
+                      </div>
+
+
+                      <div class="form-group col-md-4">
+                        <label class="col-sm-5 col-form-label">{{field_name_faq_status}}
+                          <span
+                          class="text-danger font-weight-bold">
+                          *</span>
+                        </label>
+                        <div class="col-sm-10">
+                      
+                         <select class="custom-select"  name="status"  [(ngModel)]="faqDetail.status" 
+                          #status="ngModel" [ngClass]="{ 'is-invalid': f.submitted && status.invalid,
+                         'is-valid': f.submitted && status.valid}" required >
+                        
+                         
+                          <option value ="Draft">Draft</option>
+                          <option value="Reviewed">Reviewed</option>
+                          <option value="published">published</option> 
+                           <option value=" Obsolete">Obsolete</option>
+                          
+                        </select>  
+                        <div *ngIf="f.submitted && status.invalid "class="invalid-feedback">
+                          <div
+                              *ngIf="status.errors.required ">Please provide Status</div>
+                            
+                            </div>
+                        
+                        
+                        </div>
+                      </div>
+                      </div>
+
+                      <div class="form-row">
+                        <div class="form-group col-md-3">
+                          <label class="col-sm-5 col-form-label">{{field_name_faq_created_by}}
+                           
+                          </label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" name="created_by"
+                            [(ngModel)]="faqDetail.created_by"
+                            #created_by="ngModel" readonly>
+                        </div>
+                      </div>
+                        <div class="form-group col-md-3">
+                          <label class="col-sm-5 col-form-label">{{field_name_faq_created_time}}
+                            
+                          </label>
+                          <div class="col-sm-10">
+                           
+                        
+                            <input type="text" class="form-control" name="created_time"  
+                             readonly value="{{faqDetail.created_time |  date : dateFormat:'GMT':locale}}">
+
+                          
+                        </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                          <label class="col-sm-5 col-form-label">{{field_name_faq_updated_by}}
+                           
+                          </label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" name="updated_by"
+                              [(ngModel)]="faqDetail.updated_by"
+                              #updated_by="ngModel" readonly>
+                        </div>
+                      </div>
+                        <div class="form-group col-md-3">
+                          <label class="col-sm-5 col-form-label">{{field_name_faq_updated_time}}
+                           
+                          </label>
+                          <div class="col-sm-10">
+                          
+                            <input type="text" class="form-control" name="modified_time"  
+                             readonly value=" {{faqDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+                          
+                        </div>
+                      </div>
+                        </div>
+
+          
+                     
+                  
+                   
+
+      <button class="btn btn-danger btn-round text-center pull-right" style=" margin-top: 73px;" type="button"
+      appCancelbutton>{{'Cancel'|translate}}</button>
+      <button class="btn btn-success btn-round text-center pull-right" style=" margin-top: 73px;">
+        <span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+        <span *ngIf="isUpdate">{{'Update'|translate}}</span></button>
+
+
+
+
+                      
+    
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  </section>
+
+
+
+  <section *ngIf="this._uiservice.langDataSource.value != 'ar' && this.faqDetail" dir='ltr' >
+
+  <div class="container-fluid">
+      <h3 class="text-center">{{field_name_faq_details}}</h3>
+      <div class="card">
+        <div class="card-body">
+          <form class="form-horizontal" name="form" #f="ngForm" (ngSubmit)="f.form.valid &&  onSubmit()">
+            <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+              <strong>Faq Details!</strong>The form has the following errors that need to be corrected
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="card-header">
+              <h2> 
+                  <span *ngIf="!isUpdate">{{field_name_faq_addfaq}}</span> 
+                 <!--  <span *ngIf="isUpdate">{{'Update Faq'|translate}}</span> -->
+              </h2>
+              </div>
+              <div class="card-body">
+            
+                <div class="form-row">
+                        <div class="form-group col-md-4">
+                          <label class="col-sm-5 col-form-label">{{field_name_faq_questions}}
+                            <span
+                            class="text-danger font-weight-bold">
+                            *</span>
+                          </label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" name="questions" pattern="[a-zA-Z ]+" 
+                            [(ngModel)]="faqDetail.questions"
+                            #questions="ngModel" [ngClass]="{ 'is-invalid': f.submitted && questions.invalid,
+                           'is-valid': f.submitted && questions.valid}" required >
+                            <div *ngIf="f.submitted && questions.invalid "class="invalid-feedback">
+                            <div
+                                *ngIf="questions.errors.required ">Please provide questions</div>
+                                <div *ngIf="questions.errors.pattern"> Provide proper questions 
+                                </div>
+                              </div>
+                          </div>
+                        </div>
+                       
+                        <div class="form-group col-md-4"> 
+                          <label class="col-sm-5 col-form-label">{{field_name_faq_answers}}<span
+                            class="text-danger font-weight-bold">
+                            *</span></label>
+                          <div class="col-sm-10">
+                              <textarea class="form-control" rows="2" name="answers"  [(ngModel)]="faqDetail.answers" 
+                              pattern="[a-zA-Z ]+"  #answers="ngModel" [ngClass]="{ 'is-invalid': f.submitted && answers.invalid,
+                              'is-valid': f.submitted && answers.valid}" required >
+                              </textarea>
+                               <div *ngIf="f.submitted && answers.invalid "class="invalid-feedback">
+                               <div
+                                   *ngIf="answers.errors.required ">Please provide Answers</div>
+                                   <div *ngIf="answers.errors.pattern"> Provide proper Answers 
+                                   </div>
+                                 </div>
+                              
+                          </div>
+                        </div>
+  
+  
+                        <div class="form-group col-md-4">
+                          <label class="col-sm-5 col-form-label">{{field_name_faq_status}}
+                            <span
+                            class="text-danger font-weight-bold">
+                            *</span>
+                          </label>
+                          <div class="col-sm-10">
+                        
+                           <select class="custom-select"  name="status"  [(ngModel)]="faqDetail.status" 
+                            #status="ngModel" [ngClass]="{ 'is-invalid': f.submitted && status.invalid,
+                           'is-valid': f.submitted && status.valid}" required >
+                      
+                           
+                            <option value ="Draft">Draft</option>
+                            <option value="Reviewed">Reviewed</option>
+                            <option value="published">published</option> 
+                             <option value=" Obsolete">Obsolete</option>
+                            
+                          </select>  
+                          <div *ngIf="f.submitted && status.invalid "class="invalid-feedback">
+                            <div
+                                *ngIf="status.errors.required ">Please provide Status</div>
+                              
+                              </div>
+                          
+                          
+                          </div>
+                        </div>
+                        </div>
+  
+                        <div class="form-row">
+                          <div class="form-group col-md-3">
+                            <label class="col-sm-5 col-form-label">{{field_name_faq_created_by}}
+                             
+                            </label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" name="created_by"
+                              [(ngModel)]="faqDetail.created_by"
+                              #created_by="ngModel" readonly>
+                          </div>
+                        </div>
+                          <div class="form-group col-md-3">
+                            <label class="col-sm-5 col-form-label">{{field_name_faq_created_time}}
+                              
+                            </label>
+                            <div class="col-sm-10">
+                             
+                          
+                              <input type="text" class="form-control" name="created_time"  
+                               readonly value="{{faqDetail.created_time |  date : dateFormat:'GMT':locale}}">
+  
+                            
+                          </div>
+                          </div>
+                          <div class="form-group col-md-3">
+                            <label class="col-sm-5 col-form-label">{{field_name_faq_updated_by}}
+                             
+                            </label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" name="updated_by"
+                                [(ngModel)]="faqDetail.updated_by"
+                                #updated_by="ngModel" readonly>
+                          </div>
+                        </div>
+                          <div class="form-group col-md-3">
+                            <label class="col-sm-5 col-form-label">{{field_name_faq_updated_time}}
+                             
+                            </label>
+                            <div class="col-sm-10">
+                            
+                              <input type="text" class="form-control" name="modified_time"  
+                               readonly value=" {{faqDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+                            
+                          </div>
+                        </div>
+                          </div>
+  
+            
+                       
+                    
+                       
+                         
+
+                          <button class="btn btn-danger btn-round text-center pull-right" style=" margin-top: 73px;" type="button"
+                          appCancelbutton>{{'Cancel'|translate}}</button>
+      <button class="btn btn-success btn-round text-center pull-right" style=" margin-top: 73px;">
+        <span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+        <span *ngIf="isUpdate">{{'Update'|translate}}</span></button>
+
+
+
+
+      
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    </section>

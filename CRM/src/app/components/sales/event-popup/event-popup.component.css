@@ -1,0 +1,45 @@
+
+  
+
+  .modal-dialog{
+    position: absolute;
+    z-index: 1;
+    background-color: white;
+  }
+  
+  
+  
+  #agenda-label {
+    display: block;
+  }
+ 
+ 
+  
+
+  
+  
+  
+  h3 {
+    margin-bottom: .5em;
+    margin-left: .5em;
+  }
+ 
+  
+ 
+ 
+  .modal-content {
+    position: relative;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-color: #FFF;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: .27rem;
+    outline: 0;
+}

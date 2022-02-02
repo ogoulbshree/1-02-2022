@@ -1,0 +1,2303 @@
+<br /><br />
+
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' >
+  <div class="grey-bg container-fluid">
+    <section id="minimal-statistics">
+      <form
+        class="form-row dateSection"
+        name="form"
+        #f="ngForm"
+        (ngSubmit)="f.form.valid && filterData()"
+      >
+        <div class="form-group row col-md-4">
+          <label class="col-sm-3 col-form-label">
+            {{field_name_hrms_fromdate}}<span class="text-danger font-weight-bold"> *</span></label
+          >
+          <div class="col-sm-8">
+            <input
+              type="date"
+              class="form-control"
+              [(ngModel)]="model.fromDate"
+              name="fromDate"
+              #fromDate="ngModel"
+              [ngClass]="{
+                'is-invalid': f.submitted && fromDate.invalid,
+                'is-valid': f.submitted && fromDate.valid
+              }"
+              required
+            />
+
+            <div
+              *ngIf="f.submitted && fromDate.invalid"
+              class="invalid-feedback"
+            >
+              <div *ngIf="fromDate.errors.required">
+                Please provide fromDate
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row col-md-4">
+          <label class="col-sm-3 col-form-label">
+            {{field_name_hrms_todate}}<span class="text-danger font-weight-bold"> *</span></label
+          >
+          <div class="col-sm-8">
+            <input
+              type="date"
+              class="form-control"
+              [(ngModel)]="model.toDate"
+              name="toDate"
+              #toDate="ngModel"
+              [ngClass]="{
+                'is-invalid': f.submitted && toDate.invalid,
+                'is-valid': f.submitted && toDate.valid
+              }"
+              required
+            />
+
+            <div *ngIf="f.submitted && toDate.invalid" class="invalid-feedback">
+              <div *ngIf="toDate.errors.required">Please provide toDate</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-success search-btn">{{field_name_hrms_search}}</button>
+        </div>
+      </form>
+      <form
+      class="form-row dateSectionMat"
+      name="form"
+      #f="ngForm"
+      (ngSubmit)="f.form.valid && filterData()"
+    >
+      &nbsp;&nbsp;<mat-form-field
+        style="width: 110px; margin-left: 10px; font-weight: bold"
+      >
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [(ngModel)]="model.fromDate"
+          name="fromDate"
+          #fromDate="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && fromDate.invalid,
+            'is-valid': f.submitted && fromDate.valid
+          }"
+          required
+          placeholder={{field_name_hrms_fromdate}}
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <div *ngIf="f.submitted && fromDate.invalid" class="invalid-feedback">
+        <div *ngIf="fromDate.errors.required">Please provide fromDate</div>
+      </div>
+
+      <mat-form-field style="width: 93px; margin-left: 10px; font-weight: bold">
+        <input
+          matInput
+          [matDatepicker]="picker1"
+          [(ngModel)]="model.toDate"
+          name="toDate"
+          #toDate="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && toDate.invalid,
+            'is-valid': f.submitted && toDate.valid
+          }"
+          required
+          placeholder={{field_name_hrms_todate}}
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="picker1"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+      <div *ngIf="f.submitted && toDate.invalid" class="invalid-feedback">
+        <div *ngIf="toDate.errors.required">Please provide toDate</div>
+      </div>
+      &nbsp;&nbsp;
+      <div style="width: 110px">
+        <button class="btn btn-success search-btn font-weight-bold">
+          {{ field_name_hrms_search }}
+        </button>
+      </div>
+    </form>
+      <div class="row">
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i class="icon-users primary font-large-2 float-left"></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="!this.filterFlagEnabled">
+                      {{ this.employeeArrCount }}
+                    </h3>
+                    <h3 *ngIf="this.filterFlagEnabled">
+                      {{ this.employeeCount }}
+                    </h3>
+                    <span> {{field_name_hrms_employee}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i
+                      class="fa fa-industry success font-large-2 float-left"
+                    ></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="!this.filterFlagEnabled">
+                      {{ this.holidayArrCount }}
+                    </h3>
+                    <h3 *ngIf="this.filterFlagEnabled">
+                      {{ this.holidayCount }}
+                    </h3>
+                    <span>{{field_name_hrms_holidays}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i
+                      class="
+                        fa fa-shopping-cart
+                        primary
+                        font-large-2
+                        float-left
+                      "
+                    ></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="!this.filterFlagEnabled">
+                      {{ this.leaveArrCount }}
+                    </h3>
+                    <h3 *ngIf="this.filterFlagEnabled">
+                      {{ this.leaveCount }}
+                    </h3>
+                    <span>{{field_name_hrms_leaves}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i
+                      class="fa fa-handshake-o warning font-large-2 float-left"
+                    ></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="!this.filterFlagEnabled">
+                      {{ this.projectArrCount }}
+                    </h3>
+                    <h3 *ngIf="this.filterFlagEnabled">
+                      {{ this.projectCount }}
+                    </h3>
+                    <span> {{field_name_hrms_projects}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i
+                      class="
+                      fa fa-bullhorn
+                        success
+                        font-large-2
+                        float-left
+                      "
+                    ></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="!this.filterFlagEnabled">
+                      {{ this.trainingArrCount }}
+                    </h3>
+                    <h3 *ngIf="this.filterFlagEnabled">
+                      {{ this.trainingCount }}
+                    </h3>
+                    <span>{{field_name_hrms_trainings}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i class="fa fa-sticky-note success font-large-2 float-left"></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="!this.filterFlagEnabled">
+                      {{ this.noticeArrCount }}
+                    </h3>
+                    <h3 *ngIf="this.filterFlagEnabled">
+                      {{ this.noticeCount }}
+                    </h3>
+                    <span>{{field_name_hrms_notices}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i class="fa fa-users success font-large-2 float-left"></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="!this.filterFlagEnabled">
+                      {{ this.candidateArrCount }}
+                    </h3>
+                    <h3 *ngIf="this.filterFlagEnabled">
+                      {{ this.candidateArrCount }}
+                    </h3>
+                    <span>{{field_name_hrms_candidates}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i
+                      class="fa fa-question success font-large-2 float-left"
+                    ></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="!this.filterFlagEnabled">
+                      {{ this.interviewArrCount }}
+                    </h3>
+                    <h3 *ngIf="this.filterFlagEnabled">
+                      {{ this.interviewArrCount }}
+                    </h3>
+                    <span>{{field_name_hrms_interviews}} </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i class="fa fa-shield success font-large-2 float-left"></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="!this.filterFlagEnabled">
+                      {{ this.policyArrCount }}
+                    </h3>
+                    <h3 *ngIf="this.filterFlagEnabled">
+                      {{ this.policyArrCount }}
+                    </h3>
+                    <span>{{field_name_hrms_policy}} </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i class="fa fa-money success font-large-2 float-left"></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="!this.filterFlagEnabled">
+                      {{ this.expenseArrCount }}
+                    </h3>
+                    <h3 *ngIf="this.filterFlagEnabled">
+                      {{ this.expenseArrCount }}
+                    </h3>
+                    <span>{{field_name_hrms_expenses}} </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div *ngIf="filterFlagEnabled">
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_hrms_employee_table}}</div>
+
+        <div class="table-responsive">
+          <table
+            id="contentToConvert"
+            class="table table-striped"
+            [mfData]="employeeArray"
+            #mf2="mfDataTable"
+          >
+            <thead class="thead-light">
+              <tr>
+                <th width="20%" (click)="sortCustomers('first_name')">
+                  <mfDefaultSorter by="first_name"
+                    >{{field_name_hrms_employee_first_name}}</mfDefaultSorter
+                  >
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('last_name')">
+                  <mfDefaultSorter by="last_name">{{field_name_hrms_employee_email_id}} </mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('email')">
+                  <mfDefaultSorter by="email"> {{field_name_hrms_employee_mobile}} </mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('phone')">
+                  <mfDefaultSorter by="phone"> {{field_name_hrms_employee_join_date}} </mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter>{{field_name_hrms_employee_role}}</mfDefaultSorter>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter>{{field_name_hrms_actons}}</mfDefaultSorter>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody *ngIf="employeeArray.length > 0">
+              <tr
+                *ngFor="
+                  let obj of mf2.data
+                    | orderBy: key:reverse
+                    | paginate
+                      : {
+                          id: 'employee',
+                          itemsPerPage: 5,
+                          currentPage: employeePagination,
+                          totalItems: employeeCount
+                        };
+                  let i = index
+                "
+              >
+                <td>{{ obj.first_name }}</td>
+
+                <td>{{ obj.email }}</td>
+                <td>{{ obj.phone }}</td>
+                <td>{{ obj.joining_date }}</td>
+                <td>{{ obj.designation }}</td>
+                <td>
+                  <i
+                    class="fa fa-edit"
+                    (click)="onClickEdit('employee', obj)"
+                  ></i>
+
+                  <!-- <span
+                    ><i
+                      (click)="onClickDelete('employee', obj)"
+                      class="fa fa-trash"
+                    ></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="employeeArray.length == 0">
+              No Records Found
+            </tbody>
+            <tfoot *ngIf="employeeArray.length > 0">
+              <tr>
+                <td colspan="4">
+                  <pagination-controls
+                    id="employee"
+                    (pageChange)="
+                      pageChanged('employee', (employeePagination = $event))
+                    "
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_hrms_holiday_table}}</div>
+
+        <div class="table-responsive">
+          <table
+            id="contentToConvert"
+            class="table table-striped"
+            [mfData]="holidayArr"
+            #mf1="mfDataTable"
+          >
+            <thead class="thead-light">
+              <tr>
+                <th width="20%" (click)="sortCustomers('first_name')">
+                  <mfDefaultSorter by="first_name"
+                    >{{field_name_hrms_holiday_name}}</mfDefaultSorter
+                  >
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('last_name')">
+                  <mfDefaultSorter by="last_name">
+                    {{field_name_hrms_holiday_date}}
+                  </mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('email')">
+                  <mfDefaultSorter by="email"> {{field_name_hrms_holiday_day}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+
+                <th width="20%">
+                  <mfDefaultSorter>{{field_name_hrms_actons}}</mfDefaultSorter>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody *ngIf="holidayArr.length > 0">
+              <tr
+                *ngFor="
+                  let obj of mf1.data
+                    | orderBy: key:reverse
+                    | paginate
+                      : {
+                          id: 'holidays',
+                          itemsPerPage: 5,
+                          currentPage: holidaysPagination,
+                          totalItems: holidayCount
+                        };
+                  let i = index
+                "
+              >
+                <td>{{ obj.holiday_name }}</td>
+
+                <td>{{ obj.holiday_date }}</td>
+                <td>{{ obj.holiday_day }}</td>
+                <td>
+                  <i
+                    class="fa fa-edit"
+                    (click)="onClickEdit('holidays', obj)"
+                  ></i>
+
+                  <!-- <span
+                    ><i
+                      (click)="onClickDelete('holidays', obj)"
+                      class="fa fa-trash"
+                    ></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="holidayArr.length == 0">
+              No Records Found
+            </tbody>
+            <tfoot *ngIf="holidayArr.length > 0">
+              <tr>
+                <td colspan="4">
+                  <pagination-controls
+                    id="holidays"
+                    (pageChange)="
+                      pageChanged('holidays', (holidaysPagination = $event))
+                    "
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_hrms_leaves_table}}</div>
+
+        <div class="table-responsive">
+          <table
+            id="contentToConvert"
+            class="table table-striped"
+            [mfData]="leaveArr"
+            #mf3="mfDataTable"
+          >
+            <thead class="thead-light">
+              <tr>
+                <th width="20%" (click)="sortCustomers('first_name')">
+                  <mfDefaultSorter by="first_name">{{field_name_hrms_leaves_type}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('last_name')">
+                  <mfDefaultSorter by="last_name"> {{field_name_hrms_leaves_from}} </mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('email')">
+                  <mfDefaultSorter by="email"> {{field_name_hrms_leaves_to}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sort('email')">
+                  <mfDefaultSorter by="email">{{field_name_hrms_leaves_reason}} </mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter>{{field_name_hrms_actons}}</mfDefaultSorter>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody *ngIf="leaveArr.length > 0">
+              <tr
+                *ngFor="
+                  let obj of mf3.data
+                    | orderBy: key:reverse
+                    | paginate
+                      : {
+                          id: 'leaves',
+                          itemsPerPage: 5,
+                          currentPage: leavesPagination,
+                          totalItems: leaveCount
+                        };
+                  let i = index
+                "
+              >
+                <td>{{ obj.leave_type }}</td>
+
+                <td>{{ obj.leave_from }}</td>
+                <td>{{ obj.leave_to }}</td>
+                <td>{{ obj.leave_reason }}</td>
+                <td>
+                  <i
+                    class="fa fa-edit"
+                    (click)="onClickEdit('leaves', obj)"
+                  ></i>
+
+                  <!-- <span
+                    ><i
+                      (click)="onClickDelete('leaves', obj)"
+                      class="fa fa-trash"
+                    ></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="leaveArr.length == 0">
+              No Records Found
+            </tbody>
+            <tfoot *ngIf="leaveArr.length > 0">
+              <tr>
+                <td colspan="4">
+                  <pagination-controls
+                    id="leaves"
+                    (pageChange)="
+                      pageChanged('leaves', (leavesPagination = $event))
+                    "
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_hrms_training_table}}</div>
+
+        <div class="table-responsive">
+          <table
+            id="contentToConvert"
+            class="table table-striped"
+            [mfData]="trainingArr"
+            #mf4="mfDataTable"
+          >
+            <thead class="thead-light">
+              <tr>
+                <th width="20%" (click)="sortCustomers('first_name')">
+                  <mfDefaultSorter by="first_name">
+                    {{field_name_hrms_training_type}}</mfDefaultSorter
+                  >
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('last_name')">
+                  <mfDefaultSorter by="last_name"> {{field_name_hrms_training_trainer}} </mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('email')">
+                  <mfDefaultSorter by="email"> {{field_name_hrms_training_employee}} </mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sort('email')">
+                  <mfDefaultSorter by="email">{{field_name_hrms_training_cost}} </mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter>{{field_name_hrms_training_description}}</mfDefaultSorter>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter>{{field_name_hrms_actons}}</mfDefaultSorter>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody *ngIf="trainingArr.length > 0">
+              <tr
+                *ngFor="
+                  let obj of mf4.data
+                    | orderBy: key:reverse
+                    | paginate
+                      : {
+                          id: 'training',
+                          itemsPerPage: 5,
+                          currentPage: trainingPagination,
+                          totalItems: trainingCount
+                        };
+                  let i = index
+                "
+              >
+                <td>{{ obj.training_type }}</td>
+                <td>{{ obj.trainer_name }}</td>
+                <td>{{ obj.trained_employee_name }}</td>
+                <td>{{ obj.training_cost }}</td>
+                <td>{{ obj.training_description }}</td>
+                <td>
+                  <i
+                    class="fa fa-edit"
+                    (click)="onClickEdit('training', obj)"
+                  ></i>
+
+                  <!-- <span
+                    ><i
+                      (click)="onClickDelete('training', obj)"
+                      class="fa fa-trash"
+                    ></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="trainingArr.length == 0">
+              No Records Found
+            </tbody>
+            <tfoot *ngIf="trainingArr.length > 0">
+              <tr>
+                <td colspan="4">
+                  <pagination-controls
+                    id="training"
+                    (pageChange)="
+                      pageChanged('training', (trainingPagination = $event))
+                    "
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_hrms_project_table}}</div>
+
+        <div class="table-responsive">
+          <table
+            id="contentToConvert"
+            class="table table-striped"
+            [mfData]="projectArr"
+            #mf5="mfDataTable"
+          >
+            <thead class="thead-light">
+              <tr>
+                <th width="20%" (click)="sortCustomers('first_name')">
+                  <mfDefaultSorter by="first_name">
+                    {{field_name_hrms_project_name}}</mfDefaultSorter
+                  >
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('last_name')">
+                  <mfDefaultSorter by="last_name">
+                    {{field_name_hrms_project_description}}
+                  </mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('email')">
+                  <mfDefaultSorter by="email"> {{field_name_hrms_project_team}} </mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+
+                <th width="20%">
+                  <mfDefaultSorter>{{field_name_hrms_actons}}</mfDefaultSorter>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody *ngIf="projectArr.length > 0">
+              <tr
+                *ngFor="
+                  let obj of mf5.data
+                    | orderBy: key:reverse
+                    | paginate
+                      : {
+                          id: 'project',
+                          itemsPerPage: 5,
+                          currentPage: projectPagination,
+                          totalItems: projectCount
+                        };
+                  let i = index
+                "
+              >
+                <td>{{ obj.project_name }}</td>
+
+                <td>{{ obj.project_description }}</td>
+                <td>{{ getEmployeeName(obj.project_team) }}</td>
+                <td>
+                  <i
+                    class="fa fa-edit"
+                    (click)="onClickEdit('project', obj)"
+                  ></i>
+
+                  <!-- <span
+                    ><i
+                      (click)="onClickDelete('project', obj)"
+                      class="fa fa-trash"
+                    ></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="projectArr.length == 0">
+              No Records Found
+            </tbody>
+            <tfoot *ngIf="projectArr.length > 0">
+              <tr>
+                <td colspan="4">
+                  <pagination-controls
+                    id="project"
+                    (pageChange)="
+                      pageChanged('project', (projectPagination = $event))
+                    "
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_hrms_notice_table}}</div>
+
+        <div class="table-responsive">
+          <table
+            id="contentToConvert"
+            class="table table-striped"
+            [mfData]="noticeArr"
+            #mf6="mfDataTable"
+          >
+            <thead class="thead-light">
+              <tr>
+                <th width="20%" (click)="sortCustomers('first_name')">
+                  <mfDefaultSorter by="first_name">
+                    {{field_name_hrms_notice_type}}</mfDefaultSorter
+                  >
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('last_name')">
+                  <mfDefaultSorter by="last_name">
+                    {{field_name_hrms_notice_date}}
+                  </mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('email')">
+                  <mfDefaultSorter by="email"> {{field_name_hrms_notice_by}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+
+                <th width="20%">
+                  <mfDefaultSorter>{{field_name_hrms_actons}}</mfDefaultSorter>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody *ngIf="noticeArr.length > 0">
+              <tr
+                *ngFor="
+                  let obj of mf6.data
+                    | orderBy: key:reverse
+                    | paginate
+                      : {
+                          id: 'notice',
+                          itemsPerPage: 5,
+                          currentPage: noticePagination,
+                          totalItems: noticeCount
+                        };
+                  let i = index
+                "
+              >
+                <td>{{ obj.notice_type }}</td>
+
+                <td>{{ obj.notice_date }}</td>
+                <td>{{ obj.notice_by }}</td>
+                <td>
+                  <i
+                    class="fa fa-edit"
+                    (click)="onClickEdit('notice', obj)"
+                  ></i>
+
+                  <!-- <span
+                    ><i
+                      (click)="onClickDelete('notice', obj)"
+                      class="fa fa-trash"
+                    ></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="noticeArr.length == 0">
+              No Records Found
+            </tbody>
+            <tfoot *ngIf="noticeArr.length > 0">
+              <tr>
+                <td colspan="4">
+                  <pagination-controls
+                    id="notice"
+                    (pageChange)="
+                      pageChanged('notice', (noticePagination = $event))
+                    "
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_hrms_candidate_table}}</div>
+        <div class="table-responsive">
+          <table class="table" [mfData]="candidateArr" #mf7="mfDataTable">
+            <thead class="thead-light">
+              <tr>
+                <th width="20%" (click)="sort('SL NO')">
+                  <mfDefaultSorter by="">{{field_name_hrms_candidate_name}} </mfDefaultSorter>
+                </th>
+
+                <th width="20%" (click)="sort('designation_name')">
+                  <mfDefaultSorter>{{field_name_hrms_candidate_email}}</mfDefaultSorter>
+                </th>
+
+                <th width="20%" (click)="sort('department_name')">
+                  <mfDefaultSorter>{{field_name_hrms_candidate_phone}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+
+                <th width="20%">{{field_name_hrms_actons}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let obj of mf7.data
+                    | orderBy: key:reverse
+                    | paginate
+                      : {
+                        id: 'candidate',
+                        itemsPerPage: 5,
+                        currentPage: candidatePagination,
+                        totalItems: candidateCount
+                        };
+                  let i = index
+                "
+              >
+                <td>{{ obj.candidate_name }}</td>
+                <td>{{ obj.candidate_email }}</td>
+                <td>{{ obj.candidate_phone }}</td>
+                <td>
+                  <i class="fa fa-edit" (click)="onClickEdit('candidate',obj)"></i>
+
+                  <!-- <span
+                    ><i (click)="onClickDelete('candidate',obj)" class="fa fa-trash"></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4" *ngIf="candidateArr.length > 0">
+                  <pagination-controls
+                    (pageChange)="pageChanged('candidate', (candidatePagination = $event))"
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_hrms_policy_table}}</div>
+        <div class="table-responsive">
+          <table class="table" [mfData]="policyArr" #mf8="mfDataTable">
+            <thead class="thead-light">
+              <tr>
+                <th width="10%" (click)="sort('SLNO')">
+                  <mfDefaultSorter by="">{{ 'SL NO'| translate}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+
+                <th width="20%" (click)="sort('policy_id')">
+                  <mfDefaultSorter by="policy_name">{{field_name_hrms_policy_id}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="10%" (click)="sort('policy_name')">
+                  <mfDefaultSorter by="policy_name"
+                    >{{field_name_hrms_policy_name}}</mfDefaultSorter
+                  >
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="10%" (click)="sort('policy_name')">
+                  <mfDefaultSorter by="policy_name">{{field_name_hrms_policy_size}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sort('file')">
+                  <mfDefaultSorter by="file">{{field_name_hrms_policy_file}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="10%" (click)="sort('Download')">
+                  <mfDefaultSorter by="">{{field_name_hrms_policy_download}}</mfDefaultSorter>
+                </th>
+
+                <th width="10%">{{field_name_hrms_actons}}</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="mf8.data?.length >= 1">
+              <tr
+                *ngFor="
+                  let obj of mf8.data
+                    | orderBy: key:reverse
+                    | paginate
+                      : {
+                        id: 'policy',
+                        itemsPerPage: 5,
+                        currentPage: policyPagination,
+                        totalItems: policyCount
+                        };
+                  let i = index
+                "
+              >
+                <td>{{ i + 1 }}</td>
+                <td>{{ obj.policy_id }}</td>
+
+                <td>{{ obj.policy_name }}</td>
+                <td>{{ obj.size }} Bytes</td>
+                <td>{{ obj.files }}</td>
+                <td>
+                  <a [href]="obj.files" download target="_blank"> {{field_name_hrms_policy_download}} </a>
+                </td>
+
+                <td>
+                  <i class="fa fa-edit" (click)="onClickEdit('policy',obj)"></i>
+
+                  <!-- <span
+                    ><i (click)="onClickDelete('policy',obj)" class="fa fa-trash"></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="mf8.data?.length <= 0">
+              <tr class="odd" style="opacity: 1">
+                <td
+                  valign="top"
+                  colspan="8"
+                  style="text-align: center"
+                  class="dataTables_empty"
+                >
+                  No data available in table
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4" *ngIf="mf8.data?.length >= 1" >
+                  <pagination-controls
+                    (pageChange)="pageChanged('policy', (policyPagination = $event))"
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_hrms_expenses_table}}</div>
+        <div class="table-responsive">
+          <table
+            id="contentToConvert"
+            class="table"
+            [mfData]="expenseArr"
+            #mf9="mfDataTable"
+          >
+            <thead class="thead-light">
+              <tr>
+                <th width="20%" (click)="sort('email')">
+                  <mfDefaultSorter by="email">{{field_name_add_expense_user_email}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sort('expense_item')">
+                  <mfDefaultSorter by="expense_item"
+                    >{{field_name_add_expense_add_expense_item}}</mfDefaultSorter
+                  >
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sort('amount')">
+                  <mfDefaultSorter by="amount">{{field_name_add_expense_amount}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sort('date')">
+                  <mfDefaultSorter by="date">{{field_name_add_expense_date}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%">{{field_name_hrms_actons}}</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="mf9.data?.length >= 1">
+              <tr
+                *ngFor="
+                  let obj of mf9.data
+                    | orderBy: key:reverse
+                    | paginate
+                      : {
+                        id: 'expense',
+                        itemsPerPage: 5,
+                        currentPage: expensePagination,
+                        totalItems: expenseCount
+                        };
+                  let i = index
+                "
+              >
+                <td>{{ obj.email }}</td>
+
+                <td>{{ obj.expense_item }}</td>
+                <td>{{ obj.amount }}</td>
+
+                <td>{{ obj.date }}</td>
+                 <td>
+                  <i class="fa fa-edit" (click)="onClickEdit('expense',obj)"></i>
+
+                  <!-- <span
+                    ><i (click)="onClickDelete('expense',obj)" class="fa fa-trash"></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="mf9.data?.length <= 0">
+              <tr class="odd" style="opacity: 1">
+                <td
+                  valign="top"
+                  colspan="8"
+                  style="text-align: center"
+                  class="dataTables_empty"
+                >
+                  No data available in table
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr >
+                <td colspan="4" *ngIf="mf9.data?.length >= 1">
+                  <pagination-controls
+                    (pageChange)="pageChanged('expense', (expensePagination = $event))"
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir="ltr">
+  <div class="grey-bg container-fluid">
+    <section id="minimal-statistics">
+      <form
+        class="form-row dateSection"
+        name="form"
+        #f="ngForm"
+        (ngSubmit)="f.form.valid && filterData()"
+      >
+        <div class="form-group row col-md-4">
+          <label class="col-sm-3 col-form-label">
+            {{field_name_hrms_fromdate}}<span class="text-danger font-weight-bold"> *</span></label
+          >
+          <div class="col-sm-8">
+            <input
+              type="date"
+              class="form-control"
+              [(ngModel)]="model.fromDate"
+              name="fromDate"
+              #fromDate="ngModel"
+              [ngClass]="{
+                'is-invalid': f.submitted && fromDate.invalid,
+                'is-valid': f.submitted && fromDate.valid
+              }"
+              required
+            />
+
+            <div
+              *ngIf="f.submitted && fromDate.invalid"
+              class="invalid-feedback"
+            >
+              <div *ngIf="fromDate.errors.required">
+                Please provide fromDate
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row col-md-4">
+          <label class="col-sm-3 col-form-label">
+            {{field_name_hrms_todate}}<span class="text-danger font-weight-bold"> *</span></label
+          >
+          <div class="col-sm-8">
+            <input
+              type="date"
+              class="form-control"
+              [(ngModel)]="model.toDate"
+              name="toDate"
+              #toDate="ngModel"
+              [ngClass]="{
+                'is-invalid': f.submitted && toDate.invalid,
+                'is-valid': f.submitted && toDate.valid
+              }"
+              required
+            />
+
+            <div *ngIf="f.submitted && toDate.invalid" class="invalid-feedback">
+              <div *ngIf="toDate.errors.required">Please provide toDate</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-success search-btn">{{field_name_hrms_search}}</button>
+        </div>
+      </form>
+      <form
+      class="form-row dateSectionMat"
+      name="form"
+      #f="ngForm"
+      (ngSubmit)="f.form.valid && filterData()"
+    >
+      &nbsp;&nbsp;<mat-form-field
+        style="width: 110px; margin-left: 10px; font-weight: bold"
+      >
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [(ngModel)]="model.fromDate"
+          name="fromDate"
+          #fromDate="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && fromDate.invalid,
+            'is-valid': f.submitted && fromDate.valid
+          }"
+          required
+          placeholder={{field_name_hrms_fromdate}}
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <div *ngIf="f.submitted && fromDate.invalid" class="invalid-feedback">
+        <div *ngIf="fromDate.errors.required">Please provide fromDate</div>
+      </div>
+
+      <mat-form-field style="width: 93px; margin-left: 10px; font-weight: bold">
+        <input
+          matInput
+          [matDatepicker]="picker1"
+          [(ngModel)]="model.toDate"
+          name="toDate"
+          #toDate="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && toDate.invalid,
+            'is-valid': f.submitted && toDate.valid
+          }"
+          required
+          placeholder={{field_name_hrms_todate}}
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="picker1"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+      <div *ngIf="f.submitted && toDate.invalid" class="invalid-feedback">
+        <div *ngIf="toDate.errors.required">Please provide toDate</div>
+      </div>
+      &nbsp;&nbsp;
+      <div style="width: 110px">
+        <button class="btn btn-success search-btn font-weight-bold">
+          {{ field_name_hrms_search }}
+        </button>
+      </div>
+    </form>
+      <div class="row">
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i class="icon-users primary font-large-2 float-left"></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="!this.filterFlagEnabled">
+                      {{ this.employeeArrCount }}
+                    </h3>
+                    <h3 *ngIf="this.filterFlagEnabled">
+                      {{ this.employeeArrCount }}
+                    </h3>
+                    <span> {{field_name_hrms_employee}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i class="fa fa-plane success font-large-2 float-left"></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="!this.filterFlagEnabled">
+                      {{ this.holidayArrCount }}
+                    </h3>
+                    <h3 *ngIf="this.filterFlagEnabled">
+                      {{ this.holidayArrCount }}
+                    </h3>
+                    <span>{{field_name_hrms_holidays}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i
+                      class="fa fa-thermometer-full primary font-large-2 float-left"
+                    ></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="!this.filterFlagEnabled">
+                      {{ this.leaveArrCount }}
+                    </h3>
+                    <h3 *ngIf="this.filterFlagEnabled">
+                      {{ this.leaveArrCount }}
+                    </h3>
+                    <span>{{field_name_hrms_leaves}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i
+                      class="fa fa-handshake-o warning font-large-2 float-left"
+                    ></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="!this.filterFlagEnabled">
+                      {{ this.projectArrCount }}
+                    </h3>
+                    <h3 *ngIf="this.filterFlagEnabled">
+                      {{ this.projectArrCount }}
+                    </h3>
+                    <span> {{field_name_hrms_projects}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i
+                      class="fa fa-bullhorn success font-large-2 float-left"
+                    ></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="!this.filterFlagEnabled">
+                      {{ this.trainingArrCount }}
+                    </h3>
+                    <h3 *ngIf="this.filterFlagEnabled">
+                      {{ this.trainingArrCount }}
+                    </h3>
+                    <span>{{field_name_hrms_trainings}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i
+                      class="fa fa-sticky-note success font-large-2 float-left"
+                    ></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="!this.filterFlagEnabled">
+                      {{ this.noticeArrCount }}
+                    </h3>
+                    <h3 *ngIf="this.filterFlagEnabled">
+                      {{ this.noticeArrCount }}
+                    </h3>
+                    <span>{{field_name_hrms_notices}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i class="fa fa-users success font-large-2 float-left"></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="!this.filterFlagEnabled">
+                      {{ this.candidateArrCount }}
+                    </h3>
+                    <h3 *ngIf="this.filterFlagEnabled">
+                      {{ this.candidateArrCount }}
+                    </h3>
+                    <span>{{field_name_hrms_candidates}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i
+                      class="fa fa-question success font-large-2 float-left"
+                    ></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="!this.filterFlagEnabled">
+                      {{ this.interviewArrCount }}
+                    </h3>
+                    <h3 *ngIf="this.filterFlagEnabled">
+                      {{ this.interviewArrCount }}
+                    </h3>
+                    <span>{{field_name_hrms_interviews}} </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i class="fa fa-shield success font-large-2 float-left"></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="!this.filterFlagEnabled">
+                      {{ this.policyArrCount }}
+                    </h3>
+                    <h3 *ngIf="this.filterFlagEnabled">
+                      {{ this.policyArrCount }}
+                    </h3>
+                    <span>{{field_name_hrms_policy}} </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 col-12">
+          <div class="card">
+            <div class="card-content">
+              <div class="card-body">
+                <div class="media d-flex">
+                  <div class="align-self-center">
+                    <i class="fa fa-money success font-large-2 float-left"></i>
+                  </div>
+                  <div class="media-body text-right">
+                    <h3 *ngIf="!this.filterFlagEnabled">
+                      {{ this.expenseArrCount }}
+                    </h3>
+                    <h3 *ngIf="this.filterFlagEnabled">
+                      {{ this.expenseArrCount }}
+                    </h3>
+                    <span>{{field_name_hrms_expenses}} </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div *ngIf="filterFlagEnabled">
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_hrms_employee_table}}</div>
+
+        <div class="table-responsive">
+          <table
+            id="contentToConvert"
+            class="table table-striped"
+            [mfData]="employeeArray"
+            #mf2="mfDataTable"
+          >
+            <thead class="thead-light">
+              <tr>
+                <th width="20%" (click)="sortCustomers('first_name')">
+                  <mfDefaultSorter by="first_name"
+                    >{{field_name_hrms_employee_first_name}}</mfDefaultSorter
+                  >
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('last_name')">
+                  <mfDefaultSorter by="last_name">{{field_name_hrms_employee_email_id}} </mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('email')">
+                  <mfDefaultSorter by="email"> {{field_name_hrms_employee_mobile}} </mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('phone')">
+                  <mfDefaultSorter by="phone"> {{field_name_hrms_employee_join_date}} </mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter>{{field_name_hrms_employee_role}}</mfDefaultSorter>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter>{{field_name_hrms_actons}}</mfDefaultSorter>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody *ngIf="employeeArray.length > 0">
+              <tr
+                *ngFor="
+                  let obj of mf2.data
+                    | orderBy: key:reverse
+                    | paginate
+                      : {
+                          id: 'employee',
+                          itemsPerPage: 5,
+                          currentPage: employeePagination,
+                          totalItems: employeeCount
+                        };
+                  let i = index
+                "
+              >
+                <td>{{ obj.first_name }}</td>
+
+                <td>{{ obj.email }}</td>
+                <td>{{ obj.phone }}</td>
+                <td>{{ obj.joining_date }}</td>
+                <td>{{ obj.designation }}</td>
+                <td>
+                  <i
+                    class="fa fa-edit"
+                    (click)="onClickEdit('employee', obj)"
+                  ></i>
+
+                  <!-- <span
+                    ><i
+                      (click)="onClickDelete('employee', obj)"
+                      class="fa fa-trash"
+                    ></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="employeeArray.length == 0">
+              No Records Found
+            </tbody>
+            <tfoot *ngIf="employeeArray.length > 0">
+              <tr>
+                <td colspan="4">
+                  <pagination-controls
+                    id="employee"
+                    (pageChange)="
+                      pageChanged('employee', (employeePagination = $event))
+                    "
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_hrms_holiday_table}}</div>
+
+        <div class="table-responsive">
+          <table
+            id="contentToConvert"
+            class="table table-striped"
+            [mfData]="holidayArr"
+            #mf1="mfDataTable"
+          >
+            <thead class="thead-light">
+              <tr>
+                <th width="20%" (click)="sortCustomers('first_name')">
+                  <mfDefaultSorter by="first_name"
+                    >{{field_name_hrms_holiday_name}}</mfDefaultSorter
+                  >
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('last_name')">
+                  <mfDefaultSorter by="last_name">
+                    {{field_name_hrms_holiday_date}}
+                  </mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('email')">
+                  <mfDefaultSorter by="email"> {{field_name_hrms_holiday_day}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+
+                <th width="20%">
+                  <mfDefaultSorter>{{field_name_hrms_actons}}</mfDefaultSorter>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody *ngIf="holidayArr.length > 0">
+              <tr
+                *ngFor="
+                  let obj of mf1.data
+                    | orderBy: key:reverse
+                    | paginate
+                      : {
+                          id: 'holidays',
+                          itemsPerPage: 5,
+                          currentPage: holidaysPagination,
+                          totalItems: holidayCount
+                        };
+                  let i = index
+                "
+              >
+                <td>{{ obj.holiday_name }}</td>
+
+                <td>{{ obj.holiday_date }}</td>
+                <td>{{ obj.holiday_day }}</td>
+                <td>
+                  <i
+                    class="fa fa-edit"
+                    (click)="onClickEdit('holidays', obj)"
+                  ></i>
+
+                  <!-- <span
+                    ><i
+                      (click)="onClickDelete('holidays', obj)"
+                      class="fa fa-trash"
+                    ></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="holidayArr.length == 0">
+              No Records Found
+            </tbody>
+            <tfoot *ngIf="holidayArr.length > 0">
+              <tr>
+                <td colspan="4">
+                  <pagination-controls
+                    id="holidays"
+                    (pageChange)="
+                      pageChanged('holidays', (holidaysPagination = $event))
+                    "
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_hrms_leaves_table}}</div>
+
+        <div class="table-responsive">
+          <table
+            id="contentToConvert"
+            class="table table-striped"
+            [mfData]="leaveArr"
+            #mf3="mfDataTable"
+          >
+            <thead class="thead-light">
+              <tr>
+                <th width="20%" (click)="sortCustomers('first_name')">
+                  <mfDefaultSorter by="first_name">{{field_name_hrms_leaves_type}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('last_name')">
+                  <mfDefaultSorter by="last_name"> {{field_name_hrms_leaves_from}} </mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('email')">
+                  <mfDefaultSorter by="email"> {{field_name_hrms_leaves_to}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sort('email')">
+                  <mfDefaultSorter by="email">{{field_name_hrms_leaves_reason}} </mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter>{{field_name_hrms_actons}}</mfDefaultSorter>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody *ngIf="leaveArr.length > 0">
+              <tr
+                *ngFor="
+                  let obj of mf3.data
+                    | orderBy: key:reverse
+                    | paginate
+                      : {
+                          id: 'leaves',
+                          itemsPerPage: 5,
+                          currentPage: leavesPagination,
+                          totalItems: leaveCount
+                        };
+                  let i = index
+                "
+              >
+                <td>{{ obj.leave_type }}</td>
+
+                <td>{{ obj.leave_from }}</td>
+                <td>{{ obj.leave_to }}</td>
+                <td>{{ obj.leave_reason }}</td>
+                <td>
+                  <i
+                    class="fa fa-edit"
+                    (click)="onClickEdit('leaves', obj)"
+                  ></i>
+
+                  <!-- <span
+                    ><i
+                      (click)="onClickDelete('leaves', obj)"
+                      class="fa fa-trash"
+                    ></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="leaveArr.length == 0">
+              No Records Found
+            </tbody>
+            <tfoot *ngIf="leaveArr.length > 0">
+              <tr>
+                <td colspan="4">
+                  <pagination-controls
+                    id="leaves"
+                    (pageChange)="
+                      pageChanged('leaves', (leavesPagination = $event))
+                    "
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_hrms_training_table}}</div>
+
+        <div class="table-responsive">
+          <table
+            id="contentToConvert"
+            class="table table-striped"
+            [mfData]="trainingArr"
+            #mf4="mfDataTable"
+          >
+            <thead class="thead-light">
+              <tr>
+                <th width="20%" (click)="sortCustomers('first_name')">
+                  <mfDefaultSorter by="first_name">
+                    {{field_name_hrms_training_type}}</mfDefaultSorter
+                  >
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('last_name')">
+                  <mfDefaultSorter by="last_name"> {{field_name_hrms_training_trainer}} </mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('email')">
+                  <mfDefaultSorter by="email"> {{field_name_hrms_training_employee}} </mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sort('email')">
+                  <mfDefaultSorter by="email">{{field_name_hrms_training_cost}} </mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter>{{field_name_hrms_training_description}}</mfDefaultSorter>
+                </th>
+                <th width="20%">
+                  <mfDefaultSorter>{{field_name_hrms_actons}}</mfDefaultSorter>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody *ngIf="trainingArr.length > 0">
+              <tr
+                *ngFor="
+                  let obj of mf4.data
+                    | orderBy: key:reverse
+                    | paginate
+                      : {
+                          id: 'training',
+                          itemsPerPage: 5,
+                          currentPage: trainingPagination,
+                          totalItems: trainingCount
+                        };
+                  let i = index
+                "
+              >
+                <td>{{ obj.training_type }}</td>
+                <td>{{ obj.trainer_name }}</td>
+                <td>{{ obj.trained_employee_name }}</td>
+                <td>{{ obj.training_cost }}</td>
+                <td>{{ obj.training_description }}</td>
+                <td>
+                  <i
+                    class="fa fa-edit"
+                    (click)="onClickEdit('training', obj)"
+                  ></i>
+
+                  <!-- <span
+                    ><i
+                      (click)="onClickDelete('training', obj)"
+                      class="fa fa-trash"
+                    ></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="trainingArr.length == 0">
+              No Records Found
+            </tbody>
+            <tfoot *ngIf="trainingArr.length > 0">
+              <tr>
+                <td colspan="4">
+                  <pagination-controls
+                    id="training"
+                    (pageChange)="
+                      pageChanged('training', (trainingPagination = $event))
+                    "
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_hrms_project_table}}</div>
+
+        <div class="table-responsive">
+          <table
+            id="contentToConvert"
+            class="table table-striped"
+            [mfData]="projectArr"
+            #mf5="mfDataTable"
+          >
+            <thead class="thead-light">
+              <tr>
+                <th width="20%" (click)="sortCustomers('first_name')">
+                  <mfDefaultSorter by="first_name">
+                    {{field_name_hrms_project_name}}</mfDefaultSorter
+                  >
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('last_name')">
+                  <mfDefaultSorter by="last_name">
+                    {{field_name_hrms_project_description}}
+                  </mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('email')">
+                  <mfDefaultSorter by="email"> {{field_name_hrms_project_team}} </mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+
+                <th width="20%">
+                  <mfDefaultSorter>{{field_name_hrms_actons}}</mfDefaultSorter>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody *ngIf="projectArr.length > 0">
+              <tr
+                *ngFor="
+                  let obj of mf5.data
+                    | orderBy: key:reverse
+                    | paginate
+                      : {
+                          id: 'project',
+                          itemsPerPage: 5,
+                          currentPage: projectPagination,
+                          totalItems: projectCount
+                        };
+                  let i = index
+                "
+              >
+                <td>{{ obj.project_name }}</td>
+
+                <td>{{ obj.project_description }}</td>
+                <td>{{ getEmployeeName(obj.project_team) }}</td>
+                <td>
+                  <i
+                    class="fa fa-edit"
+                    (click)="onClickEdit('project', obj)"
+                  ></i>
+
+                  <!-- <span
+                    ><i
+                      (click)="onClickDelete('project', obj)"
+                      class="fa fa-trash"
+                    ></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="projectArr.length == 0">
+              No Records Found
+            </tbody>
+            <tfoot *ngIf="projectArr.length > 0">
+              <tr>
+                <td colspan="4">
+                  <pagination-controls
+                    id="project"
+                    (pageChange)="
+                      pageChanged('project', (projectPagination = $event))
+                    "
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_hrms_notice_table}}</div>
+
+        <div class="table-responsive">
+          <table
+            id="contentToConvert"
+            class="table table-striped"
+            [mfData]="noticeArr"
+            #mf6="mfDataTable"
+          >
+            <thead class="thead-light">
+              <tr>
+                <th width="20%" (click)="sortCustomers('first_name')">
+                  <mfDefaultSorter by="first_name">
+                    {{field_name_hrms_notice_type}}</mfDefaultSorter
+                  >
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('last_name')">
+                  <mfDefaultSorter by="last_name">
+                    {{field_name_hrms_notice_date}}
+                  </mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sortCustomers('email')">
+                  <mfDefaultSorter by="email"> {{field_name_hrms_notice_by}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+
+                <th width="20%">
+                  <mfDefaultSorter>{{field_name_hrms_actons}}</mfDefaultSorter>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody *ngIf="noticeArr.length > 0">
+              <tr
+                *ngFor="
+                  let obj of mf6.data
+                    | orderBy: key:reverse
+                    | paginate
+                      : {
+                          id: 'notice',
+                          itemsPerPage: 5,
+                          currentPage: noticePagination,
+                          totalItems: noticeCount
+                        };
+                  let i = index
+                "
+              >
+                <td>{{ obj.notice_type }}</td>
+
+                <td>{{ obj.notice_date }}</td>
+                <td>{{ obj.notice_by }}</td>
+                <td>
+                  <i
+                    class="fa fa-edit"
+                    (click)="onClickEdit('notice', obj)"
+                  ></i>
+
+                  <!-- <span
+                    ><i
+                      (click)="onClickDelete('notice', obj)"
+                      class="fa fa-trash"
+                    ></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="noticeArr.length == 0">
+              No Records Found
+            </tbody>
+            <tfoot *ngIf="noticeArr.length > 0">
+              <tr>
+                <td colspan="4">
+                  <pagination-controls
+                    id="notice"
+                    (pageChange)="
+                      pageChanged('notice', (noticePagination = $event))
+                    "
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_hrms_candidate_table}}</div>
+        <div class="table-responsive">
+          <table class="table" [mfData]="candidateArr" #mf7="mfDataTable">
+            <thead class="thead-light">
+              <tr>
+                <th width="20%" (click)="sort('SL NO')">
+                  <mfDefaultSorter by="">{{field_name_hrms_candidate_name}} </mfDefaultSorter>
+                </th>
+
+                <th width="20%" (click)="sort('designation_name')">
+                  <mfDefaultSorter>{{field_name_hrms_candidate_email}}</mfDefaultSorter>
+                </th>
+
+                <th width="20%" (click)="sort('department_name')">
+                  <mfDefaultSorter>{{field_name_hrms_candidate_phone}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+
+                <th width="20%">{{field_name_hrms_actons}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let obj of mf7.data
+                    | orderBy: key:reverse
+                    | paginate
+                      : {
+                        id: 'candidate',
+                        itemsPerPage: 5,
+                        currentPage: candidatePagination,
+                        totalItems: candidateCount
+                        };
+                  let i = index
+                "
+              >
+                <td>{{ obj.candidate_name }}</td>
+                <td>{{ obj.candidate_email }}</td>
+                <td>{{ obj.candidate_phone }}</td>
+                <td>
+                  <i class="fa fa-edit" (click)="onClickEdit('candidate',obj)"></i>
+
+                  <!-- <span
+                    ><i (click)="onClickDelete('candidate',obj)" class="fa fa-trash"></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4" *ngIf="candidateArr.length > 0">
+                  <pagination-controls
+                    (pageChange)="pageChanged('candidate', (candidatePagination = $event))"
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_hrms_policy_table}}</div>
+        <div class="table-responsive">
+          <table class="table" [mfData]="policyArr" #mf8="mfDataTable">
+            <thead class="thead-light">
+              <tr>
+                <th width="10%" (click)="sort('SLNO')">
+                  <mfDefaultSorter by="">{{ 'SL NO'| translate}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+
+                <th width="20%" (click)="sort('policy_id')">
+                  <mfDefaultSorter by="policy_name">{{field_name_hrms_policy_id}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="10%" (click)="sort('policy_name')">
+                  <mfDefaultSorter by="policy_name"
+                    >{{field_name_hrms_policy_name}}</mfDefaultSorter
+                  >
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="10%" (click)="sort('policy_name')">
+                  <mfDefaultSorter by="policy_name">{{field_name_hrms_policy_size}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sort('file')">
+                  <mfDefaultSorter by="file">{{field_name_hrms_policy_file}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="10%" (click)="sort('Download')">
+                  <mfDefaultSorter by="">{{field_name_hrms_policy_download}}</mfDefaultSorter>
+                </th>
+
+                <th width="10%">{{field_name_hrms_actons}}</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="mf8.data?.length >= 1">
+              <tr
+                *ngFor="
+                  let obj of mf8.data
+                    | orderBy: key:reverse
+                    | paginate
+                      : {
+                        id: 'policy',
+                        itemsPerPage: 5,
+                        currentPage: policyPagination,
+                        totalItems: policyCount
+                        };
+                  let i = index
+                "
+              >
+                <td>{{ i + 1 }}</td>
+                <td>{{ obj.policy_id }}</td>
+
+                <td>{{ obj.policy_name }}</td>
+                <td>{{ obj.size }} Bytes</td>
+                <td>{{ obj.files }}</td>
+                <td>
+                  <a [href]="obj.files" download target="_blank"> {{field_name_hrms_policy_download}} </a>
+                </td>
+
+                <td>
+                  <i class="fa fa-edit" (click)="onClickEdit('policy',obj)"></i>
+
+                  <!-- <span
+                    ><i (click)="onClickDelete('policy',obj)" class="fa fa-trash"></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="mf8.data?.length <= 0">
+              <tr class="odd" style="opacity: 1">
+                <td
+                  valign="top"
+                  colspan="8"
+                  style="text-align: center"
+                  class="dataTables_empty"
+                >
+                  No data available in table
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4" *ngIf="mf8.data?.length >= 1" >
+                  <pagination-controls
+                    (pageChange)="pageChanged('policy', (policyPagination = $event))"
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <div class="card-body product-table p-t-35">
+        <div style="font-size: 20px; font-weight: bold">{{field_name_hrms_expenses_table}}</div>
+        <div class="table-responsive">
+          <table
+            id="contentToConvert"
+            class="table"
+            [mfData]="expenseArr"
+            #mf9="mfDataTable"
+          >
+            <thead class="thead-light">
+              <tr>
+                <th width="20%" (click)="sort('email')">
+                  <mfDefaultSorter by="email">{{field_name_add_expense_user_email}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sort('expense_item')">
+                  <mfDefaultSorter by="expense_item"
+                    >{{field_name_add_expense_add_expense_item}}</mfDefaultSorter
+                  >
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sort('amount')">
+                  <mfDefaultSorter by="amount">{{field_name_add_expense_amount}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%" (click)="sort('date')">
+                  <mfDefaultSorter by="date">{{field_name_add_expense_date}}</mfDefaultSorter>
+                  <i class="fa fa-sort"></i>
+                </th>
+                <th width="20%">{{field_name_hrms_actons}}</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="mf9.data?.length >= 1">
+              <tr
+                *ngFor="
+                  let obj of mf9.data
+                    | orderBy: key:reverse
+                    | paginate
+                      : {
+                        id: 'expense',
+                        itemsPerPage: 5,
+                        currentPage: expensePagination,
+                        totalItems: expenseCount
+                        };
+                  let i = index
+                "
+              >
+                <td>{{ obj.email }}</td>
+
+                <td>{{ obj.expense_item }}</td>
+                <td>{{ obj.amount }}</td>
+
+                <td>{{ obj.date }}</td>
+                 <td>
+                  <i class="fa fa-edit" (click)="onClickEdit('expense',obj)"></i>
+
+                  <!-- <span
+                    ><i (click)="onClickDelete('expense',obj)" class="fa fa-trash"></i
+                  ></span> -->
+                </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="mf9.data?.length <= 0">
+              <tr class="odd" style="opacity: 1">
+                <td
+                  valign="top"
+                  colspan="8"
+                  style="text-align: center"
+                  class="dataTables_empty"
+                >
+                  No data available in table
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr >
+                <td colspan="4" *ngIf="mf9.data?.length >= 1">
+                  <pagination-controls
+                    (pageChange)="pageChanged('expense', (expensePagination = $event))"
+                  >
+                  </pagination-controls>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

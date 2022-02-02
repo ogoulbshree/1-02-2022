@@ -1,0 +1,500 @@
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' >
+  <div class="button-page">
+    <div class="row">
+      <div class="col-sm-12">
+        <form
+          class="form-horizontal form-material"
+          name="form"
+          #f="ngForm"
+          (ngSubmit)="f.form.valid && onSubmit()"
+        >
+          <div
+            *ngIf="f.form.invalid && f.submitted"
+            class="alert alert-danger alert-dismissible fade show"
+            role="alert"
+          >
+            <strong>Attendance Details!</strong>The form has the following errors
+            that need to be corrected
+            <button
+              type="button"
+              class="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="card-header">
+            <h2>
+              <span *ngIf="!isUpdate">{{field_name_hrms_attendence_add_attendence}}</span>
+              <span *ngIf="isUpdate">{{field_name_hrms_attendence_update}}</span>
+            </h2>
+          </div>
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_attendence_employee_name}}<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              <div class="col-sm-5">
+                <div class="ng-autocomplete">
+                  <ng-autocomplete
+                    [data]="employeeArray"
+                    [searchKeyword]="keyword"
+                    [initialValue]="keyword"
+                    (selected)="selectEvent($event)"
+                    
+                    [itemTemplate]="itemTemplate"
+                    [notFoundTemplate]="notFoundTemplate"
+                    [(ngModel)]="selectedEmployee.first_name"
+                    name="first_name"
+                    #first_name="ngModel"
+                    required
+                    [ngClass]="{
+                      'is-invalid': f.submitted && first_name.invalid,
+                      'is-valid': f.submitted && first_name.valid
+                    }"
+                  >
+                  </ng-autocomplete>
+  
+                  <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.first_name"></a>
+                  </ng-template>
+  
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                  </ng-template>
+                  <div
+                    *ngIf="f.submitted && first_name.invalid"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="first_name.errors.required">
+                      Please Provide First Name
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_attendence_phone}}<span class="text-danger font-weight-bold"> *</span></label
+              >
+              <div class="col-sm-3">
+                <input
+                readonly
+                  type="text"
+                  class="form-control"
+                  name="created_by"
+                  [(ngModel)]="attendanceDetail.created_by"
+                  #created_by="ngModel"
+                  readonly
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_attendence_leave_type}}<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              <div class="col-sm-10">
+                <select
+                  class="form-control"
+                  [(ngModel)]="attendanceDetail.leave_type"
+                  name="leave_type"
+                  #leave_type="ngModel"
+                >
+                  <option value="undefined" [selected]="true">
+                    Choose Leave
+                  </option>
+                  <option value="casual leave">Casual Leave</option>
+                  <option value="medical leave">Medical Leave</option>
+                  <option value="loss pay">Loss of Pay</option>
+                </select>
+                <div
+                  *ngIf="f.submitted && leave_type.invalid"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="leave_type.errors.required">
+                    Please provide Travel Info
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_attendence_leave_from}}<span class="text-danger font-weight-bold"> *</span></label
+              >
+  
+              <div class="col-sm-10">
+                <input
+                  type="date"
+                  class="form-control"
+                  name="created_time"
+                  value="{{ attendanceDetail.created_time |  date : dateFormat:'GMT':locale }}"
+                  readonly
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_attendence_leave_to}}<span class="text-danger font-weight-bold"> *</span></label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="date"
+                  class="form-control"
+                  name="updated_by"
+                  [(ngModel)]="attendanceDetail.updated_by"
+                  #updated_by="ngModel"
+                  readonly
+                />
+              </div>
+              <div *ngIf="this.dateErrorFlag" style="color: red">
+                To date Should be greater than from date
+              </div><br/>
+              <div *ngIf="this.insufficientFlag" style="color: red">
+               You dont have this much leaves
+               </div>
+            </div>
+            
+            
+           
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label"
+                >{{field_name_hrms_attendence_leave_reason}}<span class="text-danger font-weight-bold">
+                  *</span
+                ></label
+              >
+              <div class="col-sm-10">
+                <textarea
+                  type="text"
+                  class="form-control"
+                  name="modified_time"
+                  value=" {{ attendanceDetail.modified_time |  date : dateFormat:'GMT':locale }}"
+                  readonly
+                >
+                </textarea>
+              </div>
+            </div>
+  
+            <div class="form-row">
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_hrms_attendence_created_by}} </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="created_by"
+                    [(ngModel)]="attendanceDetail.created_by"
+                    #created_by="ngModel"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_hrms_attendence_created_time}} </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="created_time"
+                    value="{{ attendanceDetail.created_time |  date : dateFormat:'GMT':locale }}"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_hrms_attendence_updated_by}} </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="updated_by"
+                    [(ngModel)]="attendanceDetail.updated_by"
+                    #updated_by="ngModel"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="col-sm-5 col-form-label">{{field_name_hrms_attendence_updated_time}} </label>
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="modified_time"
+                    value=" {{ attendanceDetail.modified_time |  date : dateFormat:'GMT':locale }}"
+                  />
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-success btn-round">
+              <span *ngIf="!isUpdate">{{ "Save" | translate }}</span>
+              <span *ngIf="isUpdate">{{ "Update" | translate }}</span>
+            </button>
+  
+            <button
+              class="btn btn-danger btn-round"
+              type="button"
+              appCancelbutton
+            >
+              {{ "Cancel" | translate }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  </section>
+
+
+
+
+
+  <section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir='ltr' >
+    <div class="button-page">
+      <div class="row">
+        <div class="col-sm-12">
+          <form
+            class="form-horizontal form-material"
+            name="form"
+            #f="ngForm"
+            (ngSubmit)="f.form.valid && onSubmit()"
+          >
+            <div
+              *ngIf="f.form.invalid && f.submitted"
+              class="alert alert-danger alert-dismissible fade show"
+              role="alert"
+            >
+              <strong>Attendance Details!</strong>The form has the following errors
+              that need to be corrected
+              <button
+                type="button"
+                class="close"
+                data-dismiss="alert"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="card-header">
+              <h2>
+                <span *ngIf="!isUpdate">{{field_name_hrms_attendence_add_attendence}}</span>
+                <span *ngIf="isUpdate">{{field_name_hrms_attendence_update}}</span>
+              </h2>
+            </div>
+            <div class="card-body">
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label"
+                  >{{field_name_hrms_attendence_employee_name}}<span class="text-danger font-weight-bold">
+                    *</span
+                  ></label
+                >
+                <div class="col-sm-5">
+                  <div class="ng-autocomplete">
+                    <ng-autocomplete
+                      [data]="employeeArray"
+                      [searchKeyword]="keyword"
+                      [initialValue]="keyword"
+                      (selected)="selectEvent($event)"
+                      
+                      [itemTemplate]="itemTemplate"
+                      [notFoundTemplate]="notFoundTemplate"
+                      [(ngModel)]="selectedEmployee.first_name"
+                      name="first_name"
+                      #first_name="ngModel"
+                      required
+                      [ngClass]="{
+                        'is-invalid': f.submitted && first_name.invalid,
+                        'is-valid': f.submitted && first_name.valid
+                      }"
+                    >
+                    </ng-autocomplete>
+    
+                    <ng-template #itemTemplate let-item>
+                      <a [innerHTML]="item.first_name"></a>
+                    </ng-template>
+    
+                    <ng-template #notFoundTemplate let-notFound>
+                      <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                    <div
+                      *ngIf="f.submitted && first_name.invalid"
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="first_name.errors.required">
+                        Please Provide First Name
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <label class="col-sm-2 col-form-label"
+                  >{{field_name_hrms_attendence_phone}}<span class="text-danger font-weight-bold"> *</span></label
+                >
+                <div class="col-sm-3">
+                  <input
+                  readonly
+                    type="text"
+                    class="form-control"
+                    name="created_by"
+                    [(ngModel)]="attendanceDetail.created_by"
+                    #created_by="ngModel"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label"
+                  >{{field_name_hrms_attendence_leave_type}}<span class="text-danger font-weight-bold">
+                    *</span
+                  ></label
+                >
+                <div class="col-sm-10">
+                  <select
+                    class="form-control"
+                    [(ngModel)]="attendanceDetail.leave_type"
+                    name="leave_type"
+                    #leave_type="ngModel"
+                  >
+                    <option value="undefined" [selected]="true">
+                      Choose Leave
+                    </option>
+                    <option value="casual leave">Casual Leave</option>
+                    <option value="medical leave">Medical Leave</option>
+                    <option value="loss pay">Loss of Pay</option>
+                  </select>
+                  <div
+                    *ngIf="f.submitted && leave_type.invalid"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="leave_type.errors.required">
+                      Please provide Travel Info
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label"
+                  >{{field_name_hrms_attendence_leave_from}}<span class="text-danger font-weight-bold"> *</span></label
+                >
+    
+                <div class="col-sm-10">
+                  <input
+                    type="date"
+                    class="form-control"
+                    name="created_time"
+                    value="{{ attendanceDetail.created_time |  date : dateFormat:'GMT':locale }}"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label"
+                  >{{field_name_hrms_attendence_leave_to}}<span class="text-danger font-weight-bold"> *</span></label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="date"
+                    class="form-control"
+                    name="updated_by"
+                    [(ngModel)]="attendanceDetail.updated_by"
+                    #updated_by="ngModel"
+                    readonly
+                  />
+                </div>
+                <div *ngIf="this.dateErrorFlag" style="color: red">
+                  To date Should be greater than from date
+                </div><br/>
+                <div *ngIf="this.insufficientFlag" style="color: red">
+                 You dont have this much leaves
+                 </div>
+              </div>
+              
+              
+             
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label"
+                  >{{field_name_hrms_attendence_leave_reason}}<span class="text-danger font-weight-bold">
+                    *</span
+                  ></label
+                >
+                <div class="col-sm-10">
+                  <textarea
+                    type="text"
+                    class="form-control"
+                    name="modified_time"
+                    value=" {{ attendanceDetail.modified_time |  date : dateFormat:'GMT':locale }}"
+                    readonly
+                  >
+                  </textarea>
+                </div>
+              </div>
+    
+              <div class="form-row">
+                <div class="form-group col-md-3">
+                  <label class="col-sm-5 col-form-label">{{field_name_hrms_attendence_created_by}} </label>
+                  <div class="col-sm-10">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="created_by"
+                      [(ngModel)]="attendanceDetail.created_by"
+                      #created_by="ngModel"
+                    />
+                  </div>
+                </div>
+                <div class="form-group col-md-3">
+                  <label class="col-sm-5 col-form-label">{{field_name_hrms_attendence_created_time}} </label>
+                  <div class="col-sm-10">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="created_time"
+                      value="{{ attendanceDetail.created_time |  date : dateFormat:'GMT':locale }}"
+                    />
+                  </div>
+                </div>
+                <div class="form-group col-md-3">
+                  <label class="col-sm-5 col-form-label">{{field_name_hrms_attendence_updated_by}} </label>
+                  <div class="col-sm-10">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="updated_by"
+                      [(ngModel)]="attendanceDetail.updated_by"
+                      #updated_by="ngModel"
+                    />
+                  </div>
+                </div>
+                <div class="form-group col-md-3">
+                  <label class="col-sm-5 col-form-label">{{field_name_hrms_attendence_updated_time}} </label>
+                  <div class="col-sm-10">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="modified_time"
+                      value=" {{ attendanceDetail.modified_time |  date : dateFormat:'GMT':locale }}"
+                    />
+                  </div>
+                </div>
+              </div>
+              <button class="btn btn-success btn-round">
+                <span *ngIf="!isUpdate">{{ "Save" | translate }}</span>
+                <span *ngIf="isUpdate">{{ "Update" | translate }}</span>
+              </button>
+    
+              <button
+                class="btn btn-danger btn-round"
+                type="button"
+                appCancelbutton
+              >
+                {{ "Cancel" | translate }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    </section>

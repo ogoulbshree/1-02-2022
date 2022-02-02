@@ -1,0 +1,296 @@
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar'" dir='rtl' >
+
+
+<h2 mat-dialog-title>{{field_name_hrms_add_leaves}}</h2>
+<form
+  class="form-horizontal"
+  name="form"
+  #f="ngForm"
+  (ngSubmit)="f.form.valid && submit()"
+>
+  <mat-dialog-content class="mat-typography">
+    <div class="row">
+      <div class="col-md-12">
+        {{field_name_hrms_leaves_employee_email}} :<br />
+        <input
+          tabindex="1"
+          class="form-control"
+          [(ngModel)]="leaveDetail.leave_mail"
+          (change)="selectMail($event)"
+          name="leave_mail"
+          #leave_mail="ngModel"
+          readonly
+        />
+         
+      </div>
+      <br/>
+      <div class="col-md-6">
+        {{field_name_hrms_leaves_type}} :<br />
+        <select
+          tabindex="1"
+          class="form-control"
+          [(ngModel)]="leaveDetail.leave_type"
+          name="leave_type"
+          #leave_type="ngModel"
+        >
+          <option value="undefined" disabled [selected]="true">
+            Choose Leave
+          </option>
+          <option value="casual leave">Casual Leave</option>
+          <option value="medical leave">Medical Leave</option>
+          <option value="loss pay">Loss of Pay</option>
+        </select>
+        <br />
+
+        {{field_name_hrms_leaves_from}} :<br />
+        <input
+          tabindex="2"
+          type="date"
+          class="form-control"
+          name="leave_from"
+          #leave_from="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && leave_from.invalid,
+            'is-valid': f.submitted && leave_from.valid
+          }"
+          (change)="dateSelected()"
+          [(ngModel)]="leaveDetail.leave_from"
+          required
+        />
+        <div *ngIf="f.submitted && leave_from.invalid" class="invalid-feedback">
+          <div *ngIf="leave_from.errors.required">Please provide From Date</div>
+        </div>
+        <br />
+
+        {{field_name_hrms_leaves_created_by}}:<br />
+        <input
+          type="text"
+          class="form-control"
+          name="created_by"
+          #created_by="ngModel"
+          [(ngModel)]="leaveDetail.created_by"
+          readonly
+        />
+      </div>
+      <div class="col-md-6">
+        {{field_name_hrms_leaves_reason}}:<br />
+        <textarea
+          tabindex="1"
+          type="text"
+          class="form-control"
+          name="leave_reason"
+          #leave_reason="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && leave_reason.invalid,
+            'is-valid': f.submitted && leave_reason.valid
+          }"
+          [(ngModel)]="leaveDetail.leave_reason"
+          required
+        >
+        </textarea>
+        <div
+          *ngIf="f.submitted && leave_reason.invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="leave_reason.errors.required">
+            Please provide Leave Reason
+          </div>
+          <br />
+        </div>
+        {{field_name_hrms_leaves_to}}:<br />
+        <input
+          tabindex="2"
+          type="date"
+          class="form-control"
+          name="leave_to"
+          #leave_to="ngModel"
+          [ngClass]="{
+            'is-invalid': f.submitted && leave_to.invalid,
+            'is-valid': f.submitted && leave_to.valid
+          }"
+          (change)="dateSelected()"
+          [(ngModel)]="leaveDetail.leave_to"
+          required
+        />
+        <div *ngIf="f.submitted && leave_to.invalid" class="invalid-feedback">
+          <div *ngIf="leave_to.errors.required">Please provide To Date</div>
+        </div>
+        <div *ngIf="this.dateErrorFlag" style="color: red">
+          To date Should be greater than from date
+        </div>
+
+        <br />
+
+        {{field_name_hrms_leaves_status}}:<br />
+        <select
+          disabled
+          class="form-control"
+          [(ngModel)]="leaveDetail.leave_status"
+          name="leave_status"
+          #leave_status="ngModel"
+        >
+          <option value="approved">Approved</option>
+          <option value="pending">Pending</option>
+          <option value="rejected">Rejected</option>
+        </select>
+        <br />
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close class="btn btn-danger">{{'Cancel'|translate}}</button>
+
+    <button type="submit" mat-button class="btn btn-success"> {{'Save'|translate}}</button>
+  </mat-dialog-actions>
+</form>
+</section>
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value != 'ar'" dir='ltr' >
+
+
+  <h2 mat-dialog-title>{{field_name_hrms_add_leaves}}</h2>
+  <form
+    class="form-horizontal"
+    name="form"
+    #f="ngForm"
+    (ngSubmit)="f.form.valid && submit()"
+  >
+    <mat-dialog-content class="mat-typography">
+      <div class="row">
+        <div class="col-md-12">
+          {{field_name_hrms_leaves_employee_email}} :<br />
+          <input
+            tabindex="1"
+            class="form-control"
+            [(ngModel)]="leaveDetail.leave_mail"
+            (change)="selectMail($event)"
+            name="leave_mail"
+            #leave_mail="ngModel"
+            readonly
+          />
+           
+        </div>
+        <br/>
+        <div class="col-md-6">
+          {{field_name_hrms_leaves_type}} :<br />
+          <select
+            tabindex="1"
+            class="form-control"
+            [(ngModel)]="leaveDetail.leave_type"
+            name="leave_type"
+            #leave_type="ngModel"
+          >
+            <option value="undefined" disabled [selected]="true">
+              Choose Leave
+            </option>
+            <option value="casual leave">Casual Leave</option>
+            <option value="medical leave">Medical Leave</option>
+            <option value="loss pay">Loss of Pay</option>
+          </select>
+          <br />
+  
+          {{field_name_hrms_leaves_from}} :<br />
+          <input
+            tabindex="2"
+            type="date"
+            class="form-control"
+            name="leave_from"
+            #leave_from="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && leave_from.invalid,
+              'is-valid': f.submitted && leave_from.valid
+            }"
+            (change)="dateSelected()"
+            [(ngModel)]="leaveDetail.leave_from"
+            required
+          />
+          <div *ngIf="f.submitted && leave_from.invalid" class="invalid-feedback">
+            <div *ngIf="leave_from.errors.required">Please provide From Date</div>
+          </div>
+          <br />
+  
+          {{field_name_hrms_leaves_created_by}}:<br />
+          <input
+            type="text"
+            class="form-control"
+            name="created_by"
+            #created_by="ngModel"
+            [(ngModel)]="leaveDetail.created_by"
+            readonly
+          />
+        </div>
+        <div class="col-md-6">
+          {{field_name_hrms_leaves_reason}}:<br />
+          <textarea
+            tabindex="1"
+            type="text"
+            class="form-control"
+            name="leave_reason"
+            #leave_reason="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && leave_reason.invalid,
+              'is-valid': f.submitted && leave_reason.valid
+            }"
+            [(ngModel)]="leaveDetail.leave_reason"
+            required
+          >
+          </textarea>
+          <div
+            *ngIf="f.submitted && leave_reason.invalid"
+            class="invalid-feedback"
+          >
+            <div *ngIf="leave_reason.errors.required">
+              Please provide Leave Reason
+            </div>
+            <br />
+          </div>
+          {{field_name_hrms_leaves_to}}:<br />
+          <input
+            tabindex="2"
+            type="date"
+            class="form-control"
+            name="leave_to"
+            #leave_to="ngModel"
+            [ngClass]="{
+              'is-invalid': f.submitted && leave_to.invalid,
+              'is-valid': f.submitted && leave_to.valid
+            }"
+            (change)="dateSelected()"
+            [(ngModel)]="leaveDetail.leave_to"
+            required
+          />
+          <div *ngIf="f.submitted && leave_to.invalid" class="invalid-feedback">
+            <div *ngIf="leave_to.errors.required">Please provide To Date</div>
+          </div>
+          <div *ngIf="this.dateErrorFlag" style="color: red">
+            To date Should be greater than from date
+          </div>
+  
+          <br />
+  
+          {{field_name_hrms_leaves_status}}:<br />
+          <select
+            disabled
+            class="form-control"
+            [(ngModel)]="leaveDetail.leave_status"
+            name="leave_status"
+            #leave_status="ngModel"
+          >
+            <option value="approved">Approved</option>
+            <option value="pending">Pending</option>
+            <option value="rejected">Rejected</option>
+          </select>
+          <br />
+        </div>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close class="btn btn-danger">{{'Cancel'|translate}}</button>
+  
+      <button type="submit" mat-button class="btn btn-success"> {{'Save'|translate}}</button>
+    </mat-dialog-actions>
+  </form>
+  </section>

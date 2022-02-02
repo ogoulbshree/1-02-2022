@@ -1,0 +1,417 @@
+
+
+<section *ngIf="this._uiservice.langDataSource.value == 'ar' && this.suppliernameDetail" dir='rtl' >
+
+
+<div class="button-page">
+  <div class="row">
+
+      <div class="col-sm-12">
+      
+              <form class="form-horizontal form-material" name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()">
+                <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+                  <strong>Supplier Details!</strong>The form has the following errors that need to be corrected
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                  <div class="card-header">
+                      <h2> 
+                          <span *ngIf="!isUpdate">{{field_name_supplier_addsupplier}}</span> 
+                          <span *ngIf="isUpdate">{{field_name_supplier_update}}</span>
+                      </h2>
+                      </div>
+                      <div class="card-body">
+                          <!--  <div class="form-group row">
+                              <label class="col-sm-2 col-form-label">Category Id<span
+                                class="text-danger font-weight-bold">
+                                *</span></label>
+                              <div class="col-sm-10">
+                                <input type="text" class="form-control" [(ngModel)]="categoryDetail.category_id" name="category_id"
+                                required pattern="[a-zA-Z0-9]+" #category_id="ngModel"  
+                                [ngClass]="{ 'is-invalid': f.submitted && category_id.invalid, 
+                                'is-valid': f.submitted && category_id.valid }"
+                               required/>
+                               <div *ngIf="f.submitted && category_id.invalid" class="invalid-feedback">
+                                <div *ngIf="category_id.errors.required"> Please provide product id</div>
+                             
+                            <div *ngIf="category_id.errors.pattern">Id should be only in Alphanumeric
+                               </div>
+                            </div>
+                              </div>
+                            </div>  -->
+                            <div class="form-row">
+                              <div class="form-group col-md-4">
+                                  <label class="col-sm-5 col-form-label">{{field_name_supplier_name}}
+                                      <span
+                                      class="text-danger font-weight-bold">
+                                      *</span>
+                                    </label>
+                                    <div class="col-sm-10">
+                                <input type="text" class="form-control" [(ngModel)]="suppliernameDetail.supplier_name" 
+                                name="supplier_name"
+                                required  pattern="^(?:[A-Za-z]+)(?:[A-Za-z _]*)$" #supplier_name="ngModel"  
+                                [ngClass]="{ 'is-invalid': f.submitted && supplier_name.invalid, 
+                                'is-valid': f.submitted && supplier_name.valid }"
+                               required/>
+                               
+                   
+                               <div *ngIf="f.submitted && supplier_name.invalid" class="invalid-feedback">
+                                <div *ngIf="supplier_name.errors.required"> Please provide Supplier name</div>
+                             
+                            <div *ngIf="supplier_name.errors.pattern">Supplier Name should be only in Alphabets
+                               </div>
+                            </div>
+                              </div>
+                            </div>
+
+
+
+                            <div class="form-group col-md-4">
+                              <label class="col-sm-5 col-form-label">{{field_name_supplier_email}}
+                                  <span
+                                  class="text-danger font-weight-bold">
+                                  *</span>
+                                </label>
+                              
+
+<div class="col-sm-10">
+<input type="text" class="form-control" [(ngModel)]="suppliernameDetail.supplier_email" name="supplier_email"
+pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" #supplier_email="ngModel"
+[ngClass]="{ 'is-invalid': f.submitted && supplier_email.invalid, 
+'is-valid': f.submitted && supplier_email.valid }"
+required >
+
+<div *ngIf="f.submitted && supplier_email.invalid" class="invalid-feedback">
+<div *ngIf="supplier_email.errors.required"> Please provide Supplier Email</div>
+<div *ngIf="supplier_email.errors.pattern">Email format should be <small  class="text-success"><b>jhon@abc.com</b></small>
+</div>
+</div>
+</div>
+                        </div>
+
+
+                        
+                        <div class="form-group col-md-4">
+                          <label class="col-sm-5 col-form-label">{{field_name_supplier_phone}}
+                              <span
+                              class="text-danger font-weight-bold">
+                              *</span>
+                            </label>
+                           
+
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" [(ngModel)]="suppliernameDetail.supplier_phone" name="supplier_phone"
+                         required pattern="^(?:[0-9()\-+]+)(?:[0-9()\-+]+)$" #supplier_phone="ngModel" 
+                         [ngClass]="{ 'is-invalid': f.submitted && supplier_phone.invalid, 
+                         'is-valid': f.submitted && supplier_phone.valid }"
+                        required>
+                     
+                        <div *ngIf="f.submitted && supplier_phone.invalid" class="invalid-feedback">
+                            <div *ngIf="supplier_phone.errors.required">Please provide phone number</div>
+                         
+                        <div *ngIf="supplier_phone.errors.pattern">Phone number should be only numbers
+                           </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+
+</div>
+<div class="form-row">
+
+  <div class="form-group col-md-4">
+      <label class="col-sm-5 col-form-label">{{field_name_supplier_address}}
+          <span
+          class="text-danger font-weight-bold">
+          *</span>
+        </label>
+        <div class="col-sm-10">
+    <input type="text" class="form-control" [(ngModel)]="suppliernameDetail.supplier_address" 
+    name="supplier_address" #supplier_address="ngModel" 
+    [ngClass]="{ 'is-invalid': f.submitted && supplier_address.invalid, 
+    'is-valid': f.submitted && supplier_address.valid }"
+   required>
+   
+   <div *ngIf="f.submitted && supplier_address.invalid" class="invalid-feedback">
+    <div *ngIf="supplier_address.errors.required">Please provide supplier Address</div>
+   </div>
+   
+
+  </div>
+</div>
+
+
+</div>
+
+
+                            <div class="form-row">
+                              <div class="form-group col-md-3">
+                                <label class="col-sm-5 col-form-label">{{field_name_supplier_created_by}}
+                                 
+                                </label>
+                                <div class="col-sm-10">
+                                  <input type="text" class="form-control" name="created_by"
+                                  [(ngModel)]="suppliernameDetail.created_by"
+                                  #created_by="ngModel" readonly>
+                              </div>
+                            </div>
+                              <div class="form-group col-md-3">
+                                <label class="col-sm-5 col-form-label">{{field_name_supplier_created_time}}
+                                  
+                                </label>
+                                <div class="col-sm-10">
+                                 
+                              
+                                  <input type="text" class="form-control" name="created_time"  
+                                   readonly value="{{suppliernameDetail.created_time |  date : dateFormat:'GMT':locale}}">
+                                   
+                                
+                                
+                              </div>
+                              </div>
+                              <div class="form-group col-md-3">
+                                <label class="col-sm-5 col-form-label">{{field_name_supplier_updated_by}}
+                                 
+                                </label>
+                                <div class="col-sm-10">
+                                  <input type="text" class="form-control" name="updated_by"
+                                    [(ngModel)]="suppliernameDetail.updated_by"
+                                    #updated_by="ngModel" readonly>
+                              </div>
+                            </div>
+                              <div class="form-group col-md-3">
+                                <label class="col-sm-5 col-form-label">{{field_name_supplier_updated_time}}
+                                 
+                                </label>
+                                <div class="col-sm-10">
+                                
+                                  <input type="text" class="form-control" name="modified_time"  
+                                   readonly value=" {{suppliernameDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+                                
+                              </div>
+                            </div>
+                              </div>  
+                              <button class="btn btn-danger btn-round text-center pull-right" type="button" appCancelbutton>{{'Cancel'|translate}}</button>
+  <button  class="btn btn-success btn-round text-center pull-right">
+  <span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+    <span *ngIf="isUpdate">{{'Update'|translate}}</span></button>
+                          </div>
+              </form>
+         
+          </div>
+      </div></div>
+
+      
+</section>
+
+
+
+<section *ngIf="this._uiservice.langDataSource.value != 'ar' && this.suppliernameDetail" dir='ltr' >
+
+
+  <div class="button-page">
+    <div class="row">
+  
+        <div class="col-sm-12">
+        
+                <form class="form-horizontal form-material" name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()">
+                  <div *ngIf="f.form.invalid && f.submitted" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Supplier Details!</strong>The form has the following errors that need to be corrected
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                    <div class="card-header">
+                        <h2> 
+                            <span *ngIf="!isUpdate">{{field_name_supplier_addsupplier}}</span> 
+                            <span *ngIf="isUpdate">{{field_name_supplier_update}}</span>
+                        </h2>
+                        </div>
+                        <div class="card-body">
+                            <!--  <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Category Id<span
+                                  class="text-danger font-weight-bold">
+                                  *</span></label>
+                                <div class="col-sm-10">
+                                  <input type="text" class="form-control" [(ngModel)]="categoryDetail.category_id" name="category_id"
+                                  required pattern="[a-zA-Z0-9]+" #category_id="ngModel"  
+                                  [ngClass]="{ 'is-invalid': f.submitted && category_id.invalid, 
+                                  'is-valid': f.submitted && category_id.valid }"
+                                 required/>
+                                 <div *ngIf="f.submitted && category_id.invalid" class="invalid-feedback">
+                                  <div *ngIf="category_id.errors.required"> Please provide product id</div>
+                               
+                              <div *ngIf="category_id.errors.pattern">Id should be only in Alphanumeric
+                                 </div>
+                              </div>
+                                </div>
+                              </div>  -->
+                              <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label class="col-sm-5 col-form-label">{{field_name_supplier_name}}
+                                        <span
+                                        class="text-danger font-weight-bold">
+                                        *</span>
+                                      </label>
+                                      <div class="col-sm-10">
+                                  <input type="text" class="form-control" [(ngModel)]="suppliernameDetail.supplier_name" 
+                                  name="supplier_name"
+                                  required  pattern="^(?:[A-Za-z]+)(?:[A-Za-z _]*)$" #supplier_name="ngModel"  
+                                  [ngClass]="{ 'is-invalid': f.submitted && supplier_name.invalid, 
+                                  'is-valid': f.submitted && supplier_name.valid }"
+                                 required/>
+                                 
+                     
+                                 <div *ngIf="f.submitted && supplier_name.invalid" class="invalid-feedback">
+                                  <div *ngIf="supplier_name.errors.required"> Please provide Supplier name</div>
+                               
+                              <div *ngIf="supplier_name.errors.pattern">Supplier Name should be only in Alphabets
+                                 </div>
+                              </div>
+                                </div>
+                              </div>
+  
+  
+  
+                              <div class="form-group col-md-4">
+                                <label class="col-sm-5 col-form-label">{{field_name_supplier_email}}
+                                    <span
+                                    class="text-danger font-weight-bold">
+                                    *</span>
+                                  </label>
+                                
+  
+  <div class="col-sm-10">
+  <input type="text" class="form-control" [(ngModel)]="suppliernameDetail.supplier_email" name="supplier_email"
+  pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" #supplier_email="ngModel"
+  [ngClass]="{ 'is-invalid': f.submitted && supplier_email.invalid, 
+  'is-valid': f.submitted && supplier_email.valid }"
+  required >
+  
+  <div *ngIf="f.submitted && supplier_email.invalid" class="invalid-feedback">
+  <div *ngIf="supplier_email.errors.required"> Please provide Supplier Email</div>
+  <div *ngIf="supplier_email.errors.pattern">Email format should be <small  class="text-success"><b>jhon@abc.com</b></small>
+  </div>
+  </div>
+  </div>
+                          </div>
+  
+  
+                          
+                          <div class="form-group col-md-4">
+                            <label class="col-sm-5 col-form-label">{{field_name_supplier_phone}}
+                                <span
+                                class="text-danger font-weight-bold">
+                                *</span>
+                              </label>
+                             
+  
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" [(ngModel)]="suppliernameDetail.supplier_phone" name="supplier_phone"
+                           required pattern="^(?:[0-9()\-+]+)(?:[0-9()\-+]+)$" #supplier_phone="ngModel" 
+                           [ngClass]="{ 'is-invalid': f.submitted && supplier_phone.invalid, 
+                           'is-valid': f.submitted && supplier_phone.valid }"
+                          required>
+                       
+                          <div *ngIf="f.submitted && supplier_phone.invalid" class="invalid-feedback">
+                              <div *ngIf="supplier_phone.errors.required">Please provide phone number</div>
+                           
+                          <div *ngIf="supplier_phone.errors.pattern">Phone number should be only numbers
+                             </div>
+                          </div>
+                        </div>
+                      </div>
+  
+  
+  
+  
+  </div>
+  <div class="form-row">
+  
+    <div class="form-group col-md-4">
+        <label class="col-sm-5 col-form-label">{{field_name_supplier_address}}
+            <span
+            class="text-danger font-weight-bold">
+            *</span>
+          </label>
+          <div class="col-sm-10">
+      <input type="text" class="form-control" [(ngModel)]="suppliernameDetail.supplier_address" 
+      name="supplier_address" #supplier_address="ngModel" 
+      [ngClass]="{ 'is-invalid': f.submitted && supplier_address.invalid, 
+      'is-valid': f.submitted && supplier_address.valid }"
+     required>
+     
+     <div *ngIf="f.submitted && supplier_address.invalid" class="invalid-feedback">
+      <div *ngIf="supplier_address.errors.required">Please provide supplier Address</div>
+     </div>
+     
+  
+    </div>
+  </div>
+  
+  
+  </div>
+  
+  
+                              <div class="form-row">
+                                <div class="form-group col-md-3">
+                                  <label class="col-sm-5 col-form-label">{{field_name_supplier_created_by}}
+                                   
+                                  </label>
+                                  <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="created_by"
+                                    [(ngModel)]="suppliernameDetail.created_by"
+                                    #created_by="ngModel" readonly>
+                                </div>
+                              </div>
+                                <div class="form-group col-md-3">
+                                  <label class="col-sm-5 col-form-label">{{field_name_supplier_created_time}}
+                                    
+                                  </label>
+                                  <div class="col-sm-10">
+                                   
+                                
+                                    <input type="text" class="form-control" name="created_time"  
+                                     readonly value="{{suppliernameDetail.created_time |  date : dateFormat:'GMT':locale}}">
+                                     
+                                  
+                                  
+                                </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                  <label class="col-sm-5 col-form-label">{{field_name_supplier_updated_by}}
+                                   
+                                  </label>
+                                  <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="updated_by"
+                                      [(ngModel)]="suppliernameDetail.updated_by"
+                                      #updated_by="ngModel" readonly>
+                                </div>
+                              </div>
+                                <div class="form-group col-md-3">
+                                  <label class="col-sm-5 col-form-label">{{field_name_supplier_updated_time}}
+                                   
+                                  </label>
+                                  <div class="col-sm-10">
+                                  
+                                    <input type="text" class="form-control" name="modified_time"  
+                                     readonly value=" {{suppliernameDetail.modified_time |  date : dateFormat:'GMT':locale}}">
+                                  
+                                </div>
+                              </div>
+                                </div>  
+                                <button class="btn btn-danger btn-round text-center pull-right" type="button" appCancelbutton>{{'Cancel'|translate}}</button>
+    <button  class="btn btn-success btn-round text-center pull-right">
+    <span *ngIf="!isUpdate">{{'Save'|translate}}</span>
+      <span *ngIf="isUpdate">{{'Update'|translate}}</span></button>
+                            </div>
+                </form>
+           
+            </div>
+        </div></div>
+  
+        
+  </section>
